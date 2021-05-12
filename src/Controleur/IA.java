@@ -39,7 +39,7 @@ abstract class IA {
             if (jeu.estMouvementPossible(depart, new Point(h-1, l)))
                 voisinsAccessible.add(new Point(h-1, l));
         }
-        if (h+1 <= 9){         //(h+1, l)
+        if (h+1 < 9){         //(h+1, l)
             if (jeu.estMouvementPossible(depart, new Point(h+1, l)))
                 voisinsAccessible.add(new Point(h+1, l));
         }
@@ -50,19 +50,19 @@ abstract class IA {
                 if (jeu.estMouvementPossible(depart, new Point(h-1, l-1)))     //(h-1, l-1)
                     voisinsAccessible.add(new Point(h-1, l-1));
             }
-            if (h+1 <= 9){  //(h+1, l-1)
+            if (h+1 < 9){  //(h+1, l-1)
                 if (jeu.estMouvementPossible(depart, new Point(h+1, l-1)))     //(h+1, l-1)
                     voisinsAccessible.add(new Point(h-1, l-1));
             }
         }
-        if (l+1 <= 9){
+        if (l+1 < 9){
             if (jeu.estMouvementPossible(depart, new Point(h, l+1)))     //(h, l+1)
                 voisinsAccessible.add(new Point(h, l+1));
             if (h-1 >= 0){    //(h-1, l+1)
                 if (jeu.estMouvementPossible(depart, new Point(h-1, l+1)))     //(h, l+1)
                     voisinsAccessible.add(new Point(h-1, l+1));
             }
-            if (h+1 <= 9){  //(h+1, l+1)
+            if (h+1 < 9){  //(h+1, l+1)
                 if (jeu.estMouvementPossible(depart, new Point(h+1, l+1)))     //(h, l+1)
                     voisinsAccessible.add(new Point(h+1, l+1));
             }
@@ -71,8 +71,8 @@ abstract class IA {
     }
 
     public void trouveCasePeutBouger(){
-        for (int i = 0; i < 10; i++){
-            for (int j = 0; j < 10; j++){
+        for (int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
                 ArrayList<Point> vosinsAccessible = trouveVosinsAccessible(new Point(i, j));
                 if (vosinsAccessible != null){
                     if (vosinsAccessible.size() != 0)

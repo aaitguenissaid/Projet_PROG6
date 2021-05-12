@@ -5,36 +5,41 @@ import Structures.*;
 public class Case {
     boolean valide;
     SequenceListe<Pion> pions;
+    Pion tete;
 
     public Case() {
         this.valide = true;
         this.pions = new SequenceListe<>();
+        tete = null;
     }
 
     public Case(boolean valide) {
         this.valide = valide;
         this.pions = new SequenceListe<>();
+        tete = null;
     }
 
     public Case(boolean valide, Pion pion) {
         this.valide = valide;
         this.pions = new SequenceListe<>();
         this.pions.insereTete(pion);
+        tete = pion;
     }
 
     public Case(boolean valide, SequenceListe<Pion> pions) {
         this.valide = valide;
         this.pions = pions;
+        tete = pions.extraitTete();
+        pions.insereTete(tete);
     }
 
     void addPion(Pion pion) {
         this.pions.insereTete(pion);
+        this.tete = pion;
     }
 
     Pion getTete() {
-        Pion p = this.pions.extraitTete();
-        this.pions.insereTete(p);
-        return p;
+        return this.tete;
     }
 
     boolean estValide() {
@@ -43,6 +48,16 @@ public class Case {
 
     void setValide(boolean valide) {
         this.valide = valide;
+    }
+
+    public String toString() {
+        String s = "[";
+        if(!valide) s += " ";
+        else {
+            s += tete.getCouleur();
+        }
+        s += "]";
+        return s;
     }
 
 }

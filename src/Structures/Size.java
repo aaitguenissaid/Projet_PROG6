@@ -1,8 +1,8 @@
 package Structures;
 
 public class Size {
-    int l;
-    int h;
+    public int l;
+    public int h;
     public Size(int x, int y){
         l=x;
         h=y;

@@ -10,7 +10,7 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
         else
             return null;
     }
-    SequenceListe(){
+    public SequenceListe(){
         taille = 0;
     }
     public void insereTete(Titi element) {

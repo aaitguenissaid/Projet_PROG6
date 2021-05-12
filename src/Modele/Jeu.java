@@ -1,8 +1,5 @@
 package Modele;
 
-import Structures.Joueur;
-import Structures.Size;
-
 public class Jeu {
     byte [][] grille;
     Size taille;

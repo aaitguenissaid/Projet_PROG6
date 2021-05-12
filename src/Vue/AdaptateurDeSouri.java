@@ -1,8 +1,8 @@
 package Vue;
 
-import Structures.Coordonnee;
 import Structures.Mouvement;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -20,13 +20,13 @@ public class AdaptateurDeSouri implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        m=new Mouvement(new Coordonnee(e.getX()/a.getLargeurCase(),e.getY()/a.getHauteurCase()));
+        m=new Mouvement(new Point(e.getX()/a.getLargeurCase(),e.getY()/a.getHauteurCase()));
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         if(m!=null){
-            m.setArrivee(new Coordonnee(e.getX()/a.getLargeurCase(),e.getY()/a.getHauteurCase()));
+            m.setArrivee(new Point(e.getX()/a.getLargeurCase(),e.getY()/a.getHauteurCase()));
             cc.mouvementFini(m);
         }
     }

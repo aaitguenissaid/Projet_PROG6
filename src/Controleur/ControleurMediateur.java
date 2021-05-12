@@ -21,8 +21,8 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void mouvementFini(Mouvement m) {
         System.out.print("Start :");
-        System.out.println("x-"+m.getDepart().getL()+" y-"+m.getDepart().getH());
+        System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
         System.out.print("End :");
-        System.out.println("x-"+m.getArrivee().getL()+" y-"+m.getArrivee().getH());
+        System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
     }
 }

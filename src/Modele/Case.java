@@ -38,7 +38,7 @@ public class Case {
         this.tete = pion;
     }
 
-    Pion getTete() {
+    public Pion getTete() {
         return this.tete;
     }
 

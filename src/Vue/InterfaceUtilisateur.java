@@ -21,7 +21,7 @@ public class InterfaceUtilisateur implements Runnable {
         l=6;h=7;
         comp = new AireDeDessin(j);
         ctrl = new ControleurMediateur(this);
-        comp.addMouseListener(new AdaptateurDeSouri(ctrl));
+        comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
         frame.add(comp);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750, 500);

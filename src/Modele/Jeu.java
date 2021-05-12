@@ -38,7 +38,7 @@ public class Jeu {
     public Size getTaille(){
         return taille;
     }
-    public Case  getCase(int i , int j){
+    public Case getCase(int i , int j){
         return grille[i][j];
     }
 }

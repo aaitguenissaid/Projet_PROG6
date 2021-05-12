@@ -73,4 +73,10 @@ public class AireDeDessin extends JComponent {
                 }
             }
     }
+    public int getLargeurCase(){
+        return largeurCase;
+    }
+    public int getHauteurCase(){
+        return hauteurCase;
+    }
 }

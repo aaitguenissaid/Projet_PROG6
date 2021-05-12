@@ -1,0 +1,21 @@
+package Structures;
+
+import java.awt.*;
+
+public class Mouvement {
+    Point depart;
+    Point arrivee;
+
+    public Mouvement(Point depart, Point arrivee){
+        this.depart = depart;
+        this.arrivee = arrivee;
+    }
+
+    public Point getDepart(){
+        return depart;
+    }
+
+    public Point getArrivee(){
+        return arrivee;
+    }
+}

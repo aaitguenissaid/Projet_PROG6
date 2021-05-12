@@ -50,7 +50,7 @@ public class Case {
         return this.pions.taille();
     }
 
-    boolean estValide() {
+    public boolean estValide() {
         return this.valide;
     }
 
@@ -105,4 +105,7 @@ public class Case {
         return pions.taille();
     }
 
+    public Iterateur<Pion> getIterateur(){
+        return pions.iterateur();
+    }
 }

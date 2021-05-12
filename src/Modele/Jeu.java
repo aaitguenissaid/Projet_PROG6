@@ -110,4 +110,8 @@ public class Jeu {
         }
         return s;
     }
+    public Case getCase(int i , int j){
+        return grille[i][j];
+    }
+
 }

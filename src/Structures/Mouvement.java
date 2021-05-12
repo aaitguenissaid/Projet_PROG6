@@ -1,21 +1,19 @@
 package Structures;
 
-import java.awt.*;
-
 public class Mouvement {
-    Point depart;
-    Point arrivee;
+    Coordonnee depart;
+    Coordonnee arrivee;
 
-    public Mouvement(Point depart, Point arrivee){
+    public Mouvement(Coordonnee depart, Coordonnee arrivee){
         this.depart = depart;
         this.arrivee = arrivee;
     }
 
-    public Point getDepart(){
+    public Coordonnee getDepart(){
         return depart;
     }
 
-    public Point getArrivee(){
+    public Coordonnee getArrivee(){
         return arrivee;
     }
 }

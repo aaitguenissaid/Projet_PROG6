@@ -14,4 +14,12 @@ public class Pion {
     public int getCouleur() {
         return couleur;
     }
+
+    public boolean estBlanc() {
+        return this.couleur == 0;
+    }
+
+    public boolean estNoir() {
+        return this.couleur != 0;
+    }
 }

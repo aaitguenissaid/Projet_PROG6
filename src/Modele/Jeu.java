@@ -12,6 +12,8 @@ public class Jeu {
         init_grille();
     }
     void init_grille(){
+        int centerL = taille.l/2+1;
+        int centerH = taille.h/2+1;
 
     }
 }

@@ -70,7 +70,8 @@ public class Case {
         String s = "[";
         if(!valide) s += " ";
         else {
-            s += tete.getCouleur();
+            if(tete==null) s += " ";
+            else s += tete.getCouleur();
         }
         s += "]";
         return s;
@@ -78,6 +79,7 @@ public class Case {
 
     public void supprimePions() {
         this.pions = new SequenceListe<>();
+        this.tete = null;
     }
 
     public void ajoutePions(SequenceListe<Pion> nvx_pions) {
@@ -92,8 +94,15 @@ public class Case {
         //On ajoute les pions à la case
         it = (IterateurListe<Pion>) file.iterateur();
         while(it.aProchain()) {
-            pions.insereTete(it.prochain());
+            Pion pion = it.prochain();
+            pions.insereTete(pion);
+            this.tete = pion;
         }
+    }
+
+    public int nbPions() {
+        if(pions==null) return 0;
+        return pions.taille();
     }
 
 }

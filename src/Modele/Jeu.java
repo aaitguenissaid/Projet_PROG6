@@ -13,16 +13,16 @@ public class Jeu {
 
     public Jeu(){
         taille = new Size(9,9);
-        grille = new Case[taille.l][taille.h];
+        grille = new Case[taille.h][taille.l];
         init_grille();
     }
     private void init_grille(){
         int centerL = taille.l/2;
         int centerH = taille.h/2;
         ArrayList<Point> emptyPoints = Configuration.instance().getEmptyPoints();
-        for(int i=0; i<taille.l; i++) {
-            for(int j=0; j< taille.h; j++) {
-                if(emptyPoints.contains(new Point(i,j)) || (i==centerL && j==centerH)) {
+        for(int i=0; i<taille.h; i++) {
+            for(int j=0; j< taille.l; j++) {
+                if(emptyPoints.contains(new Point(i,j)) || (i==centerH && j==centerL)) {
                     grille[i][j] = new Case(false);
                 } else {
                     if(i%2==0)
@@ -52,8 +52,8 @@ public class Jeu {
 
     public int nbPileBlanche() {
         int sum = 0;
-        for(int i=0; i<taille.l; i++) {
-            for (int j = 0; j < taille.h; j++) {
+        for(int i=0; i<taille.h; i++) {
+            for (int j = 0; j < taille.l; j++) {
                 if(grille[i][j].estValide() && grille[i][j].aTeteBlanche())
                     sum++;
             }
@@ -63,8 +63,8 @@ public class Jeu {
 
     public int nbPileNoire() {
         int sum = 0;
-        for(int i=0; i<taille.l; i++) {
-            for (int j = 0; j < taille.h; j++) {
+        for(int i=0; i<taille.h; i++) {
+            for (int j = 0; j < taille.l; j++) {
                 if(grille[i][j].estValide() && grille[i][j].aTeteNoire())
                     sum++;
             }
@@ -81,12 +81,33 @@ public class Jeu {
     }
 
     public boolean estMouvementPossible(Point depart, Point arrive) {
-        //TODO
+        if(estCaseValide(depart)
+            && estCaseValide(arrive)
+            && (arrive.x==depart.x+1 || arrive.x==depart.x-1 || arrive.x==depart.x)
+            && (arrive.y==depart.y+1 || arrive.y==depart.y-1 || arrive.y==depart.y)
+            && (depart.x!=arrive.x || depart.y!=arrive.y) ) {
+                return (grille[depart.x][depart.y].nbPions()>0)
+                    && (grille[depart.x][depart.y].nbPions() + grille[arrive.x][arrive.y].nbPions()) <= 5;
+        }
         return false;
     }
 
-    public boolean estCaseValide(int i, int j) {
-        return grille[i][j].estValide();
+    private boolean coordonneesValides(Point pt) {
+        return (pt.x>=0 && pt.x<taille.h && pt.y>=0 && pt.y<taille.l);
     }
 
+    public boolean estCaseValide(Point pt) {
+        return coordonneesValides(pt) && grille[pt.x][pt.y].estValide();
+    }
+
+    public String toString() {
+        String s = "";
+        for(int i=0; i<taille.h; i++) {
+            for (int j = 0; j < taille.l; j++) {
+                s += grille[i][j].toString();
+            }
+            s += "\n";
+        }
+        return s;
+    }
 }

@@ -1,6 +1,5 @@
 package Structures;
 
-
 public class SequenceListe<Titi> implements Sequence<Titi> {
     Maillon<Titi> tete, queue;
     int taille;
@@ -14,7 +13,7 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
         taille = 0;
     }
     public void insereTete(Titi element) {
-        Maillon<Titi> nouveau = new Maillon<>();
+        Maillon<Titi> nouveau = new Maillon<Titi>();
         nouveau.element = element;
         nouveau.suivant = tete;
         taille++;
@@ -27,7 +26,7 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
     }
 
     public void insereQueue(Titi element) {
-        Maillon<Titi> nouveau = new Maillon<>();
+        Maillon<Titi> nouveau = new Maillon<Titi>();
         nouveau.element = element;
         nouveau.suivant = null;
         taille++;
@@ -56,7 +55,7 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
     }
     @Override
     public Iterateur<Titi> iterateur() {
-        return new IterateurListe<>(this);
+        return new IterateurListe<Titi>(this);
     }
 
     public String toString() {

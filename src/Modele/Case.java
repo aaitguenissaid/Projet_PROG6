@@ -1,6 +1,6 @@
 package Modele;
 
-import Structures.SequenceListe;
+import Structures.*;
 
 public class Case {
     boolean valide;

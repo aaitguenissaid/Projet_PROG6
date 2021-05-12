@@ -1,6 +1,6 @@
 package Structures;
 
-class Maillon<Tutu> {
+public class Maillon<Tutu> {
     Tutu element;
     Maillon<Tutu> suivant;
 }

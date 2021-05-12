@@ -1,4 +1,5 @@
 package Structures;
+
 public class IterateurListe<Riri> extends Iterateur<Riri> {
     Maillon<Riri> courant, precedent, arrierePrecedent;
     SequenceListe<Riri> s;

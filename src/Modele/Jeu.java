@@ -1,5 +1,7 @@
 package Modele;
 
+import Structures.*;
+
 public class Jeu {
     byte [][] grille;
     Size taille;

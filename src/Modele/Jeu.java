@@ -36,11 +36,6 @@ public class Jeu {
         }
     }
 
-    public SequenceListe<Pion> contenuCase(int i, int j) {
-        if(!grille[i][j].estValide()) return null;
-        return grille[i][j].getPions();
-    }
-
     public Size getTaille() {
         return this.taille;
     }

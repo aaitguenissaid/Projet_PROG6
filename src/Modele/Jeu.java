@@ -1,4 +1,4 @@
-package Model;
+package Modele;
 
 import Structures.Joueur;
 import Structures.Size;

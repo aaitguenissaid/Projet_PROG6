@@ -42,12 +42,28 @@ public class Case {
         return this.tete;
     }
 
+    SequenceListe<Pion> getPions() {
+        return this.pions;
+    }
+
+    public int hauteur() {
+        return this.pions.taille();
+    }
+
     public boolean estValide() {
         return this.valide;
     }
 
     void setValide(boolean valide) {
         this.valide = valide;
+    }
+
+    public boolean aTeteBlanche() {
+        return this.tete.estBlanc();
+    }
+
+    public boolean aTeteNoire() {
+        return this.tete.estNoir();
     }
 
     public String toString() {
@@ -58,6 +74,26 @@ public class Case {
         }
         s += "]";
         return s;
+    }
+
+    public void supprimePions() {
+        this.pions = new SequenceListe<>();
+    }
+
+    public void ajoutePions(SequenceListe<Pion> nvx_pions) {
+        IterateurListe<Pion> it = (IterateurListe<Pion>) nvx_pions.iterateur();
+
+        //On construit une séquence qui contient les pions dans l'ordre inverse (file)
+        SequenceListe<Pion> file = new SequenceListe<>();
+        while(it.aProchain()) {
+            file.insereQueue(it.prochain());
+        }
+
+        //On ajoute les pions à la case
+        it = (IterateurListe<Pion>) file.iterateur();
+        while(it.aProchain()) {
+            pions.insereTete(it.prochain());
+        }
     }
     public Iterateur<Pion> getIterateur(){
         return pions.iterateur();

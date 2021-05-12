@@ -35,10 +35,62 @@ public class Jeu {
             System.out.println();
         }
     }
-    public Size getTaille(){
-        return taille;
+
+    public SequenceListe<Pion> contenuCase(int i, int j) {
+        if(!grille[i][j].estValide()) return null;
+        return grille[i][j].getPions();
     }
+
+    public Size getTaille() {
+        return this.taille;
+    }
+
+    public boolean estFini() {
+        //TODO
+        return false;
+    }
+
+    public int nbPileBlanche() {
+        int sum = 0;
+        for(int i=0; i<taille.l; i++) {
+            for (int j = 0; j < taille.h; j++) {
+                if(grille[i][j].estValide() && grille[i][j].aTeteBlanche())
+                    sum++;
+            }
+        }
+        return sum;
+    }
+
+    public int nbPileNoire() {
+        int sum = 0;
+        for(int i=0; i<taille.l; i++) {
+            for (int j = 0; j < taille.h; j++) {
+                if(grille[i][j].estValide() && grille[i][j].aTeteNoire())
+                    sum++;
+            }
+        }
+        return sum;
+    }
+
+    public boolean bouge(Point depart, Point arrive) {
+        if(!estMouvementPossible(depart, arrive)) return false;
+        SequenceListe<Pion> pions = grille[depart.x][depart.y].getPions();
+        grille[depart.x][depart.y].supprimePions();
+        grille[arrive.x][arrive.y].ajoutePions(pions);
+        return true;
+    }
+
+    public boolean estMouvementPossible(Point depart, Point arrive) {
+        //TODO
+        return false;
+    }
+
+    public boolean estCaseValide(int i, int j) {
+        return grille[i][j].estValide();
+    }
+
     public Case getCase(int i , int j){
         return grille[i][j];
     }
+
 }

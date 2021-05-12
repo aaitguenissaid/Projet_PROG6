@@ -26,4 +26,23 @@ public class Case {
         this.valide = valide;
         this.pions = pions;
     }
+
+    void addPion(Pion pion) {
+        this.pions.insereTete(pion);
+    }
+
+    Pion getTete() {
+        Pion p = this.pions.extraitTete();
+        this.pions.insereTete(p);
+        return p;
+    }
+
+    boolean estValide() {
+        return this.valide;
+    }
+
+    void setValide(boolean valide) {
+        this.valide = valide;
+    }
+
 }

@@ -57,7 +57,7 @@ public class AireDeDessin extends JComponent {
         for(int i = 0;i<jeu.getTaille().l;i++)
             for(int j = 0;j<jeu.getTaille().h;j++){
                 int k=0;
-                Case c =jeu.getCase(j,i);
+                Case c =jeu.getCase(i,j);
                 if(c.estValide()){
                     Iterateur<Pion> it= c.getIterateur();
                     while (it.aProchain()){

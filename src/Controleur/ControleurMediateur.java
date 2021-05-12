@@ -24,5 +24,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
         System.out.print("End :");
         System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
+        jeu.bouge(m.getDepart(),m.getArrivee());
+        jeuint.metAJour();
     }
 }

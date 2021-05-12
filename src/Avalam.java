@@ -1,5 +1,9 @@
+import Vue.InterfaceUtilisateur;
+
+import javax.swing.*;
+
 public class Avalam {
     public static void main(String[] args) {
-        System.out.println("Avalam: TODO");
+        SwingUtilities.invokeLater(new InterfaceUtilisateur());
     }
 }

@@ -35,4 +35,10 @@ public class Jeu {
             System.out.println();
         }
     }
+    public Size getTaille(){
+        return taille;
+    }
+    public Case  getCase(int i , int j){
+        return grille[i][j];
+    }
 }

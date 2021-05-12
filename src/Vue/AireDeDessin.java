@@ -1,6 +1,9 @@
 package Vue;
 
+import Modele.Case;
 import Modele.Jeu;
+import Modele.Pion;
+import Structures.Iterateur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,16 +25,20 @@ public class AireDeDessin extends JComponent {
         drawable = (Graphics2D) g;
         largeurFenetrePixel = getSize().width;
         hauteurFenetrePixel = getSize().height;
+        largeurGrille=jeu.getTaille().l;
+        hauteurGrille=jeu.getTaille().h;
         largeurCase = largeurFenetrePixel / largeurGrille;
         hauteurCase = hauteurFenetrePixel/hauteurGrille;
-        //en soit mise en place Jeu
-
-        drawable.clearRect(0, 0, largeurFenetrePixel, hauteurFenetrePixel);
+        drawable.setColor(Color.GRAY);
+        drawable.fillRect(0, 0, largeurFenetrePixel, hauteurFenetrePixel);
         tracerTableaux();
     }
 
     public void tracerTableaux(){
+        tracerGrille();
+        tracerPion();
     }
+
 
     void tracerGrille() {
         for (int l = 0; l <= largeurGrille; l++) {
@@ -46,21 +53,24 @@ public class AireDeDessin extends JComponent {
         }
     }
 
-    void traceCaseMange(int l, int c) {
-        int value = jeu.contenu(l, c);
-
-        if(value==17 || value==16+8)
-            drawable.setColor(Color.GREEN);
-        else if (value==33 || value==32+8)
-            drawable.setColor(Color.BLUE);
-
-        drawable.fillRect(c* largeurCase,l*hauteurCase, largeurCase, hauteurCase);
+    void tracerPion() {
+        for(int i = 0;i<jeu.getTaille().l;i++)
+            for(int j = 0;j<jeu.getTaille().h;j++){
+                int k=0;
+                Case c =jeu.getCase(j,i);
+                if(c.estValide()){
+                    Iterateur<Pion> it= c.getIterateur();
+                    while (it.aProchain()){
+                        k++;
+                        Pion impr=it.prochain();
+                        if(impr.getCouleur()==1){
+                            drawable.setColor(Color.WHITE);
+                        }else{
+                            drawable.setColor(Color.BLACK);
+                        }
+                        drawable.fillRect(i* largeurCase+largeurCase/3,j*hauteurCase+hauteurCase/7*k, largeurCase/3, hauteurCase/7);
+                    }
+                }
+            }
     }
-
-    void tracePoison(int l, int c) {
-        drawable.setColor(Color.RED);
-        drawable.fillOval(l* largeurCase + largeurCase /8, c*hauteurCase+hauteurCase/8, largeurCase - largeurCase /4, hauteurCase-hauteurCase/4);
-    }
-
-
 }

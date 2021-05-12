@@ -42,7 +42,7 @@ public class Case {
         return this.tete;
     }
 
-    boolean estValide() {
+    public boolean estValide() {
         return this.valide;
     }
 
@@ -59,5 +59,7 @@ public class Case {
         s += "]";
         return s;
     }
-
+    public Iterateur<Pion> getIterateur(){
+        return pions.iterateur();
+    }
 }

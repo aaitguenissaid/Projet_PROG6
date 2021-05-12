@@ -17,7 +17,7 @@ public class InterfaceUtilisateur implements Runnable {
 
     public void run() {
         frame = new JFrame("Jeu gaufre");
-        j = new Jeu(6,7);
+        j = new Jeu();
         l=6;h=7;
         comp = new AireDeDessin(j);
         ctrl = new ControleurMediateur(this);

@@ -15,16 +15,16 @@ abstract class IA {
         voisinsAccessible = new ArrayList<>();
     }
 
-    public int hashCode(int l, int h){
-        return l*10 + h;
+    public byte hashCode(int l, int h){
+        return (byte) ((l << 4) | h);
     }
 
-    public int hashCodeVerL(int code){
-        return code/10;
+    public int hashCodeVerL(byte code){
+        return (code >> 4);
     }
 
-    public int hashCodeVerH(int code){
-        return code%10;
+    public int hashCodeVerH(byte code){
+        return (int) (code & 0XF);
     }
 
 

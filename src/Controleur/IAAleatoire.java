@@ -11,7 +11,7 @@ import java.util.Random;
 public class IAAleatoire extends IA{
     Random r1, r2;
 
-    public IAAleatoire(Jeu j, boolean joueur) {
+    public IAAleatoire(Jeu j, int joueur) {
         super(j, joueur);
         r1 = new Random();
         r2 = new Random();

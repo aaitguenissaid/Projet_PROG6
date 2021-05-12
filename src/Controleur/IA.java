@@ -9,24 +9,24 @@ import java.util.ArrayList;
 
 abstract class IA {
     Jeu jeu;
-    boolean joueur;
+    int joueur;
     ArrayList<Point> casePeutBouger;
 
-    public IA (Jeu j, boolean joueur) {
+    public IA (Jeu j, int joueur) {
         jeu = j;
         this.joueur = joueur;
         casePeutBouger = new ArrayList<>();
     }
 
-    public byte hashCode(int l, int h){
-        return (byte) ((l << 4) | h);
-    }
-
-    public int hashCodeVerL(byte code){
-        return (code >> 4);
+    public byte hashCode(int h, int l){
+        return (byte) ((h << 4) | l);
     }
 
     public int hashCodeVerH(byte code){
+        return (code >> 4);
+    }
+
+    public int hashCodeVerL(byte code){
         return (code & 0XF);
     }
 

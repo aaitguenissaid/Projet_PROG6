@@ -5,8 +5,8 @@ import Structures.Mouvement;
 
 public class IABasique extends IA{
 
-    public IABasique(Jeu j) {
-        super(j);
+    public IABasique(Jeu j, int joueur) {
+        super(j, joueur);
     }
 
     @Override

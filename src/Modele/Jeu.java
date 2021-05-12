@@ -17,12 +17,12 @@ public class Jeu {
         init_grille();
     }
     private void init_grille(){
-        int centerL = taille.l/2+1;
-        int centerH = taille.h/2+1;
+        int centerL = taille.l/2;
+        int centerH = taille.h/2;
         ArrayList<Point> emptyPoints = Configuration.instance().getEmptyPoints();
         for(int i=0; i<taille.l; i++) {
             for(int j=0; j< taille.h; j++) {
-                if(emptyPoints.contains(new Point(i,j))) {
+                if(emptyPoints.contains(new Point(i,j)) || (i==centerL && j==centerH)) {
                     grille[i][j] = new Case(false);
                 } else {
                     if(i%2==0)

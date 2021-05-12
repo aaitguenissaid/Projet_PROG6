@@ -3,16 +3,21 @@ package Structures;
 
 public class SequenceListe<Titi> implements Sequence<Titi> {
     Maillon<Titi> tete, queue;
+    int taille;
     public Titi teteReturn(){
         if(tete!=null)
             return tete.element;
         else
             return null;
     }
+    SequenceListe(){
+        taille = 0;
+    }
     public void insereTete(Titi element) {
         Maillon<Titi> nouveau = new Maillon<>();
         nouveau.element = element;
         nouveau.suivant = tete;
+        taille++;
         if (tete == null) {
             tete = nouveau;
             queue = nouveau;
@@ -25,6 +30,7 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
         Maillon<Titi> nouveau = new Maillon<>();
         nouveau.element = element;
         nouveau.suivant = null;
+        taille++;
         if (tete == null) {
             tete = nouveau;
         } else {
@@ -37,6 +43,7 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
         if (tete == null)
             throw new RuntimeException("Sequence vide !");
         Titi resultat = tete.element;
+        taille--;
         tete = tete.suivant;
         return resultat;
     }
@@ -44,7 +51,9 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
     public boolean estVide() {
         return tete == null;
     }
-
+    public int taille(){
+        return taille;
+    }
     @Override
     public Iterateur<Titi> iterateur() {
         return new IterateurListe<>(this);

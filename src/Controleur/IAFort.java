@@ -100,6 +100,19 @@ public class IAFort extends IA{
         return resultat;
     }
 
+    /* Prends une configuration, teste s'il est une feuille */
+    private boolean estFeuille(HashMap<Byte, Byte> configuration){
+        for (HashMap.Entry<Byte, Byte> entry : configuration.entrySet()) {
+            byte keyDepart = entry.getKey();
+            ArrayList<Byte> voisinsAcc = voisinsAccessibles(configuration, keyDepart);
+            if (voisinsAcc != null) {
+                if (voisinsAcc.size() > 0)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     /* Prends le jeu courant et encode la configuration de ce jeu */
     public HashMap<Byte, Byte> configuration(){
         HashMap<Byte, Byte> resultat = new HashMap<>();
@@ -203,6 +216,9 @@ public class IAFort extends IA{
         Point arrivee = new Point(hArrivee, lArrivee);
         return new Mouvement(depart, arrivee);
     }
+
+
+
 
     @Override
     public Mouvement joue() {

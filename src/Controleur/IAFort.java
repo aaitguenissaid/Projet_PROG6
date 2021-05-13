@@ -15,13 +15,13 @@ public class IAFort extends IA{
     }
 
     /* Prends le valeur d'une hashtable et rends la couleur de sommet d'un pile */
-    private int getCouleur(byte value){
-        return value >> 7;
+    private byte getCouleur(byte value){
+        return (byte) (value >> 7);
     }
 
     /* Prends le valeur d'une hashtable et rends la hauteur de sommet d'un pile */
-    private int getHauteur(byte value){
-        return (value & (~(1 << 7)));
+    private byte getHauteur(byte value){
+        return (byte) (value & (~(1 << 7)));
     }
 
     /* Prends la couleur d'un sommet et sa hauteur, rends la valeur d'un hashtable */
@@ -52,7 +52,7 @@ public class IAFort extends IA{
     }
 
     /* Prends un key de hashtable comme le depart et rends les keys comme arrivées accessibles */
-    private ArrayList<Byte> casesAccessibles(HashMap<Byte, Byte> config, byte keyDepart){
+    private ArrayList<Byte> voisinsAccessibles(HashMap<Byte, Byte> config, byte keyDepart){
         ArrayList<Byte> resultat = new ArrayList<>();
         int h = super.hashCodeVerH(keyDepart);
         int l = super.hashCodeVerL(keyDepart);
@@ -62,7 +62,7 @@ public class IAFort extends IA{
             if (peutBouger(config, keyDepart, keyArrivee))
                 resultat.add(keyArrivee);
         }
-        if (h+1 < 9){         //(h+1, l)
+        if (h+1 < jeu.getTaille().h){         //(h+1, l)
             keyArrivee = super.hashCode(h+1, l);
             if (peutBouger(config, keyDepart, keyArrivee))
                 resultat.add(keyArrivee);
@@ -76,13 +76,13 @@ public class IAFort extends IA{
                 if (peutBouger(config, keyDepart, keyArrivee))
                     resultat.add(keyArrivee);
             }
-            if (h+1 < 9){  //(h+1, l-1)
+            if (h+1 <  jeu.getTaille().h){  //(h+1, l-1)
                 keyArrivee = super.hashCode(h+1, l-1);
                 if (peutBouger(config, keyDepart, keyArrivee))
                     resultat.add(keyArrivee);
             }
         }
-        if (l+1 < 9){
+        if (l+1 < jeu.getTaille().l){
             keyArrivee = super.hashCode(h, l+1);         //(h, l+1)
             if (peutBouger(config, keyDepart, keyArrivee))
                 resultat.add(keyArrivee);
@@ -91,7 +91,7 @@ public class IAFort extends IA{
                 if (peutBouger(config, keyDepart, keyArrivee))
                     resultat.add(keyArrivee);
             }
-            if (h+1 < 9){  //(h+1, l+1)
+            if (h+1 < jeu.getTaille().h){  //(h+1, l+1)
                 keyArrivee = super.hashCode(h+1, l+1);
                 if (peutBouger(config, keyDepart, keyArrivee))
                     resultat.add(keyArrivee);
@@ -100,11 +100,24 @@ public class IAFort extends IA{
         return resultat;
     }
 
+    /* Prends une configuration, teste s'il est une feuille */
+    private boolean estFeuille(HashMap<Byte, Byte> configuration){
+        for (HashMap.Entry<Byte, Byte> entry : configuration.entrySet()) {
+            byte keyDepart = entry.getKey();
+            ArrayList<Byte> voisinsAcc = voisinsAccessibles(configuration, keyDepart);
+            if (voisinsAcc != null) {
+                if (voisinsAcc.size() > 0)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     /* Prends le jeu courant et encode la configuration de ce jeu */
     public HashMap<Byte, Byte> configuration(){
         HashMap<Byte, Byte> resultat = new HashMap<>();
-        for (int i = 0; i < 9; i++){        // modifier 10 après taille est pulblic dans jeu
-            for (int j = 0; j < 9; j++){    // modifier 10 après taille est pulblic dans jeu
+        for (int i = 0; i < jeu.getTaille().h; i++){
+            for (int j = 0; j < jeu.getTaille().l; j++){
                 if (jeu.estCaseValide(new Point(i, j))){
                     byte key = super.hashCode(i, j);
                     byte hauteur = (byte) jeu.getCase(i, j).hauteur();
@@ -142,8 +155,30 @@ public class IAFort extends IA{
 
     /* A partir d'une configuration courante, retourne toutes les configurations possibles pour en une étape*/
     public ArrayList<HashMap<Byte, Byte>> configurationSuivants(HashMap<Byte, Byte> configuration){
-        ArrayList<HashMap<Byte, Byte>> resultat = new ArrayList<>();
-        //TOTO
+        ArrayList<HashMap<Byte, Byte>> resultat = new ArrayList<HashMap<Byte, Byte>>();
+        for (HashMap.Entry<Byte, Byte> entry : configuration.entrySet()){
+            byte keyDepart = entry.getKey();
+            byte valueDepart = entry.getValue();
+            byte hauteurDepart = getHauteur(valueDepart);
+            byte color = getCouleur(valueDepart);
+            ArrayList<Byte> voisinsAcc = voisinsAccessibles(configuration, keyDepart);
+            if (voisinsAcc != null){
+                if (voisinsAcc.size() > 0){
+                    for (int i = 0; i < voisinsAcc.size(); i++){
+                        byte keyArrivee = voisinsAcc.get(i);
+                        byte valueArrivee = configuration.get(keyArrivee);
+                        byte hauteurArrivee = getHauteur(valueArrivee);
+                        HashMap<Byte, Byte> copy = copyHashMap(configuration);
+                        copy.remove(keyDepart);
+                        byte nouveauCouleurArrivee = color;
+                        byte nouvaueHauteurArrivee = (byte) (hauteurDepart+hauteurArrivee);
+                        byte nouveauValueArrivee = setValue(nouveauCouleurArrivee, nouvaueHauteurArrivee);
+                        copy.replace(keyArrivee, nouveauValueArrivee);
+                        resultat.add(copy);
+                    }
+                }
+            }
+        }
         return resultat;
     }
 
@@ -181,6 +216,9 @@ public class IAFort extends IA{
         Point arrivee = new Point(hArrivee, lArrivee);
         return new Mouvement(depart, arrivee);
     }
+
+
+
 
     @Override
     public Mouvement joue() {

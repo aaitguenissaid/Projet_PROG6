@@ -63,7 +63,7 @@ public class AireDeDessin extends JComponent {
                     while (it.aProchain()){
                         k++;
                         Pion impr=it.prochain();
-                        if(impr.getCouleur()==1){
+                        if(impr.estBlanc()){
                             drawable.setColor(Color.WHITE);
                         }else{
                             drawable.setColor(Color.BLACK);

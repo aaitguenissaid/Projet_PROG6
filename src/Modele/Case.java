@@ -86,17 +86,15 @@ public class Case {
         IterateurListe<Pion> it = (IterateurListe<Pion>) nvx_pions.iterateur();
 
         //On construit une séquence qui contient les pions dans l'ordre inverse (file)
-        SequenceListe<Pion> file = new SequenceListe<>();
+        SequenceListe<Pion> pile = new SequenceListe<>();
         while(it.aProchain()) {
-            file.insereQueue(it.prochain());
+            pile.insereTete(it.prochain());
         }
 
         //On ajoute les pions à la case
-        it = (IterateurListe<Pion>) file.iterateur();
+        it = (IterateurListe<Pion>) pile.iterateur();
         while(it.aProchain()) {
-            Pion pion = it.prochain();
-            pions.insereTete(pion);
-            this.tete = pion;
+            addPion(it.prochain());
         }
     }
 

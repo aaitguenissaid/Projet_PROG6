@@ -22,4 +22,9 @@ public class Pion {
     public boolean estNoir() {
         return this.couleur != 0;
     }
+
+    public String toString() {
+        if(estBlanc()) return "Blanc";
+        return "Noir";
+    }
 }

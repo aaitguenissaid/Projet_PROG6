@@ -12,6 +12,8 @@ public class Jeu {
     Joueur j1,j2;
 
     public Jeu(){
+        j1 = new Joueur(1,0);
+        j2 = new Joueur(2,1);
         taille = new Size(9,9);
         grille = new Case[taille.h][taille.l];
         init_grille();

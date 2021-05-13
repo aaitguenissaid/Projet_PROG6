@@ -1,33 +1,32 @@
 package Modele;
 
 public class Joueur {
-    String pseudo;
+    String nom;
     int id;
-
-    public Joueur(int id) {
-        this.pseudo = "Joueur " + id;
+    int couleur;
+    public Joueur(int id,int color) {
+        this.nom = "Joueur "+id;
         this.id = id;
+        this.couleur=color;
     }
-
-    public Joueur(String pseudo, int id) {
-        this.pseudo = pseudo;
+    public Joueur(String nom, int id,int couleur) {
+        this.nom = nom;
         this.id = id;
+        this.couleur=couleur;
     }
-
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+    public String getNom() {
+        return nom;
     }
-
-    public String getPseudo() {
-        return this.pseudo;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
-
-    public void setID(int id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
-
-    public int getID() {
-        return this.id;
+    public int getColore(){
+        return couleur;
     }
-
+    public void changeColore(int couleur){
+        this.couleur = couleur;
+    }
 }

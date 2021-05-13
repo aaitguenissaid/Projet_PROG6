@@ -19,7 +19,7 @@ public class IAFort extends IA{
     }
 
     private int getHauteur(byte value){
-        return (value & (byte)(1 << 7));
+        return (value & (~(1 << 7)));
     }
 
     private byte setValue(byte couleur, byte hauteur){

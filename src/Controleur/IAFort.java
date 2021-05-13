@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class IAFort extends IA{
-
+    private final int INF = 1000;
     public IAFort(Jeu j, int joueur) {
         super(j, joueur);
     }
@@ -217,11 +217,96 @@ public class IAFort extends IA{
         return new Mouvement(depart, arrivee);
     }
 
+    /* Fonction minmax */
+    private int minmax(HashMap<Byte, Byte> config, boolean estMax){
+        if (estFeuille(config))
+            return evaluation(config);
+        if (estMax){
+            int maxValeur = -INF;
+            ArrayList<HashMap<Byte, Byte>> configSuivants = configurationSuivants(config);
+            if (configSuivants != null){
+                for (int i = 0; i < configSuivants.size(); i++){
+                    HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
+                    int valeur = minmax(configSuivant, false);
+                    maxValeur = Math.max(maxValeur, valeur);
+                    return maxValeur;
+                }
+            }
+        } else {
+            int minValeur = INF;
+            ArrayList<HashMap<Byte, Byte>> configSuivants = configurationSuivants(config);
+            if (configSuivants != null){
+                for (int i = 0; i < configSuivants.size(); i++){
+                    HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
+                    int valeur = minmax(configSuivant, true);
+                    minValeur = Math.min(minValeur, valeur);
+                    return minValeur;
+                }
+            }
+        }
+        return 0;
+    }
 
 
+    /* Fonction minmax alpha beta */
+    private int minmaxAlphaBeta(HashMap<Byte, Byte> config, int alpha, int beta, boolean estMax){
+        if (estFeuille(config))
+            return evaluation(config);
+        if (estMax){
+            int maxValeur = -INF;
+            ArrayList<HashMap<Byte, Byte>> configSuivants = configurationSuivants(config);
+            if (configSuivants != null){
+                for (int i = 0; i < configSuivants.size(); i++){
+                    HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
+                    int valeur = minmaxAlphaBeta(configSuivant, alpha, beta,false);
+                    maxValeur = Math.max(maxValeur, valeur);
+                    alpha = Math.max(alpha, valeur);
+                    if (beta <= alpha)
+                        break;
+                    return maxValeur;
+                }
+            }
+        } else {
+            int minValeur = INF;
+            ArrayList<HashMap<Byte, Byte>> configSuivants = configurationSuivants(config);
+            if (configSuivants != null){
+                for (int i = 0; i < configSuivants.size(); i++){
+                    HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
+                    int valeur = minmaxAlphaBeta(configSuivant, alpha, beta, true);
+                    minValeur = Math.min(minValeur, valeur);
+                    beta = Math.min(beta, valeur);
+                    if (beta <= alpha)
+                        break;
+                    return minValeur;
+                }
+            }
+        }
+        return 0;
+    }
 
     @Override
     public Mouvement joue() {
-        return null;
+        HashMap<Byte, Byte> config = configuration();
+        HashMap<Byte, Byte> gagnant = null;
+        ArrayList<HashMap<Byte, Byte>> configSuivants = configurationSuivants(config);
+        /* Utiliser l'algorithme minmax */
+        for (int i = 0; i < configSuivants.size(); i++){
+            HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
+            if (minmax(configSuivant, true) == 1){
+                gagnant = configSuivant;
+                break;
+            }
+        }
+       // Utiliser l'algorithme minmax alpha beta
+ /*       for (int i = 0; i < configSuivants.size(); i++){
+            HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
+            if (minmaxAlphaBeta(configSuivant, -INF, INF,true) == 1){
+                gagnant = configSuivant;
+                break;
+            }
+        }         */
+
+        Mouvement resultat = configurationVersMouvement(config, gagnant);
+        return resultat;
     }
 }

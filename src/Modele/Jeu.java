@@ -41,8 +41,35 @@ public class Jeu {
     }
 
     public boolean estFini() {
-        //TODO
-        return false;
+        //On recherche les piles que l'on peut déplacer
+        for(int i=0; i<taille.h; i++) {
+            for (int j = 0; j < taille.l; j++) {
+                //S'il est envisageable de déplacer la tour
+                if(grille[i][j].estValide() && grille[i][j].nbPions()>0 && grille[i][j].nbPions()<5) {
+                    int nbPions = grille[i][j].nbPions();
+                    ArrayList<Point> voisins = new ArrayList<>();
+                    voisins.add(new Point(i,j-1));
+                    voisins.add(new Point(i-1,j-1));
+                    voisins.add(new Point(i-1,j));
+                    voisins.add(new Point(i-1,j+1));
+                    voisins.add(new Point(i,j+1));
+                    voisins.add(new Point(i+1,j+1));
+                    voisins.add(new Point(i+1,j));
+                    voisins.add(new Point(i+1,j-1));
+                    //On parcourt tous les voisins
+                    for(int k=0; k<voisins.size(); k++) {
+                        Point voisin = voisins.get(k);
+                        if(estCaseValide(voisin)) {
+                            int nbPionsVoisin = grille[voisin.x][voisin.y].nbPions();
+                            if (nbPionsVoisin > 0 && (nbPionsVoisin + nbPions) < 5) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public int nbPileBlanche() {

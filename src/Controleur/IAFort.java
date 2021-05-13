@@ -14,16 +14,90 @@ public class IAFort extends IA{
         super(j, joueur);
     }
 
+    /* Prends le valeur d'une hashtable et rends la couleur de sommet d'un pile */
     private int getCouleur(byte value){
         return value >> 7;
     }
 
+    /* Prends le valeur d'une hashtable et rends la hauteur de sommet d'un pile */
     private int getHauteur(byte value){
         return (value & (~(1 << 7)));
     }
 
+    /* Prends la couleur d'un sommet et sa hauteur, rends la valeur d'un hashtable */
     private byte setValue(byte couleur, byte hauteur){
         return (byte)((couleur << 7) | hauteur);
+    }
+
+    /* Copy une hashtable */
+    private HashMap<Byte, Byte> copyHashMap(HashMap<Byte, Byte> original){
+        HashMap<Byte, Byte> copy = new HashMap<>();
+        for (HashMap.Entry<Byte, Byte> entry : original.entrySet()){
+            copy.put(entry.getKey(), entry.getValue());
+        }
+        return copy;
+    }
+
+    /* Prends deux key, keyDepart et keyArrivee, teste si on peut bouger le pile de pions de depart à l'arrivée */
+    private boolean peutBouger(HashMap<Byte, Byte> config, byte keyDepart, byte keyArrivee){
+        if (config.containsKey(keyArrivee)){
+            int hauteurDepart = getHauteur(config.get(keyDepart));
+            int hauteurArrivee = getHauteur(config.get(keyArrivee));
+            if (hauteurDepart + hauteurArrivee <= 5)
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
+
+    /* Prends un key de hashtable comme le depart et rends les keys comme arrivées accessibles */
+    private ArrayList<Byte> casesAccessibles(HashMap<Byte, Byte> config, byte keyDepart){
+        ArrayList<Byte> resultat = new ArrayList<>();
+        int h = super.hashCodeVerH(keyDepart);
+        int l = super.hashCodeVerL(keyDepart);
+        byte keyArrivee;
+        if (h-1 >= 0){        //(h-1, l)
+            keyArrivee = super.hashCode(h-1, l);
+            if (peutBouger(config, keyDepart, keyArrivee))
+                resultat.add(keyArrivee);
+        }
+        if (h+1 < 9){         //(h+1, l)
+            keyArrivee = super.hashCode(h+1, l);
+            if (peutBouger(config, keyDepart, keyArrivee))
+                resultat.add(keyArrivee);
+        }
+        if (l-1 >= 0){
+            keyArrivee = super.hashCode(h, l-1);         //(h, l-1)
+            if (peutBouger(config, keyDepart, keyArrivee))
+                resultat.add(keyArrivee);
+            if (h-1 >= 0){    //(h-1, l-1)
+                keyArrivee = super.hashCode(h-1, l-1);
+                if (peutBouger(config, keyDepart, keyArrivee))
+                    resultat.add(keyArrivee);
+            }
+            if (h+1 < 9){  //(h+1, l-1)
+                keyArrivee = super.hashCode(h+1, l-1);
+                if (peutBouger(config, keyDepart, keyArrivee))
+                    resultat.add(keyArrivee);
+            }
+        }
+        if (l+1 < 9){
+            keyArrivee = super.hashCode(h, l+1);         //(h, l+1)
+            if (peutBouger(config, keyDepart, keyArrivee))
+                resultat.add(keyArrivee);
+            if (h-1 >= 0){    //(h-1, l+1)
+                keyArrivee = super.hashCode(h-1, l+1);
+                if (peutBouger(config, keyDepart, keyArrivee))
+                    resultat.add(keyArrivee);
+            }
+            if (h+1 < 9){  //(h+1, l+1)
+                keyArrivee = super.hashCode(h+1, l+1);
+                if (peutBouger(config, keyDepart, keyArrivee))
+                    resultat.add(keyArrivee);
+            }
+        }
+        return resultat;
     }
 
     /* Prends le jeu courant et encode la configuration de ce jeu */
@@ -42,6 +116,8 @@ public class IAFort extends IA{
         }
         return resultat;
     }
+
+
 
     /* Evaluer la note d'une feuille */
     public int evaluation(HashMap<Byte, Byte> configuration){

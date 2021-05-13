@@ -62,7 +62,7 @@ public class IAFort extends IA{
             if (peutBouger(config, keyDepart, keyArrivee))
                 resultat.add(keyArrivee);
         }
-        if (h+1 < 9){         //(h+1, l)
+        if (h+1 < jeu.getTaille().h){         //(h+1, l)
             keyArrivee = super.hashCode(h+1, l);
             if (peutBouger(config, keyDepart, keyArrivee))
                 resultat.add(keyArrivee);
@@ -76,13 +76,13 @@ public class IAFort extends IA{
                 if (peutBouger(config, keyDepart, keyArrivee))
                     resultat.add(keyArrivee);
             }
-            if (h+1 < 9){  //(h+1, l-1)
+            if (h+1 <  jeu.getTaille().h){  //(h+1, l-1)
                 keyArrivee = super.hashCode(h+1, l-1);
                 if (peutBouger(config, keyDepart, keyArrivee))
                     resultat.add(keyArrivee);
             }
         }
-        if (l+1 < 9){
+        if (l+1 < jeu.getTaille().l){
             keyArrivee = super.hashCode(h, l+1);         //(h, l+1)
             if (peutBouger(config, keyDepart, keyArrivee))
                 resultat.add(keyArrivee);
@@ -91,7 +91,7 @@ public class IAFort extends IA{
                 if (peutBouger(config, keyDepart, keyArrivee))
                     resultat.add(keyArrivee);
             }
-            if (h+1 < 9){  //(h+1, l+1)
+            if (h+1 < jeu.getTaille().h){  //(h+1, l+1)
                 keyArrivee = super.hashCode(h+1, l+1);
                 if (peutBouger(config, keyDepart, keyArrivee))
                     resultat.add(keyArrivee);
@@ -116,8 +116,8 @@ public class IAFort extends IA{
     /* Prends le jeu courant et encode la configuration de ce jeu */
     public HashMap<Byte, Byte> configuration(){
         HashMap<Byte, Byte> resultat = new HashMap<>();
-        for (int i = 0; i < 9; i++){        // modifier 10 après taille est pulblic dans jeu
-            for (int j = 0; j < 9; j++){    // modifier 10 après taille est pulblic dans jeu
+        for (int i = 0; i < jeu.getTaille().h; i++){
+            for (int j = 0; j < jeu.getTaille().l; j++){
                 if (jeu.estCaseValide(new Point(i, j))){
                     byte key = super.hashCode(i, j);
                     byte hauteur = (byte) jeu.getCase(i, j).hauteur();

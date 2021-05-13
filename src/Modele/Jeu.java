@@ -22,8 +22,10 @@ public class Jeu {
         ArrayList<Point> emptyPoints = Configuration.instance().getEmptyPoints();
         for(int i=0; i<taille.h; i++) {
             for(int j=0; j< taille.l; j++) {
-                if(emptyPoints.contains(new Point(i,j)) || (i==centerH && j==centerL)) {
+                if(emptyPoints.contains(new Point(i,j))) {
                     grille[i][j] = new Case(false);
+                } else if((i==centerH && j==centerL)) {
+                    grille[i][j] = new Case(true);
                 } else {
                     if(i%2==0)
                         grille[i][j] = new Case(true, new Pion(j%2));
@@ -109,6 +111,7 @@ public class Jeu {
             && (arrive.y==depart.y+1 || arrive.y==depart.y-1 || arrive.y==depart.y) //On vérifie qu'on se déplace d'une case
             && (depart.x!=arrive.x || depart.y!=arrive.y) ) { //On vérifie qu'on ne reste pas sur la même case
                 return (grille[depart.x][depart.y].nbPions()>0) // On vérifie qu'on ne déplace pas une tour vide
+                    && (grille[arrive.x][arrive.y].nbPions()>0)
                     && (grille[depart.x][depart.y].nbPions() + grille[arrive.x][arrive.y].nbPions()) <= 5; //On vérifie qu'il n'y aura pas trop de pions sur la tour
         }
         return false;

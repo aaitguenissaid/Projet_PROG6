@@ -56,22 +56,20 @@ public class AireDeDessin extends JComponent {
     void tracerPion() {
         for(int i = 0;i<jeu.getTaille().l;i++)
             for(int j = 0;j<jeu.getTaille().h;j++){
-                int k=0;
-                Case c =jeu.getCase(i,j);
-                if(c.estValide()){
-                    Iterateur<Pion> it= c.getIterateur();
-                    while (it.aProchain()){
-                        k++;
-                        Pion impr=it.prochain();
-                        if(impr.estBlanc()){
-                            drawable.setColor(Color.WHITE);
-                        }else{
-                            drawable.setColor(Color.BLACK);
-                        }
-                        drawable.fillRect(i* largeurCase+largeurCase/3,j*hauteurCase+hauteurCase/7*k, largeurCase/3, hauteurCase/7);
-                    }
+            int k=0;
+            Case c =jeu.getCase(i,j);
+            Iterateur<Pion> it= c.getIterateur();
+            while (it.aProchain()){
+                k++;
+                Pion impr=it.prochain();
+                if(impr.estBlanc()){
+                    drawable.setColor(Color.WHITE);
+                }else{
+                    drawable.setColor(Color.BLACK);
                 }
+                drawable.fillRect(i* largeurCase+largeurCase/3,j*hauteurCase+hauteurCase/7*k, largeurCase/3, hauteurCase/7);
             }
+        }
     }
     public int getLargeurCase(){
         return largeurCase;

@@ -13,7 +13,7 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
         taille = 0;
     }
     public void insereTete(Titi element) {
-        Maillon<Titi> nouveau = new Maillon<Titi>();
+        Maillon<Titi> nouveau = new Maillon<>();
         nouveau.element = element;
         nouveau.suivant = tete;
         taille++;
@@ -26,7 +26,7 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
     }
 
     public void insereQueue(Titi element) {
-        Maillon<Titi> nouveau = new Maillon<Titi>();
+        Maillon<Titi> nouveau = new Maillon<>();
         nouveau.element = element;
         nouveau.suivant = null;
         taille++;
@@ -55,7 +55,7 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
     }
     @Override
     public Iterateur<Titi> iterateur() {
-        return new IterateurListe<Titi>(this);
+        return new IterateurListe<>(this);
     }
 
     public String toString() {
@@ -67,5 +67,11 @@ public class SequenceListe<Titi> implements Sequence<Titi> {
         }
         resultat.append("]");
         return resultat.toString();
+    }
+
+    public static void main(String[] args) {
+        SequenceListe<Integer> seq = new SequenceListe<>();
+        seq.insereTete(5);
+        System.out.println(seq.teteReturn());
     }
 }

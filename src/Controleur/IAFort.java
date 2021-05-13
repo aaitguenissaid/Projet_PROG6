@@ -14,6 +14,18 @@ public class IAFort extends IA{
         super(j, joueur);
     }
 
+    private int getCouleur(byte value){
+        return value >> 7;
+    }
+
+    private int getHauteur(byte value){
+        return (value & (byte)(1 << 7));
+    }
+
+    private byte setValue(byte couleur, byte hauteur){
+        return (byte)((couleur << 7) | hauteur);
+    }
+
     /* Prends le jeu courant et encode la configuration de ce jeu */
     public HashMap<Byte, Byte> configuration(){
         HashMap<Byte, Byte> resultat = new HashMap<>();
@@ -23,7 +35,7 @@ public class IAFort extends IA{
                     byte key = super.hashCode(i, j);
                     byte hauteur = (byte) jeu.getCase(i, j).hauteur();
                     byte couleur = (byte) jeu.getCase(i, j).getTete().getCouleur();
-                    byte value = (byte) ((hauteur << 7) | couleur);
+                    byte value = setValue(couleur, hauteur);
                     resultat.put(key, value);
                 }
             }

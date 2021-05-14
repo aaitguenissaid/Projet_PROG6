@@ -15,9 +15,13 @@ public class AireDeDessin extends JComponent {
     int largeurCase,hauteurCase;
     Graphics2D drawable;
     Jeu jeu;
-
+    Color one,tow,bordure,bg;
     public AireDeDessin(Jeu j){
         jeu = j;
+        one = Color.decode("#F1F2D8");
+        tow = Color.decode("#312E2B");
+        bordure = Color.decode("#779556");
+        bg = Color.decode("#7AABC7");
     }
 
     @Override
@@ -29,47 +33,49 @@ public class AireDeDessin extends JComponent {
         hauteurGrille=jeu.getTaille().h;
         largeurCase = largeurFenetrePixel / largeurGrille;
         hauteurCase = hauteurFenetrePixel/hauteurGrille;
-        drawable.setColor(Color.GRAY);
+        drawable.setColor(bg);
         drawable.fillRect(0, 0, largeurFenetrePixel, hauteurFenetrePixel);
         tracerTableaux();
     }
 
     public void tracerTableaux(){
         tracerGrille();
-        tracerPion();
     }
 
 
     void tracerGrille() {
-        for (int l = 0; l <= largeurGrille; l++) {
-            drawable.setColor(Color.BLACK);
-            drawable.setStroke(new BasicStroke(3));
-            drawable.drawLine(l* largeurCase,0, l* largeurCase, hauteurFenetrePixel);
-        }
-        for (int l = 0; l <= hauteurGrille; l++) {
-            drawable.setColor(Color.BLACK);
-            drawable.setStroke(new BasicStroke(3));
-            drawable.drawLine(0,hauteurCase*l, largeurFenetrePixel,hauteurCase*l);
-        }
-    }
-
-    void tracerPion() {
-        for(int i = 0;i<jeu.getTaille().l;i++)
-            for(int j = 0;j<jeu.getTaille().h;j++){
-            int k=0;
-            Case c =jeu.getCase(i,j);
-            Iterateur<Pion> it= c.getIterateur();
-            while (it.aProchain()){
-                k++;
-                Pion impr=it.prochain();
-                if(impr.estBlanc()){
-                    drawable.setColor(Color.WHITE);
-                }else{
-                    drawable.setColor(Color.BLACK);
+        int k;
+        for (int l = 0; l < largeurGrille; l++) {
+            for (int h = 0; h < hauteurGrille; h++) {
+                k=0;
+                Case c =jeu.getCase(l,h);
+                if(c.estValide()) {
+                    Iterateur<Pion> it = c.getIterateur();
+                    while (it.aProchain()) {
+                        k++;
+                        Pion impr = it.prochain();
+                        if (impr.estBlanc()) {
+                            drawable.setColor(one);
+                        } else {
+                            drawable.setColor(tow);
+                        }
+                        drawable.fillRect(l * largeurCase + largeurCase / 3, h * hauteurCase + hauteurCase / 7 * k, largeurCase / 3, hauteurCase / 7);
+                        drawable.setColor(bordure);
+                        drawable.setStroke(new BasicStroke(1));
+                        drawable.drawLine(l * largeurCase + largeurCase / 3,h * hauteurCase + hauteurCase / 7 * k, l * largeurCase + largeurCase / 3, h * hauteurCase + hauteurCase / 7 *(k+1));
+                        drawable.drawLine(l * largeurCase + largeurCase / 3*2,h * hauteurCase + hauteurCase / 7 * k, l * largeurCase + largeurCase / 3*2, h * hauteurCase + hauteurCase / 7 *(k+1));
+                        drawable.drawLine(l * largeurCase + largeurCase / 3,h * hauteurCase + hauteurCase / 7 * k, l * largeurCase + largeurCase / 3*2, h * hauteurCase + hauteurCase / 7 *k);
+                        drawable.drawLine(l * largeurCase + largeurCase / 3,h * hauteurCase + hauteurCase / 7 * (k+1), l * largeurCase + largeurCase / 3*2, h * hauteurCase + hauteurCase / 7 *(k+1));
+                    }
+                    drawable.setColor(bordure);
+                    drawable.setStroke(new BasicStroke(3));
+                    drawable.drawLine(l* largeurCase,h*hauteurCase, l* largeurCase, (h+1)*hauteurCase);
+                    drawable.drawLine(l* largeurCase,h*hauteurCase, (l+1)* largeurCase, h*hauteurCase);
+                    drawable.drawLine((l+1)* largeurCase,h*hauteurCase, (l+1)* largeurCase, (h+1)*hauteurCase);
+                    drawable.drawLine(l* largeurCase,(h+1)*hauteurCase, (l+1)* largeurCase, (h+1)*hauteurCase);
                 }
-                drawable.fillRect(i* largeurCase+largeurCase/3,j*hauteurCase+hauteurCase/7*k, largeurCase/3, hauteurCase/7);
             }
-        }
+    }
     }
     public int getLargeurCase(){
         return largeurCase;

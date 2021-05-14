@@ -1,5 +1,6 @@
 package Modele;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Historique {
@@ -23,7 +24,7 @@ public class Historique {
     * Cette fonction ajoute un état à la position actuelle du jeu
     */
     public void ajouteEtat(Case [][]grille, int tour) {
-        if(navigationOn) {
+        if(!navigationOn) {
             historique.add(new Etat(grille, tour));
             current = historique.size()-1;
             nbCoupsReel++;
@@ -83,5 +84,14 @@ public class Historique {
     public void annulerNavigation() {
         current = historique.size()-1;
         setNavigationOff();
+    }
+
+    public void print(PrintWriter out) {
+        out.println(nbCoupsReel);
+        out.println(historique.size());
+        for(int i=0; i<historique.size(); i++) {
+            historique.get(i).print(out);
+            out.println();
+        }
     }
 }

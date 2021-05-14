@@ -2,6 +2,8 @@ package Modele;
 
 import Structures.Size;
 
+import java.io.PrintWriter;
+
 public class Etat {
     Case[][] grille;
     Size taille;
@@ -42,5 +44,10 @@ public class Etat {
 
     public int getTour() {
         return this.tour;
+    }
+
+    public void print(PrintWriter out) {
+        Jeu.printGrille(out, grille, taille.h, taille.l);
+        out.print("," + tour);
     }
 }

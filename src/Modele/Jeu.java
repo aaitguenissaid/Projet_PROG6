@@ -4,6 +4,7 @@ import Global.Configuration;
 import Structures.*;
 
 import java.awt.*;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Jeu {
@@ -159,6 +160,43 @@ public class Jeu {
 
     public void setTour(int tour) {
         this.tour = tour;
+    }
+
+    public static void printGrille(PrintWriter out, Case [][]grille, int h, int l) {
+        out.print("[");
+        for(int i=0; i<h; i++) {
+            out.print("[");
+            for(int j=0; j<l; j++) {
+                out.print("{");
+                out.print(grille[i][j].estValide());
+                if(grille[i][j].estValide()) {
+                    out.print(",[");
+                    Iterateur<Pion> it = grille[i][j].getPions().iterateur();
+                    while (it.aProchain()) {
+                        out.print(it.prochain().getCouleur());
+                        if(it.aProchain()) out.print(",");
+                    }
+                    out.print("]");
+                }
+                out.print("}");
+                if(j!=l-1) out.print(",");
+            }
+            out.print("]");
+            if(i!=h-1) out.print(",");
+        }
+        out.println("]");
+    }
+
+    public void enregistrerPartie() {
+        PrintWriter out = Configuration.instance().ouvreFichierEcriture("FichierSauvegarde");
+        if(out!=null) {
+            printGrille(out, grille, taille.h, taille.l); //La grille est entièrement décrite sur la première ligne
+            out.println(taille.h + "," + taille.l);
+            out.println(j1.getId() + "," + j1.getNom() + "," + j1.getColore());
+            out.println(j2.getId() + "," + j2.getNom() + "," + j2.getColore());
+            out.println(tour);
+            historique.print(out);
+        }
     }
 
 }

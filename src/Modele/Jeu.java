@@ -10,13 +10,18 @@ public class Jeu {
     Case[][] grille;
     Size taille;
     Joueur j1,j2;
+    Historique historique;
+    boolean navigationHistoriqueActivee;
 
     public Jeu(){
         j1 = new Joueur(1,0);
         j2 = new Joueur(2,1);
         taille = new Size(9,9);
+
         grille = new Case[taille.h][taille.l];
         init_grille();
+        //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
+        historique = new Historique(this);
     }
     private void init_grille(){
         int centerL = taille.l/2;
@@ -34,9 +39,7 @@ public class Jeu {
                     else
                         grille[i][j] = new Case(true, new Pion((j+1)%2));
                 }
-                System.out.print(grille[i][j]);
             }
-            System.out.println();
         }
     }
 
@@ -98,11 +101,17 @@ public class Jeu {
         return sum;
     }
 
+    /**
+     * Un déplacement est refusé si :
+     *  - Le joueur est en train de naviguer dans l'historique
+     *  - Le mouvement est impossible (en dehors de la grille, trop / pas assez de pions, case invalide)
+     */
     public boolean bouge(Point depart, Point arrive) {
-        if(!estMouvementPossible(depart, arrive)) return false;
+        if(!estMouvementPossible(depart, arrive) || navigationHistoriqueActivee) return false;
         SequenceListe<Pion> pions = grille[depart.x][depart.y].getPions();
         grille[depart.x][depart.y].supprimePions();
         grille[arrive.x][arrive.y].ajoutePions(pions);
+        historique.ajouteEtat(grille);
         return true;
     }
 
@@ -139,6 +148,10 @@ public class Jeu {
     }
     public Case getCase(int i , int j){
         return grille[i][j];
+    }
+
+    public Historique getHistorique() {
+        return historique;
     }
 
 }

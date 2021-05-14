@@ -1,13 +1,9 @@
 package Modele;
 
 public class Pion {
-    int couleur;
+    private int couleur;
 
     public Pion(int couleur) {
-        this.couleur = couleur;
-    }
-
-    public void setCouleur(int couleur) {
         this.couleur = couleur;
     }
 

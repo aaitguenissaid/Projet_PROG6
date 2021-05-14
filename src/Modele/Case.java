@@ -2,7 +2,7 @@ package Modele;
 
 import Structures.*;
 
-public class Case {
+public class Case implements Cloneable {
     boolean valide;
     SequenceListe<Pion> pions;
     Pion tete;
@@ -29,8 +29,12 @@ public class Case {
     public Case(boolean valide, SequenceListe<Pion> pions) {
         this.valide = valide;
         this.pions = pions;
-        tete = pions.extraitTete();
-        pions.insereTete(tete);
+        if(pions.estVide()) {
+            tete = null;
+        } else {
+            tete = pions.extraitTete();
+            pions.insereTete(tete);
+        }
     }
 
     void addPion(Pion pion) {
@@ -105,5 +109,19 @@ public class Case {
 
     public Iterateur<Pion> getIterateur(){
         return pions.iterateur();
+    }
+
+    @Override
+    protected Object clone() {
+        if(!valide) return new Case(valide);
+        else {
+            SequenceListe<Pion> pions_copy = new SequenceListe<>();
+            Iterateur<Pion> it = pions.iterateur();
+            while(it.aProchain()) {
+                pions_copy.insereTete(it.prochain()); //On ne clone pas les Pions car ils ne sont pas modifiables
+            }
+            return new Case(valide, pions_copy);
+        }
+
     }
 }

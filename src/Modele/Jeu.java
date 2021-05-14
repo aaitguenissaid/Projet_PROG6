@@ -65,7 +65,7 @@ public class Jeu {
                         Point voisin = voisins.get(k);
                         if(estCaseValide(voisin)) {
                             int nbPionsVoisin = grille[voisin.x][voisin.y].nbPions();
-                            if (nbPionsVoisin > 0 && (nbPionsVoisin + nbPions) < 5) {
+                            if (nbPionsVoisin > 0 && (nbPionsVoisin + nbPions) <= 5) {
                                 return false;
                             }
                         }

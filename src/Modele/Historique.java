@@ -16,15 +16,15 @@ public class Historique {
         nbCoupsReel=0;
         navigationOn = false;
         jeu.navigationHistoriqueActivee = false;
-        ajouteEtat(jeu.grille);
+        ajouteEtat(jeu.grille, jeu.tour);
     }
 
     /*
     * Cette fonction ajoute un état à la position actuelle du jeu
     */
-    public void ajouteEtat(Case [][]grille) {
+    public void ajouteEtat(Case [][]grille, int tour) {
         if(navigationOn) {
-            historique.add(new Etat(grille));
+            historique.add(new Etat(grille, tour));
             current = historique.size()-1;
             nbCoupsReel++;
         }
@@ -76,6 +76,7 @@ public class Historique {
             }
         }
         jeu.grille = historique.get(current).getCopieGrille();
+        jeu.setTour(historique.get(current).getTour());
         setNavigationOff();
     }
 

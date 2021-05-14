@@ -5,8 +5,9 @@ import Structures.Size;
 public class Etat {
     Case[][] grille;
     Size taille;
+    int tour;
 
-    public Etat(Case [][]grille) {
+    public Etat(Case [][]grille, int tour) {
         this.taille = new Size(grille.length,grille.length);
         this.grille = new Case[this.taille.h][this.taille.h];
         for(int i=0; i<taille.h; i++) {
@@ -14,6 +15,7 @@ public class Etat {
                 this.grille[i][j] = (Case) grille[i][j].clone();
             }
         }
+        this.tour = tour;
     }
 
     public String toString() {
@@ -36,5 +38,9 @@ public class Etat {
             }
         }
         return copy_grid;
+    }
+
+    public int getTour() {
+        return this.tour;
     }
 }

@@ -104,4 +104,15 @@ public class Configuration {
 
         return ret;
     }
+
+    public PrintWriter ouvreFichierEcriture(String nom) {
+        String filename = this.lis(nom);
+        PrintWriter printWriter = null;
+        try {
+            printWriter = new PrintWriter(filename);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return printWriter;
+    }
 }

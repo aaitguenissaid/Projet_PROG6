@@ -4,19 +4,28 @@ import Global.Configuration;
 import Structures.*;
 
 import java.awt.*;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Jeu {
+    public static final int BLANC = 0;
+    public static final int NOIR = 1;
     Case[][] grille;
     Size taille;
     Joueur j1,j2;
+    Historique historique;
+    boolean navigationHistoriqueActivee;
+    int tour;
 
     public Jeu(){
         j1 = new Joueur(1,0);
         j2 = new Joueur(2,1);
         taille = new Size(9,9);
+        tour = BLANC;
         grille = new Case[taille.h][taille.l];
         init_grille();
+        //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
+        historique = new Historique(this);
     }
     private void init_grille(){
         int centerL = taille.l/2;
@@ -34,9 +43,7 @@ public class Jeu {
                     else
                         grille[i][j] = new Case(true, new Pion((j+1)%2));
                 }
-                System.out.print(grille[i][j]);
             }
-            System.out.println();
         }
     }
 
@@ -65,7 +72,7 @@ public class Jeu {
                         Point voisin = voisins.get(k);
                         if(estCaseValide(voisin)) {
                             int nbPionsVoisin = grille[voisin.x][voisin.y].nbPions();
-                            if (nbPionsVoisin > 0 && (nbPionsVoisin + nbPions) < 5) {
+                            if (nbPionsVoisin > 0 && (nbPionsVoisin + nbPions) <= 5) {
                                 return false;
                             }
                         }
@@ -98,11 +105,17 @@ public class Jeu {
         return sum;
     }
 
+    /**
+     * Un déplacement est refusé si :
+     *  - Le joueur est en train de naviguer dans l'historique
+     *  - Le mouvement est impossible (en dehors de la grille, trop / pas assez de pions, case invalide)
+     */
     public boolean bouge(Point depart, Point arrive) {
-        if(!estMouvementPossible(depart, arrive)) return false;
+        if(!estMouvementPossible(depart, arrive) || navigationHistoriqueActivee) return false;
         SequenceListe<Pion> pions = grille[depart.x][depart.y].getPions();
         grille[depart.x][depart.y].supprimePions();
         grille[arrive.x][arrive.y].ajoutePions(pions);
+        historique.ajouteEtat(grille, tour);
         return true;
     }
 
@@ -139,6 +152,51 @@ public class Jeu {
     }
     public Case getCase(int i , int j){
         return grille[i][j];
+    }
+
+    public Historique getHistorique() {
+        return historique;
+    }
+
+    public void setTour(int tour) {
+        this.tour = tour;
+    }
+
+    public static void printGrille(PrintWriter out, Case [][]grille, int h, int l) {
+        out.print("[");
+        for(int i=0; i<h; i++) {
+            out.print("[");
+            for(int j=0; j<l; j++) {
+                out.print("{");
+                out.print(grille[i][j].estValide());
+                if(grille[i][j].estValide()) {
+                    out.print(",[");
+                    Iterateur<Pion> it = grille[i][j].getPions().iterateur();
+                    while (it.aProchain()) {
+                        out.print(it.prochain().getCouleur());
+                        if(it.aProchain()) out.print(",");
+                    }
+                    out.print("]");
+                }
+                out.print("}");
+                if(j!=l-1) out.print(",");
+            }
+            out.print("]");
+            if(i!=h-1) out.print(",");
+        }
+        out.println("]");
+    }
+
+    public void enregistrerPartie() {
+        PrintWriter out = Configuration.instance().ouvreFichierEcriture("FichierSauvegarde");
+        if(out!=null) {
+            printGrille(out, grille, taille.h, taille.l); //La grille est entièrement décrite sur la première ligne
+            out.println(taille.h + "," + taille.l);
+            out.println(j1.getId() + "," + j1.getNom() + "," + j1.getColore());
+            out.println(j2.getId() + "," + j2.getNom() + "," + j2.getColore());
+            out.println(tour);
+            historique.print(out);
+        }
     }
 
 }

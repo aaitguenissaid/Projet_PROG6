@@ -1,9 +1,6 @@
 package Vue;
 
-import Modele.Case;
 import Modele.Jeu;
-import Modele.Pion;
-import Structures.Iterateur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +13,21 @@ public class AireDeDessin extends JComponent {
     Graphics2D drawable;
     Jeu jeu;
     Color one,tow,bordure,bg;
+    boolean set;
+    PionComponent[][] tab;
     public AireDeDessin(Jeu j){
         jeu = j;
         one = Color.decode("#F1F2D8");
         tow = Color.decode("#312E2B");
         bordure = Color.decode("#779556");
         bg = Color.decode("#7AABC7");
+        tab = new PionComponent[j.getTaille().h][j.getTaille().l];
+        for(int i = 0 ; i< j.getTaille().h;i++){
+            for(int k = 0; k<j.getTaille().l;k++){
+              tab[i][k]  = new PionComponent(jeu.getCase(i,k));
+            }
+        }
+        set=false;
     }
 
     @Override
@@ -44,29 +50,13 @@ public class AireDeDessin extends JComponent {
 
 
     void tracerGrille() {
-        int k;
         for (int l = 0; l < largeurGrille; l++) {
             for (int h = 0; h < hauteurGrille; h++) {
-                k=0;
-                Case c =jeu.getCase(l,h);
-                if(c.estValide()) {
-                    Iterateur<Pion> it = c.getIterateur();
-                    while (it.aProchain()) {
-                        k++;
-                        Pion impr = it.prochain();
-                        if (impr.estBlanc()) {
-                            drawable.setColor(one);
-                        } else {
-                            drawable.setColor(tow);
-                        }
-                        drawable.fillRect(l * largeurCase + largeurCase / 3, h * hauteurCase + hauteurCase / 7 * k, largeurCase / 3, hauteurCase / 7);
-                        drawable.setColor(bordure);
-                        drawable.setStroke(new BasicStroke(1));
-                        drawable.drawLine(l * largeurCase + largeurCase / 3,h * hauteurCase + hauteurCase / 7 * k, l * largeurCase + largeurCase / 3, h * hauteurCase + hauteurCase / 7 *(k+1));
-                        drawable.drawLine(l * largeurCase + largeurCase / 3*2,h * hauteurCase + hauteurCase / 7 * k, l * largeurCase + largeurCase / 3*2, h * hauteurCase + hauteurCase / 7 *(k+1));
-                        drawable.drawLine(l * largeurCase + largeurCase / 3,h * hauteurCase + hauteurCase / 7 * k, l * largeurCase + largeurCase / 3*2, h * hauteurCase + hauteurCase / 7 *k);
-                        drawable.drawLine(l * largeurCase + largeurCase / 3,h * hauteurCase + hauteurCase / 7 * (k+1), l * largeurCase + largeurCase / 3*2, h * hauteurCase + hauteurCase / 7 *(k+1));
+                if(tab[h][l].estValide()) {
+                    if(!set){
+                        tab[h][l].setPionComponent(l*largeurCase+largeurCase/3,h*hauteurCase,hauteurCase/8,largeurCase/3);
                     }
+                    this.add(tab[h][l]);
                     drawable.setColor(bordure);
                     drawable.setStroke(new BasicStroke(3));
                     drawable.drawLine(l* largeurCase,h*hauteurCase, l* largeurCase, (h+1)*hauteurCase);
@@ -75,12 +65,21 @@ public class AireDeDessin extends JComponent {
                     drawable.drawLine(l* largeurCase,(h+1)*hauteurCase, (l+1)* largeurCase, (h+1)*hauteurCase);
                 }
             }
+        }
     }
+    public void startMove(){
+        set = true;
+    }
+    public void stopMove(){
+        set = false;
     }
     public int getLargeurCase(){
         return largeurCase;
     }
     public int getHauteurCase(){
         return hauteurCase;
+    }
+    public PionComponent getPionComponent(int i , int j){
+        return tab[i][j];
     }
 }

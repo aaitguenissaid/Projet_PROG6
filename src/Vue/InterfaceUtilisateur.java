@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceUtilisateur implements Runnable {
-    AireDeDessin comp;
+    static AireDeDessin comp;
     JFrame frame;
     boolean maximized;
     Jeu j;
@@ -22,6 +22,7 @@ public class InterfaceUtilisateur implements Runnable {
         comp = new AireDeDessin(j);
         ctrl = new ControleurMediateur(this);
         comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
+        comp.addMouseMotionListener(new AdaptateurMouvementDeSouri(ctrl,comp));
         frame.add(comp);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750, 500);
@@ -47,5 +48,8 @@ public class InterfaceUtilisateur implements Runnable {
     }
     public void metAJour() {
         comp.repaint();
+    }
+    public AireDeDessin getAireDeDessin(){
+        return comp;
     }
 }

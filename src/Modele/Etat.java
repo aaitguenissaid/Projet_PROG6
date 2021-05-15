@@ -48,6 +48,6 @@ public class Etat {
 
     public void print(PrintWriter out) {
         Jeu.printGrille(out, grille, taille.h, taille.l);
-        out.print("," + tour);
+        out.println(tour);
     }
 }

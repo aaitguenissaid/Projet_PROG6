@@ -5,6 +5,8 @@ import Structures.SequenceListe;
 
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Properties;
@@ -16,6 +18,7 @@ public class Configuration {
     static Configuration instance = null;
     Properties prop;
     Logger logger;
+    public static final String home_directory = "Avalam";
 
     public static Configuration instance() {
         if (instance == null)
@@ -106,7 +109,17 @@ public class Configuration {
     }
 
     public PrintWriter ouvreFichierEcriture(String nom) {
-        String filename = this.lis(nom);
+        String file = this.lis("FichierEmptyPoints");
+        String home = System.getProperty("user.home");
+        if(!Files.exists(Paths.get(home + File.separator + home_directory))) {
+            try {
+                Files.createDirectories(Paths.get(home + File.separator + home_directory));
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(0);
+            }
+        }
+        String filename = home + File.separator + home_directory + File.separator + file;
         PrintWriter printWriter = null;
         try {
             printWriter = new PrintWriter(filename);
@@ -114,5 +127,21 @@ public class Configuration {
             e.printStackTrace();
         }
         return printWriter;
+    }
+
+    public Scanner ouvrirFichierLecture(String nom) {
+        String file = this.lis("FichierEmptyPoints");
+        String home = System.getProperty("user.home");
+        String filename = home + File.separator + home_directory + File.separator + file;
+        if(!Files.exists(Paths.get(filename))) {
+            return null;
+        }
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(filename);
+        } catch(Exception e) {
+            return null;
+        }
+        return new Scanner(inputStream);
     }
 }

@@ -20,6 +20,16 @@ public class Historique {
         ajouteEtat(jeu.grille, jeu.tour);
     }
 
+    //Constructor différencié par son paramètre inutilisé qui ne crée pas d'état initial
+    public Historique(Jeu j, Object useless) {
+        jeu = j;
+        historique = new ArrayList<>();
+        current = 0;
+        nbCoupsReel=0;
+        navigationOn = false;
+        jeu.navigationHistoriqueActivee = false;
+    }
+
     /*
     * Cette fonction ajoute un état à la position actuelle du jeu
     */
@@ -93,7 +103,7 @@ public class Historique {
     public void print(PrintWriter out) {
         out.println(nbCoupsReel);
         out.println(historique.size());
-        for(int i=0; i<historique.size(); i++) {
+        for(int i=0; i<historique.size()-1; i++) {
             historique.get(i).print(out);
             out.println();
         }

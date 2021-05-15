@@ -118,7 +118,7 @@ public class Case implements Cloneable {
             SequenceListe<Pion> pions_copy = new SequenceListe<>();
             Iterateur<Pion> it = pions.iterateur();
             while(it.aProchain()) {
-                pions_copy.insereTete(it.prochain()); //On ne clone pas les Pions car ils ne sont pas modifiables
+                pions_copy.insereQueue(it.prochain()); //On ne clone pas les Pions car ils ne sont pas modifiables
             }
             return new Case(valide, pions_copy);
         }

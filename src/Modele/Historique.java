@@ -38,10 +38,6 @@ public class Historique {
             historique.add(new Etat(grille, tour));
             current = historique.size()-1;
             nbCoupsReel++;
-            if(historique.size()==5) {
-                System.out.println("Enregistrement de la partie");
-                jeu.enregistrerPartie();
-            }
         }
     }
 

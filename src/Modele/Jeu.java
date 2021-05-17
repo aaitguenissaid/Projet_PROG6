@@ -14,12 +14,15 @@ public class Jeu extends Etat {
     Joueur j1,j2;
     Historique historique;
     boolean navigationHistoriqueActivee;
+    //ajouté pour afficher le dernier coup
+    int lastDepI,lastDepJ,lastArrI,lastArrJ;
 
     //Construit un jeu vide et ignore le paramètre (sert à la récupération de partie)
     private Jeu(Object useless) { }
 
     public Jeu(){
         super();
+        lastDepI=-1;lastDepJ=-1;lastArrI=-1;lastArrJ=-1;
         j1 = new Joueur(1,0);
         j2 = new Joueur(2,1);
         tour = COULEUR1;
@@ -86,6 +89,7 @@ public class Jeu extends Etat {
      */
     public boolean bouge(Point depart, Point arrive) {
         if(!estMouvementPossible(depart, arrive) || navigationHistoriqueActivee) return false;
+        lastDepI=depart.x;lastDepJ=depart.y;lastArrI=arrive.x;lastArrJ=arrive.y;
         SequenceListe<Pion> pions = grille[depart.x][depart.y].getPions();
         grille[depart.x][depart.y].supprimePions();
         grille[arrive.x][arrive.y].ajoutePions(pions);
@@ -191,5 +195,10 @@ public class Jeu extends Etat {
 
         return nvx_jeu;
     }
-
+    public boolean estCaseArrive(int x,int y){
+        return lastArrI==x && lastArrJ==y;
+    }
+    public boolean estCaseDepart(int x,int y){
+        return lastDepI==x && lastDepJ==y;
+    }
 }

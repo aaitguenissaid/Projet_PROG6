@@ -57,12 +57,28 @@ public class AireDeDessin extends JComponent {
                         tab[h][l].setPionComponent(l*largeurCase+largeurCase/3,h*hauteurCase,hauteurCase/8,largeurCase/3);
                     }
                     this.add(tab[h][l]);
+                    if(jeu.estCaseDepart(h,l)){
+                        drawable.setColor(Color.CYAN);
+                        drawable.setStroke(new BasicStroke(5));
+                        drawable.drawLine(l* largeurCase+5,h*hauteurCase+5, l* largeurCase+5, (h+1)*hauteurCase-5);
+                        drawable.drawLine(l* largeurCase+5,h*hauteurCase+5, (l+1)* largeurCase-5, h*hauteurCase+5);
+                        drawable.drawLine((l+1)* largeurCase-5,h*hauteurCase+5, (l+1)* largeurCase-5, (h+1)*hauteurCase-5);
+                        drawable.drawLine(l* largeurCase+5,(h+1)*hauteurCase-5, (l+1)* largeurCase-5, (h+1)*hauteurCase-5);
+                    }else if(jeu.estCaseArrive(h,l)){
+                        drawable.setColor(Color.DARK_GRAY);
+                        drawable.setStroke(new BasicStroke(5));
+                        drawable.drawLine(l* largeurCase+5,h*hauteurCase+5, l* largeurCase+5, (h+1)*hauteurCase-5);
+                        drawable.drawLine(l* largeurCase+5,h*hauteurCase+5, (l+1)* largeurCase-5, h*hauteurCase+5);
+                        drawable.drawLine((l+1)* largeurCase-5,h*hauteurCase+5, (l+1)* largeurCase-5, (h+1)*hauteurCase-5);
+                        drawable.drawLine(l* largeurCase+5,(h+1)*hauteurCase-5, (l+1)* largeurCase-5, (h+1)*hauteurCase-5);
+                    }
                     drawable.setColor(bordure);
                     drawable.setStroke(new BasicStroke(3));
                     drawable.drawLine(l* largeurCase,h*hauteurCase, l* largeurCase, (h+1)*hauteurCase);
                     drawable.drawLine(l* largeurCase,h*hauteurCase, (l+1)* largeurCase, h*hauteurCase);
                     drawable.drawLine((l+1)* largeurCase,h*hauteurCase, (l+1)* largeurCase, (h+1)*hauteurCase);
                     drawable.drawLine(l* largeurCase,(h+1)*hauteurCase, (l+1)* largeurCase, (h+1)*hauteurCase);
+
                 }
             }
         }

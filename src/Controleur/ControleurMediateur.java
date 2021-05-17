@@ -34,6 +34,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeu.bouge(m.getDepart(),m.getArrivee());
         jeuint.metAJour();
         System.out.println("Jeu fini : " + jeu.estFini());
+        System.out.println("Tour : " + jeu.getTour());
     }
 
 

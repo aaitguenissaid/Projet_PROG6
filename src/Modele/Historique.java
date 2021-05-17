@@ -20,7 +20,7 @@ public class Historique {
         ajouteEtat(jeu.grille, jeu.tour);
     }
 
-    //Constructor différencié par son paramètre inutilisé qui ne crée pas d'état initial
+    //Constructeur différencié par son paramètre inutilisé qui ne crée pas d'état initial
     public Historique(Jeu j, Object useless) {
         jeu = j;
         historique = new ArrayList<>();
@@ -101,7 +101,6 @@ public class Historique {
         out.println(historique.size());
         for(int i=0; i<historique.size()-1; i++) {
             historique.get(i).print(out);
-            out.println();
         }
     }
 }

@@ -19,11 +19,16 @@ public class IAAleatoire extends IA{
 
     @Override
     public Mouvement joue() {
-        super.trouveCasePeutBouger();
+        ArrayList<Point> casePeutBouger = super.trouveCasePeutBouger();
         int d = r1.nextInt(casePeutBouger.size());
         Point depart = casePeutBouger.get(d);
         ArrayList<Point> voisinsAccessible = super.trouveVosinsAccessible(depart);
-        int a = r2.nextInt(voisinsAccessible.size());
+        int a;
+        if (voisinsAccessible.size() >1){
+            a = r2.nextInt(voisinsAccessible.size());
+        } else {
+            a = 0;
+        }
         Point arrivee = voisinsAccessible.get(a);
         return new Mouvement(depart, arrivee);
     }

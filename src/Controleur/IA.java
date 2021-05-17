@@ -10,12 +10,11 @@ import java.util.ArrayList;
 abstract class IA {
     Jeu jeu;
     int joueur;
-    ArrayList<Point> casePeutBouger;
 
     public IA (Jeu j, int joueur) {
         jeu = j;
         this.joueur = joueur;
-        casePeutBouger = new ArrayList<>();
+
     }
 
     public byte hashCode(int h, int l){
@@ -70,7 +69,8 @@ abstract class IA {
         return voisinsAccessible;
     }
 
-    public void trouveCasePeutBouger(){
+    public ArrayList<Point> trouveCasePeutBouger(){
+        ArrayList<Point> casePeutBouger = new ArrayList<>();
         for (int i = 0; i < jeu.getTaille().h; i++){
             for (int j = 0; j < jeu.getTaille().l; j++){
                 ArrayList<Point> vosinsAccessible = trouveVosinsAccessible(new Point(i, j));
@@ -80,6 +80,7 @@ abstract class IA {
                 }
             }
         }
+        return casePeutBouger;
     }
 
     public abstract Mouvement joue();

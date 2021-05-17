@@ -11,6 +11,7 @@ public class PionComponent extends JComponent {
     Color one,tow,bordure;
     int x,y;
     int width,height;
+    int padding;
     Case c;
     Graphics2D drawable;
     PionComponent(Case c){
@@ -26,28 +27,28 @@ public class PionComponent extends JComponent {
         this.height=height;
         this.setLocation(new Point(x,y));
         this.setSize(new Dimension(width, 7*height));
+        padding=(7*height);
     }
     @Override
     public void paintComponent(Graphics g) {
         drawable = (Graphics2D) g;
-        int k=0;
+        int k=c.nbPions()+1;
         Iterateur<Pion> it = c.getIterateur();
         while (it.aProchain()) {
-            k++;
+            k--;
             Pion impr = it.prochain();
             if (impr.estBlanc()) {
                 drawable.setColor(one);
             } else {
                 drawable.setColor(tow);
             }
-            int padding = (int) ((2.5-c.nbPions()/2)*height);
-            drawable.fillRect(0, padding+height*k, width, height);
+            drawable.fillRect(0, padding-height*k, width, height);
             drawable.setColor(bordure);
             drawable.setStroke(new BasicStroke(1));
-            drawable.drawLine(0,padding+height*k, 0, padding+height*(k+1));
-            drawable.drawLine(width-1,padding+height*k, width-1, padding+height*(k+1));
-            drawable.drawLine(0,padding+height*k, width-1, padding+height*k);
-            drawable.drawLine(0,padding+height*(k+1), width-1, padding+height*(k+1));
+            drawable.drawLine(0,padding-height*k, 0, padding-height*(k-1));
+            drawable.drawLine(width-1,padding-height*k, width-1, padding-height*(k-1));
+            drawable.drawLine(0,padding-height*k, width-1, padding-height*k);
+            drawable.drawLine(0,padding-height*(k-1), width-1, padding-height*(k-1));
         }
     }
     public boolean estValide(){
@@ -56,6 +57,7 @@ public class PionComponent extends JComponent {
     public void movePile(int x,int y){
         this.x = x-this.getWidth()/2;
         this.y = y-this.getHeight()/2;
+        //padding = (int)(1+5-c.nbPions())*height;
         this.setLocation(new Point(this.x,this.y));
         this.repaint();
     }

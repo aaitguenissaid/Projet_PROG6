@@ -24,6 +24,7 @@ public class InterfaceUtilisateur implements Runnable {
         comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
         comp.addMouseMotionListener(new AdaptateurMouvementDeSouri(ctrl,comp));
         frame.add(comp);
+        frame.addKeyListener(new AdaptateurDeClavier(ctrl));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750, 500);
         frame.setVisible(true);

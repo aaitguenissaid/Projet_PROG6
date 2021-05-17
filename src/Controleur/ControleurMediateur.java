@@ -19,7 +19,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeu = i.jeu();
     }
     @Override
-    public void clic(int x, int y) {
+    public void taper(int x, int y) {
         System.out.println("Test passed");
     }
 

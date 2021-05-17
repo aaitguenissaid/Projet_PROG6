@@ -5,7 +5,7 @@ import Structures.Mouvement;
 import java.awt.*;
 
 public interface CollecteurEvenements {
-    void clic(int x, int y);
+    void taper(int x, int y);
 
     void mouvementFini(Mouvement m);
 

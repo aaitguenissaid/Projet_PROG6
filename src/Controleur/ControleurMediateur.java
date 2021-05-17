@@ -15,7 +15,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     InterfaceUtilisateur jeuint;
     boolean shouldMove;
     int startCaseI,startCaseJ;
-    boolean activeA, activeB, activeAB;
+    boolean activeA, activeB;
     IA IA_A, IA_B;
     Timer time;
     public ControleurMediateur(InterfaceUtilisateur i){
@@ -34,16 +34,12 @@ public class ControleurMediateur implements CollecteurEvenements {
             String IA = choisirAI("");
             if (IA != null) {
                 activateOne(IA, "A");
-                if (activeB) {
-                    //Les deux IA sont actives
-                    activateBoth();
-                } else {
-                    if(jeu.getTour() == 0) {
-                        Point clic = IA_A.joue();
-                        jeu.clic(clic.x, clic.y);
-                        gaufre.metAJour();
-                    }
+                if(jeu.getTour()==0) {
+                    Mouvement coup = IA_A.joue();
+                    jeu.bouge(coup.getDepart(), coup.getArrivee());
+                    jeuint.metAJour();
                 }
+
             } else {
                 System.out.println("Cancelling AI activation for player A.");
             }
@@ -53,28 +49,66 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(activeB) {
             activeB = false;
             IA_B = null;
-            if(activeAB) time.stop();
-            activeAB = false;
-            updatePlayerName("Joueur B", 2);
         } else {
             String IA = choisirAI("");
             if (IA != null) {
                 activateOne(IA, "B");
-                if (activeA) {
-                    //Les deux IA sont actives
-                    activateBoth();
-                } else {
-                    if(jeu.getTour()==2) {
-                        Point clic = IA_A.joue();
-                        jeu.clic(clic.x, clic.y);
-                        gaufre.metAJour();
-                    }
+                if(jeu.getTour()==1) {
+                    Mouvement coup = IA_B.joue();
+                    jeu.bouge(coup.getDepart(), coup.getArrivee());
+                    jeuint.metAJour();
                 }
+
             } else {
                 System.out.println("Cancelling AI activation for player B.");
             }
         }
     }
+
+
+    public void activateOne(String IAstr, String letter) {
+        System.out.println("Activation de l'" + IAstr + " pour le joueur "+letter+".");
+        int id;
+        if(letter.equals("A")) {
+            IA_A = createIA(IAstr, 0);
+            id = 1;
+            activeA = true;
+        }
+        else {
+            IA_B = createIA(IAstr, 1);
+            id = 2;
+            activeB = true;
+        }
+    }
+
+    public IA createIA(String IAstr, int joueur) {
+        if(IAstr.equals("IAAleatoire")) {
+            return new IAAleatoire(jeu, joueur);
+        } else if(IAstr.equals("IAFort")) {
+            return new IAFort(jeu, joueur);
+        } else {
+            return new IABasique(jeu, joueur);
+        }
+    }
+
+
+
+    private String choisirAI(String text) {
+        Object[] possibilities = {"IAAleatoire", "IABasique", "IAFort"};
+        String message = "Choose your AI in the following list.\n" + text ;
+        String title = "AI Choice";
+
+        return (String) JOptionPane.showInputDialog(
+                jeuint.getFrame(),
+                message,
+                title,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                possibilities,
+                "IAAleatoire"
+        );
+    }
+
 
 
 

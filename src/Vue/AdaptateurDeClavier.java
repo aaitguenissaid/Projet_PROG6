@@ -20,9 +20,17 @@ public class AdaptateurDeClavier implements KeyListener {
          C- activer les deux comme IA
          F - full screen        */
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_R -> cc.taper(1,1);
-            default ->{
-            }
+            case KeyEvent.VK_A:
+                cc.commande("ActiveA");
+                break;
+            case KeyEvent.VK_B:
+                cc.commande("ActiveB");
+                break;
+            case KeyEvent.VK_ESCAPE:
+                cc.commande("fullscreen");
+                break;
+            default:
+                System.out.println("Invalide command");
 
             //throw new IllegalStateException("Unexpected value: " + e.getKeyCode());
         }

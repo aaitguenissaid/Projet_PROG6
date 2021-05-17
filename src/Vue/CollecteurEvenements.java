@@ -5,7 +5,7 @@ import Structures.Mouvement;
 import java.awt.*;
 
 public interface CollecteurEvenements {
-    void taper(int x, int y);
+    boolean commande(String c);
 
     void mouvementFini(Mouvement m);
 

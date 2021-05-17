@@ -18,9 +18,11 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint=i;
         jeu = i.jeu();
     }
+
+
     @Override
-    public void taper(int x, int y) {
-        System.out.println("Test passed");
+    public boolean commande(String c) {
+        return false;
     }
 
     @Override

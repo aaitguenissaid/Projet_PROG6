@@ -3,6 +3,8 @@ package Controleur;
 
 import Modele.Jeu;
 import Structures.Mouvement;
+import Structures.SequenceListe;
+import Vue.AdaptateurTemps;
 import Vue.CollecteurEvenements;
 import Vue.InterfaceUtilisateur;
 import Vue.PionComponent;
@@ -18,11 +20,13 @@ public class ControleurMediateur implements CollecteurEvenements {
     boolean activeA, activeB;
     IA IA_A, IA_B;
     Timer time;
+    SequenceListe<Animation> animations;
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
         jeu = i.jeu();
         activeA = false;
         activeB = false;
+        animations = new SequenceListe<>();
     }
 
 
@@ -139,10 +143,31 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
         System.out.print("End :");
         System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
-        jeu.bouge(m.getDepart(),m.getArrivee());
+//        jeu.bouge(m.getDepart(),m.getArrivee());
         jeuint.metAJour();
         System.out.println("Jeu fini : " + jeu.estFini());
         System.out.println("Tour : " + jeu.getTour());
+
+        boolean animationRunning = time!=null && time.isRunning();
+        if(animationRunning) System.out.println("Animation running, ignoring clic.");
+        if(!jeu.estFini() && !animationRunning ) {
+            if(jeu.bouge(m.getDepart(),m.getArrivee())) {
+                jeuint.metAJour();
+                Mouvement to_clic = null;
+                if (activeA) {
+                    to_clic = IA_A.joue();
+                }
+                if (activeB) {
+                    to_clic = IA_B.joue();
+                }
+                if(activeA || activeB) {
+                    animations.insereTete(new AnimationJoueurIA(1, jeuint, to_clic));
+                    time = new Timer(1500, new AdaptateurTemps(this));
+                    time.start();
+                }
+            }
+        }
+
     }
 
 
@@ -160,5 +185,17 @@ public class ControleurMediateur implements CollecteurEvenements {
         shouldMove=true;
         startCaseI=i;
         startCaseJ=j;
+    }
+
+    @Override
+    public void ticTac() {
+        //Tictac servant pour l'animation qui sépare l'affichage du coup du joueur et l'affichage du coup de l'IA
+        if(animations!=null && !animations.estVide()) {
+            Animation a = animations.extraitTete();
+            a.ticTac();
+        } else {
+            time.stop();
+            animations = new SequenceListe<>();
+        }
     }
 }

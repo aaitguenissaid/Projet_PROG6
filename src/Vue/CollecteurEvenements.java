@@ -12,5 +12,7 @@ public interface CollecteurEvenements {
     void movePionTo(Point point);
 
     void startMove(int i, int i1);
+
+    void ticTac();
 }
 

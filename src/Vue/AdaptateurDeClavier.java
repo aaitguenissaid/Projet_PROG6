@@ -16,7 +16,7 @@ public class AdaptateurDeClavier implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_R -> cc.clic(1,1);
+            case KeyEvent.VK_R -> cc.taper(1,1);
             default ->{
             }
 

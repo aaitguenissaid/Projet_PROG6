@@ -63,11 +63,11 @@ public class Case implements Cloneable {
     }
 
     public boolean aTeteBlanche() {
-        return this.tete.estBlanc();
+        return this.tete.estCouleur1();
     }
 
     public boolean aTeteNoire() {
-        return this.tete.estNoir();
+        return this.tete.estCouleur2();
     }
 
     public String toString() {

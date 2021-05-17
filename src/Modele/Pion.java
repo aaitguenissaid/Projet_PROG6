@@ -11,16 +11,16 @@ public class Pion {
         return couleur;
     }
 
-    public boolean estBlanc() {
+    public boolean estCouleur1() {
         return this.couleur == 0;
     }
 
-    public boolean estNoir() {
+    public boolean estCouleur2() {
         return this.couleur != 0;
     }
 
     public String toString() {
-        if(estBlanc()) return "Blanc";
+        if(estCouleur1()) return "Blanc";
         return "Noir";
     }
 }

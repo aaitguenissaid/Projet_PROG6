@@ -38,12 +38,13 @@ public class ControleurMediateur implements CollecteurEvenements {
             String IA = choisirAI("");
             if (IA != null) {
                 activateOne(IA, "A");
-                if(jeu.getTour()==0) {
-                    Mouvement coup = IA_A.joue();
-                    jeu.bouge(coup.getDepart(), coup.getArrivee());
-                    jeuint.metAJour();
+                if (!jeu.estFini()){
+                    if(jeu.getTour()==0) {
+                        Mouvement coup = IA_A.joue();
+                        jeu.bouge(coup.getDepart(), coup.getArrivee());
+                        jeuint.metAJour();
+                    }
                 }
-
             } else {
                 System.out.println("Cancelling AI activation for player A.");
             }
@@ -57,12 +58,13 @@ public class ControleurMediateur implements CollecteurEvenements {
             String IA = choisirAI("");
             if (IA != null) {
                 activateOne(IA, "B");
-                if(jeu.getTour()==1) {
-                    Mouvement coup = IA_B.joue();
-                    jeu.bouge(coup.getDepart(), coup.getArrivee());
-                    jeuint.metAJour();
+                if (!jeu.estFini()){
+                    if(jeu.getTour()==1) {
+                        Mouvement coup = IA_B.joue();
+                        jeu.bouge(coup.getDepart(), coup.getArrivee());
+                        jeuint.metAJour();
+                    }
                 }
-
             } else {
                 System.out.println("Cancelling AI activation for player B.");
             }

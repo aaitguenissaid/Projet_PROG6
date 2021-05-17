@@ -56,8 +56,7 @@ public class PionComponent extends JComponent {
     }
     public void movePile(int x,int y){
         this.x = x-this.getWidth()/2;
-        this.y = y-this.getHeight()/2;
-        //padding = (int)(1+5-c.nbPions())*height;
+        this.y = y-this.getHeight()+height/2;
         this.setLocation(new Point(this.x,this.y));
         this.repaint();
     }

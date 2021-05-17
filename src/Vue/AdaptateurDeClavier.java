@@ -15,10 +15,6 @@ public class AdaptateurDeClavier implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        /* A - activer Joueur A
-         B - activer Joueur B
-         C- activer les deux comme IA
-         F - full screen        */
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
                 cc.commande("ActiveA");

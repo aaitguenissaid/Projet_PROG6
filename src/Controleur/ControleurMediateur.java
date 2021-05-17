@@ -20,7 +20,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
     @Override
     public void clic(int x, int y) {
-
+        System.out.println("Test passed");
     }
 
     @Override

@@ -35,7 +35,7 @@ public class PionComponent extends JComponent {
         while (it.aProchain()) {
             k++;
             Pion impr = it.prochain();
-            if (impr.estBlanc()) {
+            if (impr.estCouleur1()) {
                 drawable.setColor(one);
             } else {
                 drawable.setColor(tow);

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Jeu {
-    public static final int BLANC = 0;
-    public static final int NOIR = 1;
+    public static final int COULEUR1 = 0;
+    public static final int COULEUR2 = 1;
     Case[][] grille;
     Size taille;
     Joueur j1,j2;
@@ -24,7 +24,7 @@ public class Jeu {
         j1 = new Joueur(1,0);
         j2 = new Joueur(2,1);
         taille = new Size(9,9);
-        tour = BLANC;
+        tour = COULEUR1;
         grille = new Case[taille.h][taille.l];
         init_grille();
         //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)

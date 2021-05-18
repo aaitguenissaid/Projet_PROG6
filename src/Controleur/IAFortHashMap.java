@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class IAFort extends IA{
+public class IAFortHashMap extends IA{
     private final int INF = 1000;
-    public IAFort(Jeu j, int joueur) {
+    public IAFortHashMap(Jeu j, int joueur) {
         super(j, joueur);
     }
 

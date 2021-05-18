@@ -90,8 +90,10 @@ public class ControleurMediateur implements CollecteurEvenements {
     public IA createIA(String IAstr, int joueur) {
         if(IAstr.equals("IAAleatoire")) {
             return new IAAleatoire(jeu, joueur);
-        } else if(IAstr.equals("IAFort")) {
-            return new IAFort(jeu, joueur);
+        } else if(IAstr.equals("IAFortHashMap")) {
+            return new IAFortHashMap(jeu, joueur);
+        } else if(IAstr.equals("IAFortTableau")) {
+            return new IAFortTableau(jeu, joueur);
         } else {
             return new IABasique(jeu, joueur);
         }
@@ -100,7 +102,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
 
     private String choisirAI(String text) {
-        Object[] possibilities = {"IAAleatoire", "IABasique", "IAFort"};
+        Object[] possibilities = {"IAAleatoire", "IABasique", "IAFortHashMap", "IAFortTableau"};
         String message = "Choose your AI in the following list.\n" + text ;
         String title = "AI Choice";
 

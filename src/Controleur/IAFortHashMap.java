@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class IAFort extends IA{
+public class IAFortHashMap extends IA{
     private final int INF = 1000;
-    public IAFort(Jeu j, int joueur) {
+    public IAFortHashMap(Jeu j, int joueur) {
         super(j, joueur);
     }
 
@@ -212,22 +212,6 @@ public class IAFort extends IA{
         int hArrivee = super.hashCodeVerH(keyArrivee);
         int lArrivee = super.hashCodeVerL(keyArrivee);
         Point arrivee = new Point(hArrivee, lArrivee);
-/*        iterator = configuration.entrySet().iterator();
-        int valueDepart;
-        int valueArrivee;
-        while (iterator.hasNext()) {
-            HashMap.Entry<Byte, Byte> entry = iterator.next();
-            keyArrivee = entry.getKey();
-            valueDepart = entry.getValue();
-            if (keyArrivee != keyDepart) {
-                valueArrivee = suivant.get(keyDepart);
-                if (valueDepart != valueArrivee)
-                    break;
-            }
-        }
-        int hArrivee = super.hashCodeVerH(keyArrivee);
-        int lArrivee = super.hashCodeVerL(keyArrivee);
-        Point arrivee = new Point(hArrivee, lArrivee);*/
         return new Mouvement(depart, arrivee);
     }
 

@@ -16,7 +16,7 @@ public class IAFort extends IA{
 
     /* Prends le valeur d'une hashtable et rends la couleur de sommet d'un pile */
     private byte getCouleur(byte value){
-        return (byte) (value >> 7);
+        return ((value & (1<<7)) == 0) ? (byte) 0 : (byte)1;
     }
 
     /* Prends le valeur d'une hashtable et rends la hauteur de sommet d'un pile */
@@ -118,7 +118,7 @@ public class IAFort extends IA{
         HashMap<Byte, Byte> resultat = new HashMap<>();
         for (int i = 0; i < jeu.getTaille().h; i++){
             for (int j = 0; j < jeu.getTaille().l; j++){
-                if (jeu.estCaseValide(new Point(i, j))){
+                if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).hauteur() > 0)){
                     byte key = super.hashCode(i, j);
                     byte hauteur = (byte) jeu.getCase(i, j).hauteur();
                     byte couleur = (byte) jeu.getCase(i, j).getTete().getCouleur();
@@ -147,9 +147,9 @@ public class IAFort extends IA{
             return 0;
         else{
             if (joueur == 0)
-                return nombre0 > nombre1 ? 1 : -1;
+                return nombre0 - nombre1;
             else
-                return nombre1 > nombre0 ? 1 : -1;
+                return nombre1 - nombre0;
         }
     }
 
@@ -185,12 +185,11 @@ public class IAFort extends IA{
 
     /* A partir d'une configuration qu'on a trouver pour IA, retourner la case de depart et la case d'arrivée */
     public Mouvement configurationVersMouvement(HashMap<Byte, Byte> configuration, HashMap<Byte, Byte> suivant){
-        Iterator<HashMap.Entry<Byte, Byte>> iterator;
-        iterator = configuration.entrySet().iterator();
+        Iterator<HashMap.Entry<Byte, Byte>> iterator1;
+        iterator1 = configuration.entrySet().iterator();
         byte keyDepart = 0;
-        byte keyArrivee = 0;
-        while (iterator.hasNext()) {
-            HashMap.Entry<Byte, Byte> entry = iterator.next();
+        while (iterator1.hasNext()) {
+            HashMap.Entry<Byte, Byte> entry = iterator1.next();
             keyDepart = entry.getKey();
             if (!suivant.containsKey(keyDepart))
                 break;
@@ -198,7 +197,22 @@ public class IAFort extends IA{
         int hDepart = super.hashCodeVerH(keyDepart);
         int lDepart = super.hashCodeVerL(keyDepart);
         Point depart = new Point(hDepart, lDepart);
-        iterator = configuration.entrySet().iterator();
+        Iterator<HashMap.Entry<Byte, Byte>> iterator2;
+        iterator2 = suivant.entrySet().iterator();
+        byte keyArrivee = 0;
+        byte valueArrivee;
+        while (iterator2.hasNext()) {
+            HashMap.Entry<Byte, Byte> entry = iterator2.next();
+            keyArrivee = entry.getKey();
+            valueArrivee = suivant.get(keyArrivee);
+            byte valuePrecedent = configuration.get(keyArrivee);
+            if (valueArrivee != valuePrecedent)
+                break;
+        }
+        int hArrivee = super.hashCodeVerH(keyArrivee);
+        int lArrivee = super.hashCodeVerL(keyArrivee);
+        Point arrivee = new Point(hArrivee, lArrivee);
+/*        iterator = configuration.entrySet().iterator();
         int valueDepart;
         int valueArrivee;
         while (iterator.hasNext()) {
@@ -213,7 +227,7 @@ public class IAFort extends IA{
         }
         int hArrivee = super.hashCodeVerH(keyArrivee);
         int lArrivee = super.hashCodeVerL(keyArrivee);
-        Point arrivee = new Point(hArrivee, lArrivee);
+        Point arrivee = new Point(hArrivee, lArrivee);*/
         return new Mouvement(depart, arrivee);
     }
 
@@ -289,23 +303,21 @@ public class IAFort extends IA{
         HashMap<Byte, Byte> config = configuration();
         HashMap<Byte, Byte> gagnant = null;
         ArrayList<HashMap<Byte, Byte>> configSuivants = configurationSuivants(config);
-        /* Utiliser l'algorithme minmax */
+
+        int imax = 0;
+        int max = -INF;
         for (int i = 0; i < configSuivants.size(); i++){
             HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
-            if (minmax(configSuivant, true) == 1){
-                gagnant = configSuivant;
-                break;
+            /* Utiliser l'algorithme minmax */
+            //int courant = minmax(configSuivant, true);
+            // Utiliser l'algorithme minmax alpha beta
+            int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true);
+            if (courant > max){
+                max = courant;
+                imax = i;
             }
         }
-       // Utiliser l'algorithme minmax alpha beta
- /*       for (int i = 0; i < configSuivants.size(); i++){
-            HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
-            if (minmaxAlphaBeta(configSuivant, -INF, INF,true) == 1){
-                gagnant = configSuivant;
-                break;
-            }
-        }         */
-
+        gagnant = configSuivants.get(imax);
         Mouvement resultat = configurationVersMouvement(config, gagnant);
         return resultat;
     }

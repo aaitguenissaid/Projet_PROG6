@@ -22,7 +22,7 @@ abstract class IA {
     }
 
     public int hashCodeVerH(byte code){
-        return (code >> 4);
+        return (byte)(((int)code & (0XF << 4)) >> 4);
     }
 
     public int hashCodeVerL(byte code){

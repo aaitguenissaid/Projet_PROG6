@@ -102,7 +102,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
 
     private String choisirAI(String text) {
-        Object[] possibilities = {"IAAleatoire", "IABasique", "IAFort", "IAFortTableau"};
+        Object[] possibilities = {"IAAleatoire", "IABasique", "IAFortHashMap", "IAFortTableau"};
         String message = "Choose your AI in the following list.\n" + text ;
         String title = "AI Choice";
 

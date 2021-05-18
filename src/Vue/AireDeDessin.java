@@ -15,7 +15,7 @@ public class AireDeDessin extends JComponent {
     Color one,tow,bordure,bg;
     boolean set;
     PionComponent[][] tab;
-    public AireDeDessin(Jeu j){
+    public AireDeDessin(Jeu j, CollecteurEvenements ctrl){
         jeu = j;
         one = Color.decode("#F1F2D8");
         tow = Color.decode("#312E2B");

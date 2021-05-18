@@ -200,4 +200,17 @@ public class ControleurMediateur implements CollecteurEvenements {
             animations = new SequenceListe<>();
         }
     }
+    public void jouer_en_local(){
+        jeuint.setGameScreen();
+    }
+
+    @Override
+    public void parametres() {
+        jeuint.setParametres();
+    }
+
+    @Override
+    public void mainmenu() {
+        jeuint.setMainMenu();
+    }
 }

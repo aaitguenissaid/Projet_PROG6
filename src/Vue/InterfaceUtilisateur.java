@@ -2,32 +2,42 @@ package Vue;
 
 import Controleur.ControleurMediateur;
 import Modele.Jeu;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class InterfaceUtilisateur implements Runnable {
-    static AireDeDessin comp;
+    JPanel screens;
+    AireDeDessin comp;
     JFrame frame;
     boolean maximized;
     Jeu j;
     int l,h;
+    MainMenu main;
+    Parametres param;
     CollecteurEvenements ctrl;
+    CardLayout cl;
 
 
     public void run() {
         frame = new JFrame("Jeu gaufre");
         j = new Jeu();
         l=6;h=7;
-        comp = new AireDeDessin(j);
         ctrl = new ControleurMediateur(this);
+        comp = new AireDeDessin(j,ctrl);
+        main = new MainMenu(ctrl);
+        param = new Parametres(ctrl);
         comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
         comp.addMouseMotionListener(new AdaptateurMouvementDeSouri(ctrl,comp));
-        frame.add(comp);
+        screens = new JPanel(new CardLayout());
+        screens.add(main,"MAINMENU");
+        screens.add(comp,"GAMESCREEN");
+        screens.add(param,"PARAMETRES");
+        frame.add(screens);
         frame.addKeyListener(new AdaptateurDeClavier(ctrl));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750, 500);
         frame.setVisible(true);
+        cl = (CardLayout)(screens.getLayout());
     }
     public Jeu jeu(){
         return j;
@@ -52,5 +62,16 @@ public class InterfaceUtilisateur implements Runnable {
     }
     public AireDeDessin getAireDeDessin(){
         return comp;
+    }
+
+    public void setGameScreen(){
+        cl.show(screens, "GAMESCREEN");
+        metAJour();
+    }
+    public void setMainMenu(){
+        cl.show(screens, "MAINMENU");
+    }
+    public void setParametres(){
+        cl.show(screens, "PARAMETRES");
     }
 }

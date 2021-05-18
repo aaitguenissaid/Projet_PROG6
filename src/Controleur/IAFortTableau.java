@@ -5,7 +5,6 @@ import Structures.Mouvement;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class IAFortTableau extends IA{
     private final int INF = 1000;
@@ -104,8 +103,7 @@ public class IAFortTableau extends IA{
             i = 8;
             j = indice - 43;
         }
-        Point resultat = new Point(i, j);
-        return resultat;
+        return new Point(i, j);
     }
 
     /* Copy une table */
@@ -133,48 +131,60 @@ public class IAFortTableau extends IA{
         return false;
     }
 
+    private boolean nonMilieu(int i, int j){
+        if ((i == 4)&&(j == 4))
+            return false;
+        else
+            return true;
+    }
+
+
     /* Prends une indice de tableau de configuration comme le depart et rends les indices comme arrivées accessibles */
     private ArrayList<Integer> voisinsAccessibles(byte[] config, int indiceDepart){
         ArrayList<Integer> resultat = new ArrayList<>();
         int h = decoderIndice(indiceDepart).x;
         int l = decoderIndice(indiceDepart).y;
         int indiceArrivee;
-        if (h-1 >= 0){        //(h-1, l)
+        if ((h-1 >= 0)&&(jeu.estCaseValide(new Point(h-1, l)))&&(nonMilieu(h-1, l))){        //(h-1, l)
             indiceArrivee = coderPoint(h-1, l);
             if (peutBouger(config, indiceDepart, indiceArrivee))
                 resultat.add(indiceArrivee);
         }
-        if (h+1 < jeu.getTaille().h){         //(h+1, l)
+        if ((h+1 < jeu.getTaille().h)&&(jeu.estCaseValide(new Point(h+1, l)))&&(nonMilieu(h+1, l))){         //(h+1, l)
             indiceArrivee = coderPoint(h+1, l);
             if (peutBouger(config, indiceDepart, indiceArrivee))
                 resultat.add(indiceArrivee);
         }
         if (l-1 >= 0){
-            indiceArrivee = coderPoint(h, l-1);
-            if (peutBouger(config, indiceDepart, indiceArrivee))
-                resultat.add(indiceArrivee);
-
-            if (h-1 >= 0){    //(h-1, l-1)
+            if (jeu.estCaseValide(new Point(h, l-1))&&(nonMilieu(h, l-1))){
+                indiceArrivee = coderPoint(h, l-1);
+                if (peutBouger(config, indiceDepart, indiceArrivee))
+                    resultat.add(indiceArrivee);
+            }
+            if ((h-1 >= 0)&&(jeu.estCaseValide(new Point(h-1, l-1)))&&(nonMilieu(h-1, l-1))){    //(h-1, l-1)
                 indiceArrivee = coderPoint(h-1, l-1);
                 if (peutBouger(config, indiceDepart, indiceArrivee))
                     resultat.add(indiceArrivee);
             }
-            if (h+1 <  jeu.getTaille().h){  //(h+1, l-1)
+            if ((h+1 <  jeu.getTaille().h)&&(jeu.estCaseValide(new Point(h+1, l-1)))&&(nonMilieu(h+1, l-1))){  //(h+1, l-1)
                 indiceArrivee = coderPoint(h+1, l-1);
                 if (peutBouger(config, indiceDepart, indiceArrivee))
                     resultat.add(indiceArrivee);
             }
         }
         if (l+1 < jeu.getTaille().l){
-            indiceArrivee = coderPoint(h, l+1);
-            if (peutBouger(config, indiceDepart, indiceArrivee))
-                resultat.add(indiceArrivee);
-            if (h-1 >= 0){    //(h-1, l+1)
+            if (jeu.estCaseValide(new Point(h, l+1))&&(nonMilieu(h, l+1))){
+                indiceArrivee = coderPoint(h, l+1);
+                if (peutBouger(config, indiceDepart, indiceArrivee))
+                    resultat.add(indiceArrivee);
+            }
+
+            if ((h-1 >= 0)&&(jeu.estCaseValide(new Point(h-1, l+1)))&&(nonMilieu(h-1, l+1))){    //(h-1, l+1)
                 indiceArrivee = coderPoint(h-1, l+1);
                 if (peutBouger(config, indiceDepart, indiceArrivee))
                     resultat.add(indiceArrivee);
             }
-            if (h+1 < jeu.getTaille().h){  //(h+1, l+1)
+            if ((h+1 < jeu.getTaille().h)&&(jeu.estCaseValide(new Point(h+1, l+1)))&&(nonMilieu(h+1, l+1))){  //(h+1, l+1)
                 indiceArrivee = coderPoint(h+1, l+1);
                 if (peutBouger(config, indiceDepart, indiceArrivee))
                     resultat.add(indiceArrivee);
@@ -235,7 +245,7 @@ public class IAFortTableau extends IA{
 
     /* A partir d'une configuration courante, retourne toutes les configurations possibles pour en une étape*/
     public ArrayList<byte[]> configurationSuivants(byte[] configuration){
-        ArrayList<byte[]> resultat = new ArrayList<byte[]>();
+        ArrayList<byte[]> resultat = new ArrayList<>();
         for (int i = 0; i < configuration.length; i++){
             if (configuration[i] != 0){
                 ArrayList<Integer> voisinsAcc = voisinsAccessibles(configuration, i);
@@ -354,6 +364,7 @@ public class IAFortTableau extends IA{
 
         int imax = 0;
         int max = -INF;
+        System.out.println("configSuivants.size() = " + configSuivants.size());
         for (int i = 0; i < configSuivants.size(); i++){
             byte[] configSuivant = configSuivants.get(i);
             /* Utiliser l'algorithme minmax */

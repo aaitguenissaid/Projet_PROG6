@@ -32,6 +32,7 @@ public class AireDeDessin extends JComponent {
 
     @Override
     public void paintComponent(Graphics g) {
+        requestFocusInWindow();
         drawable = (Graphics2D) g;
         largeurFenetrePixel = getSize().width;
         hauteurFenetrePixel = getSize().height;

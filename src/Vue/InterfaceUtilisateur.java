@@ -33,7 +33,8 @@ public class InterfaceUtilisateur implements Runnable {
         screens.add(comp,"GAMESCREEN");
         screens.add(param,"PARAMETRES");
         frame.add(screens);
-        frame.addKeyListener(new AdaptateurDeClavier(ctrl));
+        comp.setFocusable(true);
+        comp.addKeyListener(new AdaptateurDeClavier(ctrl));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(750, 500);
         frame.setVisible(true);

@@ -301,8 +301,9 @@ public class IAFortTableau extends IA{
                     byte[] configSuivant = configSuivants.get(i);
                     int valeur = minmax(configSuivant, false);
                     maxValeur = Math.max(maxValeur, valeur);
-                    return maxValeur;
+
                 }
+                return maxValeur;
             }
         } else {
             int minValeur = INF;
@@ -312,8 +313,8 @@ public class IAFortTableau extends IA{
                     byte[] configSuivant = configSuivants.get(i);
                     int valeur = minmax(configSuivant, true);
                     minValeur = Math.min(minValeur, valeur);
-                    return minValeur;
                 }
+                return minValeur;
             }
         }
         return 0;
@@ -337,6 +338,7 @@ public class IAFortTableau extends IA{
                         break;
                     return maxValeur;
                 }
+//                return maxValeur;
             }
         } else {
             int minValeur = INF;
@@ -351,6 +353,7 @@ public class IAFortTableau extends IA{
                         break;
                     return minValeur;
                 }
+//                return minValeur;
             }
         }
         return 0;

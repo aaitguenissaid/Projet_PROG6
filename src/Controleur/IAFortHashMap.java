@@ -227,8 +227,8 @@ public class IAFortHashMap extends IA{
                     HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
                     int valeur = minmax(configSuivant, false);
                     maxValeur = Math.max(maxValeur, valeur);
-                    return maxValeur;
                 }
+                return maxValeur;
             }
         } else {
             int minValeur = INF;
@@ -238,8 +238,8 @@ public class IAFortHashMap extends IA{
                     HashMap<Byte, Byte> configSuivant = configSuivants.get(i);
                     int valeur = minmax(configSuivant, true);
                     minValeur = Math.min(minValeur, valeur);
-                    return minValeur;
                 }
+                return minValeur;
             }
         }
         return 0;
@@ -263,6 +263,7 @@ public class IAFortHashMap extends IA{
                         break;
                     return maxValeur;
                 }
+
             }
         } else {
             int minValeur = INF;
@@ -277,6 +278,7 @@ public class IAFortHashMap extends IA{
                         break;
                     return minValeur;
                 }
+
             }
         }
         return 0;

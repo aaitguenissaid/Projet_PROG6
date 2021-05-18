@@ -16,7 +16,6 @@ public class Historique {
         current = 0;
         nbCoupsReel=0;
         navigationOn = false;
-        jeu.navigationHistoriqueActivee = false;
         ajouteEtat(jeu.grille, jeu.tour);
     }
 
@@ -27,7 +26,6 @@ public class Historique {
         current = 0;
         nbCoupsReel=0;
         navigationOn = false;
-        jeu.navigationHistoriqueActivee = false;
     }
 
     /*
@@ -70,12 +68,10 @@ public class Historique {
     }
 
     private void setNavigationOn() {
-        jeu.navigationHistoriqueActivee = true;
         navigationOn = true;
     }
 
     private void setNavigationOff() {
-        jeu.navigationHistoriqueActivee = false;
         navigationOn = false;
     }
 
@@ -94,6 +90,16 @@ public class Historique {
     public void annulerNavigation() {
         current = historique.size()-1;
         setNavigationOff();
+    }
+
+    public Etat atteindreDebutHistorique() {
+        if(historique.size()==0) return null;
+        current = 0;
+        return historique.get(current);
+    }
+
+    public boolean getNavigation() {
+        return this.navigationOn;
     }
 
     public void print(PrintWriter out) {

@@ -13,7 +13,6 @@ public class Jeu extends Etat {
     public static final int COULEUR2 = 1;
     Joueur j1,j2;
     Historique historique;
-    boolean navigationHistoriqueActivee;
     //ajouté pour afficher le dernier coup
     int lastDepI,lastDepJ,lastArrI,lastArrJ;
 
@@ -88,7 +87,7 @@ public class Jeu extends Etat {
      *  - Le mouvement est impossible (en dehors de la grille, trop / pas assez de pions, case invalide)
      */
     public boolean bouge(Point depart, Point arrive) {
-        if(!estMouvementPossible(depart, arrive) || navigationHistoriqueActivee) return false;
+        if(!estMouvementPossible(depart, arrive) || historique.getNavigation()) return false;
         lastDepI=depart.x;lastDepJ=depart.y;lastArrI=arrive.x;lastArrJ=arrive.y;
         SequenceListe<Pion> pions = grille[depart.x][depart.y].getPions();
         grille[depart.x][depart.y].supprimePions();

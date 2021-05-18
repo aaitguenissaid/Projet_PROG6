@@ -91,7 +91,7 @@ public class Configuration {
 
     //Retourne une liste de Points devant être vides dans la grille du Avalam
     public ArrayList<Point> getEmptyPoints() {
-        String filename = this.lis("FichierEmptyPoints");
+        String filename = this.lisFichier("FichierEmptyPoints");
         InputStream in = Configuration.charge(filename);
         if(in==null) return new ArrayList<>();
         Scanner sc = new Scanner(in);
@@ -109,7 +109,7 @@ public class Configuration {
     }
 
     public PrintWriter ouvreFichierEcriture(String nom) {
-        String file = this.lis(nom);
+        String file = this.lisFichier(nom);
         String home = System.getProperty("user.home");
         if(!Files.exists(Paths.get(home + File.separator + home_directory))) {
             try {
@@ -129,8 +129,12 @@ public class Configuration {
         return printWriter;
     }
 
+    public Properties getProperties() {
+        return this.prop;
+    }
+
     public Scanner ouvrirFichierLecture(String nom) {
-        String file = this.lis(nom);
+        String file = this.lisFichier(nom);
         String home = System.getProperty("user.home");
         String filename = home + File.separator + home_directory + File.separator + file;
         if(!Files.exists(Paths.get(filename))) {

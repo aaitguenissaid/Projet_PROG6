@@ -12,23 +12,25 @@ import java.util.Scanner;
 public class Jeu extends Etat {
     public static final int COULEUR1 = 0;
     public static final int COULEUR2 = 1;
-    CollecteurEvenements events;
+    CollecteurEvenements ctrl;
     Joueur j1,j2;
     Historique historique;
     int lastDepI,lastDepJ,lastArrI,lastArrJ; //ajouté pour afficher le dernier coup
+    boolean estPartieRecuperee;
 
     public Jeu() {
         this(null, true);
     }
 
-    public Jeu(CollecteurEvenements events){
-        this(events, true);
+    public Jeu(CollecteurEvenements ctrl){
+        this(ctrl, true);
     }
 
-    public Jeu(CollecteurEvenements events, boolean fromScratch) {
+    public Jeu(CollecteurEvenements ctrl, boolean fromScratch) {
         super();
-        this.events = events;
+        this.ctrl = ctrl;
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
+        estPartieRecuperee=false;
         if(fromScratch) {
             j1 = new Joueur(1,0);
             j2 = new Joueur(2,1);
@@ -60,7 +62,7 @@ public class Jeu extends Etat {
     }
 
     public void setCollecteurEvenements(CollecteurEvenements events) {
-        this.events = events;
+        this.ctrl = events;
     }
 
     public boolean estFini() {
@@ -101,7 +103,21 @@ public class Jeu extends Etat {
      *  - Le mouvement est impossible (en dehors de la grille, trop / pas assez de pions, case invalide)
      */
     public boolean bouge(Point depart, Point arrive) {
-        if(!estMouvementPossible(depart, arrive) || historique.getNavigation()) return false;
+        if(historique.getNavigation()) {
+            //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
+            //dans l'état qu'il visitait
+            if(!historique.getEtatNavigation().estMouvementPossible(depart, arrive)) return false;
+            String titre = "Validation navigation historique";
+            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
+                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
+            String choix_valide = "Continuer";
+            String choix_annule = "Annuler";
+            if(valideAction(titre, description, choix_valide, choix_annule)) {
+                historique.validerNavigation();
+            }
+        } else {
+            if (!estMouvementPossible(depart, arrive)) return false;
+        }
 
         lastDepI=depart.x;lastDepJ=depart.y;lastArrI=arrive.x;lastArrJ=arrive.y;
 
@@ -115,25 +131,12 @@ public class Jeu extends Etat {
         return true;
     }
 
-    public boolean estMouvementPossible(Point depart, Point arrive) {
-        if(estCaseValide(depart)        //On vérifie les coordonnées
-            && estCaseValide(arrive)    //On vérifie les coordonnées
-            && (arrive.x==depart.x+1 || arrive.x==depart.x-1 || arrive.x==depart.x) //On vérifie qu'on se déplace d'une case
-            && (arrive.y==depart.y+1 || arrive.y==depart.y-1 || arrive.y==depart.y) //On vérifie qu'on se déplace d'une case
-            && (depart.x!=arrive.x || depart.y!=arrive.y) ) { //On vérifie qu'on ne reste pas sur la même case
-                return (grille[depart.x][depart.y].nbPions()>0) // On vérifie qu'on ne déplace pas une tour vide
-                    && (grille[arrive.x][arrive.y].nbPions()>0)
-                    && (grille[depart.x][depart.y].nbPions() + grille[arrive.x][arrive.y].nbPions()) <= 5; //On vérifie qu'il n'y aura pas trop de pions sur la tour
-        }
-        return false;
-    }
-
     public Historique getHistorique() {
         return historique;
     }
 
-    public void enregistrerPartie() {
-        PrintWriter out = Configuration.instance().ouvreFichierEcriture("FichierSauvegarde");
+    public void enregistrerPartie(String nom_partie) {
+        PrintWriter out = Configuration.instance().ouvreFichierEcriture("FichierSauvegarde", "_"+nom_partie);
         if(out!=null) {
             out.println(taille.h + "," + taille.l);
             print(out); //Affiche la grille et le tour
@@ -144,12 +147,17 @@ public class Jeu extends Etat {
         }
     }
 
-    public static Jeu recupererPartie(CollecteurEvenements events) {
-        Scanner in = Configuration.instance().ouvrirFichierLecture("FichierSauvegarde");
+    public static Jeu recupererPartie(String nom_partie) {
+        return recupererPartie(null, nom_partie);
+    }
+
+    public static Jeu recupererPartie(CollecteurEvenements events, String nom_partie) {
+        Scanner in = Configuration.instance().ouvrirFichierLecture("FichierSauvegarde", "_"+nom_partie);
         if(in==null) {
             return new Jeu(events);
         }
         Jeu nvx_jeu = new Jeu(events, false);
+        nvx_jeu.estPartieRecuperee=true;
 
         //#### Récupération de la taille de la grille ####
         if(!in.hasNextLine()) return new Jeu(events);
@@ -216,5 +224,13 @@ public class Jeu extends Etat {
     }
     public boolean estCaseDepart(int x,int y){
         return lastDepI==x && lastDepJ==y;
+    }
+
+    private boolean valideAction(String titre, String description, String choix_valider, String choix_annuler) {
+        if(ctrl==null) {
+            System.err.println("Attention, le jeu n'a pas accès au controleur et ne peut pas demander de validation à l'utilisateur");
+            return true;
+        }
+        return ctrl.valideAction(titre, description, choix_valider, choix_annuler);
     }
 }

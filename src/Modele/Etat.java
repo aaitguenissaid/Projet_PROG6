@@ -96,6 +96,19 @@ public class Etat {
         return coordonneesValides(pt) && grille[pt.x][pt.y].estValide();
     }
 
+    public boolean estMouvementPossible(Point depart, Point arrive) {
+        if(estCaseValide(depart)        //On vérifie les coordonnées
+                && estCaseValide(arrive)    //On vérifie les coordonnées
+                && (arrive.x==depart.x+1 || arrive.x==depart.x-1 || arrive.x==depart.x) //On vérifie qu'on se déplace d'une case
+                && (arrive.y==depart.y+1 || arrive.y==depart.y-1 || arrive.y==depart.y) //On vérifie qu'on se déplace d'une case
+                && (depart.x!=arrive.x || depart.y!=arrive.y) ) { //On vérifie qu'on ne reste pas sur la même case
+            return (grille[depart.x][depart.y].nbPions()>0) // On vérifie qu'on ne déplace pas une tour vide
+                    && (grille[arrive.x][arrive.y].nbPions()>0)
+                    && (grille[depart.x][depart.y].nbPions() + grille[arrive.x][arrive.y].nbPions()) <= 5; //On vérifie qu'il n'y aura pas trop de pions sur la tour
+        }
+        return false;
+    }
+
     public static void printGrille(PrintWriter out, Case [][]grille, int h, int l) {
         for(int i=0; i<h; i++) {
             for(int j=0; j<l; j++) {

@@ -23,6 +23,6 @@ public interface CollecteurEvenements {
 
     void reagles();
 
-    boolean valideAction(String titre, String description, String choix1, String choix2);
+    boolean valideAction(String titre, String description, String choix_valider, String choix_annuler);
 }
 

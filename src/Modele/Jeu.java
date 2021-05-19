@@ -17,6 +17,10 @@ public class Jeu extends Etat {
     Historique historique;
     int lastDepI,lastDepJ,lastArrI,lastArrJ; //ajouté pour afficher le dernier coup
 
+    public Jeu() {
+        this(null, true);
+    }
+
     public Jeu(CollecteurEvenements events){
         this(events, true);
     }

@@ -107,23 +107,26 @@ public class Etat {
                         out.print(it.prochain().getCouleur());
                     }
                 }
-                if(j!=l-1) out.print("#");
+                if(j!=l-1) out.print("/");
             }
-            if(i!=h-1) out.print("|");
+            if(i!=h-1) out.print(":");
         }
         out.println();
     }
 
     public static Case[][] readGrille(String strGrille, int h, int l) {
         Case [][] grille = new Case[h][l];
-        String[] lignes = strGrille.split("|");
+        String[] lignes = strGrille.split(":");
         for(int i=0; i<lignes.length && i<h; i++) {
-            String[] cases = lignes[i].split("#");
+            String[] cases = lignes[i].split("/");
             for(int j=0; j<cases.length && j<l; j++) {
                 String[] attributs = cases[j].split(",");
-                boolean valide = Boolean.getBoolean(attributs[0]);
+                boolean valide = Boolean.parseBoolean(attributs[0]);
                 grille[i][j] = new Case(valide);
-                if(valide) {
+                if(valide && attributs.length==1) {
+                    grille[i][j].pions = new SequenceListe<>();
+                    grille[i][j].tete = null;
+                } else if(valide) {
                     SequenceListe<Pion> seq = new SequenceListe<>();
                     for(char c : attributs[1].toCharArray()) {
                         seq.insereTete(new Pion(Character.getNumericValue(c)));

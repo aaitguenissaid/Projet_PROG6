@@ -146,6 +146,10 @@ public class Jeu extends Etat {
         }
     }
 
+    public static Jeu recupererPartie(String nom_partie) {
+        return recupererPartie(null, nom_partie);
+    }
+
     public static Jeu recupererPartie(CollecteurEvenements events, String nom_partie) {
         Scanner in = Configuration.instance().ouvrirFichierLecture("FichierSauvegarde", "_"+nom_partie);
         if(in==null) {

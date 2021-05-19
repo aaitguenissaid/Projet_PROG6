@@ -2,6 +2,7 @@ package Controleur;
 
 
 import Modele.Jeu;
+import Modele.PartiesSauvegardees;
 import Structures.Mouvement;
 import Structures.SequenceListe;
 import Vue.AdaptateurTemps;
@@ -209,8 +210,33 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
     public void reprendre_une_partie() {
-        //TODO
-        System.out.println("Reprise d'une partie");
+        Object[] parties = PartiesSauvegardees.getNomsParties();
+        String titre = "Choix d'une partie";
+        String description = "Veuillez choisir une partie parmis celles sauvegardées.";
+        String nom_partie = (String) choisirItem(titre, description, parties, JOptionPane.QUESTION_MESSAGE);
+
+        if(nom_partie!=null) {
+            Jeu j = Jeu.recupererPartie(this, nom_partie);
+            if (j != null) {
+                this.jeu = j;
+                jeuint.setJeu(j);
+                jeuint.setGameScreen();
+            } else {
+                JOptionPane.showMessageDialog(jeuint.getFrame(),
+                        "Désolé, la partie "+nom_partie+" n'existe plus",
+                        "Erreur",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public void enregistrer_la_partie() {
+        String titre = "Choix du nom";
+        String description = "Veuillez entrer un nom pour votre partie.";
+        String nom = (String) choisirItem(titre, description, null, JOptionPane.PLAIN_MESSAGE);
+        if(nom!=null && nom.length()>2) {
+            this.jeu.enregistrerPartie(nom.replace(" ","_"));
+        }
     }
 
     @Override
@@ -239,5 +265,17 @@ public class ControleurMediateur implements CollecteurEvenements {
                 options,
                 options[0]);
         return n==1;
+    }
+
+    public Object choisirItem(String titre, String description, Object[] items, int message) {
+        return JOptionPane.showInputDialog(
+                jeuint.getFrame(),
+                description,
+                titre,
+                message,
+                null,
+                items,
+                (items!=null && items.length>0) ? items[0] : null
+        );
     }
 }

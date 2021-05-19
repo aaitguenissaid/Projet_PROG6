@@ -30,6 +30,16 @@ public class AireDeDessin extends JComponent {
         set=false;
     }
 
+    public void setJeu(Jeu j) {
+        this.jeu = j;
+        for(int i = 0 ; i< j.getTaille().h;i++){
+            for(int k = 0; k<j.getTaille().l;k++){
+                tab[i][k]  = new PionComponent(jeu.getCase(i,k));
+            }
+        }
+        set=false;
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         requestFocusInWindow();

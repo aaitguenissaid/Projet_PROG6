@@ -136,7 +136,9 @@ public class Jeu extends Etat {
     }
 
     public void enregistrerPartie(String nom_partie) {
-        PrintWriter out = Configuration.instance().ouvreFichierEcriture("FichierSauvegarde", "_"+nom_partie);
+        PrintWriter out = Configuration.instance().ouvreFichierEcriture(nom_partie
+                +"."
+                +Configuration.instance().lis("ExtensionSauvegarde"));
         if(out!=null) {
             out.println(taille.h + "," + taille.l);
             print(out); //Affiche la grille et le tour
@@ -152,49 +154,51 @@ public class Jeu extends Etat {
     }
 
     public static Jeu recupererPartie(CollecteurEvenements events, String nom_partie) {
-        Scanner in = Configuration.instance().ouvrirFichierLecture("FichierSauvegarde", "_"+nom_partie);
+        Scanner in = Configuration.instance().ouvrirFichierLecture(nom_partie
+                +"."
+                +Configuration.instance().lis("ExtensionSauvegarde"));
         if(in==null) {
-            return new Jeu(events);
+            return null;
         }
         Jeu nvx_jeu = new Jeu(events, false);
         nvx_jeu.estPartieRecuperee=true;
 
         //#### Récupération de la taille de la grille ####
-        if(!in.hasNextLine()) return new Jeu(events);
+        if(!in.hasNextLine()) return null;
         String line = in.nextLine();
         String[] taille = line.split(",");
         nvx_jeu.taille = new Size(Integer.parseInt(taille[0]),Integer.parseInt(taille[1]));
 
         //#### Récupération de la grille ####
-        if(!in.hasNextLine()) return new Jeu(events);
+        if(!in.hasNextLine()) return null;
         line = in.nextLine();
         nvx_jeu.grille = readGrille(line, nvx_jeu.taille.h, nvx_jeu.taille.l);
 
         //#### Récupération du tour ####
-        if(!in.hasNextLine()) return new Jeu(events);
+        if(!in.hasNextLine()) return null;
         line = in.nextLine();
         nvx_jeu.tour = Integer.parseInt(line);
 
         //#### Récupération du premier joueur ####
-        if(!in.hasNextLine()) return new Jeu(events);
+        if(!in.hasNextLine()) return null;
         line = in.nextLine();
         String[] joueur = line.split(",");
         nvx_jeu.j1 = new Joueur(joueur[1],Integer.parseInt(joueur[0]),Integer.parseInt(joueur[2]));
 
         //#### Récupération du deuxième joueur ####
-        if(!in.hasNextLine()) return new Jeu(events);
+        if(!in.hasNextLine()) return null;
         line = in.nextLine();
         joueur = line.split(",");
         nvx_jeu.j2 = new Joueur(joueur[1],Integer.parseInt(joueur[0]),Integer.parseInt(joueur[2]));
 
         //#### Récupération du nombre de coups réels de l'historique ####
-        if(!in.hasNextLine()) return new Jeu(events);
+        if(!in.hasNextLine()) return null;
         line = in.nextLine();
         nvx_jeu.historique = new Historique(nvx_jeu, false);
         nvx_jeu.historique.nbCoupsReel = Integer.parseInt(line);
 
         //#### Récupération de la taille de l'historique ####
-        if(!in.hasNextLine()) return new Jeu(events);
+        if(!in.hasNextLine()) return null;
         line = in.nextLine();
         int taille_hist = Integer.parseInt(line);
 
@@ -204,12 +208,12 @@ public class Jeu extends Etat {
             Case[][] grille_etat;
 
             // Récupération de la grille de l'état
-            if(!in.hasNextLine()) return new Jeu(events);
+            if(!in.hasNextLine()) return null;
             line = in.nextLine();
             grille_etat = readGrille(line, nvx_jeu.taille.h, nvx_jeu.taille.l);
 
             //Récupération du tour de l'état
-            if(!in.hasNextLine()) return new Jeu(events);
+            if(!in.hasNextLine()) return null;
             line = in.nextLine();
             tour_etat = Integer.parseInt(line);
 

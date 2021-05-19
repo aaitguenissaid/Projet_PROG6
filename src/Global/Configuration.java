@@ -109,11 +109,6 @@ public class Configuration {
     }
 
     public PrintWriter ouvreFichierEcriture(String nom) {
-        return ouvreFichierEcriture(nom, "");
-    }
-
-    public PrintWriter ouvreFichierEcriture(String nom, String complement) {
-        String file = this.lisFichier(nom) + complement;
         String home = System.getProperty("user.home");
         if(!Files.exists(Paths.get(home + File.separator + home_directory))) {
             try {
@@ -123,7 +118,7 @@ public class Configuration {
                 System.exit(0);
             }
         }
-        String filename = home + File.separator + home_directory + File.separator + file;
+        String filename = home + File.separator + home_directory + File.separator + nom;
         PrintWriter printWriter = null;
         try {
             printWriter = new PrintWriter(filename);
@@ -138,13 +133,8 @@ public class Configuration {
     }
 
     public Scanner ouvrirFichierLecture(String nom) {
-        return ouvrirFichierLecture(nom, "");
-    }
-
-    public Scanner ouvrirFichierLecture(String nom, String complement) {
-        String file = this.lisFichier(nom) + complement;
         String home = System.getProperty("user.home");
-        String filename = home + File.separator + home_directory + File.separator + file;
+        String filename = home + File.separator + home_directory + File.separator + nom;
         if(!Files.exists(Paths.get(filename))) {
             return null;
         }

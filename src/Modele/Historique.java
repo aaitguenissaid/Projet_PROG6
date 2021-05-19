@@ -33,6 +33,7 @@ public class Historique {
             historique.add(new Etat(grille, tour));
             current = historique.size()-1;
             nbCoupsReel++;
+            if(nbCoupsReel==5) jeu.enregistrerPartie("PartieTest");
         }
     }
 

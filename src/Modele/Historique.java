@@ -11,21 +11,18 @@ public class Historique {
     boolean navigationOn;
 
     public Historique(Jeu j) {
-        jeu = j;
-        historique = new ArrayList<>();
-        current = 0;
-        nbCoupsReel=0;
-        navigationOn = false;
-        ajouteEtat(jeu.grille, jeu.tour);
+        this(j, true);
     }
 
-    //Constructeur différencié par son paramètre inutilisé qui ne crée pas d'état initial
-    public Historique(Jeu j, Object useless) {
+    public Historique(Jeu j, boolean createInitialState) {
         jeu = j;
         historique = new ArrayList<>();
         current = 0;
         nbCoupsReel=0;
         navigationOn = false;
+        if(createInitialState) {
+            ajouteEtat(jeu.grille, jeu.tour);
+        }
     }
 
     /*

@@ -149,8 +149,8 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
 //        jeu.bouge(m.getDepart(),m.getArrivee());
         jeuint.metAJour();
-        System.out.println("Jeu fini : " + jeu.estFini());
-        System.out.println("Tour : " + jeu.getTour());
+        //System.out.println("Jeu fini : " + jeu.estFini());
+        //System.out.println("Tour : " + jeu.getTour());
 
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");

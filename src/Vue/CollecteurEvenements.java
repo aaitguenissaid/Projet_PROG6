@@ -22,5 +22,7 @@ public interface CollecteurEvenements {
     void mainmenu();
 
     void reagles();
+
+    boolean valideAction(String titre, String description, String choix1, String choix2);
 }
 

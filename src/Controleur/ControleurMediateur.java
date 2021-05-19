@@ -21,6 +21,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     IA IA_A, IA_B;
     Timer time;
     SequenceListe<Animation> animations;
+
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
         jeu = i.jeu();
@@ -218,4 +219,19 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void reagles() { jeuint.setReagles();}
+
+    @Override
+    public boolean valideAction(String titre, String description, String choix_valider, String choix_annuler) {
+        Object[] options = {choix_annuler, choix_valider};
+        int n = JOptionPane.showOptionDialog(
+                jeuint.getFrame(),
+                description,
+                titre,
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        return n==1;
+    }
 }

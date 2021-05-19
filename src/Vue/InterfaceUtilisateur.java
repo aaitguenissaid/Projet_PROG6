@@ -25,6 +25,7 @@ public class InterfaceUtilisateur implements Runnable {
         j = new Jeu();
         l=6;h=7;
         ctrl = new ControleurMediateur(this);
+        j.setCollecteurEvenements(ctrl);
         comp = new AireDeDessin(j,ctrl);
         main = new MainMenu(ctrl);
         param = new Parametres(ctrl);

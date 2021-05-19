@@ -19,6 +19,8 @@ public interface CollecteurEvenements {
 
     void reprendre_une_partie();
 
+    void enregistrer_la_partie();
+
     void parametres();
 
     void mainmenu();

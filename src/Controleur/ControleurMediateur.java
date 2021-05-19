@@ -212,7 +212,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         Object[] parties = PartiesSauvegardees.getNomsParties();
         String titre = "Choix d'une partie";
         String description = "Veuillez choisir une partie parmis celles sauvegardées.";
-        String nom_partie = (String) choisirItem(titre, description, parties);
+        String nom_partie = (String) choisirItem(titre, description, parties, JOptionPane.QUESTION_MESSAGE);
 
         if(nom_partie!=null) {
             Jeu j = Jeu.recupererPartie(this, nom_partie);
@@ -226,6 +226,15 @@ public class ControleurMediateur implements CollecteurEvenements {
                         "Erreur",
                         JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+
+    public void enregistrer_la_partie() {
+        String titre = "Choix du nom";
+        String description = "Veuillez entrer un nom pour votre partie.";
+        String nom = (String) choisirItem(titre, description, null, JOptionPane.PLAIN_MESSAGE);
+        if(nom!=null && nom.length()>2) {
+            this.jeu.enregistrerPartie(nom.replace(" ","_"));
         }
     }
 
@@ -257,15 +266,15 @@ public class ControleurMediateur implements CollecteurEvenements {
         return n==1;
     }
 
-    public Object choisirItem(String titre, String description, Object[] items) {
+    public Object choisirItem(String titre, String description, Object[] items, int message) {
         return JOptionPane.showInputDialog(
                 jeuint.getFrame(),
                 description,
                 titre,
-                JOptionPane.QUESTION_MESSAGE,
+                message,
                 null,
                 items,
-                (items.length>0) ? items[0] : null
+                (items!=null && items.length>0) ? items[0] : null
         );
     }
 }

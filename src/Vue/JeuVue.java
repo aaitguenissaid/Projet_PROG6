@@ -224,6 +224,7 @@ public class JeuVue extends javax.swing.JPanel {
 
         private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {
             // TODO add your handling code here:
+            cc.enregistrer_la_partie();
         }
 
         private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {

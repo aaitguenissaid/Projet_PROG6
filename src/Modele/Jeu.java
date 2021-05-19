@@ -2,6 +2,7 @@ package Modele;
 
 import Global.Configuration;
 import Structures.*;
+import Vue.CollecteurEvenements;
 
 import java.awt.*;
 import java.io.PrintWriter;
@@ -11,24 +12,35 @@ import java.util.Scanner;
 public class Jeu extends Etat {
     public static final int COULEUR1 = 0;
     public static final int COULEUR2 = 1;
+    CollecteurEvenements ctrl;
     Joueur j1,j2;
     Historique historique;
-    //ajouté pour afficher le dernier coup
-    int lastDepI,lastDepJ,lastArrI,lastArrJ;
+    int lastDepI,lastDepJ,lastArrI,lastArrJ; //ajouté pour afficher le dernier coup
+    boolean estPartieRecuperee;
 
-    //Construit un jeu vide et ignore le paramètre (sert à la récupération de partie)
-    private Jeu(Object useless) { }
-
-    public Jeu(){
-        super();
-        lastDepI=-1;lastDepJ=-1;lastArrI=-1;lastArrJ=-1;
-        j1 = new Joueur(1,0);
-        j2 = new Joueur(2,1);
-        tour = COULEUR1;
-        init_grille();
-        //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
-        historique = new Historique(this);
+    public Jeu() {
+        this(null, true);
     }
+
+    public Jeu(CollecteurEvenements ctrl){
+        this(ctrl, true);
+    }
+
+    public Jeu(CollecteurEvenements ctrl, boolean fromScratch) {
+        super();
+        this.ctrl = ctrl;
+        lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
+        estPartieRecuperee=false;
+        if(fromScratch) {
+            j1 = new Joueur(1,0);
+            j2 = new Joueur(2,1);
+            tour = COULEUR1;
+            init_grille();
+            //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
+            historique = new Historique(this);
+        }
+    }
+
     private void init_grille(){
         int centerL = taille.l/2;
         int centerH = taille.h/2;
@@ -47,6 +59,10 @@ public class Jeu extends Etat {
                 }
             }
         }
+    }
+
+    public void setCollecteurEvenements(CollecteurEvenements events) {
+        this.ctrl = events;
     }
 
     public boolean estFini() {
@@ -87,35 +103,40 @@ public class Jeu extends Etat {
      *  - Le mouvement est impossible (en dehors de la grille, trop / pas assez de pions, case invalide)
      */
     public boolean bouge(Point depart, Point arrive) {
-        if(!estMouvementPossible(depart, arrive) || historique.getNavigation()) return false;
+        if(historique.getNavigation()) {
+            //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
+            //dans l'état qu'il visitait
+            if(!historique.getEtatNavigation().estMouvementPossible(depart, arrive)) return false;
+            String titre = "Validation navigation historique";
+            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
+                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
+            String choix_valide = "Continuer";
+            String choix_annule = "Annuler";
+            if(valideAction(titre, description, choix_valide, choix_annule)) {
+                historique.validerNavigation();
+            }
+        } else {
+            if (!estMouvementPossible(depart, arrive)) return false;
+        }
+
         lastDepI=depart.x;lastDepJ=depart.y;lastArrI=arrive.x;lastArrJ=arrive.y;
+
         SequenceListe<Pion> pions = grille[depart.x][depart.y].getPions();
         grille[depart.x][depart.y].supprimePions();
         grille[arrive.x][arrive.y].ajoutePions(pions);
         setTour((tour==0) ? 1 : 0);
-        historique.ajouteEtat(grille, tour);
-        return true;
-    }
 
-    public boolean estMouvementPossible(Point depart, Point arrive) {
-        if(estCaseValide(depart)        //On vérifie les coordonnées
-            && estCaseValide(arrive)    //On vérifie les coordonnées
-            && (arrive.x==depart.x+1 || arrive.x==depart.x-1 || arrive.x==depart.x) //On vérifie qu'on se déplace d'une case
-            && (arrive.y==depart.y+1 || arrive.y==depart.y-1 || arrive.y==depart.y) //On vérifie qu'on se déplace d'une case
-            && (depart.x!=arrive.x || depart.y!=arrive.y) ) { //On vérifie qu'on ne reste pas sur la même case
-                return (grille[depart.x][depart.y].nbPions()>0) // On vérifie qu'on ne déplace pas une tour vide
-                    && (grille[arrive.x][arrive.y].nbPions()>0)
-                    && (grille[depart.x][depart.y].nbPions() + grille[arrive.x][arrive.y].nbPions()) <= 5; //On vérifie qu'il n'y aura pas trop de pions sur la tour
-        }
-        return false;
+        historique.ajouteEtat(grille, tour);
+
+        return true;
     }
 
     public Historique getHistorique() {
         return historique;
     }
 
-    public void enregistrerPartie() {
-        PrintWriter out = Configuration.instance().ouvreFichierEcriture("FichierSauvegarde");
+    public void enregistrerPartie(String nom_partie) {
+        PrintWriter out = Configuration.instance().ouvreFichierEcriture("FichierSauvegarde", "_"+nom_partie);
         if(out!=null) {
             out.println(taille.h + "," + taille.l);
             print(out); //Affiche la grille et le tour
@@ -126,65 +147,69 @@ public class Jeu extends Etat {
         }
     }
 
-    public static Jeu recupererPartie() {
-        Scanner in = Configuration.instance().ouvrirFichierLecture("FichierSauvegarde");
+    public static Jeu recupererPartie(String nom_partie) {
+        return recupererPartie(null, nom_partie);
+    }
+
+    public static Jeu recupererPartie(CollecteurEvenements events, String nom_partie) {
+        Scanner in = Configuration.instance().ouvrirFichierLecture("FichierSauvegarde", "_"+nom_partie);
         if(in==null) {
-            return new Jeu();
+            return new Jeu(events);
         }
-        Jeu nvx_jeu = new Jeu(null);
+        Jeu nvx_jeu = new Jeu(events, false);
+        nvx_jeu.estPartieRecuperee=true;
 
         //#### Récupération de la taille de la grille ####
-        if(!in.hasNextLine()) return new Jeu();
+        if(!in.hasNextLine()) return new Jeu(events);
         String line = in.nextLine();
         String[] taille = line.split(",");
         nvx_jeu.taille = new Size(Integer.parseInt(taille[0]),Integer.parseInt(taille[1]));
 
         //#### Récupération de la grille ####
-        if(!in.hasNextLine()) return new Jeu();
+        if(!in.hasNextLine()) return new Jeu(events);
         line = in.nextLine();
         nvx_jeu.grille = readGrille(line, nvx_jeu.taille.h, nvx_jeu.taille.l);
 
         //#### Récupération du tour ####
-        if(!in.hasNextLine()) return new Jeu();
+        if(!in.hasNextLine()) return new Jeu(events);
         line = in.nextLine();
         nvx_jeu.tour = Integer.parseInt(line);
 
         //#### Récupération du premier joueur ####
-        if(!in.hasNextLine()) return new Jeu();
+        if(!in.hasNextLine()) return new Jeu(events);
         line = in.nextLine();
         String[] joueur = line.split(",");
         nvx_jeu.j1 = new Joueur(joueur[1],Integer.parseInt(joueur[0]),Integer.parseInt(joueur[2]));
 
         //#### Récupération du deuxième joueur ####
-        if(!in.hasNextLine()) return new Jeu();
+        if(!in.hasNextLine()) return new Jeu(events);
         line = in.nextLine();
         joueur = line.split(",");
         nvx_jeu.j2 = new Joueur(joueur[1],Integer.parseInt(joueur[0]),Integer.parseInt(joueur[2]));
 
         //#### Récupération du nombre de coups réels de l'historique ####
-        if(!in.hasNextLine()) return new Jeu();
+        if(!in.hasNextLine()) return new Jeu(events);
         line = in.nextLine();
-        nvx_jeu.historique = new Historique(nvx_jeu, null);
+        nvx_jeu.historique = new Historique(nvx_jeu, false);
         nvx_jeu.historique.nbCoupsReel = Integer.parseInt(line);
 
         //#### Récupération de la taille de l'historique ####
-        if(!in.hasNextLine()) return new Jeu();
+        if(!in.hasNextLine()) return new Jeu(events);
         line = in.nextLine();
         int taille_hist = Integer.parseInt(line);
 
-        SequenceListe<Etat> seq_etat = new SequenceListe<>();
+        int tour_etat;
         //#### Récupération  de l'historique ####
         for(int i=0; i<taille_hist-1; i++) {
-            int tour_etat = 0;
             Case[][] grille_etat;
 
             // Récupération de la grille de l'état
-            if(!in.hasNextLine()) return new Jeu();
+            if(!in.hasNextLine()) return new Jeu(events);
             line = in.nextLine();
             grille_etat = readGrille(line, nvx_jeu.taille.h, nvx_jeu.taille.l);
 
             //Récupération du tour de l'état
-            if(!in.hasNextLine()) return new Jeu();
+            if(!in.hasNextLine()) return new Jeu(events);
             line = in.nextLine();
             tour_etat = Integer.parseInt(line);
 
@@ -199,5 +224,13 @@ public class Jeu extends Etat {
     }
     public boolean estCaseDepart(int x,int y){
         return lastDepI==x && lastDepJ==y;
+    }
+
+    private boolean valideAction(String titre, String description, String choix_valider, String choix_annuler) {
+        if(ctrl==null) {
+            System.err.println("Attention, le jeu n'a pas accès au controleur et ne peut pas demander de validation à l'utilisateur");
+            return true;
+        }
+        return ctrl.valideAction(titre, description, choix_valider, choix_annuler);
     }
 }

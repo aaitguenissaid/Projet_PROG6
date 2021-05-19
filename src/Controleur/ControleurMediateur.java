@@ -21,6 +21,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     IA IA_A, IA_B;
     Timer time;
     SequenceListe<Animation> animations;
+
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
         jeu = i.jeu();
@@ -150,8 +151,8 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
 //        jeu.bouge(m.getDepart(),m.getArrivee());
         jeuint.metAJour();
-        System.out.println("Jeu fini : " + jeu.estFini());
-        System.out.println("Tour : " + jeu.getTour());
+        //System.out.println("Jeu fini : " + jeu.estFini());
+        //System.out.println("Tour : " + jeu.getTour());
 
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");
@@ -207,6 +208,11 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint.setGameScreen();
     }
 
+    public void reprendre_une_partie() {
+        //TODO
+        System.out.println("Reprise d'une partie");
+    }
+
     @Override
     public void parametres() {
         jeuint.setParametres();
@@ -215,5 +221,23 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void mainmenu() {
         jeuint.setMainMenu();
+    }
+
+    @Override
+    public void reagles() { jeuint.setReagles();}
+
+    @Override
+    public boolean valideAction(String titre, String description, String choix_valider, String choix_annuler) {
+        Object[] options = {choix_annuler, choix_valider};
+        int n = JOptionPane.showOptionDialog(
+                jeuint.getFrame(),
+                description,
+                titre,
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        return n==1;
     }
 }

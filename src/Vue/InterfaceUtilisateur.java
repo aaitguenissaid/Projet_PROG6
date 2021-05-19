@@ -16,6 +16,8 @@ public class InterfaceUtilisateur implements Runnable {
     Parametres param;
     CollecteurEvenements ctrl;
     CardLayout cl;
+    Reagles reg;
+    JeuVue jeu;
 
 
     public void run() {
@@ -23,15 +25,19 @@ public class InterfaceUtilisateur implements Runnable {
         j = new Jeu();
         l=6;h=7;
         ctrl = new ControleurMediateur(this);
+        j.setCollecteurEvenements(ctrl);
         comp = new AireDeDessin(j,ctrl);
         main = new MainMenu(ctrl);
         param = new Parametres(ctrl);
+        reg = new Reagles(ctrl);
         comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
         comp.addMouseMotionListener(new AdaptateurMouvementDeSouri(ctrl,comp));
+        jeu = new JeuVue(ctrl,comp);
         screens = new JPanel(new CardLayout());
         screens.add(main,"MAINMENU");
-        screens.add(comp,"GAMESCREEN");
+        screens.add(jeu,"GAMESCREEN");
         screens.add(param,"PARAMETRES");
+        screens.add(reg,"REAGLES");
         frame.add(screens);
         comp.setFocusable(true);
         comp.addKeyListener(new AdaptateurDeClavier(ctrl));
@@ -75,4 +81,5 @@ public class InterfaceUtilisateur implements Runnable {
     public void setParametres(){
         cl.show(screens, "PARAMETRES");
     }
+    public void setReagles(){ cl.show(screens, "REAGLES"); }
 }

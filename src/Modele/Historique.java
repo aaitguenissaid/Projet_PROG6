@@ -11,21 +11,18 @@ public class Historique {
     boolean navigationOn;
 
     public Historique(Jeu j) {
-        jeu = j;
-        historique = new ArrayList<>();
-        current = 0;
-        nbCoupsReel=0;
-        navigationOn = false;
-        ajouteEtat(jeu.grille, jeu.tour);
+        this(j, true);
     }
 
-    //Constructeur différencié par son paramètre inutilisé qui ne crée pas d'état initial
-    public Historique(Jeu j, Object useless) {
+    public Historique(Jeu j, boolean createInitialState) {
         jeu = j;
         historique = new ArrayList<>();
         current = 0;
         nbCoupsReel=0;
         navigationOn = false;
+        if(createInitialState) {
+            ajouteEtat(jeu.grille, jeu.tour);
+        }
     }
 
     /*
@@ -39,22 +36,27 @@ public class Historique {
         }
     }
 
+    public Etat getEtatNavigation() {
+        if(historique==null || current<0 || current>historique.size()) return null;
+        return historique.get(current);
+    }
+
     public boolean aPrecedent() {
         return (historique!=null) && (current-1>=0);
     }
 
     public Etat precedent() {
-        setNavigationOn();
         if(historique==null || current-1<0 || current-1>=historique.size()) return null;
+        setNavigationOn();
         return historique.get(--current);
     }
 
     public boolean aSuivant() {
-        return !(historique==null) && (current+1 <= historique.size());
+        return (historique!=null) && (current+1 < historique.size());
     }
 
     public Etat suivant() {
-        if(current==historique.size()-1) setNavigationOff();
+        if(current==historique.size()-2) setNavigationOff();
         if(historique==null || current+1<0 || current+1>=historique.size()) return null;
         return historique.get(++current);
     }
@@ -87,13 +89,18 @@ public class Historique {
         setNavigationOff();
     }
 
-    public void annulerNavigation() {
+    //Rejoins l'etat actuel du Jeu
+    public Etat atteindreFinHistorique() {
+        if(historique.size()==0) return null;
         current = historique.size()-1;
         setNavigationOff();
+        return historique.get(current);
     }
 
+    //Rejoins le premier etat de la partie
     public Etat atteindreDebutHistorique() {
         if(historique.size()==0) return null;
+        setNavigationOn();
         current = 0;
         return historique.get(current);
     }

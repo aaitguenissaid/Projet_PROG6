@@ -16,6 +16,7 @@ public class Jeu extends Etat {
     Joueur j1,j2;
     Historique historique;
     int lastDepI,lastDepJ,lastArrI,lastArrJ; //ajouté pour afficher le dernier coup
+    boolean estPartieRecuperee;
 
     public Jeu() {
         this(null, true);
@@ -29,6 +30,7 @@ public class Jeu extends Etat {
         super();
         this.events = events;
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
+        estPartieRecuperee=false;
         if(fromScratch) {
             j1 = new Joueur(1,0);
             j2 = new Joueur(2,1);
@@ -132,8 +134,8 @@ public class Jeu extends Etat {
         return historique;
     }
 
-    public void enregistrerPartie() {
-        PrintWriter out = Configuration.instance().ouvreFichierEcriture("FichierSauvegarde");
+    public void enregistrerPartie(String nom_partie) {
+        PrintWriter out = Configuration.instance().ouvreFichierEcriture("FichierSauvegarde", "_"+nom_partie);
         if(out!=null) {
             out.println(taille.h + "," + taille.l);
             print(out); //Affiche la grille et le tour
@@ -144,12 +146,13 @@ public class Jeu extends Etat {
         }
     }
 
-    public static Jeu recupererPartie(CollecteurEvenements events) {
-        Scanner in = Configuration.instance().ouvrirFichierLecture("FichierSauvegarde");
+    public static Jeu recupererPartie(CollecteurEvenements events, String nom_partie) {
+        Scanner in = Configuration.instance().ouvrirFichierLecture("FichierSauvegarde", "_"+nom_partie);
         if(in==null) {
             return new Jeu(events);
         }
         Jeu nvx_jeu = new Jeu(events, false);
+        nvx_jeu.estPartieRecuperee=true;
 
         //#### Récupération de la taille de la grille ####
         if(!in.hasNextLine()) return new Jeu(events);

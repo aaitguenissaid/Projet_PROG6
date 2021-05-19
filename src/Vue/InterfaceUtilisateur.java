@@ -49,6 +49,7 @@ public class InterfaceUtilisateur implements Runnable {
     public Jeu jeu(){
         return j;
     }
+    public void setJeu(Jeu j) {this.j=j;}
 
     public void basculePleinEcran() {
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();

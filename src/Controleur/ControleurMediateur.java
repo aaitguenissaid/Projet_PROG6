@@ -126,6 +126,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         switch (c) {
             case "ActiveA":
                 activerJoueurA();
+                System.out.println("******************");
                 break;
             case "ActiveB":
                 activerJoueurB();

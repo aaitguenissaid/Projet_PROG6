@@ -161,6 +161,7 @@ public class MainMenu extends javax.swing.JPanel {
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Sved erly game
+        cc.reprendre_une_partie();
     }
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {

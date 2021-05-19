@@ -207,6 +207,11 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint.setGameScreen();
     }
 
+    public void reprendre_une_partie() {
+        //TODO
+        System.out.println("Reprise d'une partie");
+    }
+
     @Override
     public void parametres() {
         jeuint.setParametres();

@@ -17,6 +17,8 @@ public interface CollecteurEvenements {
 
     void jouer_en_local();
 
+    void reprendre_une_partie();
+
     void parametres();
 
     void mainmenu();

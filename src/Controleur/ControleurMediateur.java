@@ -215,4 +215,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void mainmenu() {
         jeuint.setMainMenu();
     }
+
+    @Override
+    public void reagles() { jeuint.setReagles();}
 }

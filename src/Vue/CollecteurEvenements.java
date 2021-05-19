@@ -20,5 +20,7 @@ public interface CollecteurEvenements {
     void parametres();
 
     void mainmenu();
+
+    void reagles();
 }
 

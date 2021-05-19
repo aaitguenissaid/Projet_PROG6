@@ -22,13 +22,13 @@ public class MainMenu extends javax.swing.JPanel {
         filler20 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler21 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        jToggleButton6 = new javax.swing.JToggleButton();
+        jToggleButton6 = new javax.swing.JButton();
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0));
-        jToggleButton5 = new javax.swing.JToggleButton();
+        jToggleButton5 = new javax.swing.JButton();
         filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0));
-        jToggleButton7 = new javax.swing.JToggleButton();
+        jToggleButton7 = new javax.swing.JButton();
 
         setLayout(new java.awt.GridLayout(5, 3));
         add(filler1);
@@ -58,11 +58,7 @@ public class MainMenu extends javax.swing.JPanel {
                 jButton1MouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+
         jPanel1.add(jButton1);
         jPanel1.add(filler20);
         jPanel1.add(filler21);
@@ -115,15 +111,15 @@ public class MainMenu extends javax.swing.JPanel {
 
     private void jToggleButton5MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
+
     }
 
     private void jToggleButton7MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
+        cc.reagles();
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
+
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
@@ -154,8 +150,8 @@ public class MainMenu extends javax.swing.JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jToggleButton5;
-    private javax.swing.JToggleButton jToggleButton6;
-    private javax.swing.JToggleButton jToggleButton7;
+    private javax.swing.JButton jToggleButton5;
+    private javax.swing.JButton jToggleButton6;
+    private javax.swing.JButton jToggleButton7;
     // End of variables declaration
 }

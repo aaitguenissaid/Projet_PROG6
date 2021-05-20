@@ -128,7 +128,6 @@ public class ControleurMediateur implements CollecteurEvenements {
         switch (c) {
             case "ActiveA":
                 activerJoueurA();
-                System.out.println("******************");
                 break;
             case "ActiveB":
                 activerJoueurB();
@@ -160,6 +159,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(!jeu.estFini() && !animationRunning ) {
             if(jeu.bouge(m.getDepart(),m.getArrivee())) {
                 jeuint.metAJour();
+                System.out.println("Jeu fini : " + jeu.estFini());
                 Mouvement to_clic = null;
                 if (activeA) {
                     to_clic = IA_A.joue();

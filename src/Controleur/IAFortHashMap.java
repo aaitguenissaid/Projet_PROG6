@@ -261,9 +261,9 @@ public class IAFortHashMap extends IA{
                     alpha = Math.max(alpha, valeur);
                     if (beta <= alpha)
                         break;
-                    return maxValeur;
-                }
 
+                }
+                return maxValeur;
             }
         } else {
             int minValeur = INF;
@@ -276,9 +276,9 @@ public class IAFortHashMap extends IA{
                     beta = Math.min(beta, valeur);
                     if (beta <= alpha)
                         break;
-                    return minValeur;
-                }
 
+                }
+                return minValeur;
             }
         }
         return 0;

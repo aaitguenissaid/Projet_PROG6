@@ -237,11 +237,64 @@ public class IAFortTableau extends IA{
                     nombre1++;
             }
         }
+        if (nombre0 == nombre1)
+            return 0;
+        else {
+            if (joueur == 0)
+                return nombre0 > nombre1 ? 1 : 0;
+            else
+                return nombre1 > nombre0 ? 1 : 0;
+        }
+        /*
+        if (joueur == 0)
+            return nombre0 - nombre1;
+        else
+            return nombre1 - nombre0;*/
+    }
+
+    /* Evaluer la note d'une feuille */
+    public int evaluerNoeud(byte[] configuration){
+        int nombre0 = 0;
+        int nombre1 = 0;
+        for (int i = 0; i < configuration.length; i++) {
+            ArrayList<Integer> voisins = voisinsAccessibles(configuration, i);
+            if (getCouleur(configuration[i]) == joueur) {
+                if (getHauteur(configuration[i]) == 5)
+                    nombre0++;
+                else if (voisins.size() == 0)
+                    nombre0++;
+                else if (voisins.size() > 0) {
+                    int nombreDeJoueur = 0;
+                    for (int j = 0; j < voisins.size(); j++) {
+                        if (getCouleur(configuration[voisins.get(j)]) == joueur)
+                            nombreDeJoueur++;
+                    }
+                    if (nombreDeJoueur == voisins.size())
+                        nombre0++;
+                }
+            }
+            if (getCouleur(configuration[i]) != joueur) {
+                if (getHauteur(configuration[i]) == 5)
+                    nombre1++;
+                else if (voisins.size() == 0)
+                    nombre1++;
+                else if (voisins.size() > 0) {
+                    int nombreDeJoueur = 0;
+                    for (int j = 0; j < voisins.size(); j++) {
+                        if (getCouleur(configuration[voisins.get(j)]) != joueur)
+                            nombreDeJoueur++;
+                    }
+                    if (nombreDeJoueur == voisins.size())
+                        nombre1++;
+                }
+            }
+        }
         if (joueur == 0)
             return nombre0 - nombre1;
         else
             return nombre1 - nombre0;
     }
+
 
     /* A partir d'une configuration courante, retourne toutes les configurations possibles pour en une étape*/
     public ArrayList<byte[]> configurationSuivants(byte[] configuration){
@@ -301,9 +354,9 @@ public class IAFortTableau extends IA{
                     byte[] configSuivant = configSuivants.get(i);
                     int valeur = minmax(configSuivant, false);
                     maxValeur = Math.max(maxValeur, valeur);
-
                 }
                 return maxValeur;
+
             }
         } else {
             int minValeur = INF;
@@ -322,23 +375,22 @@ public class IAFortTableau extends IA{
 
 
     /* Fonction minmax alpha beta */
-    private int minmaxAlphaBeta(byte[] config, int alpha, int beta, boolean estMax){
-        if (estFeuille(config))
-            return evaluation(config);
+    private int minmaxAlphaBeta(byte[] config, int alpha, int beta, boolean estMax, int horizon){
+        if ((estFeuille(config)) || (horizon == 0))
+            return evaluerNoeud(config);
         if (estMax){
             int maxValeur = -INF;
             ArrayList<byte[]> configSuivants = configurationSuivants(config);
             if (configSuivants != null){
                 for (int i = 0; i < configSuivants.size(); i++){
                     byte[] configSuivant = configSuivants.get(i);
-                    int valeur = minmaxAlphaBeta(configSuivant, alpha, beta,false);
+                    int valeur = minmaxAlphaBeta(configSuivant, alpha, beta,false, horizon-1);
                     maxValeur = Math.max(maxValeur, valeur);
                     alpha = Math.max(alpha, valeur);
                     if (beta <= alpha)
                         break;
-                    return maxValeur;
                 }
-//                return maxValeur;
+                return maxValeur;
             }
         } else {
             int minValeur = INF;
@@ -346,18 +398,18 @@ public class IAFortTableau extends IA{
             if (configSuivants != null){
                 for (int i = 0; i < configSuivants.size(); i++){
                     byte[] configSuivant = configSuivants.get(i);
-                    int valeur = minmaxAlphaBeta(configSuivant, alpha, beta, true);
+                    int valeur = minmaxAlphaBeta(configSuivant, alpha, beta, true, horizon-1);
                     minValeur = Math.min(minValeur, valeur);
                     beta = Math.min(beta, valeur);
                     if (beta <= alpha)
                         break;
-                    return minValeur;
                 }
-//                return minValeur;
+                return minValeur;
             }
         }
         return 0;
     }
+
 
     @Override
     public Mouvement joue() {
@@ -365,21 +417,56 @@ public class IAFortTableau extends IA{
         byte[] gagnant = null;
         ArrayList<byte[]> configSuivants = configurationSuivants(config);
 
-        int imax = 0;
-        int max = -INF;
         System.out.println("configSuivants.size() = " + configSuivants.size());
-        for (int i = 0; i < configSuivants.size(); i++){
-            byte[] configSuivant = configSuivants.get(i);
-            /* Utiliser l'algorithme minmax */
-            //int courant = minmax(configSuivant, true);
-            // Utiliser l'algorithme minmax alpha beta
-            int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true);
-            if (courant > max){
-                max = courant;
-                imax = i;
+        if (configSuivants.size()>150){
+            int imax = 0;
+            int max = -INF;
+            for (int i = 0; i < configSuivants.size(); i++){
+                byte[] configSuivant = configSuivants.get(i);
+                int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, 2);
+                if (courant > max){
+                    max = courant;
+                    imax = i;
+                }
             }
+            gagnant = configSuivants.get(imax);
+        } else if (configSuivants.size()>100){
+            int imax = 0;
+            int max = -INF;
+            for (int i = 0; i < configSuivants.size(); i++){
+                byte[] configSuivant = configSuivants.get(i);
+                int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, 3);
+                if (courant > max){
+                    max = courant;
+                    imax = i;
+                }
+            }
+            gagnant = configSuivants.get(imax);
+        } else if (configSuivants.size()>50){
+            int imax = 0;
+            int max = -INF;
+            for (int i = 0; i < configSuivants.size(); i++){
+                byte[] configSuivant = configSuivants.get(i);
+                int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, 4);
+                if (courant > max){
+                    max = courant;
+                    imax = i;
+                }
+            }
+            gagnant = configSuivants.get(imax);
+        } else {
+            int imax = 0;
+            int max = -INF;
+            for (int i = 0; i < configSuivants.size(); i++){
+                byte[] configSuivant = configSuivants.get(i);
+                int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, 5);
+                if (courant > max){
+                    max = courant;
+                    imax = i;
+                }
+            }
+            gagnant = configSuivants.get(imax);
         }
-        gagnant = configSuivants.get(imax);
         Mouvement resultat = configurationVersMouvement(config, gagnant);
         return resultat;
     }

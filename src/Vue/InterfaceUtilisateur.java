@@ -33,6 +33,7 @@ public class InterfaceUtilisateur implements Runnable {
         comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
         comp.addMouseMotionListener(new AdaptateurMouvementDeSouri(ctrl,comp));
         jeu = new JeuVue(ctrl,comp);
+        setStatistiques();
         screens = new JPanel(new CardLayout());
         screens.add(main,"MAINMENU");
         screens.add(jeu,"GAMESCREEN");
@@ -46,6 +47,14 @@ public class InterfaceUtilisateur implements Runnable {
         frame.setVisible(true);
         cl = (CardLayout)(screens.getLayout());
     }
+
+    private void setStatistiques() {
+        jeu.setNomDeJ1(j.getNomJ1());
+        jeu.setNomDeJ2(j.getNomJ2());
+        jeu.setScoreJ1("0");
+        jeu.setScoreJ2("0");
+    }
+
     public Jeu jeu(){
         return j;
     }
@@ -69,6 +78,11 @@ public class InterfaceUtilisateur implements Runnable {
         return frame;
     }
     public void metAJour() {
+        if(j.getTour()==0){
+            jeu.setTour(j.getNomJ1());
+        }else{
+            jeu.setTour(j.getNomJ2());
+        }
         comp.repaint();
     }
     public AireDeDessin getAireDeDessin(){

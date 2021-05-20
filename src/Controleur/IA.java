@@ -17,18 +17,6 @@ abstract class IA {
 
     }
 
-    public byte hashCode(int h, int l){
-        return (byte) ((h << 4) | l);
-    }
-
-    public int hashCodeVerH(byte code){
-        return (byte)(((int)code & (0XF << 4)) >> 4);
-    }
-
-    public int hashCodeVerL(byte code){
-        return (code & 0XF);
-    }
-
     public ArrayList<Point> trouveVosinsAccessible(Point depart){
         ArrayList<Point> voisinsAccessible = new ArrayList<>();
         int h = depart.x;

@@ -237,4 +237,10 @@ public class Jeu extends Etat {
         }
         return ctrl.valideAction(titre, description, choix_valider, choix_annuler);
     }
+    public String getNomJ1(){
+        return j1.getNom();
+    }
+    public String getNomJ2(){
+        return j2.getNom();
+    }
 }

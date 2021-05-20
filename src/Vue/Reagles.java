@@ -1,4 +1,7 @@
 package Vue;
+
+import java.awt.*;
+
 public class Reagles extends javax.swing.JPanel {
     CollecteurEvenements cc;
     public Reagles(CollecteurEvenements ctrl) {
@@ -39,7 +42,7 @@ public class Reagles extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         jPanel2.add(jButton1, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Ubuntu", Font.BOLD, 18)); // NOI18N
         jLabel1.setText("Reagles");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -69,7 +72,7 @@ public class Reagles extends javax.swing.JPanel {
         jPanel1.add(jButton2);
 
         add(jPanel1);
-    }// </editor-fold>
+    }
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:

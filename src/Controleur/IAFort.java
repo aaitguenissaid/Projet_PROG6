@@ -6,10 +6,10 @@ import Structures.Mouvement;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class IAFortTableau extends IA{
+public class IAFort extends IA{
     private final int INF = 1000;
 
-    public IAFortTableau(Jeu j, int joueur) {
+    public IAFort(Jeu j, int joueur) {
         super(j, joueur);
     }
 

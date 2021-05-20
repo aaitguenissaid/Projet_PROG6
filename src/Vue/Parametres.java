@@ -1,4 +1,6 @@
 package Vue;
+import Modele.Preferences;
+
 import java.awt.CardLayout;
 import java.io.File;
 
@@ -6,8 +8,10 @@ import java.io.File;
 public class Parametres extends javax.swing.JPanel {
     CollecteurEvenements cc;
     CardLayout cardslayout;
+    Preferences prefs;
     public Parametres(CollecteurEvenements ctrl) {
         cc=ctrl;
+        prefs = new Preferences();
         initComponents();
         cardslayout = (CardLayout)(jPanel2.getLayout());
     }
@@ -179,6 +183,7 @@ public class Parametres extends javax.swing.JPanel {
         jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.PAGE_AXIS));
 
         jCheckBox1.setText("Recommencer une partie automatiquement lorsqu'une partie se termine");
+        jCheckBox1.setSelected(Boolean.parseBoolean(prefs.get(Preferences.RELANCE_AUTOMATIQUE)));
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
@@ -187,9 +192,21 @@ public class Parametres extends javax.swing.JPanel {
         jPanel3.add(jCheckBox1);
 
         jCheckBox2.setText("Interdire l'utilisation de l'historique");
+        jCheckBox2.setSelected(Boolean.parseBoolean(prefs.get(Preferences.EST_AUTORISE_HISTORIQUE)));
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jCheckBox2);
 
         jCheckBox3.setText("Interdire les suggestions des IAs");
+        jCheckBox3.setSelected(Boolean.parseBoolean(prefs.get(Preferences.EST_AUTORISE_SUGGESTION)));
+        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox3ActionPerformed(evt);
+            }
+        });
         jPanel3.add(jCheckBox3);
 
         jPanel2.add(jPanel3, "card1");
@@ -442,7 +459,24 @@ public class Parametres extends javax.swing.JPanel {
     }
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        // TODO add your handling code here: Relance Automatique
+        if(prefs==null) prefs = new Preferences();
+        boolean relanceAutomatique = Boolean.parseBoolean(prefs.get(Preferences.RELANCE_AUTOMATIQUE));
+        prefs.set(Preferences.RELANCE_AUTOMATIQUE, String.valueOf(!relanceAutomatique));
+    }
+
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here: Est Autorisé Historique
+        if(prefs==null) prefs = new Preferences();
+        boolean estAutoriseHistorique = Boolean.parseBoolean(prefs.get(Preferences.EST_AUTORISE_HISTORIQUE));
+        prefs.set(Preferences.EST_AUTORISE_HISTORIQUE, String.valueOf(!estAutoriseHistorique));
+    }
+
+    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here: Est Autorisé Suggestion
+        if(prefs==null) prefs = new Preferences();
+        boolean estAutoriseSuggestion = Boolean.parseBoolean(prefs.get(Preferences.EST_AUTORISE_SUGGESTION));
+        prefs.set(Preferences.EST_AUTORISE_SUGGESTION, String.valueOf(!estAutoriseSuggestion));
     }
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {

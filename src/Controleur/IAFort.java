@@ -239,17 +239,8 @@ public class IAFort extends IA{
         }
         if (nombre0 == nombre1)
             return 0;
-        else {
-            if (joueur == 0)
-                return nombre0 > nombre1 ? 1 : 0;
-            else
-                return nombre1 > nombre0 ? 1 : 0;
-        }
-        /*
-        if (joueur == 0)
-            return nombre0 - nombre1;
         else
-            return nombre1 - nombre0;*/
+            return nombre0 > nombre1 ? 1 : -1;
     }
 
     /* Evaluer la note d'une feuille */
@@ -289,10 +280,7 @@ public class IAFort extends IA{
                 }
             }
         }
-        if (joueur == 0)
-            return nombre0 - nombre1;
-        else
-            return nombre1 - nombre0;
+        return nombre0 - nombre1;
     }
 
 

@@ -410,6 +410,21 @@ public class IAFortTableau extends IA{
         return 0;
     }
 
+    private byte[] trouverGagnant(byte[] config, ArrayList<byte[]> configSuivants, int horizon){
+        byte[] gagnant = null;
+        int imax = 0;
+        int max = -INF;
+        for (int i = 0; i < configSuivants.size(); i++){
+            byte[] configSuivant = configSuivants.get(i);
+            int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, horizon);
+            if (courant > max){
+                max = courant;
+                imax = i;
+            }
+        }
+        gagnant = configSuivants.get(imax);
+        return gagnant;
+    }
 
     @Override
     public Mouvement joue() {
@@ -418,54 +433,16 @@ public class IAFortTableau extends IA{
         ArrayList<byte[]> configSuivants = configurationSuivants(config);
 
         System.out.println("configSuivants.size() = " + configSuivants.size());
-        if (configSuivants.size()>150){
-            int imax = 0;
-            int max = -INF;
-            for (int i = 0; i < configSuivants.size(); i++){
-                byte[] configSuivant = configSuivants.get(i);
-                int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, 2);
-                if (courant > max){
-                    max = courant;
-                    imax = i;
-                }
-            }
-            gagnant = configSuivants.get(imax);
-        } else if (configSuivants.size()>100){
-            int imax = 0;
-            int max = -INF;
-            for (int i = 0; i < configSuivants.size(); i++){
-                byte[] configSuivant = configSuivants.get(i);
-                int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, 3);
-                if (courant > max){
-                    max = courant;
-                    imax = i;
-                }
-            }
-            gagnant = configSuivants.get(imax);
-        } else if (configSuivants.size()>50){
-            int imax = 0;
-            int max = -INF;
-            for (int i = 0; i < configSuivants.size(); i++){
-                byte[] configSuivant = configSuivants.get(i);
-                int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, 4);
-                if (courant > max){
-                    max = courant;
-                    imax = i;
-                }
-            }
-            gagnant = configSuivants.get(imax);
+        if (configSuivants.size() > 150){
+            IABasique iaB = new IABasique(jeu, joueur);
+            return iaB.joue();
+//            gagnant = trouverGagnant(config, configSuivants, 2);
+        } else if (configSuivants.size() > 100){
+            gagnant = trouverGagnant(config, configSuivants, 3);
+        } else if (configSuivants.size() > 50){
+            gagnant = trouverGagnant(config, configSuivants, 4);
         } else {
-            int imax = 0;
-            int max = -INF;
-            for (int i = 0; i < configSuivants.size(); i++){
-                byte[] configSuivant = configSuivants.get(i);
-                int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, 5);
-                if (courant > max){
-                    max = courant;
-                    imax = i;
-                }
-            }
-            gagnant = configSuivants.get(imax);
+            gagnant = trouverGagnant(config, configSuivants, 5);
         }
         Mouvement resultat = configurationVersMouvement(config, gagnant);
         return resultat;

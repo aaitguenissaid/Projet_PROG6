@@ -17,54 +17,60 @@ abstract class IA {
 
     }
 
-    public ArrayList<Point> trouveVosinsAccessible(Point depart){
-        ArrayList<Point> voisinsAccessible = new ArrayList<>();
-        int h = depart.x;
-        int l = depart.y;
-
-        if (h-1 >= 0){        //(h-1, l)
-            if (jeu.estMouvementPossible(depart, new Point(h-1, l)))
-                voisinsAccessible.add(new Point(h-1, l));
+    /* Prends une indice de tableau de configuration comme le depart et rends les indices comme arrivées accessibles */
+    public ArrayList<Point> voisinsAccessibles(int h, int l, int hauteurDepart){
+        ArrayList<Point> resultat = new ArrayList<>();
+        Point Arrivee;
+        if ((h-1 >= 0)&&(jeu.estCaseValide(new Point(h-1, l)))&&(jeu.getCase(h-1, l).hauteur() > 0)){        //(h-1, l)
+            if (jeu.getCase(h-1, l).hauteur()+hauteurDepart <=5)
+                resultat.add(new Point(h-1, l));
         }
-        if (h+1 < jeu.getTaille().h){         //(h+1, l)
-            if (jeu.estMouvementPossible(depart, new Point(h+1, l)))
-                voisinsAccessible.add(new Point(h+1, l));
+        if ((h+1 < jeu.getTaille().h)&&(jeu.estCaseValide(new Point(h+1, l)))&&(jeu.getCase(h+1, l).hauteur() > 0)){         //(h+1, l)
+            if (jeu.getCase(h+1, l).hauteur()+hauteurDepart <=5)
+                resultat.add(new Point(h+1, l));
         }
         if (l-1 >= 0){
-            if (jeu.estMouvementPossible(depart, new Point(h, l-1)))     //(h, l-1)
-                voisinsAccessible.add(new Point(h, l-1));
-            if (h-1 >= 0){    //(h-1, l-1)
-                if (jeu.estMouvementPossible(depart, new Point(h-1, l-1)))
-                    voisinsAccessible.add(new Point(h-1, l-1));
+            if (jeu.estCaseValide(new Point(h, l-1))&&(jeu.getCase(h, l-1).hauteur() > 0)){
+                if (jeu.getCase(h, l-1).hauteur()+hauteurDepart <=5)
+                    resultat.add(new Point(h, l-1));
             }
-            if (h+1 < jeu.getTaille().h){  //(h+1, l-1)
-                if (jeu.estMouvementPossible(depart, new Point(h+1, l-1)))
-                    voisinsAccessible.add(new Point(h-1, l-1));
+            if ((h-1 >= 0)&&(jeu.estCaseValide(new Point(h-1, l-1)))&&(jeu.getCase(h-1, l-1).hauteur() > 0)){    //(h-1, l-1)
+                if (jeu.getCase(h-1, l-1).hauteur()+hauteurDepart <=5)
+                    resultat.add(new Point(h-1, l-1));
+            }
+            if ((h+1 <  jeu.getTaille().h)&&(jeu.estCaseValide(new Point(h+1, l-1)))&&(jeu.getCase(h+1, l-1).hauteur() > 0)){  //(h+1, l-1)
+                if (jeu.getCase(h+1, l-1).hauteur()+hauteurDepart <=5)
+                    resultat.add(new Point(h+1, l-1));
             }
         }
         if (l+1 < jeu.getTaille().l){
-            if (jeu.estMouvementPossible(depart, new Point(h, l+1)))     //(h, l+1)
-                voisinsAccessible.add(new Point(h, l+1));
-            if (h-1 >= 0){    //(h-1, l+1)
-                if (jeu.estMouvementPossible(depart, new Point(h-1, l+1)))
-                    voisinsAccessible.add(new Point(h-1, l+1));
+            if (jeu.estCaseValide(new Point(h, l+1))&&(jeu.getCase(h, l+1).hauteur() > 0)){
+                if (jeu.getCase(h, l+1).hauteur()+hauteurDepart <=5)
+                    resultat.add(new Point(h, l+1));
             }
-            if (h+1 < jeu.getTaille().h){  //(h+1, l+1)
-                if (jeu.estMouvementPossible(depart, new Point(h+1, l+1)))
-                    voisinsAccessible.add(new Point(h+1, l+1));
+            if ((h-1 >= 0)&&(jeu.estCaseValide(new Point(h-1, l+1)))&&(jeu.getCase(h-1, l+1).hauteur() > 0)){    //(h-1, l+1)
+                if (jeu.getCase(h-1, l+1).hauteur()+hauteurDepart <=5)
+                    resultat.add(new Point(h-1, l+1));
+            }
+            if ((h+1 < jeu.getTaille().h)&&(jeu.estCaseValide(new Point(h+1, l+1)))&&(jeu.getCase(h+1, l+1).hauteur() > 0)){  //(h+1, l+1)
+                if (jeu.getCase(h+1, l+1).hauteur()+hauteurDepart <=5)
+                    resultat.add(new Point(h+1, l+1));
             }
         }
-        return voisinsAccessible;
+        return resultat;
     }
+
 
     public ArrayList<Point> trouveCasePeutBouger(){
         ArrayList<Point> casePeutBouger = new ArrayList<>();
         for (int i = 0; i < jeu.getTaille().h; i++){
             for (int j = 0; j < jeu.getTaille().l; j++){
-                ArrayList<Point> vosinsAccessible = trouveVosinsAccessible(new Point(i, j));
-                if (vosinsAccessible != null){
-                    if (vosinsAccessible.size() != 0)
-                        casePeutBouger.add(new Point(i, j));
+                if ((jeu.estCaseValide(new Point(i, j))) && (jeu.getCase(i, j).hauteur()>0)){
+                    ArrayList<Point> vosinsAccessible = voisinsAccessibles(i, j, jeu.getCase(i, j).hauteur());
+                    if (vosinsAccessible != null){
+                        if (vosinsAccessible.size() != 0)
+                            casePeutBouger.add(new Point(i, j));
+                    }
                 }
             }
         }

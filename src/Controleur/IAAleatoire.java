@@ -22,7 +22,9 @@ public class IAAleatoire extends IA{
         ArrayList<Point> casePeutBouger = super.trouveCasePeutBouger();
         int d = r1.nextInt(casePeutBouger.size());
         Point depart = casePeutBouger.get(d);
-        ArrayList<Point> voisinsAccessible = super.trouveVosinsAccessible(depart);
+        int h = depart.x;
+        int l = depart.y;
+        ArrayList<Point> voisinsAccessible = super.voisinsAccessibles(h, l, jeu.getCase(h, l).hauteur());
         int a;
         if (voisinsAccessible.size() >1){
             a = r2.nextInt(voisinsAccessible.size());

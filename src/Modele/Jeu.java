@@ -131,6 +131,28 @@ public class Jeu extends Etat {
         return true;
     }
 
+    //Dédiée à l'IA
+    public boolean annule(Point depart, Point arrive, int nbPions) {
+        if(!estCaseValide(depart) || !estCaseValide(arrive)) return false;
+
+        Iterateur<Pion> it = grille[arrive.x][arrive.y].getIterateur();
+        SequenceListe<Pion> seq = new SequenceListe<>();
+        int i=0;
+        while(it.aProchain() && i<nbPions) {
+            Pion p = it.prochain();
+            it.supprime();
+            seq.insereQueue(p);
+            i++;
+        }
+        grille[arrive.x][arrive.y].updateTete();
+        grille[depart.x][depart.y].ajoutePions(seq);
+        setTour((tour==0) ? 1 : 0);
+
+        historique.supprimeTete();
+
+        return true;
+    }
+
     public Historique getHistorique() {
         return historique;
     }

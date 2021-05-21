@@ -33,7 +33,6 @@ public class Historique {
             historique.add(new Etat(grille, tour));
             current = historique.size()-1;
             nbCoupsReel++;
-            if(nbCoupsReel==5) jeu.enregistrerPartie("PartieTest");
         }
     }
 
@@ -104,6 +103,12 @@ public class Historique {
         setNavigationOn();
         current = 0;
         return historique.get(current);
+    }
+
+    public void supprimeTete() {
+        if(historique!=null && historique.size()>0) {
+            historique.remove(historique.size()-1);
+        }
     }
 
     public boolean getNavigation() {

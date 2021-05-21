@@ -86,6 +86,8 @@ public class Case implements Cloneable {
         this.tete = null;
     }
 
+    public void updateTete() { this.tete = pions.teteReturn(); }
+
     public void ajoutePions(SequenceListe<Pion> nvx_pions) {
         IterateurListe<Pion> it = (IterateurListe<Pion>) nvx_pions.iterateur();
 

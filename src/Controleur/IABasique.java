@@ -19,7 +19,7 @@ public class IABasique extends IA{
                 if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).hauteur() > 0)){
                     if (jeu.getCase(i, j).getTete().getCouleur() != joueur){
                         int hauteur = jeu.getCase(i, j).hauteur();
-                        ArrayList<Point> voisins = super.voisinsAccessibles(i, j, hauteur);
+                        ArrayList<Point> voisins = super.voisinsAccessibles(i, j);
                         if (voisins != null){
                             if ((voisins.size() == 1)&&(jeu.getCase(voisins.get(0).x, voisins.get(0).y).getTete().getCouleur() == joueur)){
                                 return new Mouvement(voisins.get(0), new Point(i, j));
@@ -42,7 +42,7 @@ public class IABasique extends IA{
                 if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).hauteur() > 0)){
                     if (jeu.getCase(i, j).getTete().getCouleur() != joueur){
                         int hauteur = jeu.getCase(i, j).hauteur();
-                        ArrayList<Point> voisins = super.voisinsAccessibles(i, j, hauteur);
+                        ArrayList<Point> voisins = super.voisinsAccessibles(i, j);
                         if (voisins.size() > 0){
                             for (int s = 0; s < voisins.size(); s++){
                                 Point depart = voisins.get(s);
@@ -62,7 +62,7 @@ public class IABasique extends IA{
                 if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).hauteur() > 0)){
                     if (jeu.getCase(i, j).getTete().getCouleur() != joueur){
                         int hauteur = jeu.getCase(i, j).hauteur();
-                        ArrayList<Point> voisins = super.voisinsAccessibles(i, j, hauteur);
+                        ArrayList<Point> voisins = super.voisinsAccessibles(i, j);
                         if (voisins != null){
                             for (int s = 0; s < voisins.size(); s++){
                                 Point depart = voisins.get(s);
@@ -81,7 +81,7 @@ public class IABasique extends IA{
             for (int j = 0; j < jeu.getTaille().l; j++){
                 if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).hauteur() > 0)){
                     int hauteur = jeu.getCase(i, j).hauteur();
-                    ArrayList<Point> voisins = super.voisinsAccessibles(i, j, hauteur);
+                    ArrayList<Point> voisins = super.voisinsAccessibles(i, j);
                     if (voisins != null){
                         for (int s = 0; s < voisins.size(); s++){
                             Point depart = voisins.get(s);

@@ -1,14 +1,18 @@
 package Vue;
 
+import Modele.PaletteDeCouleurs;
+
 import java.awt.*;
 import java.io.File;
 
 public class JeuVue extends javax.swing.JPanel {
     CollecteurEvenements cc;
     AireDeDessin a;
+    PaletteDeCouleurs palette;
     public JeuVue(CollecteurEvenements ctrl, AireDeDessin comp) {
         cc=ctrl;
         a=comp;
+        palette = cc.getPalette();
         initComponents();
     }
 
@@ -56,13 +60,13 @@ public class JeuVue extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
 
-        setBackground(new java.awt.Color(120, 171, 191));
+        setBackground(palette.Couleur1);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel1.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel1.setBackground(palette.Couleur1);
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
-        jButton1.setBackground(new java.awt.Color(120, 171, 191));
+        jButton1.setBackground(palette.Couleur1);
         jButton1.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_back_ios_black_24dp.png"))));// NOI18N
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -73,12 +77,12 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel1.add(filler1);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", Font.BOLD, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(241, 242, 216));
+        jLabel1.setForeground(palette.Couleur3);
         jLabel1.setText("Jeu Avalam");
         jPanel1.add(jLabel1);
         jPanel1.add(filler2);
 
-        jButton2.setBackground(new java.awt.Color(120, 171, 191));
+        jButton2.setBackground(palette.Couleur1);
         jButton2.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_help_outline_black_24dp.png")))); // NOI18N
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -90,13 +94,13 @@ public class JeuVue extends javax.swing.JPanel {
 
         add(jPanel1);
 
-        jPanel2.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel2.setBackground(palette.Couleur1);
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
 
-        jPanel3.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel3.setBackground(palette.Couleur1);
         jPanel3.setLayout(new java.awt.CardLayout());
 
-        jPanel8.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel8.setBackground(palette.Couleur1);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -113,44 +117,44 @@ public class JeuVue extends javax.swing.JPanel {
 
         jPanel2.add(jPanel3);
 
-        jPanel4.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel4.setBackground(palette.Couleur1);
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
 
-        jPanel5.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel5.setBackground(palette.Couleur1);
         jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
 
-        jLabel2.setBackground(new java.awt.Color(120, 171, 191));
+        jLabel2.setBackground(palette.Couleur1);
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(241, 242, 216));
+        jLabel2.setForeground(palette.Couleur3);
         jLabel2.setText("Tour:");
         jLabel2.setToolTipText("");
         jPanel5.add(jLabel2);
 
-        jLabel3.setBackground(new java.awt.Color(120, 171, 191));
+        jLabel3.setBackground(palette.Couleur1);
         jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(241, 242, 216));
+        jLabel3.setForeground(palette.Couleur3);
         jLabel3.setText("Nom_joueur(Noir)");
         jPanel5.add(jLabel3);
 
         jPanel4.add(jPanel5);
         jPanel4.add(filler3);
 
-        jPanel6.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel6.setBackground(palette.Couleur1);
         jPanel6.setLayout(new java.awt.GridLayout());
 
-        jLabel4.setBackground(new java.awt.Color(120, 171, 191));
+        jLabel4.setBackground(palette.Couleur1);
         jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(241, 242, 216));
+        jLabel4.setForeground(palette.Couleur3);
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Historique:");
         jPanel6.add(jLabel4);
 
         jPanel4.add(jPanel6);
 
-        jPanel9.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel9.setBackground(palette.Couleur1);
         jPanel9.setLayout(new javax.swing.BoxLayout(jPanel9, javax.swing.BoxLayout.LINE_AXIS));
 
-        jButton3.setBackground(new java.awt.Color(132, 166, 81));
+        jButton3.setBackground(palette.Couleur2);
         jButton3.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_skip_previous_black_24dp.png")))); // NOI18N
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -159,7 +163,7 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel9.add(jButton3);
 
-        jButton4.setBackground(new java.awt.Color(132, 166, 81));
+        jButton4.setBackground(palette.Couleur2);
         jButton4.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_left_black_24dp.png")))); // NOI18N
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -168,7 +172,7 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel9.add(jButton4);
 
-        jButton9.setBackground(new java.awt.Color(132, 166, 81));
+        jButton9.setBackground(palette.Couleur2);
         jButton9.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_stop_black_24dp.png")))); // NOI18N
         jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -177,7 +181,7 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel9.add(jButton9);
 
-        jButton10.setBackground(new java.awt.Color(132, 166, 81));
+        jButton10.setBackground(palette.Couleur2);
         jButton10.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_right_black_24dp.png")))); // NOI18N
         jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -186,7 +190,7 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel9.add(jButton10);
 
-        jButton11.setBackground(new java.awt.Color(132, 166, 81));
+        jButton11.setBackground(palette.Couleur2);
         jButton11.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_skip_next_black_24dp.png")))); // NOI18N
         jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -200,8 +204,8 @@ public class JeuVue extends javax.swing.JPanel {
 
         jPanel7.setLayout(new java.awt.GridLayout(4, 0));
 
-        jButton5.setBackground(new java.awt.Color(132, 166, 81));
-        jButton5.setForeground(new java.awt.Color(241, 242, 216));
+        jButton5.setBackground(palette.Couleur2);
+        jButton5.setForeground(palette.Couleur3);
         jButton5.setText("Relancer une partie");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -210,8 +214,8 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel7.add(jButton5);
 
-        jButton6.setBackground(new java.awt.Color(132, 166, 81));
-        jButton6.setForeground(new java.awt.Color(241, 242, 216));
+        jButton6.setBackground(palette.Couleur2);
+        jButton6.setForeground(palette.Couleur3);
         jButton6.setText("Abandonner");
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -220,8 +224,8 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel7.add(jButton6);
 
-        jButton7.setBackground(new java.awt.Color(132, 166, 81));
-        jButton7.setForeground(new java.awt.Color(241, 242, 216));
+        jButton7.setBackground(palette.Couleur2);
+        jButton7.setForeground(palette.Couleur3);
         jButton7.setText("Suggestion");
         jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -230,8 +234,8 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel7.add(jButton7);
 
-        jButton8.setBackground(new java.awt.Color(132, 166, 81));
-        jButton8.setForeground(new java.awt.Color(241, 242, 216));
+        jButton8.setBackground(palette.Couleur2);
+        jButton8.setForeground(palette.Couleur3);
         jButton8.setText("Sauvegarder la partie");
         jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -243,42 +247,42 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel4.add(jPanel7);
         jPanel4.add(filler5);
 
-        jPanel10.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel10.setBackground(palette.Couleur1);
         jPanel10.setLayout(new java.awt.GridLayout());
 
-        jLabel5.setBackground(new java.awt.Color(120, 171, 191));
+        jLabel5.setBackground(palette.Couleur1);
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Statistiques");
         jPanel10.add(jLabel5);
 
         jPanel4.add(jPanel10);
 
-        jPanel11.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel11.setBackground(palette.Couleur1);
         jPanel11.setLayout(new javax.swing.BoxLayout(jPanel11, javax.swing.BoxLayout.LINE_AXIS));
         jPanel11.add(filler8);
 
-        jPanel12.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel12.setBackground(palette.Couleur1);
         jPanel12.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel6.setBackground(new java.awt.Color(120, 171, 191));
+        jLabel6.setBackground(palette.Couleur1);
         jLabel6.setText("jLabel6");
         jPanel12.add(jLabel6);
 
-        jLabel8.setBackground(new java.awt.Color(120, 171, 191));
+        jLabel8.setBackground(palette.Couleur1);
         jLabel8.setText("jLabel8");
         jPanel12.add(jLabel8);
 
         jPanel11.add(jPanel12);
         jPanel11.add(filler9);
 
-        jPanel13.setBackground(new java.awt.Color(120, 171, 191));
+        jPanel13.setBackground(palette.Couleur1);
         jPanel13.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel7.setBackground(new java.awt.Color(120, 171, 191));
+        jLabel7.setBackground(palette.Couleur1);
         jLabel7.setText("jLabel7");
         jPanel13.add(jLabel7);
 
-        jLabel9.setBackground(new java.awt.Color(120, 171, 191));
+        jLabel9.setBackground(palette.Couleur1);
         jLabel9.setText("jLabel9");
         jPanel13.add(jLabel9);
 

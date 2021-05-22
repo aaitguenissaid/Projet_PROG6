@@ -2,6 +2,7 @@ package Controleur;
 
 
 import Modele.Jeu;
+import Modele.PaletteDeCouleurs;
 import Modele.PartiesSauvegardees;
 import Structures.Mouvement;
 import Structures.SequenceListe;
@@ -22,6 +23,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     IA IA_A, IA_B;
     Timer time;
     SequenceListe<Animation> animations;
+    PaletteDeCouleurs palette;
 
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
@@ -29,6 +31,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         activeA = false;
         activeB = false;
         animations = new SequenceListe<>();
+        palette=new PaletteDeCouleurs();
     }
 
 
@@ -178,7 +181,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void movePionTo(Point point) {
-        if(shouldMove){
+        if(shouldMove&&(startCaseI<jeu.getTaille().l)&&(startCaseJ<jeu.getTaille().h)){
             PionComponent Pc = jeuint.getAireDeDessin().getPionComponent(startCaseI,startCaseJ);
             Pc.movePile(point.x,point.y);
         }
@@ -275,5 +278,8 @@ public class ControleurMediateur implements CollecteurEvenements {
                 items,
                 (items!=null && items.length>0) ? items[0] : null
         );
+    }
+    public PaletteDeCouleurs getPalette(){
+        return palette;
     }
 }

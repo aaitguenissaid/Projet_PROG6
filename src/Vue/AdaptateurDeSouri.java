@@ -20,14 +20,14 @@ public class AdaptateurDeSouri implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        m=new Mouvement(new Point(e.getY()/a.getHauteurCase(),e.getX()/a.getLargeurCase()));
-        cc.startMove(e.getY()/a.getHauteurCase(),e.getX()/a.getLargeurCase());
+        m=new Mouvement(new Point((e.getY()-5)/a.getHauteurCase(),(e.getX()-5)/a.getLargeurCase()));
+        cc.startMove((e.getY()-5)/a.getHauteurCase(),(e.getX()-5)/a.getLargeurCase());
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         if(m!=null){
-            m.setArrivee(new Point(e.getY()/a.getHauteurCase(),e.getX()/a.getLargeurCase()));
+            m.setArrivee(new Point((e.getY()-5)/a.getHauteurCase(),(e.getX()-5)/a.getLargeurCase()));
             cc.mouvementFini(m);
         }
     }

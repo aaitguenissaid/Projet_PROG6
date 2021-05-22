@@ -1,6 +1,7 @@
 package Vue;
 
 import Modele.Case;
+import Modele.PaletteDeCouleurs;
 import Modele.Pion;
 import Structures.Iterateur;
 
@@ -14,10 +15,10 @@ public class PionComponent extends JComponent {
     int padding;
     Case c;
     Graphics2D drawable;
-    PionComponent(Case c){
-        one = Color.decode("#F1F2D8");
-        tow = Color.decode("#312E2B");
-        bordure = Color.decode("#779556");
+    PionComponent(Case c, Color w,Color b,Color s){
+        one = w;
+        tow = b;
+        bordure = s;
         this.c =c;
     }
     public void setPionComponent(int x, int y,int height,int width){

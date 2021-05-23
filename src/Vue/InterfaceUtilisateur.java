@@ -30,9 +30,9 @@ public class InterfaceUtilisateur implements Runnable {
         main = new MainMenu(ctrl);
         param = new Parametres(ctrl);
         reg = new Reagles(ctrl);
+        jeu = new JeuVue(ctrl,comp);
         comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
         comp.addMouseMotionListener(new AdaptateurMouvementDeSouri(ctrl,comp));
-        jeu = new JeuVue(ctrl,comp);
         setStatistiques();
         screens = new JPanel(new CardLayout());
         screens.add(main,"MAINMENU");
@@ -100,4 +100,9 @@ public class InterfaceUtilisateur implements Runnable {
         cl.show(screens, "PARAMETRES");
     }
     public void setReagles(){ cl.show(screens, "REAGLES"); }
+    public void revalidateInterface(){
+        main.setToutCouleurs();
+        param.setToutCouleurs();
+        jeu.setToutCouleurs();
+    }
 }

@@ -282,4 +282,9 @@ public class ControleurMediateur implements CollecteurEvenements {
     public PaletteDeCouleurs getPalette(){
         return palette;
     }
+
+    @Override
+    public void revalidateInterface() {
+        jeuint.revalidateInterface();
+    }
 }

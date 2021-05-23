@@ -69,23 +69,20 @@ public class Parametres extends javax.swing.JPanel {
         jToggleButton25 = new javax.swing.JToggleButton();
         jPanel19 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jToggleButton26 = new javax.swing.JToggleButton();
-        jToggleButton27 = new javax.swing.JToggleButton();
-        jToggleButton28 = new javax.swing.JToggleButton();
-        jToggleButton29 = new javax.swing.JToggleButton();
-        jToggleButton30 = new javax.swing.JToggleButton();
+        jButton26 = new javax.swing.JButton();
+        jButton27 = new javax.swing.JButton();
+        jButton28 = new javax.swing.JButton();
+        jButton29 = new javax.swing.JButton();
+        jButton30 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
 
-        setBackground(palette.Couleur1);
+        setToutCouleurs();
 
-        jPanel8.setBackground(palette.Couleur1);
         jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel10.setBackground(palette.Couleur1);
         jPanel10.setLayout(new java.awt.GridBagLayout());
 
-        jButton6.setBackground(palette.Couleur1);
         jButton6.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_back_ios_black_24dp.png")))); // NOI18N
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -98,7 +95,6 @@ public class Parametres extends javax.swing.JPanel {
         jPanel10.add(jButton6, gridBagConstraints);
 
         jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jLabel4.setForeground(palette.Couleur3);
         jLabel4.setText("Parametres");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.weightx = 11.0;
@@ -108,31 +104,20 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel8.add(jPanel10);
 
-        jPanel9.setBackground(palette.Couleur1);
         jPanel9.setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBackground(palette.Couleur1);
         jPanel1.setLayout(new java.awt.GridLayout(7, 1));
 
-        jButton1.setBackground(palette.Couleur2);
         jButton1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jButton1.setForeground(palette.Couleur3);
         jButton1.setText("General");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
         jPanel1.add(jButton1);
 
-        jButton2.setBackground(palette.Couleur2);
         jButton2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jButton2.setForeground(palette.Couleur3);
         jButton2.setText("IA");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -141,9 +126,7 @@ public class Parametres extends javax.swing.JPanel {
         });
         jPanel1.add(jButton2);
 
-        jButton3.setBackground(palette.Couleur2);
         jButton3.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jButton3.setForeground(palette.Couleur3);
         jButton3.setText("Affichage");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -152,9 +135,7 @@ public class Parametres extends javax.swing.JPanel {
         });
         jPanel1.add(jButton3);
 
-        jButton4.setBackground(palette.Couleur2);
         jButton4.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jButton4.setForeground(palette.Couleur3);
         jButton4.setText("Controles");
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -163,9 +144,7 @@ public class Parametres extends javax.swing.JPanel {
         });
         jPanel1.add(jButton4);
 
-        jButton5.setBackground(palette.Couleur2);
         jButton5.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jButton5.setForeground(palette.Couleur3);
         jButton5.setText("Sons");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -179,13 +158,9 @@ public class Parametres extends javax.swing.JPanel {
         gridBagConstraints.weightx = 2.0;
         jPanel9.add(jPanel1, gridBagConstraints);
 
-        jPanel2.setBackground(palette.Couleur1);
         jPanel2.setLayout(new java.awt.CardLayout());
 
-        jPanel3.setBackground(palette.Couleur1);
         jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.PAGE_AXIS));
-        jCheckBox1.setBackground(palette.Couleur1);
-        jCheckBox1.setForeground(palette.Couleur3);
         jCheckBox1.setText("Recommencer une partie automatiquement lorsqu'une partie se termine");
         jCheckBox1.setSelected(Boolean.parseBoolean(prefs.get(Preferences.RELANCE_AUTOMATIQUE)));
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -196,8 +171,6 @@ public class Parametres extends javax.swing.JPanel {
         jPanel3.add(jCheckBox1);
 
         jCheckBox2.setText("Interdire l'utilisation de l'historique");
-        jCheckBox2.setBackground(palette.Couleur1);
-        jCheckBox2.setForeground(palette.Couleur3);
         jCheckBox2.setSelected(Boolean.parseBoolean(prefs.get(Preferences.EST_AUTORISE_HISTORIQUE)));
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,8 +180,6 @@ public class Parametres extends javax.swing.JPanel {
         jPanel3.add(jCheckBox2);
 
         jCheckBox3.setText("Interdire les suggestions des IAs");
-        jCheckBox3.setBackground(palette.Couleur1);
-        jCheckBox3.setForeground(palette.Couleur3);
         jCheckBox3.setSelected(Boolean.parseBoolean(prefs.get(Preferences.EST_AUTORISE_SUGGESTION)));
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,10 +190,8 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel2.add(jPanel3, "card1");
 
-        jPanel4.setBackground(palette.Couleur1);
         jPanel4.setLayout(new java.awt.GridLayout(5, 1));
 
-        jPanel11.setBackground(palette.Couleur1);
         jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 5));
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -231,7 +200,6 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel4.add(jPanel11);
 
-        jPanel15.setBackground(palette.Couleur1);
         jPanel15.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 30, 5));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -239,7 +207,6 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel4.add(jPanel15);
 
-        jPanel16.setBackground(palette.Couleur1);
         jPanel16.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 25, 5));
 
         jLabel5.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
@@ -248,10 +215,8 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel4.add(jPanel16);
 
-        jPanel12.setBackground(palette.Couleur1);
         jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel13.setBackground(palette.Couleur1);
         jPanel13.setLayout(new java.awt.GridLayout(1, 2));
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
@@ -264,15 +229,9 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel12.add(jPanel13);
 
-        jPanel14.setBackground(palette.Couleur1);
         jPanel14.setLayout(new java.awt.GridLayout(1, 2));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
         jPanel14.add(jComboBox2);
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -284,10 +243,8 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel2.add(jPanel4, "card2");
 
-        jPanel5.setBackground(palette.Couleur1);
         jPanel5.setLayout(new java.awt.GridLayout(3, 1));
 
-        jPanel17.setBackground(palette.Couleur1);
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 25);
         flowLayout1.setAlignOnBaseline(true);
         jPanel17.setLayout(flowLayout1);
@@ -295,29 +252,28 @@ public class Parametres extends javax.swing.JPanel {
         jLabel10.setText("Couleur du joueur 1 :");
         jPanel17.add(jLabel10);
 
-        jToggleButton16.setBackground(new java.awt.Color(2, 172, 229));
+
         jToggleButton16.setText("   ");
         jPanel17.add(jToggleButton16);
 
-        jToggleButton17.setBackground(new java.awt.Color(43, 215, 83));
+
         jToggleButton17.setText("   ");
         jPanel17.add(jToggleButton17);
 
-        jToggleButton18.setBackground(new java.awt.Color(227, 68, 58));
+
         jToggleButton18.setText("   ");
         jPanel17.add(jToggleButton18);
 
-        jToggleButton19.setBackground(new java.awt.Color(69, 45, 229));
+
         jToggleButton19.setText("   ");
         jPanel17.add(jToggleButton19);
 
-        jToggleButton20.setBackground(new java.awt.Color(202, 228, 237));
+
         jToggleButton20.setText("   ");
         jPanel17.add(jToggleButton20);
 
         jPanel5.add(jPanel17);
 
-        jPanel18.setBackground(palette.Couleur1);
         java.awt.FlowLayout flowLayout2 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 25);
         flowLayout2.setAlignOnBaseline(true);
         jPanel18.setLayout(flowLayout2);
@@ -325,29 +281,27 @@ public class Parametres extends javax.swing.JPanel {
         jLabel11.setText("Couleur du joueur 2 :");
         jPanel18.add(jLabel11);
 
-        jToggleButton21.setBackground(new java.awt.Color(2, 172, 229));
         jToggleButton21.setText("   ");
         jPanel18.add(jToggleButton21);
 
-        jToggleButton22.setBackground(new java.awt.Color(43, 215, 83));
+
         jToggleButton22.setText("   ");
         jPanel18.add(jToggleButton22);
 
-        jToggleButton23.setBackground(new java.awt.Color(227, 68, 58));
+
         jToggleButton23.setText("   ");
         jPanel18.add(jToggleButton23);
 
-        jToggleButton24.setBackground(new java.awt.Color(69, 45, 229));
+
         jToggleButton24.setText("   ");
         jPanel18.add(jToggleButton24);
 
-        jToggleButton25.setBackground(new java.awt.Color(202, 228, 237));
+
         jToggleButton25.setText("   ");
         jPanel18.add(jToggleButton25);
 
         jPanel5.add(jPanel18);
 
-        jPanel19.setBackground(palette.Couleur1);
         java.awt.FlowLayout flowLayout3 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 25);
         flowLayout3.setAlignOnBaseline(true);
         jPanel19.setLayout(flowLayout3);
@@ -355,31 +309,55 @@ public class Parametres extends javax.swing.JPanel {
         jLabel12.setText("Thème");
         jPanel19.add(jLabel12);
 
-        jToggleButton26.setBackground(new java.awt.Color(2, 172, 229));
-        jToggleButton26.setText("   ");
-        jPanel19.add(jToggleButton26);
 
-        jToggleButton27.setBackground(new java.awt.Color(43, 215, 83));
-        jToggleButton27.setText("   ");
-        jPanel19.add(jToggleButton27);
+        jButton26.setText("   ");
+        jButton26.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton26MouseClicked(evt);
+            }
+        });
+        jPanel19.add(jButton26);
 
-        jToggleButton28.setBackground(new java.awt.Color(227, 68, 58));
-        jToggleButton28.setText("   ");
-        jPanel19.add(jToggleButton28);
 
-        jToggleButton29.setBackground(new java.awt.Color(69, 45, 229));
-        jToggleButton29.setText("   ");
-        jPanel19.add(jToggleButton29);
+        jButton27.setText("   ");
+        jButton27.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton27MouseClicked(evt);
+            }
+        });
+        jPanel19.add(jButton27);
 
-        jToggleButton30.setBackground(new java.awt.Color(202, 228, 237));
-        jToggleButton30.setText("   ");
-        jPanel19.add(jToggleButton30);
+
+        jButton28.setText("   ");
+        jButton28.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton28MouseClicked(evt);
+            }
+        });
+        jPanel19.add(jButton28);
+
+
+        jButton29.setText("   ");
+        jButton29.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton29MouseClicked(evt);
+            }
+        });
+        jPanel19.add(jButton29);
+
+
+        jButton30.setText("   ");
+        jButton30.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton30MouseClicked(evt);
+            }
+        });
+        jPanel19.add(jButton30);
 
         jPanel5.add(jPanel19);
 
         jPanel2.add(jPanel5, "card3");
 
-        jPanel6.setBackground(palette.Couleur1);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -394,7 +372,6 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel2.add(jPanel6, "card4");
 
-        jPanel7.setBackground(palette.Couleur1);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -430,11 +407,9 @@ public class Parametres extends javax.swing.JPanel {
                                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
         );
-    }// </editor-fold>
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
+
+
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
@@ -487,10 +462,75 @@ public class Parametres extends javax.swing.JPanel {
         prefs.set(Preferences.EST_AUTORISE_SUGGESTION, String.valueOf(!estAutoriseSuggestion));
     }
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButton26MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
+        palette.setSheme1();
+        cc.revalidateInterface();
+     }
+    private void jButton27MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        palette.setSheme2();
+        cc.revalidateInterface();
+    }
+    private void jButton28MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        palette.setSheme3();
+        cc.revalidateInterface();
+    }
+    private void jButton29MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        palette.setSheme4();
+        cc.revalidateInterface();
+    }
+    private void jButton30MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+        palette.setSheme5();
+        cc.revalidateInterface();
     }
 
+    public void setToutCouleurs(){
+        setBackground(palette.Couleur1);
+        jPanel8.setBackground(palette.Couleur1);
+        jPanel10.setBackground(palette.Couleur1);
+        jButton6.setBackground(palette.Couleur1);
+        jLabel4.setForeground(palette.Couleur3);
+        jPanel9.setBackground(palette.Couleur1);
+        jPanel1.setBackground(palette.Couleur1);
+        jButton1.setBackground(palette.Couleur2);
+        jButton1.setForeground(palette.Couleur3);
+        jButton2.setBackground(palette.Couleur2);
+        jButton2.setForeground(palette.Couleur3);
+        jButton3.setBackground(palette.Couleur2);
+        jButton3.setForeground(palette.Couleur3);
+        jButton4.setBackground(palette.Couleur2);
+        jButton4.setForeground(palette.Couleur3);
+        jButton5.setBackground(palette.Couleur2);
+        jButton5.setForeground(palette.Couleur3);
+        jPanel2.setBackground(palette.Couleur1);
+        jPanel3.setBackground(palette.Couleur1);
+        jCheckBox1.setBackground(palette.Couleur1);
+        jCheckBox1.setForeground(palette.Couleur3);
+        jCheckBox2.setBackground(palette.Couleur1);
+        jCheckBox2.setForeground(palette.Couleur3);
+        jCheckBox3.setBackground(palette.Couleur1);
+        jCheckBox3.setForeground(palette.Couleur3);
+        jPanel4.setBackground(palette.Couleur1);
+        jPanel11.setBackground(palette.Couleur1);
+        jPanel15.setBackground(palette.Couleur1);
+        jPanel16.setBackground(palette.Couleur1);
+        jPanel12.setBackground(palette.Couleur1);
+        jPanel13.setBackground(palette.Couleur1);
+        jPanel14.setBackground(palette.Couleur1);
+        jPanel5.setBackground(palette.Couleur1);
+        jPanel17.setBackground(palette.Couleur1);
+        jToggleButton16.setBackground(new java.awt.Color(2, 172, 229));jToggleButton17.setBackground(new java.awt.Color(43, 215, 83));jToggleButton18.setBackground(new java.awt.Color(227, 68, 58));jToggleButton19.setBackground(new java.awt.Color(69, 45, 229));jToggleButton20.setBackground(new java.awt.Color(202, 228, 237));
+        jPanel18.setBackground(palette.Couleur1);
+        jToggleButton21.setBackground(new java.awt.Color(2, 172, 229));jToggleButton22.setBackground(new java.awt.Color(43, 215, 83));jToggleButton23.setBackground(new java.awt.Color(227, 68, 58));jToggleButton24.setBackground(new java.awt.Color(69, 45, 229));jToggleButton25.setBackground(new java.awt.Color(202, 228, 237));
+        jPanel19.setBackground(palette.Couleur1);
+        jButton26.setBackground(new java.awt.Color(2, 172, 229));jButton27.setBackground(new java.awt.Color(43, 215, 83));jButton28.setBackground(new java.awt.Color(227, 68, 58));jButton29.setBackground(new java.awt.Color(69, 45, 229));jButton30.setBackground(new java.awt.Color(202, 228, 237));
+        jPanel6.setBackground(palette.Couleur1);
+        jPanel7.setBackground(palette.Couleur1);
+    }
 
     // Variables declaration - do not modify
     private javax.swing.Box.Filler filler1;
@@ -543,10 +583,10 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.JToggleButton jToggleButton23;
     private javax.swing.JToggleButton jToggleButton24;
     private javax.swing.JToggleButton jToggleButton25;
-    private javax.swing.JToggleButton jToggleButton26;
-    private javax.swing.JToggleButton jToggleButton27;
-    private javax.swing.JToggleButton jToggleButton28;
-    private javax.swing.JToggleButton jToggleButton29;
-    private javax.swing.JToggleButton jToggleButton30;
+    private javax.swing.JButton jButton26;
+    private javax.swing.JButton jButton27;
+    private javax.swing.JButton jButton28;
+    private javax.swing.JButton jButton29;
+    private javax.swing.JButton jButton30;
     // End of variables declaration
 }

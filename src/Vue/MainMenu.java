@@ -21,23 +21,20 @@ public class MainMenu extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-
-        setBackground(palette.Couleur1);
+        setToutCouleurs();
         setLayout(new java.awt.GridLayout(8, 3));
         grid_insérer_des_cellules_vides(1);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(241, 242, 216));
+
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Avalam");
         add(jLabel1);
 
-        jPanel1.setBackground(palette.Couleur1);
         jPanel1.setLayout(new java.awt.GridLayout(1, 5, 5, 5));
         jPanel1.add(filler);
         jPanel1.add(filler);
 
-        jButton2.setBackground(palette.Couleur1);
         jButton2.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_settings_black_24dp.png")))); // NOI18N
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -46,7 +43,6 @@ public class MainMenu extends javax.swing.JPanel {
         });
         jPanel1.add(jButton2);
 
-        jButton1.setBackground(palette.Couleur1);
         jButton1.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_account_circle_black_24dp.png")))); // NOI18N
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -59,9 +55,7 @@ public class MainMenu extends javax.swing.JPanel {
 
 
         grid_insérer_des_cellules_vides(4);
-        jButton3.setBackground(palette.Couleur2);
         jButton3.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jButton3.setForeground(palette.Couleur3);
         jButton3.setText("Jouer en local");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -71,9 +65,7 @@ public class MainMenu extends javax.swing.JPanel {
         add(jButton3);
         grid_insérer_des_cellules_vides(5);
 
-        jButton4.setBackground(palette.Couleur2);
         jButton4.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jButton4.setForeground(palette.Couleur3);
         jButton4.setText("Reprendre une partie");
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -83,9 +75,7 @@ public class MainMenu extends javax.swing.JPanel {
         add(jButton4);
         grid_insérer_des_cellules_vides(5);
 
-        jButton5.setBackground(palette.Couleur2);
         jButton5.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jButton5.setForeground(palette.Couleur3);
         jButton5.setText("Règles du jeu");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -120,7 +110,19 @@ public class MainMenu extends javax.swing.JPanel {
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {
         cc.reagles();
     }
-
+    public void setToutCouleurs(){
+        setBackground(palette.Couleur1);
+        jPanel1.setBackground(palette.Couleur1);
+        jLabel1.setForeground(palette.Couleur3);
+        jButton2.setBackground(palette.Couleur1);
+        jButton1.setBackground(palette.Couleur1);
+        jButton3.setBackground(palette.Couleur2);
+        jButton3.setForeground(palette.Couleur3);
+        jButton4.setBackground(palette.Couleur2);
+        jButton4.setForeground(palette.Couleur3);
+        jButton5.setBackground(palette.Couleur2);
+        jButton5.setForeground(palette.Couleur3);
+    }
     private javax.swing.Box.Filler filler;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

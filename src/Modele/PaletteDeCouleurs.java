@@ -19,4 +19,40 @@ public class PaletteDeCouleurs {
         Couleur4=Color.decode("#262422");
         Couleur5=Color.decode("#768C54");
     }
+
+    public void setSheme1() {
+        Couleur1=Color.decode("#4988BF");
+        Couleur2=Color.decode("#84A651");
+        Couleur3=Color.decode("#F1F2D8");
+        Couleur4=Color.decode("#262422");
+        Couleur5=Color.decode("#768C54");
+    }
+    public void setSheme2() {
+        Couleur1=Color.decode("#4988BF");
+        Couleur2=Color.decode("#84A651");
+        Couleur3=Color.decode("#F1F2D8");
+        Couleur4=Color.decode("#262422");
+        Couleur5=Color.decode("#768C54");
+    }
+    public void setSheme3() {
+        Couleur1=Color.decode("#4988BF");
+        Couleur2=Color.decode("#84A651");
+        Couleur3=Color.decode("#F1F2D8");
+        Couleur4=Color.decode("#262422");
+        Couleur5=Color.decode("#768C54");
+    }
+    public void setSheme4() {
+        Couleur1=Color.decode("#4988BF");
+        Couleur2=Color.decode("#84A651");
+        Couleur3=Color.decode("#F1F2D8");
+        Couleur4=Color.decode("#262422");
+        Couleur5=Color.decode("#768C54");
+    }
+    public void setSheme5() {
+        Couleur1=Color.decode("#222226");
+        Couleur2=Color.decode("#7B44F2");
+        Couleur3=Color.decode("#F28705");
+        Couleur4=Color.decode("#1763A6");
+        Couleur5=Color.decode("#F20505");
+    }
 }

@@ -6,13 +6,13 @@ import Modele.PaletteDeCouleurs;
 import Modele.PartiesSauvegardees;
 import Structures.Mouvement;
 import Structures.SequenceListe;
-import Vue.AdaptateurTemps;
-import Vue.CollecteurEvenements;
-import Vue.InterfaceUtilisateur;
-import Vue.PionComponent;
+import Vue.*;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class ControleurMediateur implements CollecteurEvenements {
     Jeu jeu;
@@ -24,6 +24,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     Timer time;
     SequenceListe<Animation> animations;
     PaletteDeCouleurs palette;
+    EffetsSonores sonCtrl;
 
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
@@ -32,6 +33,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         activeB = false;
         animations = new SequenceListe<>();
         palette=new PaletteDeCouleurs();
+        sonCtrl = new EffetsSonores();
     }
 
 
@@ -152,6 +154,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
 //        jeu.bouge(m.getDepart(),m.getArrivee());
         jeuint.metAJour();
+        sonCtrl.moveEnd();
         //System.out.println("Jeu fini : " + jeu.estFini());
         //System.out.println("Tour : " + jeu.getTour());
 
@@ -189,6 +192,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void startMove(int i, int j) {
+        sonCtrl.moveStart();
         jeuint.getAireDeDessin().startMove();
         shouldMove=true;
         startCaseI=i;

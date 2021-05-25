@@ -16,9 +16,9 @@ public class InterfaceUtilisateur implements Runnable {
     Parametres param;
     CollecteurEvenements ctrl;
     CardLayout cl;
-    Reagles reg;
+    Regles reg;
     JeuVue jeu;
-
+    boolean regBack =false;
 
     public void run() {
         frame = new JFrame("Jeu Avalam");
@@ -29,7 +29,7 @@ public class InterfaceUtilisateur implements Runnable {
         comp = new AireDeDessin(j,ctrl);
         main = new MainMenu(ctrl);
         param = new Parametres(ctrl);
-        reg = new Reagles(ctrl);
+        reg = new Regles(ctrl);
         jeu = new JeuVue(ctrl,comp);
         comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
         comp.addMouseMotionListener(new AdaptateurMouvementDeSouri(ctrl,comp));
@@ -92,9 +92,11 @@ public class InterfaceUtilisateur implements Runnable {
     public void setGameScreen(){
         cl.show(screens, "GAMESCREEN");
         metAJour();
+        regBack=true;
     }
     public void setMainMenu(){
         cl.show(screens, "MAINMENU");
+        regBack=false;
     }
     public void setParametres(){
         cl.show(screens, "PARAMETRES");
@@ -104,5 +106,12 @@ public class InterfaceUtilisateur implements Runnable {
         main.setToutCouleurs();
         param.setToutCouleurs();
         jeu.setToutCouleurs();
+    }
+    public void reaglesBack(){
+        if(regBack){
+            cl.show(screens, "GAMESCREEN");
+        }else{
+            cl.show(screens, "MAINMENU");
+        }
     }
 }

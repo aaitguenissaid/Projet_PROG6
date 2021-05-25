@@ -33,5 +33,7 @@ public interface CollecteurEvenements {
     PaletteDeCouleurs getPalette();
 
     void revalidateInterface();
+
+    void reaglesBack();
 }
 

@@ -291,4 +291,9 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void revalidateInterface() {
         jeuint.revalidateInterface();
     }
+
+    @Override
+    public void reaglesBack() {
+        jeuint.reaglesBack();
+    }
 }

@@ -269,10 +269,12 @@ public class JeuVue extends javax.swing.JPanel {
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:|<
+        cc.last_historique();
     }
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:<
+        cc.next_historique();
     }
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {
@@ -299,14 +301,17 @@ public class JeuVue extends javax.swing.JPanel {
 
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: Stop historique []
+        cc.stop_historique();
     }
 
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:>
+        cc.previous_historique();
     }
 
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:>|
+        cc.first_historique();
     }
     public void setNomDeJ1(String nom){
         jLabel6.setText(nom);

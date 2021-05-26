@@ -48,7 +48,10 @@ public class Historique implements Cloneable {
     public Etat precedent() {
         if(historique==null || current-1<0 || current-1>=historique.size()) return null;
         setNavigationOn();
-        return historique.get(--current);
+        current--;
+        jeu.grille = historique.get(current).getCopieGrille();
+        jeu.tour = historique.get(current).getTour();
+        return historique.get(current);
     }
 
     public boolean aSuivant() {
@@ -58,7 +61,10 @@ public class Historique implements Cloneable {
     public Etat suivant() {
         if(current==historique.size()-2) setNavigationOff();
         if(historique==null || current+1<0 || current+1>=historique.size()) return null;
-        return historique.get(++current);
+        current++;
+        jeu.grille = historique.get(current).getCopieGrille();
+        jeu.tour = historique.get(current).getTour();
+        return historique.get(current);
     }
 
     public int getNbCoups() {

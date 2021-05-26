@@ -308,4 +308,47 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void reaglesBack() {
         jeuint.reaglesBack();
     }
+
+    @Override
+    public void last_historique() {
+        jeu.getHistorique().atteindreFinHistorique();
+        jeuint.metAJour();
+    }
+
+    @Override
+    public void next_historique() {
+        if(jeu.getHistorique().aSuivant()) {
+            System.out.println(jeu.getHistorique().suivant());
+            jeuint.metAJour();
+        }
+    }
+
+    @Override
+    public void stop_historique() {
+        if(jeu.getHistorique().isNavigationOn()) {
+            //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
+            String titre = "Validation navigation historique";
+            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
+                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
+            String choix_valide = "Continuer";
+            String choix_annule = "Annuler";
+            if(valideAction(titre, description, choix_valide, choix_annule)) {
+                jeu.getHistorique().validerNavigation();
+            }
+        }
+    }
+
+    @Override
+    public void previous_historique() {
+        if(jeu.getHistorique().aPrecedent()) {
+            System.out.println(jeu.getHistorique().precedent());
+            jeuint.metAJour();
+        }
+    }
+
+    @Override
+    public void first_historique() {
+        jeu.getHistorique().atteindreDebutHistorique();
+        jeuint.metAJour();
+    }
 }

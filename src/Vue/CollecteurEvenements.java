@@ -35,5 +35,11 @@ public interface CollecteurEvenements {
     void revalidateInterface();
 
     void reaglesBack();
+
+    void last_historique();
+    void next_historique();
+    void stop_historique();
+    void previous_historique();
+    void first_historique();
 }
 

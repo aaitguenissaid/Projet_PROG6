@@ -15,12 +15,12 @@ public class IAFortCoup extends IA{
 
     private ArrayList<Mouvement> EtapesPossibles(){
         ArrayList<Mouvement> etapesPossibles = new ArrayList<>();
-        ArrayList<Point> casePeutBouger = super.trouveCasePeutBouger();
+        ArrayList<Point> casePeutBouger = jeu.trouveCasePeutBouger();
         for (int i = 0; i < casePeutBouger.size(); i++){
             Point depart = casePeutBouger.get(i);
             int h = depart.x;
             int l = depart.y;
-            ArrayList<Point> voisinsAccessible = super.voisinsAccessibles(h, l);
+            ArrayList<Point> voisinsAccessible = jeu.voisinsAccessibles(h, l);
             for (int j = 0; j < voisinsAccessible.size(); j++){
                 Point arrivee = voisinsAccessible.get(i);
                 etapesPossibles.add(new Mouvement(depart, arrivee));
@@ -42,7 +42,7 @@ public class IAFortCoup extends IA{
 
 
     private boolean estFeuille(){
-        ArrayList<Point> casePeutBouger = super.trouveCasePeutBouger();
+        ArrayList<Point> casePeutBouger = jeu.trouveCasePeutBouger();
         if ((casePeutBouger == null) | (casePeutBouger.size() == 0))
             return true;
         else
@@ -54,8 +54,8 @@ public class IAFortCoup extends IA{
         int nombre1 = 0;
         for (int i = 0; i < jeu.getTaille().h; i++) {
             for (int j = 0; j < jeu.getTaille().l; j++) {
-                if ((jeu.estCaseValide(new Point(i, j))) && (jeu.getCase(i, j).hauteur() > 0)) {
-                    ArrayList<Point> voisinsAccessible = super.voisinsAccessibles(i, j);
+                if ((jeu.estCaseValide(new Point(i, j))) && (jeu.getCase(i, j).nbPions() > 0)) {
+                    ArrayList<Point> voisinsAccessible = jeu.voisinsAccessibles(i, j);
                     if ((voisinsAccessible == null) | (voisinsAccessible.size() == 0)) {
                         if (jeu.getCase(i, j).aTeteBlanche())
                             nombre0++;
@@ -84,7 +84,7 @@ public class IAFortCoup extends IA{
                 Mouvement m = etapesSuivant.get(i);
                 Point depart = m.getDepart();
                 Point arrvee = m.getArrivee();
-                int hauteur = jeu.getCase(depart.x, depart.y).hauteur();
+                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
                 jeu.bouge(depart, arrvee);
                 int valeur = minmaxAlphaBeta(alpha, beta, false, horizon-1);
                 jeu.annule(depart, arrvee, hauteur);
@@ -102,7 +102,7 @@ public class IAFortCoup extends IA{
                 Mouvement m = etapesSuivant.get(i);
                 Point depart = m.getDepart();
                 Point arrvee = m.getArrivee();
-                int hauteur = jeu.getCase(depart.x, depart.y).hauteur();
+                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
                 jeu.bouge(depart, arrvee);
                 int valeur = minmaxAlphaBeta(alpha, beta, true, horizon-1);
                 jeu.annule(depart, arrvee, hauteur);

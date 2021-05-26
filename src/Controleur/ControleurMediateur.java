@@ -8,11 +8,8 @@ import Structures.Mouvement;
 import Structures.SequenceListe;
 import Vue.*;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class ControleurMediateur implements CollecteurEvenements {
     Jeu jeu;
@@ -154,7 +151,6 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
         System.out.print("End :");
         System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
-//        jeu.bouge(m.getDepart(),m.getArrivee());
         jeuint.metAJour();
         sonCtrl.moveEnd();
         //System.out.println("Jeu fini : " + jeu.estFini());
@@ -163,20 +159,34 @@ public class ControleurMediateur implements CollecteurEvenements {
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");
         if(!jeu.estFini() && !animationRunning ) {
-            if(jeu.bouge(m.getDepart(),m.getArrivee())) {
-                jeuint.metAJour();
-                System.out.println("Jeu fini : " + jeu.estFini());
-                Mouvement to_clic = null;
-                if (activeA) {
-                    to_clic = IA_A.joue();
+            if(jeu.getHistorique().isNavigationOn()) {
+                //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
+                String titre = "Validation navigation historique";
+                String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
+                        +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
+                String choix_valide = "Continuer";
+                String choix_annule = "Annuler";
+                if(valideAction(titre, description, choix_valide, choix_annule)) {
+                    jeu.getHistorique().validerNavigation();
                 }
-                if (activeB) {
-                    to_clic = IA_B.joue();
-                }
-                if(activeA || activeB) {
-                    animations.insereTete(new AnimationJoueurIA(1, jeuint, to_clic));
-                    time = new Timer(1500, new AdaptateurTemps(this));
-                    time.start();
+            }
+            //Si on la navigation n'est pas activée (ou qu'elle vient d'être désactivée)
+            if(!jeu.getHistorique().isNavigationOn()) {
+                if (jeu.bouge(m.getDepart(), m.getArrivee())) {
+                    jeuint.metAJour();
+                    System.out.println("Jeu fini : " + jeu.estFini());
+                    Mouvement to_clic = null;
+                    if (activeA) {
+                        to_clic = IA_A.joue();
+                    }
+                    if (activeB) {
+                        to_clic = IA_B.joue();
+                    }
+                    if (activeA || activeB) {
+                        animations.insereTete(new AnimationJoueurIA(1, jeuint, to_clic));
+                        time = new Timer(1500, new AdaptateurTemps(this));
+                        time.start();
+                    }
                 }
             }
         }

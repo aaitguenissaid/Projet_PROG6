@@ -111,7 +111,7 @@ public class Historique implements Cloneable {
         }
     }
 
-    public boolean getNavigation() {
+    public boolean isNavigationOn() {
         return this.navigationOn;
     }
 

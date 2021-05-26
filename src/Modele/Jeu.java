@@ -4,9 +4,7 @@ import Global.Configuration;
 import Structures.*;
 
 import java.awt.*;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Jeu extends Etat implements Cloneable {
     public static final int COULEUR1 = 0;
@@ -92,15 +90,10 @@ public class Jeu extends Etat implements Cloneable {
      *  - Le mouvement est impossible (en dehors de la grille, trop / pas assez de pions, case invalide)
      */
     public boolean bouge(Point depart, Point arrive) {
-        if(historique.getNavigation()) {
+        if(historique.isNavigationOn()) {
             //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
             //dans l'état qu'il visitait
             if(!historique.getEtatNavigation().estMouvementPossible(depart, arrive)) return false;
-            /*String titre = "Validation navigation historique";
-            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
-                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
-            String choix_valide = "Continuer";
-            String choix_annule = "Annuler";*/
             historique.validerNavigation();
         } else {
             if (!estMouvementPossible(depart, arrive)) return false;

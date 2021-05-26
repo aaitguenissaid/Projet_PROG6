@@ -9,26 +9,20 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Jeu extends Etat {
+public class Jeu extends Etat implements Cloneable {
     public static final int COULEUR1 = 0;
     public static final int COULEUR2 = 1;
-    CollecteurEvenements ctrl;
     Joueur j1,j2;
     Historique historique;
     int lastDepI,lastDepJ,lastArrI,lastArrJ; //ajouté pour afficher le dernier coup
     boolean estPartieRecuperee;
 
     public Jeu() {
-        this(null, true);
+        this(true);
     }
 
-    public Jeu(CollecteurEvenements ctrl){
-        this(ctrl, true);
-    }
-
-    public Jeu(CollecteurEvenements ctrl, boolean fromScratch) {
+    public Jeu(boolean fromScratch) {
         super();
-        this.ctrl = ctrl;
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
         estPartieRecuperee=false;
         if(fromScratch) {
@@ -59,10 +53,6 @@ public class Jeu extends Etat {
                 }
             }
         }
-    }
-
-    public void setCollecteurEvenements(CollecteurEvenements events) {
-        this.ctrl = events;
     }
 
     public boolean estFini() {
@@ -107,14 +97,12 @@ public class Jeu extends Etat {
             //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
             //dans l'état qu'il visitait
             if(!historique.getEtatNavigation().estMouvementPossible(depart, arrive)) return false;
-            String titre = "Validation navigation historique";
+            /*String titre = "Validation navigation historique";
             String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
                     +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
             String choix_valide = "Continuer";
-            String choix_annule = "Annuler";
-            if(valideAction(titre, description, choix_valide, choix_annule)) {
-                historique.validerNavigation();
-            }
+            String choix_annule = "Annuler";*/
+            historique.validerNavigation();
         } else {
             if (!estMouvementPossible(depart, arrive)) return false;
         }
@@ -182,7 +170,7 @@ public class Jeu extends Etat {
         if(in==null) {
             return null;
         }
-        Jeu nvx_jeu = new Jeu(events, false);
+        Jeu nvx_jeu = new Jeu(false);
         nvx_jeu.estPartieRecuperee=true;
 
         //#### Récupération de la taille de la grille ####
@@ -245,6 +233,50 @@ public class Jeu extends Etat {
 
         return nvx_jeu;
     }
+
+    // Prends une indice de tableau de configuration comme le depart et rends les indices comme arrivées accessibles
+    public ArrayList<Point> voisinsAccessibles(int h, int l){
+        int nbPionsDep = grille[h][l].nbPions();
+        ArrayList<Point> resultat = new ArrayList<>();
+        if (nbPionsDep > 0) {
+            ArrayList<Point> pointsVoisins = getPointsVoisins(h, l);
+            for (Point v : pointsVoisins) {
+                if (estCaseValide(v) && grille[v.x][v.y].nbPions() > 0 && grille[v.x][v.y].nbPions() + nbPionsDep <= 5) {
+                    resultat.add(v);
+                }
+            }
+        }
+        return resultat;
+    }
+
+    public ArrayList<Point> trouveCasePeutBouger() {
+        ArrayList<Point> casePeutBouger = new ArrayList<>();
+        for (int i = 0; i < taille.h; i++) {
+            for (int j = 0; j < taille.l; j++) {
+                if ((estCaseValide(new Point(i, j))) && (grille[i][j].nbPions()>0)) {
+                    ArrayList<Point> vosinsAccessible = voisinsAccessibles(i, j);
+                    if (vosinsAccessible != null && vosinsAccessible.size() != 0) {
+                            casePeutBouger.add(new Point(i, j));
+                    }
+                }
+            }
+        }
+        return casePeutBouger;
+    }
+
+    private ArrayList<Point> getPointsVoisins(int h, int l) {
+        ArrayList<Point> ret = new ArrayList<>();
+        ret.add(new Point(h, l-1));
+        ret.add(new Point(h-1, l-1));
+        ret.add(new Point(h-1, l));
+        ret.add(new Point(h-1, l+1));
+        ret.add(new Point(h, l+1));
+        ret.add(new Point(h+1, l+1));
+        ret.add(new Point(h+1, l));
+        ret.add(new Point(h+1, l-1));
+        return ret;
+    }
+
     public boolean estCaseArrive(int x,int y){
         return lastArrI==x && lastArrJ==y;
     }
@@ -252,17 +284,30 @@ public class Jeu extends Etat {
         return lastDepI==x && lastDepJ==y;
     }
 
-    private boolean valideAction(String titre, String description, String choix_valider, String choix_annuler) {
-        if(ctrl==null) {
-            System.err.println("Attention, le jeu n'a pas accès au controleur et ne peut pas demander de validation à l'utilisateur");
-            return true;
-        }
-        return ctrl.valideAction(titre, description, choix_valider, choix_annuler);
-    }
     public String getNomJ1(){
         return j1.getNom();
     }
     public String getNomJ2(){
         return j2.getNom();
+    }
+
+    @Override
+    public Object clone() {
+        Jeu ret = new Jeu();
+        ret.j1 = j1;
+        ret.j2 = j2;
+        ret.historique = (Historique) historique.clone();
+        ret.historique.jeu = ret;
+        for(int i=0; i<taille.h; i++) {
+            for(int j=0; j<taille.l; j++) {
+                ret.grille[i][j] = (Case) grille[i][j].clone();
+            }
+        }
+        ret.lastArrI = lastArrI;
+        ret.lastArrJ = lastArrJ;
+        ret.lastDepI = lastDepI;
+        ret.lastDepJ = lastDepJ;
+        ret.estPartieRecuperee = estPartieRecuperee;
+        return ret;
     }
 }

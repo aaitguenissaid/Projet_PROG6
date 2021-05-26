@@ -212,9 +212,9 @@ public class IAFort extends IA{
         byte[] resultat = new byte[48];
         for (int i = 0; i < jeu.getTaille().h; i++){
             for (int j = 0; j < jeu.getTaille().l; j++){
-                if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).hauteur() > 0)){
+                if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).nbPions() > 0)){
                     int indice = coderPoint(i, j);
-                    byte hauteur = (byte) jeu.getCase(i, j).hauteur();
+                    byte hauteur = (byte) jeu.getCase(i, j).nbPions();
                     byte couleur = (byte) jeu.getCase(i, j).getTete().getCouleur();
                     byte value = setValue(couleur, hauteur);
                     resultat[indice] = value;

@@ -1,16 +1,21 @@
 package Vue;
 
+import Modele.PaletteDeCouleurs;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
 public class Regles extends javax.swing.JPanel {
     CollecteurEvenements cc;
+    PaletteDeCouleurs palette;
     public Regles(CollecteurEvenements ctrl) {
-        initComponents();
         cc=ctrl;
+        palette = cc.getPalette();
+        initComponents();
     }
-    private void initComponents() {
+    void initComponents() {
+        removeAll();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
@@ -18,14 +23,12 @@ public class Regles extends javax.swing.JPanel {
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jScrollPane5 = new javax.swing.JScrollPane();
         jPanel8 = new javax.swing.JPanel();
+        setToutCouleurs();
         jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel2.setBackground(new java.awt.Color(120, 171, 191));
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
 
-        jButton1.setBackground(new java.awt.Color(120, 171, 191));
         jButton1.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_back_ios_black_24dp.png"))));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -35,14 +38,12 @@ public class Regles extends javax.swing.JPanel {
         jPanel2.add(jButton1);
         jPanel2.add(filler1);
 
-        jLabel1.setBackground(new java.awt.Color(120, 171, 191));
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel1.setText("Reagles");
         jPanel2.add(jLabel1);
         jPanel2.add(filler2);
 
         add(jPanel2);
-        jPanel8.setBackground(new java.awt.Color(120, 171, 191));
         jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.PAGE_AXIS));
         jPanel8.add(addImageToPanel("12"));
         jPanel8.add(addImageToPanel("1"));
@@ -91,10 +92,10 @@ public class Regles extends javax.swing.JPanel {
     }
     JPanel addImageToPanel(String nom){
         JPanel panel= new JPanel();
-        panel.setBackground(new java.awt.Color(120, 171, 191));
+        panel.setBackground(palette.Couleur1);
         panel.setLayout(new java.awt.GridLayout());
         JLabel label = new JLabel();
-        label.setBackground(new java.awt.Color(120, 171, 191));
+        label.setBackground(palette.Couleur1);
         label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/img/"+nom+".png"))));
         panel.add(label);
@@ -102,18 +103,22 @@ public class Regles extends javax.swing.JPanel {
     }
     JPanel addTextToPanel(String text){
         JPanel panel= new JPanel();
-        panel.setBackground(new java.awt.Color(120, 171, 191));
+        panel.setBackground(palette.Couleur1);
         panel.setLayout(new java.awt.GridLayout());
         JLabel label = new JLabel();
         label.setPreferredSize(new Dimension(label.getPreferredSize().height,getPreferredSize().width));
-        label.setBackground(new java.awt.Color(120, 171, 191));
+        label.setBackground(palette.Couleur1);
         label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label.setText(text);
         panel.add(label);
         return panel;
     }
-
-    // Variables declaration - do not modify
+    public void setToutCouleurs(){
+        jPanel2.setBackground(palette.Couleur1);
+        jButton1.setBackground(palette.Couleur1);
+        jLabel1.setBackground(palette.Couleur1);
+        jPanel8.setBackground(palette.Couleur1);
+    }
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JButton jButton1;

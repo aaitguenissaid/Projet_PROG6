@@ -1,7 +1,7 @@
 package Vue;
 
 import Modele.Case;
-import Modele.PaletteDeCouleurs;
+import Modele.Jeu;
 import Modele.Pion;
 import Structures.Iterateur;
 
@@ -15,11 +15,15 @@ public class PionComponent extends JComponent {
     int padding;
     Case c;
     Graphics2D drawable;
-    PionComponent(Case c, Color w,Color b,Color s){
+    Jeu j;
+    Point p;
+    PionComponent(Jeu j, Point c, Color w, Color b, Color s){
         one = w;
         tow = b;
         bordure = s;
-        this.c =c;
+        this.j = j;
+        p=c;
+        this.c =j.getCase(p.x,p.y);
     }
     public void setPionComponent(int x, int y,int height,int width){
         this.x=x;
@@ -29,6 +33,7 @@ public class PionComponent extends JComponent {
         this.setLocation(new Point(x,y));
         this.setSize(new Dimension(width, 7*height));
         padding=(7*height);
+        this.c =j.getCase(p.x,p.y);
     }
     @Override
     public void paintComponent(Graphics g) {

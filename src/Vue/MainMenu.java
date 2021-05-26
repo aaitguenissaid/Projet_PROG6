@@ -12,7 +12,8 @@ public class MainMenu extends javax.swing.JPanel {
         palette = cc.getPalette();
         initComponents();
     }
-    private void initComponents() {
+    void initComponents() {
+        removeAll();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         filler = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));

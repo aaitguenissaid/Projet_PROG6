@@ -16,7 +16,8 @@ public class JeuVue extends javax.swing.JPanel {
         initComponents();
     }
 
-    private void initComponents() {
+    void initComponents() {
+        removeAll();
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();

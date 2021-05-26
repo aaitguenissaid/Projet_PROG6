@@ -102,9 +102,10 @@ public class InterfaceUtilisateur implements Runnable {
     }
     public void setReagles(){ cl.show(screens, "REAGLES"); }
     public void revalidateInterface(){
-        main.setToutCouleurs();
+        main.initComponents();
         param.setToutCouleurs();
-        jeu.setToutCouleurs();
+        reg.initComponents();
+        jeu.initComponents();
     }
     public void reaglesBack(){
         if(regBack){

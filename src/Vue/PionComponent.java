@@ -66,4 +66,8 @@ public class PionComponent extends JComponent {
         this.setLocation(new Point(this.x,this.y));
         this.repaint();
     }
+
+    public void setJeu(Jeu j) {
+        this.j=j;
+    }
 }

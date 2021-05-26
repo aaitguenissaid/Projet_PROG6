@@ -2,18 +2,13 @@ package Modele;
 
 import Global.Configuration;
 import Structures.Iterateur;
-import Structures.IterateurListe;
 import Structures.FAPListe;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Classement {
@@ -48,13 +43,15 @@ public class Classement {
                 sc = new Scanner(fichierClassement);
                 if(sc.hasNextLine())
                     ligne = sc.nextLine();
+                else
+                    ligne = "";
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(0);
             }
             while (ligne.length() > 0) {
                 String[] mots = new String[4];
-                mots = ligne.split(" ");
+                mots = ligne.split("\t");
                 String pseudo = mots[0];
                 int nbVictoires = Integer.parseInt(mots[1]);
                 int nbParties = Integer.parseInt(mots[2]);
@@ -63,6 +60,8 @@ public class Classement {
                 listeScores.insere(score);
                 if(sc.hasNextLine())
                     ligne = sc.nextLine();
+                else
+                    ligne = "";
             }
         }
         this.listeScores = listeScores;
@@ -74,19 +73,24 @@ public class Classement {
 
     void enregsitererScore(String pseudo, boolean aGagner) {
         Iterateur<Score> it = listeScores.iterateur();
+        boolean b = false;
         while(it.aProchain()){
             Score p = it.prochain();
             if (p.pseudo.equals(pseudo)) {
+                System.out.println("debug");
                 p.nbParties++;
                 p.nbVictoires = aGagner ? p.nbVictoires+1 : p.nbVictoires;
-                p.ratio = p.nbVictoires / p.nbParties;
+                if(p.nbParties>0)
+                    p.ratio = (float)p.nbVictoires / p.nbParties;
                 //enregistrer le fichier. suprimer et reecrire.
                 supprimerEnregistrerFichier();
-                return;
+                b = true;
             }
         }
-        listeScores.insere(new Score(pseudo, aGagner ? 1 : 0, 1));
-        supprimerEnregistrerFichier();
+        if(!b){
+            listeScores.insere(new Score(pseudo, aGagner ? 1 : 0, 1));
+            supprimerEnregistrerFichier();
+        }
     }
 
     void enregsitererScore(String pseudo1, String pseudo2, boolean premierAGagner) {
@@ -95,13 +99,14 @@ public class Classement {
     }
 
     void supprimerEnregistrerFichier() {
-        fichierClassement.delete();
+        //fichierClassement.delete();
         fichierClassement = new File(nomFichierClassement);
         try {
-            FileWriter fileWriter = new FileWriter(fichierClassement);
-            while(listeScores.iterateur().aProchain()){
-                Score sc = listeScores.iterateur().prochain();
-                String s = sc.pseudo +" "+ sc.nbVictoires +" "+ sc.nbParties +" "+ sc.ratio + "\n";
+            FileWriter fileWriter = new FileWriter(fichierClassement,false);
+            Iterateur<Score> iterateur = listeScores.iterateur();
+            while(iterateur.aProchain()){
+                Score sc = iterateur.prochain();
+                String s = sc.pseudo + "\t" + sc.nbVictoires + "\t" + sc.nbParties + "\t" + sc.ratio + "\n";
                 fileWriter.write(s);
             }
             fileWriter.close();
@@ -110,33 +115,6 @@ public class Classement {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-    }
-    public static void main(String[] args) {
-        Classement classement = new Classement();
-        Random r = new Random();
-        int n = 5;
-        int m = 5;
-        String[] pseudos = new String[n];
-        for (int i=0; i<n; i++) {
-            byte[] array = new byte[7]; // length is bounded by 7
-            new Random().nextBytes(array);
-            String generatedString = (char) r.nextBytes(); //new String(array, Charset.forName("UTF-8"));
-
-            pseudos[i] = aaaa;
-        }
-        for(int i = 0; i<m; i++) {
-            int nbPseudo = r.nextInt(n);
-            Score score = new Score(pseudos[nbPseudo],r.nextInt(), r.nextInt());
-            classement.listeScores.insere(score);
-            classement.enregsitererScore(pseudos[nbPseudo], r.nextBoolean());
-        }
-
-        //System.out.println("\nCouleur J1 avant update : " + prefs.get(Preferences.COULEUR_J1));
-        //prefs.set(Preferences.COULEUR_J1, String.valueOf(10));
-        //System.out.println("Couleur J1 après update : " + prefs.get(Preferences.COULEUR_J1));
-
-        //prefs.reinitialiserProprietes();
     }
 
 }

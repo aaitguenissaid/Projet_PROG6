@@ -11,7 +11,8 @@ public class Score implements Comparable<Score> {
         this.pseudo = pseudo;
         this.nbVictoires = nbVictoires;
         this.nbParties = nbParties;
-        ratio = nbVictoires / nbParties;
+        if(nbParties>0)
+            ratio = (float) nbVictoires / nbParties;
     }
     Score(String pseudo, int nbVictoires, int nbParties, float ratio) {
         this.pseudo = pseudo;

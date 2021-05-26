@@ -414,6 +414,8 @@ public class IAFort extends IA{
         return gagnant;
     }
 
+
+
     @Override
     public Mouvement joue() {
         byte[] config = configuration();

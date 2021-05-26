@@ -22,7 +22,7 @@ public class IAFortCoup extends IA{
             int l = depart.y;
             ArrayList<Point> voisinsAccessible = super.voisinsAccessibles(h, l);
             for (int j = 0; j < voisinsAccessible.size(); j++){
-                Point arrivee = voisinsAccessible.get(i);
+                Point arrivee = voisinsAccessible.get(j);
                 etapesPossibles.add(new Mouvement(depart, arrivee));
             }
         }
@@ -31,8 +31,10 @@ public class IAFortCoup extends IA{
 
     private boolean memeCouleur(Point depart, ArrayList<Point> voisins){
         int i = 0;
+        int couleurDepart = jeu.getCase(depart.x, depart.y).getTete().getCouleur();
         while (i < voisins.size()){
-            if (jeu.getCase(depart.x, depart.y).getTete().getCouleur() == jeu.getCase(voisins.get(i).x, voisins.get(i).y).getTete().getCouleur())
+            int couleurArrivee = jeu.getCase(voisins.get(i).x, voisins.get(i).y).getTete().getCouleur();
+            if (couleurDepart == couleurArrivee)
                 i++;
             else
                 break;
@@ -114,8 +116,29 @@ public class IAFortCoup extends IA{
             return minValeur;
         }
     }
+
+
+    private Mouvement trouverGagnant(ArrayList<Mouvement> configSuivants, int horizon){
+        Mouvement gagnant = null;
+        int imax = 0;
+        int max = -INF;
+        for (int i = 0; i < configSuivants.size(); i++){
+            Mouvement configSuivant = configSuivants.get(i);
+            int courant = minmaxAlphaBeta( -INF, INF,true, horizon);
+            if (courant > max){
+                max = courant;
+                imax = i;
+            }
+        }
+        gagnant = configSuivants.get(imax);
+        return gagnant;
+    }
+
+
     @Override
     public Mouvement joue() {
-        return null;
+        ArrayList<Mouvement> configSuivants = EtapesPossibles();
+        Mouvement resultat = trouverGagnant(configSuivants, 5);
+        return resultat;
     }
 }

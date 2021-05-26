@@ -49,8 +49,7 @@ public class Historique implements Cloneable {
         if(historique==null || current-1<0 || current-1>=historique.size()) return null;
         setNavigationOn();
         current--;
-        jeu.grille = historique.get(current).getCopieGrille();
-        jeu.tour = historique.get(current).getTour();
+        metAJourJeu();
         return historique.get(current);
     }
 
@@ -62,8 +61,7 @@ public class Historique implements Cloneable {
         if(current==historique.size()-2) setNavigationOff();
         if(historique==null || current+1<0 || current+1>=historique.size()) return null;
         current++;
-        jeu.grille = historique.get(current).getCopieGrille();
-        jeu.tour = historique.get(current).getTour();
+        metAJourJeu();
         return historique.get(current);
     }
 
@@ -99,6 +97,7 @@ public class Historique implements Cloneable {
     public Etat atteindreFinHistorique() {
         if(historique.size()==0) return null;
         current = historique.size()-1;
+        metAJourJeu();
         setNavigationOff();
         return historique.get(current);
     }
@@ -108,6 +107,7 @@ public class Historique implements Cloneable {
         if(historique.size()==0) return null;
         setNavigationOn();
         current = 0;
+        metAJourJeu();
         return historique.get(current);
     }
 
@@ -127,6 +127,11 @@ public class Historique implements Cloneable {
         for(int i=0; i<historique.size()-1; i++) {
             historique.get(i).print(out);
         }
+    }
+
+    private void metAJourJeu() {
+        jeu.grille = historique.get(current).getCopieGrille();
+        jeu.tour = historique.get(current).getTour();
     }
 
     @Override

@@ -2,7 +2,6 @@ package Modele;
 
 import Global.Configuration;
 import Structures.*;
-import Vue.CollecteurEvenements;
 
 import java.awt.*;
 import java.io.PrintWriter;
@@ -12,23 +11,17 @@ import java.util.Scanner;
 public class Jeu extends Etat implements Cloneable {
     public static final int COULEUR1 = 0;
     public static final int COULEUR2 = 1;
-    CollecteurEvenements ctrl;
     Joueur j1,j2;
     Historique historique;
     int lastDepI,lastDepJ,lastArrI,lastArrJ; //ajouté pour afficher le dernier coup
     boolean estPartieRecuperee;
 
     public Jeu() {
-        this(null, true);
+        this(true);
     }
 
-    public Jeu(CollecteurEvenements ctrl){
-        this(ctrl, true);
-    }
-
-    public Jeu(CollecteurEvenements ctrl, boolean fromScratch) {
+    public Jeu(boolean fromScratch) {
         super();
-        this.ctrl = ctrl;
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
         estPartieRecuperee=false;
         if(fromScratch) {
@@ -59,10 +52,6 @@ public class Jeu extends Etat implements Cloneable {
                 }
             }
         }
-    }
-
-    public void setCollecteurEvenements(CollecteurEvenements events) {
-        this.ctrl = events;
     }
 
     public boolean estFini() {
@@ -107,14 +96,12 @@ public class Jeu extends Etat implements Cloneable {
             //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
             //dans l'état qu'il visitait
             if(!historique.getEtatNavigation().estMouvementPossible(depart, arrive)) return false;
-            String titre = "Validation navigation historique";
+            /*String titre = "Validation navigation historique";
             String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
                     +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
             String choix_valide = "Continuer";
-            String choix_annule = "Annuler";
-            if(valideAction(titre, description, choix_valide, choix_annule)) {
-                historique.validerNavigation();
-            }
+            String choix_annule = "Annuler";*/
+            historique.validerNavigation();
         } else {
             if (!estMouvementPossible(depart, arrive)) return false;
         }
@@ -157,94 +144,49 @@ public class Jeu extends Etat implements Cloneable {
         return historique;
     }
 
-    public void enregistrerPartie(String nom_partie) {
-        PrintWriter out = Configuration.instance().ouvreFichierEcriture(nom_partie
-                +"."
-                +Configuration.instance().lis("ExtensionSauvegarde"));
-        if(out!=null) {
-            out.println(taille.h + "," + taille.l);
-            print(out); //Affiche la grille et le tour
-            out.println(j1.getId() + "," + j1.getNom() + "," + j1.getColore());
-            out.println(j2.getId() + "," + j2.getNom() + "," + j2.getColore());
-            historique.print(out);
-            out.close();
+    // Prends une indice de tableau de configuration comme le depart et rends les indices comme arrivées accessibles
+    public ArrayList<Point> voisinsAccessibles(int h, int l){
+        int nbPionsDep = grille[h][l].nbPions();
+        ArrayList<Point> resultat = new ArrayList<>();
+        if (nbPionsDep > 0) {
+            ArrayList<Point> pointsVoisins = getPointsVoisins(h, l);
+            for (Point v : pointsVoisins) {
+                if (estCaseValide(v) && grille[v.x][v.y].nbPions() > 0 && grille[v.x][v.y].nbPions() + nbPionsDep <= 5) {
+                    resultat.add(v);
+                }
+            }
         }
+        return resultat;
     }
 
-    public static Jeu recupererPartie(String nom_partie) {
-        return recupererPartie(null, nom_partie);
+    public ArrayList<Point> trouveCasePeutBouger() {
+        ArrayList<Point> casePeutBouger = new ArrayList<>();
+        for (int i = 0; i < taille.h; i++) {
+            for (int j = 0; j < taille.l; j++) {
+                if ((estCaseValide(new Point(i, j))) && (grille[i][j].nbPions()>0)) {
+                    ArrayList<Point> vosinsAccessible = voisinsAccessibles(i, j);
+                    if (vosinsAccessible != null && vosinsAccessible.size() != 0) {
+                            casePeutBouger.add(new Point(i, j));
+                    }
+                }
+            }
+        }
+        return casePeutBouger;
     }
 
-    public static Jeu recupererPartie(CollecteurEvenements events, String nom_partie) {
-        Scanner in = Configuration.instance().ouvrirFichierLecture(nom_partie
-                +"."
-                +Configuration.instance().lis("ExtensionSauvegarde"));
-        if(in==null) {
-            return null;
-        }
-        Jeu nvx_jeu = new Jeu(events, false);
-        nvx_jeu.estPartieRecuperee=true;
-
-        //#### Récupération de la taille de la grille ####
-        if(!in.hasNextLine()) return null;
-        String line = in.nextLine();
-        String[] taille = line.split(",");
-        nvx_jeu.taille = new Size(Integer.parseInt(taille[0]),Integer.parseInt(taille[1]));
-
-        //#### Récupération de la grille ####
-        if(!in.hasNextLine()) return null;
-        line = in.nextLine();
-        nvx_jeu.grille = readGrille(line, nvx_jeu.taille.h, nvx_jeu.taille.l);
-
-        //#### Récupération du tour ####
-        if(!in.hasNextLine()) return null;
-        line = in.nextLine();
-        nvx_jeu.tour = Integer.parseInt(line);
-
-        //#### Récupération du premier joueur ####
-        if(!in.hasNextLine()) return null;
-        line = in.nextLine();
-        String[] joueur = line.split(",");
-        nvx_jeu.j1 = new Joueur(joueur[1],Integer.parseInt(joueur[0]),Integer.parseInt(joueur[2]));
-
-        //#### Récupération du deuxième joueur ####
-        if(!in.hasNextLine()) return null;
-        line = in.nextLine();
-        joueur = line.split(",");
-        nvx_jeu.j2 = new Joueur(joueur[1],Integer.parseInt(joueur[0]),Integer.parseInt(joueur[2]));
-
-        //#### Récupération du nombre de coups réels de l'historique ####
-        if(!in.hasNextLine()) return null;
-        line = in.nextLine();
-        nvx_jeu.historique = new Historique(nvx_jeu, false);
-        nvx_jeu.historique.nbCoupsReel = Integer.parseInt(line);
-
-        //#### Récupération de la taille de l'historique ####
-        if(!in.hasNextLine()) return null;
-        line = in.nextLine();
-        int taille_hist = Integer.parseInt(line);
-
-        int tour_etat;
-        //#### Récupération  de l'historique ####
-        for(int i=0; i<taille_hist-1; i++) {
-            Case[][] grille_etat;
-
-            // Récupération de la grille de l'état
-            if(!in.hasNextLine()) return null;
-            line = in.nextLine();
-            grille_etat = readGrille(line, nvx_jeu.taille.h, nvx_jeu.taille.l);
-
-            //Récupération du tour de l'état
-            if(!in.hasNextLine()) return null;
-            line = in.nextLine();
-            tour_etat = Integer.parseInt(line);
-
-            nvx_jeu.historique.ajouteEtat(grille_etat, tour_etat);
-        }
-        nvx_jeu.historique.ajouteEtat(nvx_jeu.grille, nvx_jeu.tour);
-
-        return nvx_jeu;
+    private ArrayList<Point> getPointsVoisins(int h, int l) {
+        ArrayList<Point> ret = new ArrayList<>();
+        ret.add(new Point(h, l-1));
+        ret.add(new Point(h-1, l-1));
+        ret.add(new Point(h-1, l));
+        ret.add(new Point(h-1, l+1));
+        ret.add(new Point(h, l+1));
+        ret.add(new Point(h+1, l+1));
+        ret.add(new Point(h+1, l));
+        ret.add(new Point(h+1, l-1));
+        return ret;
     }
+
     public boolean estCaseArrive(int x,int y){
         return lastArrI==x && lastArrJ==y;
     }
@@ -252,13 +194,6 @@ public class Jeu extends Etat implements Cloneable {
         return lastDepI==x && lastDepJ==y;
     }
 
-    private boolean valideAction(String titre, String description, String choix_valider, String choix_annuler) {
-        if(ctrl==null) {
-            System.err.println("Attention, le jeu n'a pas accès au controleur et ne peut pas demander de validation à l'utilisateur");
-            return true;
-        }
-        return ctrl.valideAction(titre, description, choix_valider, choix_annuler);
-    }
     public String getNomJ1(){
         return j1.getNom();
     }

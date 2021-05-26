@@ -19,12 +19,12 @@ public class IAAleatoire extends IA{
 
     @Override
     public Mouvement joue() {
-        ArrayList<Point> casePeutBouger = super.trouveCasePeutBouger();
+        ArrayList<Point> casePeutBouger = jeu.trouveCasePeutBouger();
         int d = r1.nextInt(casePeutBouger.size());
         Point depart = casePeutBouger.get(d);
         int h = depart.x;
         int l = depart.y;
-        ArrayList<Point> voisinsAccessible = super.voisinsAccessibles(h, l);
+        ArrayList<Point> voisinsAccessible = jeu.voisinsAccessibles(h, l);
         int a;
         if (voisinsAccessible.size() >1){
             a = r2.nextInt(voisinsAccessible.size());

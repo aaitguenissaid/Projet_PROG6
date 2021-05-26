@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Jeu extends Etat {
+public class Jeu extends Etat implements Cloneable {
     public static final int COULEUR1 = 0;
     public static final int COULEUR2 = 1;
     CollecteurEvenements ctrl;
@@ -264,5 +264,25 @@ public class Jeu extends Etat {
     }
     public String getNomJ2(){
         return j2.getNom();
+    }
+
+    @Override
+    public Object clone() {
+        Jeu ret = new Jeu();
+        ret.j1 = j1;
+        ret.j2 = j2;
+        ret.historique = (Historique) historique.clone();
+        ret.historique.jeu = ret;
+        for(int i=0; i<taille.h; i++) {
+            for(int j=0; j<taille.l; j++) {
+                ret.grille[i][j] = (Case) grille[i][j].clone();
+            }
+        }
+        ret.lastArrI = lastArrI;
+        ret.lastArrJ = lastArrJ;
+        ret.lastDepI = lastDepI;
+        ret.lastDepJ = lastDepJ;
+        ret.estPartieRecuperee = estPartieRecuperee;
+        return ret;
     }
 }

@@ -3,7 +3,7 @@ package Modele;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class Historique {
+public class Historique implements Cloneable {
     Jeu jeu;
     ArrayList<Etat> historique;
     int current;
@@ -121,5 +121,17 @@ public class Historique {
         for(int i=0; i<historique.size()-1; i++) {
             historique.get(i).print(out);
         }
+    }
+
+    @Override
+    public Object clone() {
+        Historique ret = new Historique(jeu, false);
+        for(int i=0; i<historique.size(); i++) {
+            ret.ajouteEtat(historique.get(i).grille, historique.get(i).getTour());
+        }
+        ret.nbCoupsReel = nbCoupsReel;
+        ret.current = current;
+        ret.navigationOn = navigationOn;
+        return ret;
     }
 }

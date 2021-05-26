@@ -50,10 +50,6 @@ public class Case implements Cloneable {
         return this.pions;
     }
 
-    public int hauteur() {
-        return this.pions.taille();
-    }
-
     public boolean estValide() {
         return this.valide;
     }

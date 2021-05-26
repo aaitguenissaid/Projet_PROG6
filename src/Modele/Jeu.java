@@ -245,6 +245,50 @@ public class Jeu extends Etat implements Cloneable {
 
         return nvx_jeu;
     }
+
+    // Prends une indice de tableau de configuration comme le depart et rends les indices comme arrivées accessibles
+    public ArrayList<Point> voisinsAccessibles(int h, int l){
+        int nbPionsDep = grille[h][l].nbPions();
+        ArrayList<Point> resultat = new ArrayList<>();
+        if (nbPionsDep > 0) {
+            ArrayList<Point> pointsVoisins = getPointsVoisins(h, l);
+            for (Point v : pointsVoisins) {
+                if (estCaseValide(v) && grille[v.x][v.y].nbPions() > 0 && grille[v.x][v.y].nbPions() + nbPionsDep <= 5) {
+                    resultat.add(v);
+                }
+            }
+        }
+        return resultat;
+    }
+
+    public ArrayList<Point> trouveCasePeutBouger() {
+        ArrayList<Point> casePeutBouger = new ArrayList<>();
+        for (int i = 0; i < taille.h; i++) {
+            for (int j = 0; j < taille.l; j++) {
+                if ((estCaseValide(new Point(i, j))) && (grille[i][j].nbPions()>0)) {
+                    ArrayList<Point> vosinsAccessible = voisinsAccessibles(i, j);
+                    if (vosinsAccessible != null && vosinsAccessible.size() != 0) {
+                            casePeutBouger.add(new Point(i, j));
+                    }
+                }
+            }
+        }
+        return casePeutBouger;
+    }
+
+    private ArrayList<Point> getPointsVoisins(int h, int l) {
+        ArrayList<Point> ret = new ArrayList<>();
+        ret.add(new Point(h, l-1));
+        ret.add(new Point(h-1, l-1));
+        ret.add(new Point(h-1, l));
+        ret.add(new Point(h-1, l+1));
+        ret.add(new Point(h, l+1));
+        ret.add(new Point(h+1, l+1));
+        ret.add(new Point(h+1, l));
+        ret.add(new Point(h+1, l-1));
+        return ret;
+    }
+
     public boolean estCaseArrive(int x,int y){
         return lastArrI==x && lastArrJ==y;
     }

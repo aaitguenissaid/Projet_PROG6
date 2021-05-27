@@ -98,10 +98,33 @@ public class MainMenu extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Acount
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                NomsDeJoueurs dialog = new NomsDeJoueurs(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
     }
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {
-        cc.jouer_en_local();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DebutJeuDialog dialog = new DebutJeuDialog(new javax.swing.JFrame(), true,cc);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
     }
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {

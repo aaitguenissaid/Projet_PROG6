@@ -279,11 +279,13 @@ public class JeuVue extends javax.swing.JPanel {
     }
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        // TODO add your handling code here: Relancer une partie
+        cc.relancerPartie();
     }
 
     private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        // TODO add your handling code here: Abandonner
+        cc.abandonner();
     }
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {

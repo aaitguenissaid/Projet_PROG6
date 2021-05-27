@@ -41,5 +41,8 @@ public interface CollecteurEvenements {
     void stop_historique();
     void previous_historique();
     void first_historique();
+
+    void relancerPartie();
+    void abandonner();
 }
 

@@ -14,7 +14,7 @@ public class TestClassement {
         for(int i = 0; i<m; i++) {
             int nbPseudo = r.nextInt(n);
             Score score = new Score(pseudos[nbPseudo], r.nextInt(10), r.nextInt(10));
-            classement.enregsitererScore(pseudos[nbPseudo], r.nextBoolean());
+            classement.enregistrerScore(pseudos[nbPseudo], r.nextBoolean());
         }
 
     }

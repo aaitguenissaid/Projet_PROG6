@@ -71,7 +71,7 @@ public class Classement {
         return listeScores.iterateur();
     }
 
-    void enregsitererScore(String pseudo, boolean aGagner) {
+    void enregistrerScore(String pseudo, boolean aGagner) {
         Iterateur<Score> it = listeScores.iterateur();
         boolean b = false;
         while(it.aProchain()){
@@ -93,9 +93,9 @@ public class Classement {
         }
     }
 
-    void enregsitererScore(String pseudo1, String pseudo2, boolean premierAGagner) {
-        enregsitererScore(pseudo1, premierAGagner);
-        enregsitererScore(pseudo2, !premierAGagner);
+    void enregistrerScore(String pseudo1, String pseudo2, boolean premierAGagner) {
+        enregistrerScore(pseudo1, premierAGagner);
+        enregistrerScore(pseudo2, !premierAGagner);
     }
 
     void supprimerEnregistrerFichier() {

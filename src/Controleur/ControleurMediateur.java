@@ -351,4 +351,20 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeu.getHistorique().atteindreDebutHistorique();
         jeuint.metAJour();
     }
+
+    @Override
+    public void relancerPartie() {
+        if(jeu.estFini()) {
+            jeu.relancerPartie();
+            jeuint.metAJour();
+        }
+    }
+
+    @Override
+    public void abandonner() {
+        if(!jeu.estFini()) {
+            jeu.abandonner();
+            jeuint.metAJour();
+        }
+    }
 }

@@ -180,6 +180,40 @@ public class Jeu extends Etat implements Cloneable {
         return ret;
     }
 
+    //Fait perdre le joueur dont c'était le tour
+    public void abandonner() {
+        relancerPartie(true);
+    }
+
+    public void relancerPartie() {
+        relancerPartie(false);
+    }
+
+    public void relancerPartie(boolean isAbandon) {
+        Classement c = new Classement();
+        if(isAbandon) {
+            c.enregistrerScore(getNomJ1(), getNomJ2(), tour!=COULEUR1);
+        } else {
+            int nb1=0, nb2=0;
+            for(int i=0; i<taille.h; i++) {
+                for(int j=0; j<taille.l; j++) {
+                    if(grille[i][j].estValide() && grille[i][j].tete!=null) {
+                        if(grille[i][j].tete.estCouleur1()) nb1++;
+                        else nb2++;
+                    }
+                }
+            }
+            if(nb1!=nb2) {
+                c.enregistrerScore(getNomJ1(), getNomJ2(), nb1>nb2);
+            }
+        }
+        init_grille();
+        tour = COULEUR1;
+        lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
+        estPartieRecuperee=false;
+        historique = new Historique(this);
+    }
+
     public boolean estCaseArrive(int x,int y){
         return lastArrI==x && lastArrJ==y;
     }

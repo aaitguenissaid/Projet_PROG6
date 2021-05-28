@@ -110,15 +110,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         String message = "Choose your AI in the following list.\n" + text ;
         String title = "AI Choice";
 
-        return (String) JOptionPane.showInputDialog(
-                jeuint.getFrame(),
-                message,
-                title,
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                possibilities,
-                "IAAleatoire"
-        );
+        return (String) jeuint.choisirItem(title, message, possibilities, JOptionPane.QUESTION_MESSAGE);
     }
 
 
@@ -166,7 +158,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                         +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
                 String choix_valide = "Continuer";
                 String choix_annule = "Annuler";
-                if(valideAction(titre, description, choix_valide, choix_annule)) {
+                if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
                     jeu.getHistorique().validerNavigation();
                 }
             }
@@ -230,7 +222,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         Object[] parties = PartiesSauvegardees.getNomsParties();
         String titre = "Choix d'une partie";
         String description = "Veuillez choisir une partie parmis celles sauvegardées.";
-        String nom_partie = (String) choisirItem(titre, description, parties, JOptionPane.QUESTION_MESSAGE);
+        String nom_partie = (String) jeuint.choisirItem(titre, description, parties, JOptionPane.QUESTION_MESSAGE);
 
         if(nom_partie!=null) {
             Jeu j = PartiesSauvegardees.recupererPartie(nom_partie);
@@ -250,7 +242,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void enregistrer_la_partie() {
         String titre = "Choix du nom";
         String description = "Veuillez entrer un nom pour votre partie.";
-        String nom = (String) choisirItem(titre, description, null, JOptionPane.PLAIN_MESSAGE);
+        String nom = (String) jeuint.choisirItem(titre, description, null, JOptionPane.PLAIN_MESSAGE);
         if(nom!=null && nom.length()>2) {
             PartiesSauvegardees.enregistrerPartie(nom.replace(" ","_"), this.jeu);
         }
@@ -269,32 +261,6 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void reagles() { jeuint.setReagles();}
 
-    @Override
-    public boolean valideAction(String titre, String description, String choix_valider, String choix_annuler) {
-        Object[] options = {choix_annuler, choix_valider};
-        int n = JOptionPane.showOptionDialog(
-                jeuint.getFrame(),
-                description,
-                titre,
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[0]);
-        return n==1;
-    }
-
-    public Object choisirItem(String titre, String description, Object[] items, int message) {
-        return JOptionPane.showInputDialog(
-                jeuint.getFrame(),
-                description,
-                titre,
-                message,
-                null,
-                items,
-                (items!=null && items.length>0) ? items[0] : null
-        );
-    }
     public PaletteDeCouleurs getPalette(){
         return palette;
     }
@@ -332,7 +298,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                     +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
             String choix_valide = "Continuer";
             String choix_annule = "Annuler";
-            if(valideAction(titre, description, choix_valide, choix_annule)) {
+            if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
                 jeu.getHistorique().validerNavigation();
             }
         }

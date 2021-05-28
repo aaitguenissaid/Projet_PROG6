@@ -28,8 +28,6 @@ public interface CollecteurEvenements {
 
     void reagles();
 
-    boolean valideAction(String titre, String description, String choix_valider, String choix_annuler);
-
     PaletteDeCouleurs getPalette();
 
     void revalidateInterface();

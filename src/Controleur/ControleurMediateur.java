@@ -16,7 +16,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     InterfaceUtilisateur jeuint;
     boolean shouldMove;
     int startCaseI,startCaseJ;
-    boolean activeA, activeB;
+    boolean activeA, activeB, activeAB;
     IA IA_A, IA_B;
     Timer time;
     SequenceListe<Animation> animations;
@@ -28,6 +28,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeu = i.jeu();
         activeA = false;
         activeB = false;
+        activeAB = false;
         animations = new SequenceListe<>();
         palette=new PaletteDeCouleurs();
         sonCtrl = new EffetsSonores();
@@ -38,15 +39,21 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(activeA) {
             activeA = false;
             IA_A = null;
+            if(activeAB) time.stop();
+            activeAB = false;
         } else {
             String IA = choisirAI("");
             if (IA != null) {
                 activateOne(IA, "A");
-                if (!jeu.estFini()){
-                    if(jeu.getTour()==0) {
-                        Mouvement coup = IA_A.joue();
-                        jeu.bouge(coup.getDepart(), coup.getArrivee());
-                        jeuint.metAJour();
+                if (activeB){
+                    activateBoth();
+                } else {
+                    if (!jeu.estFini()){
+                        if(jeu.getTour()==0) {
+                            Mouvement coup = IA_A.joue();
+                            jeu.bouge(coup.getDepart(), coup.getArrivee());
+                            jeuint.metAJour();
+                        }
                     }
                 }
             } else {
@@ -58,15 +65,21 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(activeB) {
             activeB = false;
             IA_B = null;
+            if(activeAB) time.stop();
+            activeAB = false;
         } else {
             String IA = choisirAI("");
             if (IA != null) {
                 activateOne(IA, "B");
-                if (!jeu.estFini()){
-                    if(jeu.getTour()==1) {
-                        Mouvement coup = IA_B.joue();
-                        jeu.bouge(coup.getDepart(), coup.getArrivee());
-                        jeuint.metAJour();
+                if (activeA){
+                    activateBoth();
+                } else {
+                    if (!jeu.estFini()){
+                        if(jeu.getTour()==1) {
+                            Mouvement coup = IA_B.joue();
+                            jeu.bouge(coup.getDepart(), coup.getArrivee());
+                            jeuint.metAJour();
+                        }
                     }
                 }
             } else {
@@ -75,6 +88,12 @@ public class ControleurMediateur implements CollecteurEvenements {
         }
     }
 
+    public void activateBoth() {
+        System.out.println("Les deux IA s'affrontent");
+        activeAB = true;
+        time = new Timer(1000, new AdaptateurTemps(this));
+        time.start();
+    }
 
     public void activateOne(String IAstr, String letter) {
         System.out.println("Activation de l'" + IAstr + " pour le joueur "+letter+".");
@@ -103,6 +122,22 @@ public class ControleurMediateur implements CollecteurEvenements {
         }
     }
 
+
+    public void activerJoueurIA(){
+        String IAA = choisirAI("Choix de l'IA A");
+        String IAB = choisirAI("Choix de l'IA B");
+        if(IAA==null || IAB==null) {
+            System.out.println("Cancelling AI activation for both players.");
+            return;
+        }
+        IA_A = createIA(IAA, 0);
+        IA_B = createIA(IAB, 1);
+
+        time = new Timer(1000, new AdaptateurTemps(this));
+        time.start();
+
+        activeAB = ! activeAB;
+    }
 
 
     private String choisirAI(String text) {
@@ -181,6 +216,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                     }
                 }
             }
+//            jeu.annule(m.getDepart(), m.getArrivee(), 1);
         }
 
     }
@@ -205,14 +241,36 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void ticTac() {
-        //Tictac servant pour l'animation qui sépare l'affichage du coup du joueur et l'affichage du coup de l'IA
-        if(animations!=null && !animations.estVide()) {
-            Animation a = animations.extraitTete();
-            a.ticTac();
+        //Tictac servant à alterner le jeu des deux IAs
+        if (activeAB){
+            if (jeu.getTour() == 0) {
+                if (IA_B == null) {
+                    System.err.println("Missing AI.");
+                    System.exit(0);
+                }
+                Mouvement coup = IA_A.joue();
+                jeu.bouge(coup.getDepart(), coup.getArrivee());
+                jeuint.metAJour();
+            } else {
+                if (IA_B == null) {
+                    System.err.println("Missing AI.");
+                    System.exit(0);
+                }
+                Mouvement coup = IA_B.joue();
+                jeu.bouge(coup.getDepart(), coup.getArrivee());
+                jeuint.metAJour();
+            }
         } else {
-            time.stop();
-            animations = new SequenceListe<>();
+            //Tictac servant pour l'animation qui sépare l'affichage du coup du joueur et l'affichage du coup de l'IA
+            if(animations!=null && !animations.estVide()) {
+                Animation a = animations.extraitTete();
+                a.ticTac();
+            } else {
+                time.stop();
+                animations = new SequenceListe<>();
+            }
         }
+
     }
     public void jouer_en_local(){
         jeuint.setGameScreen();

@@ -248,62 +248,6 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel5.setLayout(new GridLayout(3, 1));
 
-        FlowLayout flowLayout1 = new FlowLayout(FlowLayout.LEFT, 15, 25);
-        flowLayout1.setAlignOnBaseline(true);
-        jPanel17.setLayout(flowLayout1);
-
-        jLabel10.setText("Couleur du joueur 1 :");
-        jPanel17.add(jLabel10);
-
-
-        jToggleButton16.setText("   ");
-        jPanel17.add(jToggleButton16);
-
-
-        jToggleButton17.setText("   ");
-        jPanel17.add(jToggleButton17);
-
-
-        jToggleButton18.setText("   ");
-        jPanel17.add(jToggleButton18);
-
-
-        jToggleButton19.setText("   ");
-        jPanel17.add(jToggleButton19);
-
-
-        jToggleButton20.setText("   ");
-        jPanel17.add(jToggleButton20);
-
-        jPanel5.add(jPanel17);
-
-        FlowLayout flowLayout2 = new FlowLayout(FlowLayout.LEFT, 15, 25);
-        flowLayout2.setAlignOnBaseline(true);
-        jPanel18.setLayout(flowLayout2);
-
-        jLabel11.setText("Couleur du joueur 2 :");
-        jPanel18.add(jLabel11);
-
-        jToggleButton21.setText("   ");
-        jPanel18.add(jToggleButton21);
-
-
-        jToggleButton22.setText("   ");
-        jPanel18.add(jToggleButton22);
-
-
-        jToggleButton23.setText("   ");
-        jPanel18.add(jToggleButton23);
-
-
-        jToggleButton24.setText("   ");
-        jPanel18.add(jToggleButton24);
-
-
-        jToggleButton25.setText("   ");
-        jPanel18.add(jToggleButton25);
-
-        jPanel5.add(jPanel18);
 
         FlowLayout flowLayout3 = new FlowLayout(FlowLayout.LEFT, 15, 25);
         flowLayout3.setAlignOnBaseline(true);

@@ -1,8 +1,16 @@
 package Vue;
-public class NomsDeJoueurs extends javax.swing.JDialog {
 
-    public NomsDeJoueurs(java.awt.Frame parent, boolean modal) {
+import Modele.PaletteDeCouleurs;
+
+import java.awt.*;
+
+public class NomsDeJoueurs extends javax.swing.JDialog {
+    CollecteurEvenements cc;
+    PaletteDeCouleurs palette;
+    public NomsDeJoueurs(Frame parent, boolean modal, CollecteurEvenements cc) {
         super(parent, modal);
+        this.cc=cc;
+        palette = cc.getPalette();
         initComponents();
     }
 
@@ -56,105 +64,66 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
-        setBackground(new java.awt.Color(120, 171, 191));
-        jTabbedPane1.setBackground(new java.awt.Color(120, 171, 191));
-        jTabbedPane1.setForeground(new java.awt.Color(245, 238, 236));
+        setToutCouleurs();
 
-        jPanel1.setBackground(new java.awt.Color(120, 171, 191));
-        jPanel1.setLayout(new java.awt.GridLayout(7, 3));
-        jPanel1.add(filler8);
-        jPanel1.add(filler1);
-        jPanel1.add(filler10);
+
+        jPanel1.setLayout(new java.awt.GridLayout(7, 1));
         jPanel1.add(filler11);
-
-        jLabel1.setBackground(new java.awt.Color(120, 171, 191));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Choisissez un nom pour le premier joueur");
         jPanel1.add(jLabel1);
         jPanel1.add(filler12);
-        jPanel1.add(filler9);
-        jPanel1.add(filler14);
-        jPanel1.add(filler13);
-        jPanel1.add(filler2);
 
-        jTextField1.setBackground(new java.awt.Color(120, 171, 191));
-        jTextField1.setText("jTextField1");
+        jTextField1.setText("Nom");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
         jPanel1.add(jTextField1);
-        jPanel1.add(filler15);
-        jPanel1.add(filler16);
-        jPanel1.add(filler17);
-        jPanel1.add(filler19);
-        jPanel1.add(filler18);
         jPanel1.add(filler3);
 
-        jPanel2.setBackground(new java.awt.Color(120, 171, 191));
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButton2.setBackground(new java.awt.Color(120, 171, 191));
-        jButton2.setText("jButton2");
+        jButton2.setText("Cancel");
         jPanel2.add(jButton2);
 
-        jButton1.setBackground(new java.awt.Color(120, 171, 191));
-        jButton1.setText("jButton1");
+
+        jButton1.setText("Save");
         jPanel2.add(jButton1);
 
         jPanel1.add(jPanel2);
         jPanel1.add(filler7);
 
-        jTabbedPane1.addTab("tab1", jPanel1);
-
-        jPanel5.setBackground(new java.awt.Color(120, 171, 191));
-        jPanel5.setLayout(new java.awt.GridLayout(7, 3));
-        jPanel5.add(filler20);
-        jPanel5.add(filler21);
-        jPanel5.add(filler22);
+        jTabbedPane1.addTab("premier joueur", jPanel1);
+        jPanel5.setLayout(new java.awt.GridLayout(7, 1));
         jPanel5.add(filler23);
-
-        jLabel3.setBackground(new java.awt.Color(120, 171, 191));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("jLabel1");
+        jLabel3.setText("Choisissez un nom pour le deuxième joueur");
         jPanel5.add(jLabel3);
-        jPanel5.add(filler24);
-        jPanel5.add(filler25);
-        jPanel5.add(filler26);
-        jPanel5.add(filler27);
         jPanel5.add(filler28);
 
-        jTextField3.setBackground(new java.awt.Color(120, 171, 191));
-        jTextField3.setText("jTextField1");
+        jTextField3.setText("Nom");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
         jPanel5.add(jTextField3);
-        jPanel5.add(filler29);
-        jPanel5.add(filler30);
-        jPanel5.add(filler31);
-        jPanel5.add(filler32);
-        jPanel5.add(filler33);
         jPanel5.add(filler34);
 
-        jPanel6.setBackground(new java.awt.Color(120, 171, 191));
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButton5.setBackground(new java.awt.Color(120, 171, 191));
-        jButton5.setText("jButton2");
+        jButton5.setText("Cancel");
         jPanel6.add(jButton5);
 
-        jButton6.setBackground(new java.awt.Color(120, 171, 191));
-        jButton6.setText("jButton1");
+        jButton6.setText("Save");
         jPanel6.add(jButton6);
 
         jPanel5.add(jPanel6);
         jPanel5.add(filler35);
 
-        jTabbedPane1.addTab("tab1", jPanel5);
+        jTabbedPane1.addTab("Deuxième joueur", jPanel5);
 
         getContentPane().add(jTabbedPane1, "card2");
 
@@ -168,7 +137,23 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         // TODO add your handling code here:
     }
 
-
+    public void setToutCouleurs(){
+        setBackground(palette.Couleur1);
+        jTabbedPane1.setBackground(palette.Couleur1);
+        jTabbedPane1.setForeground(palette.Couleur4);
+        jPanel1.setBackground(palette.Couleur1);
+        jLabel1.setBackground(palette.Couleur1);
+        jTextField1.setBackground(palette.Couleur1);
+        jPanel2.setBackground(palette.Couleur1);
+        jButton2.setBackground(palette.Couleur1);
+        jButton1.setBackground(palette.Couleur1);
+        jPanel5.setBackground(palette.Couleur1);
+        jLabel3.setBackground(palette.Couleur1);
+        jTextField3.setBackground(palette.Couleur1);
+        jPanel6.setBackground(palette.Couleur1);
+        jButton5.setBackground(palette.Couleur1);
+        jButton6.setBackground(palette.Couleur1);
+    }
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler10;
     private javax.swing.Box.Filler filler11;

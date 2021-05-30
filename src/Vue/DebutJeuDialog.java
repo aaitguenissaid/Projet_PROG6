@@ -1,12 +1,16 @@
 package Vue;
 
+import Modele.PaletteDeCouleurs;
+
 import java.awt.*;
 
 public class DebutJeuDialog extends javax.swing.JDialog {
     CollecteurEvenements cc;
+    PaletteDeCouleurs palette;
     public DebutJeuDialog(Frame parent, boolean modal, CollecteurEvenements cc) {
         super(parent, modal);
         this.cc=cc;
+        palette = cc.getPalette();
         initComponents();
     }
     private void initComponents() {
@@ -20,21 +24,18 @@ public class DebutJeuDialog extends javax.swing.JDialog {
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setBackground(new java.awt.Color(120, 171, 191));
+        setToutCouleurs();
         getContentPane().setLayout(new java.awt.GridLayout(5, 1));
         getContentPane().add(filler1);
 
-        jLabel1.setBackground(new java.awt.Color(120, 171, 191));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Choisissez une façon de jouer");
         getContentPane().add(jLabel1);
         getContentPane().add(filler2);
 
-        jPanel1.setBackground(new java.awt.Color(120, 171, 191));
         jPanel1.setLayout(new java.awt.GridLayout());
 
-        jButton1.setBackground(new java.awt.Color(120, 171, 191));
-        jButton1.setText("J vs J");
+        jButton1.setText("Joueur contre joueur");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -42,8 +43,7 @@ public class DebutJeuDialog extends javax.swing.JDialog {
         });
         jPanel1.add(jButton1);
 
-        jButton2.setBackground(new java.awt.Color(120, 171, 191));
-        jButton2.setText("j vs IA");
+        jButton2.setText("Un joueur contre l'intelligence artificielle");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -55,6 +55,15 @@ public class DebutJeuDialog extends javax.swing.JDialog {
         getContentPane().add(filler3);
 
         pack();
+    }
+
+    private void setToutCouleurs() {
+        setBackground(palette.Couleur1);
+        getContentPane().setBackground(palette.Couleur1);
+        jLabel1.setBackground(palette.Couleur1);
+        jPanel1.setBackground(palette.Couleur1);
+        jButton1.setBackground(palette.Couleur1);
+        jButton2.setBackground(palette.Couleur1);
     }
 
 

@@ -202,6 +202,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                 if (jeu.bouge(m.getDepart(), m.getArrivee())) {
                     jeuint.metAJour();
                     System.out.println("Jeu fini : " + jeu.estFini());
+                    System.out.println(jeu.getNbPionsDepl());
                     Mouvement to_clic = null;
                     if (activeA) {
                         to_clic = IA_A.joue();

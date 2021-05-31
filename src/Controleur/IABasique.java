@@ -94,7 +94,7 @@ public class IABasique extends IA{
                 }
             }
         }
-        Mouvement m = null;
-        return m;
+        IAAleatoire iaA = new IAAleatoire(jeu, joueur);
+        return iaA.joue();
     }
 }

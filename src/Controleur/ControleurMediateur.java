@@ -216,7 +216,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                     }
                 }
             }
-            jeu.annule(m.getDepart(), m.getArrivee(), 1);
+            //jeu.annule(m.getDepart(), m.getArrivee(), 1);
         }
 
     }

@@ -17,7 +17,6 @@ public class IAFortCoup extends IA{
     }
 
 
-
     /* Prends le valeur d'une hashtable et rends la couleur de sommet d'un pile */
     private byte getCouleur(byte value){
         return ((value & (1<<7)) == 0) ? (byte) 0 : (byte)1;
@@ -192,13 +191,21 @@ public class IAFortCoup extends IA{
                 Point arrvee = m.getArrivee();
                 int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
                 jeu.bouge(depart, arrvee);
-                int valeur = minmaxAlphaBeta(alpha, beta, false, horizon-1);
-                maxValeur = Math.max(maxValeur, valeur);
+                byte[] config = configuration();
+                int valeur;
+                if (configurationDejaVu.containsKey(hashCode(config))){
+                    valeur = configurationDejaVu.get(hashCode(config));
+                } else {
+                    valeur = minmaxAlphaBeta(alpha, beta, false, horizon-1);
+                    maxValeur = Math.max(maxValeur, valeur);
+                }
                 alpha = Math.max(alpha, valeur);
                 jeu.annule(depart, arrvee, hauteur);
                 if (beta <= alpha)
                     break;
             }
+            byte[] config = configuration();
+            configurationDejaVu.put(hashCode(config), maxValeur);
             return maxValeur;
 
         } else {
@@ -210,13 +217,21 @@ public class IAFortCoup extends IA{
                 Point arrvee = m.getArrivee();
                 int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
                 jeu.bouge(depart, arrvee);
-                int valeur = minmaxAlphaBeta(alpha, beta, true, horizon-1);
-                minValeur = Math.min(minValeur, valeur);
+                byte[] config = configuration();
+                int valeur;
+                if (configurationDejaVu.containsKey(hashCode(config))){
+                    valeur = configurationDejaVu.get(hashCode(config));
+                } else {
+                    valeur = minmaxAlphaBeta(alpha, beta, true, horizon-1);
+                    minValeur = Math.min(minValeur, valeur);
+                }
                 alpha = Math.max(alpha, valeur);
                 jeu.annule(depart, arrvee, hauteur);
                 if (beta <= alpha)
                     break;
             }
+            byte[] config = configuration();
+            configurationDejaVu.put(hashCode(config), minValeur);
             return minValeur;
         }
     }

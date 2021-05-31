@@ -220,7 +220,7 @@ public class Jeu extends Etat implements Cloneable {
         int ret=0;
         for(int i=0; i<taille.h; i++) {
             for(int j=0; j< taille.l; j++) {
-                if(estCaseValide(new Point(i, j)) && grille[i][j].tete.estCouleur(id)) ret++;
+                if(estCaseValide(new Point(i, j)) && grille[i][j].tete!=null && grille[i][j].tete.estCouleur(id)) ret++;
             }
         }
         return ret;

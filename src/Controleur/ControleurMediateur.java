@@ -51,7 +51,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                     if (!jeu.estFini()){
                         if(jeu.getTour()==0) {
                             Mouvement coup = IA_A.joue();
-                            jeu.bouge(coup.getDepart(), coup.getArrivee());
+                            bouge(coup.getDepart(), coup.getArrivee());
                             jeuint.metAJour();
                         }
                     }
@@ -77,7 +77,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                     if (!jeu.estFini()){
                         if(jeu.getTour()==1) {
                             Mouvement coup = IA_B.joue();
-                            jeu.bouge(coup.getDepart(), coup.getArrivee());
+                            bouge(coup.getDepart(), coup.getArrivee());
                             jeuint.metAJour();
                         }
                     }
@@ -199,10 +199,7 @@ public class ControleurMediateur implements CollecteurEvenements {
             }
             //Si on la navigation n'est pas activée (ou qu'elle vient d'être désactivée)
             if(!jeu.getHistorique().isNavigationOn()) {
-                if (jeu.bouge(m.getDepart(), m.getArrivee())) {
-                    jeuint.metAJour();
-                    System.out.println("Jeu fini : " + jeu.estFini());
-                    System.out.println(jeu.getNbPionsDepl());
+                if (bouge(m.getDepart(), m.getArrivee())) {
                     Mouvement to_clic = null;
                     if (activeA) {
                         to_clic = IA_A.joue();
@@ -211,7 +208,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                         to_clic = IA_B.joue();
                     }
                     if (activeA || activeB) {
-                        animations.insereTete(new AnimationJoueurIA(1, jeuint, to_clic));
+                        animations.insereTete(new AnimationJoueurIA(1, jeuint, to_clic, this));
                         time = new Timer(1500, new AdaptateurTemps(this));
                         time.start();
                     }
@@ -253,7 +250,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                         System.exit(0);
                     }
                     Mouvement coup = IA_A.joue();
-                    jeu.bouge(coup.getDepart(), coup.getArrivee());
+                    bouge(coup.getDepart(), coup.getArrivee());
                     jeuint.metAJour();
                 } else {
                     if (IA_B == null) {
@@ -261,7 +258,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                         System.exit(0);
                     }
                     Mouvement coup = IA_B.joue();
-                    jeu.bouge(coup.getDepart(), coup.getArrivee());
+                    bouge(coup.getDepart(), coup.getArrivee());
                     jeuint.metAJour();
                 }
             } else {
@@ -308,6 +305,15 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(nom!=null && nom.length()>2) {
             PartiesSauvegardees.enregistrerPartie(nom.replace(" ","_"), this.jeu);
         }
+    }
+
+    public boolean bouge(Point depart, Point arrivee) {
+        boolean ret = jeu.bouge(depart, arrivee);
+        jeuint.metAJour();
+        System.out.println("Jeu fini : " + jeu.estFini());
+        System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
+        jeuint.setStatistiques();
+        return ret;
     }
 
     @Override

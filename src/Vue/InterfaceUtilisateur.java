@@ -47,11 +47,11 @@ public class InterfaceUtilisateur implements Runnable {
         cl = (CardLayout)(screens.getLayout());
     }
 
-    private void setStatistiques() {
+    public void setStatistiques() {
         jeu.setNomDeJ1(j.getNomJ1());
         jeu.setNomDeJ2(j.getNomJ2());
-        jeu.setScoreJ1("0");
-        jeu.setScoreJ2("0");
+        jeu.setScoreJ1(String.valueOf(j.nbPilesJoueur(1)));
+        jeu.setScoreJ2(String.valueOf(j.nbPilesJoueur(2)));
     }
 
     public Jeu jeu(){

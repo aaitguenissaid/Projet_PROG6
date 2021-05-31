@@ -13,7 +13,7 @@ public class IAFortCoup extends IA{
 
     public IAFortCoup(Jeu j, int joueur) {
         super(j, joueur);
-        configurationDejaVu = new HashMap<>();
+
     }
 
 
@@ -256,6 +256,7 @@ public class IAFortCoup extends IA{
 
     @Override
     public Mouvement joue() {
+        configurationDejaVu = new HashMap<>();
         ArrayList<Mouvement> configSuivants = EtapesPossibles();
         Mouvement resultat = trouverGagnant(configSuivants, 10);
         return resultat;

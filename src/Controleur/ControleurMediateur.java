@@ -8,18 +8,15 @@ import Structures.Mouvement;
 import Structures.SequenceListe;
 import Vue.*;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class ControleurMediateur implements CollecteurEvenements {
     Jeu jeu;
     InterfaceUtilisateur jeuint;
     boolean shouldMove;
     int startCaseI,startCaseJ;
-    boolean activeA, activeB;
+    boolean activeA, activeB, activeAB;
     IA IA_A, IA_B;
     Timer time;
     SequenceListe<Animation> animations;
@@ -31,6 +28,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeu = i.jeu();
         activeA = false;
         activeB = false;
+        activeAB = false;
         animations = new SequenceListe<>();
         palette=new PaletteDeCouleurs();
         sonCtrl = new EffetsSonores();
@@ -41,15 +39,21 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(activeA) {
             activeA = false;
             IA_A = null;
+            if(activeAB) time.stop();
+            activeAB = false;
         } else {
             String IA = choisirAI("");
             if (IA != null) {
                 activateOne(IA, "A");
-                if (!jeu.estFini()){
-                    if(jeu.getTour()==0) {
-                        Mouvement coup = IA_A.joue();
-                        jeu.bouge(coup.getDepart(), coup.getArrivee());
-                        jeuint.metAJour();
+                if (activeB){
+                    activateBoth();
+                } else {
+                    if (!jeu.estFini()){
+                        if(jeu.getTour()==0) {
+                            Mouvement coup = IA_A.joue();
+                            bouge(coup.getDepart(), coup.getArrivee());
+                            jeuint.metAJour();
+                        }
                     }
                 }
             } else {
@@ -61,15 +65,21 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(activeB) {
             activeB = false;
             IA_B = null;
+            if(activeAB) time.stop();
+            activeAB = false;
         } else {
             String IA = choisirAI("");
             if (IA != null) {
                 activateOne(IA, "B");
-                if (!jeu.estFini()){
-                    if(jeu.getTour()==1) {
-                        Mouvement coup = IA_B.joue();
-                        jeu.bouge(coup.getDepart(), coup.getArrivee());
-                        jeuint.metAJour();
+                if (activeA){
+                    activateBoth();
+                } else {
+                    if (!jeu.estFini()){
+                        if(jeu.getTour()==1) {
+                            Mouvement coup = IA_B.joue();
+                            bouge(coup.getDepart(), coup.getArrivee());
+                            jeuint.metAJour();
+                        }
                     }
                 }
             } else {
@@ -78,6 +88,12 @@ public class ControleurMediateur implements CollecteurEvenements {
         }
     }
 
+    public void activateBoth() {
+        System.out.println("Les deux IA s'affrontent");
+        activeAB = true;
+        time = new Timer(1000, new AdaptateurTemps(this));
+        time.start();
+    }
 
     public void activateOne(String IAstr, String letter) {
         System.out.println("Activation de l'" + IAstr + " pour le joueur "+letter+".");
@@ -107,21 +123,29 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
 
+    public void activerJoueurIA(){
+        String IAA = choisirAI("Choix de l'IA A");
+        String IAB = choisirAI("Choix de l'IA B");
+        if(IAA==null || IAB==null) {
+            System.out.println("Cancelling AI activation for both players.");
+            return;
+        }
+        IA_A = createIA(IAA, 0);
+        IA_B = createIA(IAB, 1);
+
+        time = new Timer(1000, new AdaptateurTemps(this));
+        time.start();
+
+        activeAB = ! activeAB;
+    }
+
 
     private String choisirAI(String text) {
         Object[] possibilities = {"IAAleatoire", "IABasique", "IAFort", "IAFortCoup"};
         String message = "Choose your AI in the following list.\n" + text ;
         String title = "AI Choice";
 
-        return (String) JOptionPane.showInputDialog(
-                jeuint.getFrame(),
-                message,
-                title,
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                possibilities,
-                "IAAleatoire"
-        );
+        return (String) jeuint.choisirItem(title, message, possibilities, JOptionPane.QUESTION_MESSAGE);
     }
 
 
@@ -154,7 +178,6 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
         System.out.print("End :");
         System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
-//        jeu.bouge(m.getDepart(),m.getArrivee());
         jeuint.metAJour();
         sonCtrl.moveEnd();
         //System.out.println("Jeu fini : " + jeu.estFini());
@@ -163,22 +186,35 @@ public class ControleurMediateur implements CollecteurEvenements {
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");
         if(!jeu.estFini() && !animationRunning ) {
-            if(jeu.bouge(m.getDepart(),m.getArrivee())) {
-                jeuint.metAJour();
-                System.out.println("Jeu fini : " + jeu.estFini());
-                Mouvement to_clic = null;
-                if (activeA) {
-                    to_clic = IA_A.joue();
-                }
-                if (activeB) {
-                    to_clic = IA_B.joue();
-                }
-                if(activeA || activeB) {
-                    animations.insereTete(new AnimationJoueurIA(1, jeuint, to_clic));
-                    time = new Timer(1500, new AdaptateurTemps(this));
-                    time.start();
+            if(jeu.getHistorique().isNavigationOn()) {
+                //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
+                String titre = "Validation navigation historique";
+                String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
+                        +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
+                String choix_valide = "Continuer";
+                String choix_annule = "Annuler";
+                if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
+                    jeu.getHistorique().validerNavigation();
                 }
             }
+            //Si on la navigation n'est pas activée (ou qu'elle vient d'être désactivée)
+            if(!jeu.getHistorique().isNavigationOn()) {
+                if (bouge(m.getDepart(), m.getArrivee())) {
+                    Mouvement to_clic = null;
+                    if (activeA) {
+                        to_clic = IA_A.joue();
+                    }
+                    if (activeB) {
+                        to_clic = IA_B.joue();
+                    }
+                    if (activeA || activeB) {
+                        animations.insereTete(new AnimationJoueurIA(1, jeuint, to_clic, this));
+                        time = new Timer(1500, new AdaptateurTemps(this));
+                        time.start();
+                    }
+                }
+            }
+            //jeu.annule(m.getDepart(), m.getArrivee(), 1);
         }
 
     }
@@ -203,13 +239,38 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void ticTac() {
-        //Tictac servant pour l'animation qui sépare l'affichage du coup du joueur et l'affichage du coup de l'IA
-        if(animations!=null && !animations.estVide()) {
-            Animation a = animations.extraitTete();
-            a.ticTac();
-        } else {
+        if (jeu.estFini()){
             time.stop();
-            animations = new SequenceListe<>();
+        } else {
+            //Tictac servant à alterner le jeu des deux IAs
+            if (activeAB){
+                if (jeu.getTour() == 0) {
+                    if (IA_B == null) {
+                        System.err.println("Missing AI.");
+                        System.exit(0);
+                    }
+                    Mouvement coup = IA_A.joue();
+                    bouge(coup.getDepart(), coup.getArrivee());
+                    jeuint.metAJour();
+                } else {
+                    if (IA_B == null) {
+                        System.err.println("Missing AI.");
+                        System.exit(0);
+                    }
+                    Mouvement coup = IA_B.joue();
+                    bouge(coup.getDepart(), coup.getArrivee());
+                    jeuint.metAJour();
+                }
+            } else {
+                //Tictac servant pour l'animation qui sépare l'affichage du coup du joueur et l'affichage du coup de l'IA
+                if(animations!=null && !animations.estVide()) {
+                    Animation a = animations.extraitTete();
+                    a.ticTac();
+                } else {
+                    time.stop();
+                    animations = new SequenceListe<>();
+                }
+            }
         }
     }
     public void jouer_en_local(){
@@ -220,7 +281,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         Object[] parties = PartiesSauvegardees.getNomsParties();
         String titre = "Choix d'une partie";
         String description = "Veuillez choisir une partie parmis celles sauvegardées.";
-        String nom_partie = (String) choisirItem(titre, description, parties, JOptionPane.QUESTION_MESSAGE);
+        String nom_partie = (String) jeuint.choisirItem(titre, description, parties, JOptionPane.QUESTION_MESSAGE);
 
         if(nom_partie!=null) {
             Jeu j = PartiesSauvegardees.recupererPartie(nom_partie);
@@ -240,10 +301,19 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void enregistrer_la_partie() {
         String titre = "Choix du nom";
         String description = "Veuillez entrer un nom pour votre partie.";
-        String nom = (String) choisirItem(titre, description, null, JOptionPane.PLAIN_MESSAGE);
+        String nom = (String) jeuint.choisirItem(titre, description, null, JOptionPane.PLAIN_MESSAGE);
         if(nom!=null && nom.length()>2) {
             PartiesSauvegardees.enregistrerPartie(nom.replace(" ","_"), this.jeu);
         }
+    }
+
+    public boolean bouge(Point depart, Point arrivee) {
+        boolean ret = jeu.bouge(depart, arrivee);
+        jeuint.metAJour();
+        System.out.println("Jeu fini : " + jeu.estFini());
+        System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
+        jeuint.setStatistiques();
+        return ret;
     }
 
     @Override
@@ -259,32 +329,6 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void reagles() { jeuint.setReagles();}
 
-    @Override
-    public boolean valideAction(String titre, String description, String choix_valider, String choix_annuler) {
-        Object[] options = {choix_annuler, choix_valider};
-        int n = JOptionPane.showOptionDialog(
-                jeuint.getFrame(),
-                description,
-                titre,
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[0]);
-        return n==1;
-    }
-
-    public Object choisirItem(String titre, String description, Object[] items, int message) {
-        return JOptionPane.showInputDialog(
-                jeuint.getFrame(),
-                description,
-                titre,
-                message,
-                null,
-                items,
-                (items!=null && items.length>0) ? items[0] : null
-        );
-    }
     public PaletteDeCouleurs getPalette(){
         return palette;
     }
@@ -297,5 +341,70 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void reaglesBack() {
         jeuint.reaglesBack();
+    }
+
+    @Override
+    public void last_historique() {
+        jeu.getHistorique().atteindreFinHistorique();
+        jeuint.metAJour();
+    }
+
+    @Override
+    public void next_historique() {
+        if(jeu.getHistorique().aSuivant()) {
+            jeu.getHistorique().suivant();
+            jeuint.metAJour();
+        }
+    }
+
+    @Override
+    public void stop_historique() {
+        if(jeu.getHistorique().isNavigationOn()) {
+            //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
+            String titre = "Validation navigation historique";
+            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
+                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
+            String choix_valide = "Continuer";
+            String choix_annule = "Annuler";
+            if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
+                jeu.getHistorique().validerNavigation();
+            }
+        }
+    }
+
+    @Override
+    public void previous_historique() {
+        if(jeu.getHistorique().aPrecedent()) {
+            jeu.getHistorique().precedent();
+            jeuint.metAJour();
+        }
+    }
+
+    @Override
+    public void first_historique() {
+        jeu.getHistorique().atteindreDebutHistorique();
+        jeuint.metAJour();
+    }
+
+    @Override
+    public void relancerPartie() {
+        if(jeu.estFini()) {
+            jeu.relancerPartie();
+            jeuint.metAJour();
+        }
+    }
+
+    @Override
+    public void abandonner() {
+        if(!jeu.estFini()) {
+            String titre = "Abandon";
+            String description = "Vous vous apprêtez à abandonner une partie.\n Si vous abandonnez, vous allez perdre la partie.";
+            String choix_valide = "Continuer";
+            String choix_annule = "Annuler";
+            if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
+                jeu.abandonner();
+                jeuint.metAJour();
+            }
+        }
     }
 }

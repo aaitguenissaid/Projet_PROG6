@@ -12,7 +12,8 @@ public class MainMenu extends javax.swing.JPanel {
         palette = cc.getPalette();
         initComponents();
     }
-    private void initComponents() {
+    void initComponents() {
+        removeAll();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         filler = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
@@ -97,10 +98,21 @@ public class MainMenu extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Acount
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                NomsDeJoueurs dialog = new NomsDeJoueurs(new javax.swing.JFrame(), true,cc);
+                dialog.setVisible(true);
+            }
+        });
     }
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {
-        cc.jouer_en_local();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DebutJeuDialog dialog = new DebutJeuDialog(new javax.swing.JFrame(), true,cc);
+                dialog.setVisible(true);
+            }
+        });
     }
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {

@@ -11,10 +11,11 @@ public class TestClassement {
         int m = 100;
         String[] pseudos = {"aaaaa", "bbbbb", "ccccc", "vvvvv", "eeeee", "fffff", "ggggg", "hhhhh", "kkkkk", "jjjjj"};
 
-        for(int i = 0; i<m; i++) {
+        for(int i = 0; i<m/2; i+=2) {
             int nbPseudo = r.nextInt(n);
             Score score = new Score(pseudos[nbPseudo], r.nextInt(10), r.nextInt(10));
-            classement.enregsitererScore(pseudos[nbPseudo], r.nextBoolean());
+            Score score1 = new Score(pseudos[nbPseudo*2], r.nextInt(10), r.nextInt(10));
+            classement.enregistrerScore(pseudos[nbPseudo], pseudos[nbPseudo*2],r.nextBoolean());
         }
 
     }

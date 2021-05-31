@@ -5,20 +5,21 @@ public class Score implements Comparable<Score> {
     String pseudo;
     int nbVictoires;
     int nbParties;
-    float ratio;
+    int  lesPoints;
 
     Score(String pseudo, int nbVictoires, int nbParties) {
         this.pseudo = pseudo;
         this.nbVictoires = nbVictoires;
         this.nbParties = nbParties;
         if(nbParties>0)
-            ratio = (float) nbVictoires / nbParties;
+            lesPoints = 500;
     }
-    Score(String pseudo, int nbVictoires, int nbParties, float ratio) {
+
+    Score(String pseudo, int nbVictoires, int nbParties, int lesPoints) {
         this.pseudo = pseudo;
         this.nbVictoires = nbVictoires;
         this.nbParties = nbParties;
-        this.ratio = ratio;
+        this.lesPoints = lesPoints;
     }
 
     String getPseudo() {
@@ -33,8 +34,8 @@ public class Score implements Comparable<Score> {
         return nbParties;
     }
 
-    float getRatio() {
-        return ratio;
+    float getLesPoints() {
+        return lesPoints;
     }
 
     void setPseudo(String pseudo) {

@@ -12,10 +12,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Configuration {
-    static Configuration instance = null;
-    Properties prop;
-    Logger logger;
     public static final String home_directory = "Avalam";
+    public static String directory = System.getProperty("user.home") + File.separator + home_directory;
+
+    static Configuration instance = null;
+
+    Properties prop, user_prop;
+    Logger logger;
+    File user_prop_file;
 
     public static Configuration instance() {
         if (instance == null)
@@ -36,30 +40,44 @@ public class Configuration {
             p.load(in);
         } catch (IOException e) {
             System.err.println("Impossible de charger " + nom);
-            System.err.println(e.toString());
+            System.err.println(e);
             System.exit(1);
         }
     }
 
     protected Configuration() {
-        // On charge les propriétés
+        //###### On charge les propriétés par défaut
         InputStream in = charge("defaut.cfg");
-        Properties defaut = new Properties();
-        chargerProprietes(defaut, in, "defaut.cfg");
-        // Il faut attendre le dernier moment pour utiliser le logger
-        // car celui-ci s'initialise avec les propriétés
-        String message = "Fichier de propriétés defaut.cfg chargé";
-        String nom = System.getProperty("user.home") + File.separator + ".sokoban";
-        try {
-            in = new FileInputStream(nom);
-            prop = new Properties(defaut);
-            chargerProprietes(prop, in, nom);
-            logger().info(message);
-            logger().info("Fichier de propriétés " + nom + " chargé");
-        } catch (FileNotFoundException e) {
-            prop = defaut;
-            logger().info(message);
+        prop = new Properties();
+        chargerProprietes(prop, in, "defaut.cfg");
+        logger().info("Fichier de propriétés defaut.cfg chargé");
+
+        //###### Fichiers et chemins
+        String user_props_filename = directory + File.separator + prop.getProperty("user_prop");
+        user_prop_file = new File(user_props_filename);
+
+        //###### Création du fichier de propriétés utilisateur s'il n'existe pas
+        if(!Files.exists(Paths.get(user_props_filename))) {
+            try {
+                //Création du répertoire Avalam (s'il n'existe pas) dans le répertoire de l'utilisateur
+                Files.createDirectories(Paths.get(directory));
+                //Récupération des propriétés par défaut
+                prop.store(new FileOutputStream(user_prop_file), "Creation of user's property file");
+            } catch(Exception e) {
+                e.printStackTrace();
+                System.exit(0);
+            }
         }
+
+        //###### Chargement des propriétés de l'utilisateur
+        user_prop = new Properties();
+        try {
+            user_prop.load(new FileInputStream(user_prop_file));
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        logger().info("Fichier de propriétés utilisateur chargé");
     }
 
     public String lis(String nom) {
@@ -147,4 +165,64 @@ public class Configuration {
     public static String directoryPath() {
         return System.getProperty("user.home") + File.separator + Configuration.home_directory;
     }
+
+    public String get(String attribut) {
+        return get(attribut, false);
+    }
+
+    public String get(String attribut, boolean defaut) {
+        Properties p = (defaut) ? prop : user_prop;
+        if(p.stringPropertyNames().contains(attribut)) {
+            return p.getProperty(attribut);
+        } else {
+            System.err.println("Configuration.get: Attribut invalide");
+            return null;
+        }
+    }
+
+    public void set(String attribut, String value) {
+        if(user_prop.stringPropertyNames().contains(attribut)) {
+            user_prop.setProperty(attribut, value);
+            enregistrerPropriete(attribut);
+        } else {
+            System.err.println("Configuration.set: Attribut invalide");
+        }
+    }
+
+    private void enregistrerPropriete(String attribut) {
+        try {
+            user_prop.store(new FileOutputStream(user_prop_file), "Update of " + attribut);
+        }catch(Exception e) {
+            System.err.println("Impossible de sauvegarder la propriété " + attribut + ".");
+            System.err.println("La modification sera perdue après la fermeture de l'application.");
+            e.printStackTrace();
+        }
+    }
+
+    public void reinitialiserProprietes() {
+        try {
+            prop.store(new FileOutputStream(user_prop_file), "Reinitialisation des propriétés utilisateur");
+        } catch(Exception e) {
+            System.err.println("Impossible de réinitialiser les propriétés utilisateur.");
+            e.printStackTrace();
+        }
+        user_prop = new Properties();
+        try {
+            user_prop.load(new FileInputStream(user_prop_file));
+        }catch(Exception e) {
+            System.err.println("Impossible de recharger les préférences après réinitialisation.");
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    public static final String COULEUR_J1="couleurJ1";
+    public static final String COULEUR_J2="couleurJ2";
+    public static final String COULEUR_THEME="couleurTheme";
+    public static final String RELANCE_AUTOMATIQUE="relanceAutomatique";
+    public static final String EST_AUTORISE_HISTORIQUE="estAutoriseHistorique";
+    public static final String EST_AUTORISE_SUGGESTION="estAutoriseSuggestion";
+    public static final String IA_AFFRONTEMENT="IA_Affrontement";
+    public static final String IA_1="IA_1";
+    public static final String IA_2="IA_2";
 }

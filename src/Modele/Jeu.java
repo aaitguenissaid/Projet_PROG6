@@ -4,16 +4,14 @@ import Global.Configuration;
 import Structures.*;
 
 import java.awt.*;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Jeu extends Etat implements Cloneable {
     public static final int COULEUR1 = 0;
     public static final int COULEUR2 = 1;
     Joueur j1,j2;
     Historique historique;
-    int lastDepI,lastDepJ,lastArrI,lastArrJ; //ajouté pour afficher le dernier coup
+    int lastDepI,lastDepJ,lastArrI,lastArrJ, nbPionsDepl; //ajouté pour afficher le dernier coup
     boolean estPartieRecuperee;
 
     public Jeu() {
@@ -23,6 +21,7 @@ public class Jeu extends Etat implements Cloneable {
     public Jeu(boolean fromScratch) {
         super();
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
+        nbPionsDepl=0;
         estPartieRecuperee=false;
         if(fromScratch) {
             j1 = new Joueur(1,0);
@@ -92,21 +91,17 @@ public class Jeu extends Etat implements Cloneable {
      *  - Le mouvement est impossible (en dehors de la grille, trop / pas assez de pions, case invalide)
      */
     public boolean bouge(Point depart, Point arrive) {
-        if(historique.getNavigation()) {
+        if(historique.isNavigationOn()) {
             //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
             //dans l'état qu'il visitait
             if(!historique.getEtatNavigation().estMouvementPossible(depart, arrive)) return false;
-            /*String titre = "Validation navigation historique";
-            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
-                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
-            String choix_valide = "Continuer";
-            String choix_annule = "Annuler";*/
             historique.validerNavigation();
         } else {
             if (!estMouvementPossible(depart, arrive)) return false;
         }
 
         lastDepI=depart.x;lastDepJ=depart.y;lastArrI=arrive.x;lastArrJ=arrive.y;
+        nbPionsDepl=grille[depart.x][depart.y].nbPions();
 
         SequenceListe<Pion> pions = grille[depart.x][depart.y].getPions();
         grille[depart.x][depart.y].supprimePions();
@@ -187,12 +182,57 @@ public class Jeu extends Etat implements Cloneable {
         return ret;
     }
 
+    //Fait perdre le joueur dont c'était le tour
+    public void abandonner() {
+        relancerPartie(true);
+    }
+
+    public void relancerPartie() {
+        relancerPartie(false);
+    }
+
+    public void relancerPartie(boolean isAbandon) {
+        Classement c = new Classement();
+        if(isAbandon) {
+            c.enregistrerScore(getNomJ1(), getNomJ2(), tour!=COULEUR1);
+        } else {
+            int nb1=0, nb2=0;
+            for(int i=0; i<taille.h; i++) {
+                for(int j=0; j<taille.l; j++) {
+                    if(grille[i][j].estValide() && grille[i][j].tete!=null) {
+                        if(grille[i][j].tete.estCouleur1()) nb1++;
+                        else nb2++;
+                    }
+                }
+            }
+            if(nb1!=nb2) {
+                c.enregistrerScore(getNomJ1(), getNomJ2(), nb1>nb2);
+            }
+        }
+        init_grille();
+        tour = COULEUR1;
+        lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
+        estPartieRecuperee=false;
+        historique = new Historique(this);
+    }
+
+    public int nbPilesJoueur(int id) {
+        int ret=0;
+        for(int i=0; i<taille.h; i++) {
+            for(int j=0; j< taille.l; j++) {
+                if(estCaseValide(new Point(i, j)) && grille[i][j].tete!=null && grille[i][j].tete.estCouleur(id)) ret++;
+            }
+        }
+        return ret;
+    }
+
     public boolean estCaseArrive(int x,int y){
         return lastArrI==x && lastArrJ==y;
     }
     public boolean estCaseDepart(int x,int y){
         return lastDepI==x && lastDepJ==y;
     }
+    public int getNbPionsDepl() {return nbPionsDepl;}
 
     public String getNomJ1(){
         return j1.getNom();

@@ -28,12 +28,19 @@ public interface CollecteurEvenements {
 
     void reagles();
 
-    boolean valideAction(String titre, String description, String choix_valider, String choix_annuler);
-
     PaletteDeCouleurs getPalette();
 
     void revalidateInterface();
 
     void reaglesBack();
+
+    void last_historique();
+    void next_historique();
+    void stop_historique();
+    void previous_historique();
+    void first_historique();
+
+    void relancerPartie();
+    void abandonner();
 }
 

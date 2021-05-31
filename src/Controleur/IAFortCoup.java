@@ -5,12 +5,97 @@ import Structures.Mouvement;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class IAFortCoup extends IA{
     private final int INF = 1000;
+    HashMap<String, Integer> configurationDejaVu;
 
     public IAFortCoup(Jeu j, int joueur) {
         super(j, joueur);
+        configurationDejaVu = new HashMap<>();
+    }
+
+
+
+    /* Prends le valeur d'une hashtable et rends la couleur de sommet d'un pile */
+    private byte getCouleur(byte value){
+        return ((value & (1<<7)) == 0) ? (byte) 0 : (byte)1;
+    }
+
+    /* Prends le valeur d'une hashtable et rends la hauteur de sommet d'un pile */
+    private byte getHauteur(byte value){
+        return (byte) (value & (~(1 << 7)));
+    }
+
+    /* Prends la couleur d'un sommet et sa hauteur, rends la valeur d'un hashtable */
+    private byte setValue(byte couleur, byte hauteur){
+        return (byte)((couleur << 7) | hauteur);
+    }
+
+    private String codage(byte value){
+        int hauteur = getHauteur(value);
+        if (getCouleur(value) == 0){
+            return Integer.toString(hauteur);
+        } else {
+            if (hauteur == 1)
+                return "A";
+            else if (hauteur == 2)
+                return "B";
+            else if (hauteur == 3)
+                return "C";
+            else if (hauteur == 4)
+                return "D";
+            else
+                return "E";
+            }
+    }
+
+    public String hashCode(byte[] configuration) {
+        String resultat = codage(configuration[0]);;
+        for (int i = 1; i < configuration.length; i++){
+            resultat += codage(configuration[i]);
+        }
+        return resultat;
+    }
+
+    /* Prends un Point et code le numéro de case */
+    private int coderPoint(int i, int j){
+        int resultat = 0;
+        switch (i){
+            case 0:
+                resultat = j - 4;
+                break;
+            case 1:
+                resultat = j + 1;
+                break;
+            case 2:
+                resultat = j + 7;
+                break;
+            case 3:
+                resultat = j + 14;
+                break;
+            case 4:
+                if (j < 4){
+                    resultat = j + 20;
+                } else if(j > 4){
+                    resultat = j + 19;
+                }
+                break;
+            case 5:
+                resultat = j + 25;
+                break;
+            case 6:
+                resultat = j + 32;
+                break;
+            case 7:
+                resultat = j + 38;
+                break;
+            case 8:
+                resultat = j + 43;
+                break;
+        }
+        return resultat;
     }
 
     private ArrayList<Mouvement> EtapesPossibles(){
@@ -75,7 +160,26 @@ public class IAFortCoup extends IA{
         return joueur == 0 ? nombre0 - nombre1 : nombre1 - nombre0;
     }
 
-        /* Fonction minmax alpha beta */
+
+    /* Prends le jeu courant et encode la configuration de ce jeu */
+    public byte[] configuration(){
+        byte[] resultat = new byte[48];
+        for (int i = 0; i < jeu.getTaille().h; i++){
+            for (int j = 0; j < jeu.getTaille().l; j++){
+                if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).nbPions() > 0)){
+                    int indice = coderPoint(i, j);
+                    byte hauteur = (byte) jeu.getCase(i, j).nbPions();
+                    byte couleur = (byte) jeu.getCase(i, j).getTete().getCouleur();
+                    byte value = setValue(couleur, hauteur);
+                    resultat[indice] = value;
+                }
+            }
+        }
+        return resultat;
+    }
+
+
+    /* Fonction minmax alpha beta */
     private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
         if ((estFeuille()) || (horizon == 0))
             return evaluerNoeud();
@@ -89,9 +193,9 @@ public class IAFortCoup extends IA{
                 int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
                 jeu.bouge(depart, arrvee);
                 int valeur = minmaxAlphaBeta(alpha, beta, false, horizon-1);
-                jeu.annule(depart, arrvee, hauteur);
                 maxValeur = Math.max(maxValeur, valeur);
                 alpha = Math.max(alpha, valeur);
+                jeu.annule(depart, arrvee, hauteur);
                 if (beta <= alpha)
                     break;
             }
@@ -107,9 +211,9 @@ public class IAFortCoup extends IA{
                 int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
                 jeu.bouge(depart, arrvee);
                 int valeur = minmaxAlphaBeta(alpha, beta, true, horizon-1);
-                jeu.annule(depart, arrvee, hauteur);
                 minValeur = Math.min(minValeur, valeur);
                 alpha = Math.max(alpha, valeur);
+                jeu.annule(depart, arrvee, hauteur);
                 if (beta <= alpha)
                     break;
             }
@@ -138,7 +242,7 @@ public class IAFortCoup extends IA{
     @Override
     public Mouvement joue() {
         ArrayList<Mouvement> configSuivants = EtapesPossibles();
-        Mouvement resultat = trouverGagnant(configSuivants, 5);
+        Mouvement resultat = trouverGagnant(configSuivants, 10);
         return resultat;
     }
 }

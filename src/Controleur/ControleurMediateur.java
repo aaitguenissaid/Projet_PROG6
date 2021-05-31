@@ -391,8 +391,14 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void abandonner() {
         if(!jeu.estFini()) {
-            jeu.abandonner();
-            jeuint.metAJour();
+            String titre = "Abandon";
+            String description = "Vous vous apprêtez à abandonner une partie.\n Si vous abandonnez, vous allez perdre la partie.";
+            String choix_valide = "Continuer";
+            String choix_annule = "Annuler";
+            if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
+                jeu.abandonner();
+                jeuint.metAJour();
+            }
         }
     }
 }

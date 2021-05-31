@@ -19,6 +19,13 @@ public class Pion {
         return this.couleur != 0;
     }
 
+    public boolean estCouleur(int id) {
+        if(id==1) {
+            return estCouleur1();
+        }
+        return estCouleur2();
+    }
+
     public String toString() {
         if(estCouleur1()) return "Blanc";
         return "Noir";

@@ -19,6 +19,7 @@ public class Classement {
     //Fichiers et chemins
     String directory_path = System.getProperty("user.home") + File.separator + Configuration.home_directory;
     String nomFichierClassement = directory_path + File.separator + Configuration.instance().lis("user_classement");
+    Jeu jeu;
 
     public Classement() {
         //check if file exists
@@ -55,8 +56,8 @@ public class Classement {
                 String pseudo = mots[0];
                 int nbVictoires = Integer.parseInt(mots[1]);
                 int nbParties = Integer.parseInt(mots[2]);
-                float ratio = Float.parseFloat(mots[3]);
-                Score score = new Score(pseudo, nbVictoires, nbParties, ratio);
+                int lesPoints = Integer.parseInt(mots[3]);
+                Score score = new Score(pseudo, nbVictoires, nbParties, lesPoints);
                 listeScores.insere(score);
                 if(sc.hasNextLine())
                     ligne = sc.nextLine();
@@ -71,7 +72,7 @@ public class Classement {
         return listeScores.iterateur();
     }
 
-    void enregistrerScore(String pseudo, boolean aGagner) {
+    void enregistrerScore(String pseudo, boolean aGagner, int lesNouveauxPoints) {
         Iterateur<Score> it = listeScores.iterateur();
         boolean b = false;
         while(it.aProchain()){
@@ -80,8 +81,7 @@ public class Classement {
                 System.out.println("debug");
                 p.nbParties++;
                 p.nbVictoires = aGagner ? p.nbVictoires+1 : p.nbVictoires;
-                if(p.nbParties>0)
-                    p.ratio = (float)p.nbVictoires / p.nbParties;
+                p.lesPoints += aGagner ? lesNouveauxPoints : -lesNouveauxPoints;
                 //enregistrer le fichier. suprimer et reecrire.
                 supprimerEnregistrerFichier();
                 b = true;
@@ -94,19 +94,28 @@ public class Classement {
     }
 
     void enregistrerScore(String pseudo1, String pseudo2, boolean premierAGagner) {
-        enregistrerScore(pseudo1, premierAGagner);
-        enregistrerScore(pseudo2, !premierAGagner);
+        int id1, id2;
+        if (jeu.j1.getNom().equals(pseudo1)) {
+            id1 = jeu.j1.getId();
+            id2 = jeu.j2.getId();
+        } else {
+            id1 = jeu.j2.getId();
+            id2 = jeu.j1.getId();
+        }
+
+        int lesNouveauxPoints =  calculePointsAbsolu(id1, id2);
+        enregistrerScore(pseudo1, premierAGagner, lesNouveauxPoints);
+        enregistrerScore(pseudo2, !premierAGagner, lesNouveauxPoints);
     }
 
     void supprimerEnregistrerFichier() {
-        //fichierClassement.delete();
         fichierClassement = new File(nomFichierClassement);
         try {
             FileWriter fileWriter = new FileWriter(fichierClassement,false);
             Iterateur<Score> iterateur = listeScores.iterateur();
             while(iterateur.aProchain()){
                 Score sc = iterateur.prochain();
-                String s = sc.pseudo + "\t" + sc.nbVictoires + "\t" + sc.nbParties + "\t" + sc.ratio + "\n";
+                String s = sc.pseudo + "\t" + sc.nbVictoires + "\t" + sc.nbParties + "\n";
                 fileWriter.write(s);
             }
             fileWriter.close();
@@ -117,4 +126,10 @@ public class Classement {
         }
     }
 
+    int calculePointsAbsolu(int id1, int id2) {
+        int nbPileJ1 = jeu.nbPilesJoueur(id1);
+        int nbPileJ2 = jeu.nbPilesJoueur(id2);
+        int lesPoints = Math.abs(nbPileJ1 - nbPileJ2);
+        return lesPoints;
+    }
 }

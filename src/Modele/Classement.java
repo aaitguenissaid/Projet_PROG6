@@ -17,7 +17,7 @@ public class Classement {
     FAPListe<Score> listeScores;
     Scanner sc;
     //Fichiers et chemins
-    String directory_path = System.getProperty("user.home") + File.separator + Configuration.home_directory;
+    String directory_path = Configuration.directoryPath();
     String nomFichierClassement = directory_path + File.separator + Configuration.instance().lis("user_classement");
 
     public Classement() {
@@ -77,7 +77,6 @@ public class Classement {
         while(it.aProchain()){
             Score p = it.prochain();
             if (p.pseudo.equals(pseudo)) {
-                System.out.println("debug");
                 p.nbParties++;
                 p.nbVictoires = aGagner ? p.nbVictoires+1 : p.nbVictoires;
                 if(p.nbParties>0)
@@ -99,7 +98,6 @@ public class Classement {
     }
 
     void supprimerEnregistrerFichier() {
-        //fichierClassement.delete();
         fichierClassement = new File(nomFichierClassement);
         try {
             FileWriter fileWriter = new FileWriter(fichierClassement,false);

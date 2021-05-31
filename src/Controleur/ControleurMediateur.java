@@ -216,7 +216,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                     }
                 }
             }
-//            jeu.annule(m.getDepart(), m.getArrivee(), 1);
+            jeu.annule(m.getDepart(), m.getArrivee(), 1);
         }
 
     }
@@ -241,36 +241,39 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void ticTac() {
-        //Tictac servant à alterner le jeu des deux IAs
-        if (activeAB){
-            if (jeu.getTour() == 0) {
-                if (IA_B == null) {
-                    System.err.println("Missing AI.");
-                    System.exit(0);
-                }
-                Mouvement coup = IA_A.joue();
-                jeu.bouge(coup.getDepart(), coup.getArrivee());
-                jeuint.metAJour();
-            } else {
-                if (IA_B == null) {
-                    System.err.println("Missing AI.");
-                    System.exit(0);
-                }
-                Mouvement coup = IA_B.joue();
-                jeu.bouge(coup.getDepart(), coup.getArrivee());
-                jeuint.metAJour();
-            }
+        if (jeu.estFini()){
+            time.stop();
         } else {
-            //Tictac servant pour l'animation qui sépare l'affichage du coup du joueur et l'affichage du coup de l'IA
-            if(animations!=null && !animations.estVide()) {
-                Animation a = animations.extraitTete();
-                a.ticTac();
+            //Tictac servant à alterner le jeu des deux IAs
+            if (activeAB){
+                if (jeu.getTour() == 0) {
+                    if (IA_B == null) {
+                        System.err.println("Missing AI.");
+                        System.exit(0);
+                    }
+                    Mouvement coup = IA_A.joue();
+                    jeu.bouge(coup.getDepart(), coup.getArrivee());
+                    jeuint.metAJour();
+                } else {
+                    if (IA_B == null) {
+                        System.err.println("Missing AI.");
+                        System.exit(0);
+                    }
+                    Mouvement coup = IA_B.joue();
+                    jeu.bouge(coup.getDepart(), coup.getArrivee());
+                    jeuint.metAJour();
+                }
             } else {
-                time.stop();
-                animations = new SequenceListe<>();
+                //Tictac servant pour l'animation qui sépare l'affichage du coup du joueur et l'affichage du coup de l'IA
+                if(animations!=null && !animations.estVide()) {
+                    Animation a = animations.extraitTete();
+                    a.ticTac();
+                } else {
+                    time.stop();
+                    animations = new SequenceListe<>();
+                }
             }
         }
-
     }
     public void jouer_en_local(){
         jeuint.setGameScreen();

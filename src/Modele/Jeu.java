@@ -12,7 +12,6 @@ public class Jeu extends Etat implements Cloneable {
     public static final int COULEUR2 = 1;
     Joueur j1,j2;
     Historique historique;
-    int lastDepI,lastDepJ,lastArrI,lastArrJ, nbPionsDepl; //ajouté pour afficher le dernier coup
     boolean estPartieRecuperee;
 
     public Jeu() {
@@ -21,8 +20,6 @@ public class Jeu extends Etat implements Cloneable {
 
     public Jeu(boolean fromScratch) {
         super();
-        lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
-        nbPionsDepl=0;
         estPartieRecuperee=false;
         if(fromScratch) {
             j1 = new Joueur(1,0);
@@ -226,14 +223,6 @@ public class Jeu extends Etat implements Cloneable {
         }
         return ret;
     }
-
-    public boolean estCaseArrive(int x,int y){
-        return lastArrI==x && lastArrJ==y;
-    }
-    public boolean estCaseDepart(int x,int y){
-        return lastDepI==x && lastDepJ==y;
-    }
-    public int getNbPionsDepl() {return nbPionsDepl;}
 
     public Joueur getJ1() {return j1;}
     public Joueur getJ2() {return j2;}

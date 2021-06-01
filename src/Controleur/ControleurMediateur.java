@@ -185,17 +185,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");
         if(!jeu.estFini() && !animationRunning ) {
-            if(jeu.getHistorique().isNavigationOn()) {
-                //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
-                String titre = "Validation navigation historique";
-                String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
-                        +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
-                String choix_valide = "Continuer";
-                String choix_annule = "Annuler";
-                if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
-                    jeu.getHistorique().validerNavigation();
-                }
-            }
+            stop_historique();
             //Si on la navigation n'est pas activée (ou qu'elle vient d'être désactivée)
             if(!jeu.getHistorique().isNavigationOn()) {
                 if (bouge(m.getDepart(), m.getArrivee())) {
@@ -315,6 +305,20 @@ public class ControleurMediateur implements CollecteurEvenements {
         return ret;
     }
 
+    private void stop_historique() {
+        if(jeu.getHistorique().isNavigationOn()) {
+            //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
+            String titre = "Validation navigation historique";
+            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
+                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
+            String choix_valide = "Continuer";
+            String choix_annule = "Annuler";
+            if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
+                jeu.getHistorique().validerNavigation();
+            }
+        }
+    }
+
     @Override
     public void parametres() {
         jeuint.setParametres();
@@ -349,34 +353,30 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
     @Override
-    public void next_historique() {
+    public boolean next_historique() {
         if(jeu.getHistorique().aPrecedent()) {
             jeu.getHistorique().precedent();
             jeuint.metAJour();
+            return true;
         }
+        return false;
     }
 
     @Override
-    public void stop_historique() {
-        if(jeu.getHistorique().isNavigationOn()) {
-            //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
-            String titre = "Validation navigation historique";
-            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
-                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
-            String choix_valide = "Continuer";
-            String choix_annule = "Annuler";
-            if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
-                jeu.getHistorique().validerNavigation();
-            }
-        }
+    public void play_pause_historique() {
+        animations.insereTete(new AnimationHistorique(1, this));
+        time = new Timer(1500, new AdaptateurTemps(this));
+        time.start();
     }
 
     @Override
-    public void previous_historique() {
+    public boolean previous_historique() {
         if(jeu.getHistorique().aSuivant()) {
             jeu.getHistorique().suivant();
             jeuint.metAJour();
+            return true;
         }
+        return false;
     }
 
     @Override

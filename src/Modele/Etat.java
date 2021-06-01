@@ -12,8 +12,9 @@ public class Etat {
     Case[][] grille;
     Size taille;
     int tour;
+    int lastDepI,lastDepJ,lastArrI,lastArrJ, nbPionsDepl; //ajouté pour afficher avoir coup
 
-    public Etat(Case [][]grille, int tour) {
+    public Etat(Case [][]grille, int tour, int lastDepI, int lastDepJ, int lastArrI, int lastArrJ, int nbPionsDepl) {
         this.taille = new Size(grille.length,grille.length);
         this.grille = new Case[this.taille.h][this.taille.l];
         for(int i=0; i<taille.h; i++) {
@@ -22,11 +23,22 @@ public class Etat {
             }
         }
         this.tour = tour;
+        this.lastDepI=lastDepI;
+        this.lastDepJ=lastDepJ;
+        this.lastArrI=lastArrI;
+        this.lastArrJ=lastArrJ;
+        this.nbPionsDepl=nbPionsDepl;
+    }
+
+    public Etat(Case [][]grille, int tour) {
+        this(grille, tour, -1, -1, -1, -1,0);
     }
 
     public Etat() {
         taille = new Size(DEFAULT_SIZE, DEFAULT_SIZE);
         grille = new Case[this.taille.h][this.taille.l];
+        lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
+        nbPionsDepl=0;
     }
 
     public String toString() {
@@ -108,6 +120,14 @@ public class Etat {
         }
         return false;
     }
+
+    public boolean estCaseArrive(int x,int y){
+        return lastArrI==x && lastArrJ==y;
+    }
+    public boolean estCaseDepart(int x,int y){
+        return lastDepI==x && lastDepJ==y;
+    }
+    public int getNbPionsDepl() {return nbPionsDepl;}
 
     public static void printGrille(PrintWriter out, Case [][]grille, int h, int l) {
         for(int i=0; i<h; i++) {

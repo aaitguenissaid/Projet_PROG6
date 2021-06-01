@@ -5,6 +5,7 @@ import Structures.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Jeu extends Etat implements Cloneable {
     public static final int COULEUR1 = 0;
@@ -239,6 +240,24 @@ public class Jeu extends Etat implements Cloneable {
     }
     public String getNomJ2(){
         return j2.getNom();
+    }
+    public boolean setNomJ1(String nom) {
+        String []IA_names = Configuration.instance().lis("IA_names").split(",");
+        if(j2.getNom().equals(nom) || Arrays.stream(IA_names).toList().contains(nom)) return false;
+        j1.setNom(nom);
+        return true;
+    }
+    public boolean setNomJ2(String nom) {
+        String []IA_names = Configuration.instance().lis("IA_names").split(",");
+        if(j1.getNom().equals(nom) || Arrays.stream(IA_names).toList().contains(nom)) return false;
+        j2.setNom(nom);
+        return true;
+    }
+
+    public void inverseJoueurs() {
+        String tmp = j1.getNom();
+        j1.setNom(j2.getNom());
+        j2.setNom(tmp);
     }
 
     @Override

@@ -14,6 +14,14 @@ public class Jeu extends Etat implements Cloneable {
     Historique historique;
     boolean estPartieRecuperee;
 
+
+
+
+
+
+    // ########################
+    // #### INITIALISATION ####
+    // ########################
     public Jeu() {
         this(true);
     }
@@ -31,26 +39,14 @@ public class Jeu extends Etat implements Cloneable {
         }
     }
 
-    private void init_grille(){
-        int centerL = taille.l/2;
-        int centerH = taille.h/2;
-        ArrayList<Point> emptyPoints = Configuration.instance().getEmptyPoints();
-        for(int i=0; i<taille.h; i++) {
-            for(int j=0; j< taille.l; j++) {
-                if(emptyPoints.contains(new Point(i,j))) {
-                    grille[i][j] = new Case(false);
-                } else if((i==centerH && j==centerL)) {
-                    grille[i][j] = new Case(true);
-                } else {
-                    if(i%2==0)
-                        grille[i][j] = new Case(true, new Pion(j%2));
-                    else
-                        grille[i][j] = new Case(true, new Pion((j+1)%2));
-                }
-            }
-        }
-    }
 
+
+
+
+
+    // ######################
+    // #### VERIFICATION ####
+    // ######################
     public boolean estFini() {
         //On recherche les piles que l'on peut déplacer
         for(int i=0; i<taille.h; i++) {
@@ -58,23 +54,22 @@ public class Jeu extends Etat implements Cloneable {
                 //S'il est envisageable de déplacer la tour
                 if(grille[i][j].estValide() && grille[i][j].nbPions()>0 && grille[i][j].nbPions()<5) {
                     int nbPions = grille[i][j].nbPions();
-                    ArrayList<Point> voisins = getPointsVoisins(i, j);
-                    //On parcourt tous les voisins
-                    for(int k=0; k<voisins.size(); k++) {
-                        Point voisin = voisins.get(k);
-                        if(estCaseValide(voisin)) {
-                            int nbPionsVoisin = grille[voisin.x][voisin.y].nbPions();
-                            if (nbPionsVoisin > 0 && (nbPionsVoisin + nbPions) <= 5) {
-                                return false;
-                            }
-                        }
-                    }
+                    ArrayList<Point> voisins = voisinsAccessibles(i, j);
+                    if(voisins!=null && voisins.size()>0) return false;
                 }
             }
         }
         return true;
     }
 
+
+
+
+
+
+    // #########################
+    // #### JOUER DES COUPS ####
+    // #########################
     /**
      * Un déplacement est refusé si :
      *  - Le joueur est en train de naviguer dans l'historique
@@ -125,53 +120,26 @@ public class Jeu extends Etat implements Cloneable {
         return true;
     }
 
+
+
+
+
+
+    // #######################
+    // #### GETTER/SETTER ####
+    // #######################
     public Historique getHistorique() {
         return historique;
     }
 
-    // Prends une indice de tableau de configuration comme le depart et rends les indices comme arrivées accessibles
-    public ArrayList<Point> voisinsAccessibles(int h, int l){
-        int nbPionsDep = grille[h][l].nbPions();
-        ArrayList<Point> resultat = new ArrayList<>();
-        if (nbPionsDep > 0) {
-            ArrayList<Point> pointsVoisins = getPointsVoisins(h, l);
-            for (Point v : pointsVoisins) {
-                if (estCaseValide(v) && grille[v.x][v.y].nbPions() > 0 && grille[v.x][v.y].nbPions() + nbPionsDep <= 5) {
-                    resultat.add(v);
-                }
-            }
-        }
-        return resultat;
-    }
 
-    public ArrayList<Point> trouveCasePeutBouger() {
-        ArrayList<Point> casePeutBouger = new ArrayList<>();
-        for (int i = 0; i < taille.h; i++) {
-            for (int j = 0; j < taille.l; j++) {
-                if ((estCaseValide(new Point(i, j))) && (grille[i][j].nbPions()>0)) {
-                    ArrayList<Point> vosinsAccessible = voisinsAccessibles(i, j);
-                    if (vosinsAccessible != null && vosinsAccessible.size() != 0) {
-                            casePeutBouger.add(new Point(i, j));
-                    }
-                }
-            }
-        }
-        return casePeutBouger;
-    }
 
-    private ArrayList<Point> getPointsVoisins(int h, int l) {
-        ArrayList<Point> ret = new ArrayList<>();
-        ret.add(new Point(h, l-1));
-        ret.add(new Point(h-1, l-1));
-        ret.add(new Point(h-1, l));
-        ret.add(new Point(h-1, l+1));
-        ret.add(new Point(h, l+1));
-        ret.add(new Point(h+1, l+1));
-        ret.add(new Point(h+1, l));
-        ret.add(new Point(h+1, l-1));
-        return ret;
-    }
 
+
+
+    // ###################################
+    // #### MANIPULATION DE LA PARTIE ####
+    // ###################################
     //Fait perdre le joueur dont c'était le tour
     public void abandonner() {
         relancerPartie(true);
@@ -206,16 +174,14 @@ public class Jeu extends Etat implements Cloneable {
         historique = new Historique(this);
     }
 
-    public int nbPilesJoueur(int id) {
-        int ret=0;
-        for(int i=0; i<taille.h; i++) {
-            for(int j=0; j< taille.l; j++) {
-                if(estCaseValide(new Point(i, j)) && grille[i][j].tete!=null && grille[i][j].tete.estCouleur(id)) ret++;
-            }
-        }
-        return ret;
-    }
 
+
+
+
+
+    // ##################################
+    // #### MANIPULATION DES JOUEURS ####
+    // ##################################
     public Joueur getJ1() {return j1;}
     public Joueur getJ2() {return j2;}
     public String getNomJ1(){
@@ -243,6 +209,14 @@ public class Jeu extends Etat implements Cloneable {
         j2.setNom(tmp);
     }
 
+
+
+
+
+
+    // #################
+    // #### CLONAGE ####
+    // #################
     @Override
     public Object clone() {
         Jeu ret = new Jeu();

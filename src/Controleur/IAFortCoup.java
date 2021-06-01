@@ -112,6 +112,11 @@ public class IAFortCoup extends IA{
         }
         return etapesPossibles;
     }
+    /*
+    private Iterable<Mouvement> EtapesPossible(){
+
+    }*/
+
 
     private boolean memeCouleur(Point depart, ArrayList<Point> voisins){
         int i = 0;
@@ -143,20 +148,20 @@ public class IAFortCoup extends IA{
                 if ((jeu.estCaseValide(new Point(i, j))) && (jeu.getCase(i, j).nbPions() > 0)) {
                     ArrayList<Point> voisinsAccessible = jeu.voisinsAccessibles(i, j);
                     if ((voisinsAccessible == null) | (voisinsAccessible.size() == 0)) {
-                        if (jeu.getCase(i, j).aTeteBlanche())
+                        if (jeu.getCase(i, j).getTete().getCouleur() == joueur)
                             nombre0++;
                         else
                             nombre1++;
                     } else {
                         if (memeCouleur(new Point(i, j), voisinsAccessible))
-                            if (jeu.getCase(i, j).aTeteBlanche())
+                            if (jeu.getCase(i, j).getTete().getCouleur() == joueur)
                                 nombre0++;
                             else nombre1++;
                     }
                 }
             }
         }
-        return joueur == 0 ? nombre0 - nombre1 : nombre1 - nombre0;
+        return nombre0 - nombre1;
     }
 
 
@@ -178,7 +183,7 @@ public class IAFortCoup extends IA{
     }
 
 
-    /* Fonction minmax alpha beta */
+    /* Fonction minmax alpha beta
     private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
         if ((estFeuille()) || (horizon == 0))
             return evaluerNoeud();
@@ -234,8 +239,59 @@ public class IAFortCoup extends IA{
             configurationDejaVu.put(hashCode(config), minValeur);
             return minValeur;
         }
-    }
+    } */
 
+    /* Fonction minmax alpha beta */
+    private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
+        if ((estFeuille()) || (horizon == 0))
+            return evaluerNoeud();
+        if (estMax){
+            int maxValeur = -INF;
+            ArrayList<Mouvement> etapesSuivant = EtapesPossibles();
+            for (int i = 0; i < etapesSuivant.size(); i++){
+                Mouvement m = etapesSuivant.get(i);
+                Point depart = m.getDepart();
+                Point arrvee = m.getArrivee();
+                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
+                jeu.bouge(depart, arrvee);
+                byte[] config = configuration();
+                int valeur;
+
+                valeur = minmaxAlphaBeta(alpha, beta, false, horizon-1);
+                maxValeur = Math.max(maxValeur, valeur);
+
+                alpha = Math.max(alpha, valeur);
+                jeu.annule(depart, arrvee, hauteur);
+                if (beta <= alpha)
+                    break;
+            }
+            return maxValeur;
+
+        } else {
+            int minValeur = INF;
+            ArrayList<Mouvement> etapesSuivant = EtapesPossibles();
+            for (int i = 0; i < etapesSuivant.size(); i++){
+                Mouvement m = etapesSuivant.get(i);
+                Point depart = m.getDepart();
+                Point arrvee = m.getArrivee();
+                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
+                jeu.bouge(depart, arrvee);
+                byte[] config = configuration();
+                int valeur;
+
+                valeur = minmaxAlphaBeta(alpha, beta, true, horizon-1);
+                minValeur = Math.min(minValeur, valeur);
+
+                alpha = Math.max(alpha, valeur);
+                jeu.annule(depart, arrvee, hauteur);
+                if (beta <= alpha)
+                    break;
+            }
+            byte[] config = configuration();
+            configurationDejaVu.put(hashCode(config), minValeur);
+            return minValeur;
+        }
+    }
 
     private Mouvement trouverGagnant(ArrayList<Mouvement> configSuivants, int horizon){
         Mouvement gagnant = null;
@@ -256,9 +312,33 @@ public class IAFortCoup extends IA{
 
     @Override
     public Mouvement joue() {
+        long start = System.currentTimeMillis();
+        Mouvement resultat;
         configurationDejaVu = new HashMap<>();
         ArrayList<Mouvement> configSuivants = EtapesPossibles();
-        Mouvement resultat = trouverGagnant(configSuivants, 10);
+        /*
+        System.out.println("configSuivants.size() = " + configSuivants.size());
+        if (configSuivants.size() > 200){
+//            resultat = trouverGagnant(configSuivants, 2);
+            IABasique iaB = new IABasique(jeu, joueur);
+            return iaB.joue();
+        } else if (configSuivants.size() > 150){
+//            resultat = trouverGagnant(configSuivants, 2);
+            IABasique iaB = new IABasique(jeu, joueur);
+            return iaB.joue();
+        } else if (configSuivants.size() > 100){
+            resultat = trouverGagnant(configSuivants, 2);
+        } else if (configSuivants.size() > 50){
+            resultat = trouverGagnant(configSuivants, 3);
+        } else {
+            resultat = trouverGagnant(configSuivants, 4);
+        } */
+        resultat = trouverGagnant(configSuivants, 2);
+        long end=System.currentTimeMillis();
+        System.out.println("Coup程序运行时间： "+(end-start)+"ms");
         return resultat;
+
+
+
     }
 }

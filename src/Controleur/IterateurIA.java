@@ -36,7 +36,6 @@ public class IterateurIA {
             }
         }
         int indiceDepart = indice;
-//        System.out.println("** configuration[indiceDepart] = " + ia.getHauteur(configuration[indice]));
         byte couleurDepart = ia.getCouleur(configuration[indice]);
         byte hauteurDeaprt = ia.getHauteur(configuration[indice]);
         byte[] copy = ia.copyTable(configuration);
@@ -59,14 +58,6 @@ public class IterateurIA {
                 }
             }
         }
-        if (equals(copy)){
-            System.out.println("configuration[indiceDepart] = " + ia.getHauteur(configuration[indice]));
-            System.out.println("indiceDepart = " + indiceDepart + ", indiceArrivee = " + indiceArrivee + ", copy[indiceDepart] = " + ia.getHauteur(copy[indiceDepart]));
-        }
-
- //           System.out.println("indice = " + indice + ", indiceVoisin = " + indiceVoisin);
-
-
         return copy;
     }
 

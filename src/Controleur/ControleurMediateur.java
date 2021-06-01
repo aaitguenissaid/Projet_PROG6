@@ -1,6 +1,7 @@
 package Controleur;
 
 
+import Modele.Classement;
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 import Modele.PartiesSauvegardees;
@@ -22,6 +23,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     SequenceListe<Animation> animations;
     PaletteDeCouleurs palette;
     EffetsSonores sonCtrl;
+    Classement classement;
 
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
@@ -32,6 +34,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         animations = new SequenceListe<>();
         palette=new PaletteDeCouleurs();
         sonCtrl = new EffetsSonores();
+        classement = new Classement(jeu);
     }
 
 
@@ -97,15 +100,14 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     public void activateOne(String IAstr, String letter) {
         System.out.println("Activation de l'" + IAstr + " pour le joueur "+letter+".");
-        int id;
         if(letter.equals("A")) {
             IA_A = createIA(IAstr, 0);
-            id = 1;
+            jeu.getJ1().setNom(IAstr);
             activeA = true;
         }
         else {
             IA_B = createIA(IAstr, 1);
-            id = 2;
+            jeu.getJ2().setNom(IAstr);
             activeB = true;
         }
     }
@@ -186,17 +188,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");
         if(!jeu.estFini() && !animationRunning ) {
-            if(jeu.getHistorique().isNavigationOn()) {
-                //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
-                String titre = "Validation navigation historique";
-                String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
-                        +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
-                String choix_valide = "Continuer";
-                String choix_annule = "Annuler";
-                if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
-                    jeu.getHistorique().validerNavigation();
-                }
-            }
+            stop_historique();
             //Si on la navigation n'est pas activée (ou qu'elle vient d'être désactivée)
             if(!jeu.getHistorique().isNavigationOn()) {
                 if (bouge(m.getDepart(), m.getArrivee())) {
@@ -311,9 +303,26 @@ public class ControleurMediateur implements CollecteurEvenements {
         boolean ret = jeu.bouge(depart, arrivee);
         jeuint.metAJour();
         System.out.println("Jeu fini : " + jeu.estFini());
+        if(jeu.estFini()) {
+            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.j1AGagne());
+        }
         System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
         jeuint.setStatistiques();
         return ret;
+    }
+
+    private void stop_historique() {
+        if(jeu.getHistorique().isNavigationOn()) {
+            //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
+            String titre = "Validation navigation historique";
+            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
+                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
+            String choix_valide = "Continuer";
+            String choix_annule = "Annuler";
+            if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
+                jeu.getHistorique().validerNavigation();
+            }
+        }
     }
 
     @Override
@@ -345,44 +354,40 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void last_historique() {
-        jeu.getHistorique().atteindreFinHistorique();
+        jeu.getHistorique().atteindreDebutHistorique();
         jeuint.metAJour();
     }
 
     @Override
-    public void next_historique() {
-        if(jeu.getHistorique().aSuivant()) {
-            jeu.getHistorique().suivant();
-            jeuint.metAJour();
-        }
-    }
-
-    @Override
-    public void stop_historique() {
-        if(jeu.getHistorique().isNavigationOn()) {
-            //#### Demander une validation à l'utilisateur pour retourner en arrière dans l'historique ####
-            String titre = "Validation navigation historique";
-            String description = "Attention, vous êtes sur le point de retourner à un état antérieur de la partie.\n"
-                    +"Si vous n'avez pas enregistré votre partie, certains coups risquent d'être perdus.";
-            String choix_valide = "Continuer";
-            String choix_annule = "Annuler";
-            if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
-                jeu.getHistorique().validerNavigation();
-            }
-        }
-    }
-
-    @Override
-    public void previous_historique() {
+    public boolean next_historique() {
         if(jeu.getHistorique().aPrecedent()) {
             jeu.getHistorique().precedent();
             jeuint.metAJour();
+            return true;
         }
+        return false;
+    }
+
+    @Override
+    public void play_pause_historique() {
+        animations.insereTete(new AnimationHistorique(1, this));
+        time = new Timer(1500, new AdaptateurTemps(this));
+        time.start();
+    }
+
+    @Override
+    public boolean previous_historique() {
+        if(jeu.getHistorique().aSuivant()) {
+            jeu.getHistorique().suivant();
+            jeuint.metAJour();
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void first_historique() {
-        jeu.getHistorique().atteindreDebutHistorique();
+        jeu.getHistorique().atteindreFinHistorique();
         jeuint.metAJour();
     }
 
@@ -406,5 +411,11 @@ public class ControleurMediateur implements CollecteurEvenements {
                 jeuint.metAJour();
             }
         }
+    }
+    public void deisabel_enabel_son(){
+        sonCtrl.deisabel_enabel_son();
+    }
+    public boolean getSonState(){
+        return sonCtrl.getSonState();
     }
 }

@@ -1,8 +1,5 @@
 package Global;
 
-import Structures.Sequence;
-import Structures.SequenceListe;
-
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -163,6 +160,10 @@ public class Configuration {
             return null;
         }
         return new Scanner(inputStream);
+    }
+    
+    public static String directoryPath() {
+        return System.getProperty("user.home") + File.separator + Configuration.home_directory;
     }
 
     public String get(String attribut) {

@@ -304,7 +304,7 @@ public class JeuVue extends javax.swing.JPanel {
 
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: Stop historique []
-        cc.stop_historique();
+        cc.play_pause_historique();
     }
 
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {

@@ -21,16 +21,16 @@ public class Historique implements Cloneable {
         nbCoupsReel=0;
         navigationOn = false;
         if(createInitialState) {
-            ajouteEtat(jeu.grille, jeu.tour);
+            ajouteEtat(new Etat(jeu.grille, jeu.tour));
         }
     }
 
     /*
     * Cette fonction ajoute un état à la position actuelle du jeu
     */
-    public void ajouteEtat(Case [][]grille, int tour) {
+    public void ajouteEtat(Etat e) {
         if(!navigationOn) {
-            historique.add(new Etat(grille, tour));
+            historique.add(e);
             current = historique.size()-1;
             nbCoupsReel++;
         }
@@ -138,7 +138,7 @@ public class Historique implements Cloneable {
     public Object clone() {
         Historique ret = new Historique(jeu, false);
         for(int i=0; i<historique.size(); i++) {
-            ret.ajouteEtat(historique.get(i).grille, historique.get(i).getTour());
+            ret.ajouteEtat(new Etat(historique.get(i).grille, historique.get(i).getTour()));
         }
         ret.nbCoupsReel = nbCoupsReel;
         ret.current = current;

@@ -35,12 +35,21 @@ public interface CollecteurEvenements {
     void reaglesBack();
 
     void last_historique();
-    void next_historique();
-    void stop_historique();
-    void previous_historique();
+
+    boolean next_historique();
+
+    void play_pause_historique();
+
+    boolean previous_historique();
+
     void first_historique();
 
     void relancerPartie();
+
     void abandonner();
+
+    boolean getSonState();
+
+    void deisabel_enabel_son();
 }
 

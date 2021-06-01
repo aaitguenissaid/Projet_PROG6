@@ -1,6 +1,7 @@
 package Controleur;
 
 
+import Modele.Classement;
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 import Modele.PartiesSauvegardees;
@@ -22,6 +23,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     SequenceListe<Animation> animations;
     PaletteDeCouleurs palette;
     EffetsSonores sonCtrl;
+    Classement classement;
 
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
@@ -32,6 +34,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         animations = new SequenceListe<>();
         palette=new PaletteDeCouleurs();
         sonCtrl = new EffetsSonores();
+        classement = new Classement(jeu);
     }
 
 
@@ -300,6 +303,9 @@ public class ControleurMediateur implements CollecteurEvenements {
         boolean ret = jeu.bouge(depart, arrivee);
         jeuint.metAJour();
         System.out.println("Jeu fini : " + jeu.estFini());
+        if(jeu.estFini()) {
+            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.j1AGagne());
+        }
         System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
         jeuint.setStatistiques();
         return ret;

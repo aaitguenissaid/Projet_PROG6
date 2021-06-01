@@ -17,11 +17,12 @@ public class Classement {
     FAPListe<Score> listeScores;
     Scanner sc;
     //Fichiers et chemins
-    String directory_path = System.getProperty("user.home") + File.separator + Configuration.home_directory;
+    String directory_path = Configuration.directoryPath();
     String nomFichierClassement = directory_path + File.separator + Configuration.instance().lis("user_classement");
     Jeu jeu;
 
-    public Classement() {
+    public Classement(Jeu j) {
+        jeu =j;
         //check if file exists
         //if yes load scores into the seq
         FAPListe<Score> listeScores = new FAPListe<Score>();
@@ -78,7 +79,6 @@ public class Classement {
         while(it.aProchain()){
             Score p = it.prochain();
             if (p.pseudo.equals(pseudo)) {
-                System.out.println("debug");
                 p.nbParties++;
                 p.nbVictoires = aGagner ? p.nbVictoires+1 : p.nbVictoires;
                 p.lesPoints += aGagner ? lesNouveauxPoints : -lesNouveauxPoints;
@@ -93,17 +93,9 @@ public class Classement {
         }
     }
 
-    void enregistrerScore(String pseudo1, String pseudo2, boolean premierAGagner) {
-        int id1, id2;
-        if (jeu.j1.getNom().equals(pseudo1)) {
-            id1 = jeu.j1.getId();
-            id2 = jeu.j2.getId();
-        } else {
-            id1 = jeu.j2.getId();
-            id2 = jeu.j1.getId();
-        }
-
-        int lesNouveauxPoints =  calculePointsAbsolu(id1, id2);
+    public void enregistrerScore(String pseudo1, String pseudo2, boolean premierAGagner) {
+        //TODO ids codé en dur!
+        int lesNouveauxPoints =  calculePointsAbsolu(1, 2);
         enregistrerScore(pseudo1, premierAGagner, lesNouveauxPoints);
         enregistrerScore(pseudo2, !premierAGagner, lesNouveauxPoints);
     }
@@ -115,7 +107,7 @@ public class Classement {
             Iterateur<Score> iterateur = listeScores.iterateur();
             while(iterateur.aProchain()){
                 Score sc = iterateur.prochain();
-                String s = sc.pseudo + "\t" + sc.nbVictoires + "\t" + sc.nbParties + "\n";
+                String s = sc.pseudo + "\t" + sc.nbVictoires + "\t" + sc.nbParties + "\t" + sc.lesPoints + "\n";
                 fileWriter.write(s);
             }
             fileWriter.close();

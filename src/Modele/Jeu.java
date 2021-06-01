@@ -150,9 +150,16 @@ public class Jeu extends Etat implements Cloneable {
     }
 
     public void relancerPartie(boolean isAbandon) {
-        Classement c = new Classement();
+        Classement c = new Classement(this);
         if(isAbandon) {
-            c.enregistrerScore(getNomJ1(), getNomJ2(), tour!=COULEUR1);
+            // TODO 24 codé en dur!
+            if(nbPilesJoueur(j1.id)==nbPilesJoueur(j2.id) && nbPilesJoueur(j1.id)==24){
+                System.out.println("Aucun pion n'a été Bougé");
+                // aucun pion n'a été bougé. pas d'enregistrement.
+            } else {
+                // celui qui a abondonné est perdant!
+                c.enregistrerScore(getNomJ1(), getNomJ2(), tour!=COULEUR1);
+            }
         } else {
             int nb1=0, nb2=0;
             for(int i=0; i<taille.h; i++) {
@@ -207,6 +214,16 @@ public class Jeu extends Etat implements Cloneable {
         String tmp = j1.getNom();
         j1.setNom(j2.getNom());
         j2.setNom(tmp);
+    }
+
+    public boolean j1AGagne() {
+        boolean resultat = false;
+        if(nbPilesJoueur(j1.id) > nbPilesJoueur(j2.id))
+            resultat = true;
+        else {
+            //TODO if comparaison des piles à 5.
+        }
+        return resultat;
     }
 
 

@@ -97,15 +97,14 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     public void activateOne(String IAstr, String letter) {
         System.out.println("Activation de l'" + IAstr + " pour le joueur "+letter+".");
-        int id;
         if(letter.equals("A")) {
             IA_A = createIA(IAstr, 0);
-            id = 1;
+            jeu.getJ1().setNom(IAstr);
             activeA = true;
         }
         else {
             IA_B = createIA(IAstr, 1);
-            id = 2;
+            jeu.getJ2().setNom(IAstr);
             activeB = true;
         }
     }

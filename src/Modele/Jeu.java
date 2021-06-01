@@ -235,6 +235,8 @@ public class Jeu extends Etat implements Cloneable {
     }
     public int getNbPionsDepl() {return nbPionsDepl;}
 
+    public Joueur getJ1() {return j1;}
+    public Joueur getJ2() {return j2;}
     public String getNomJ1(){
         return j1.getNom();
     }

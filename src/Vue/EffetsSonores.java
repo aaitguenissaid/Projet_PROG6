@@ -7,7 +7,9 @@ import javax.sound.sampled.*;
 public class EffetsSonores {
     Clip clip1;
     Clip clip2;
+    boolean on;
     public EffetsSonores() {
+        on =true;
         try {
             AudioInputStream audioInputStream1 = AudioSystem.getAudioInputStream(new File("ressources/sounds/1.wav").getAbsoluteFile());
             AudioInputStream audioInputStream2 = AudioSystem.getAudioInputStream(new File("ressources/sounds/2.wav").getAbsoluteFile());
@@ -23,14 +25,24 @@ public class EffetsSonores {
             e.printStackTrace();
         }
     }
+    public void deisabel_enabel_son(){
+        on=!on;
+    }
+    public boolean getSonState(){
+        return on;
+    }
     public void moveStart(){
-        if (clip2.isActive()) clip2.stop();
-        clip1.setFramePosition(0);
-        clip1.start();
+        if(on) {
+            if (clip2.isActive()) clip2.stop();
+            clip1.setFramePosition(0);
+            clip1.start();
+        }
     }
     public void moveEnd(){
-        if (clip1.isActive()) clip1.stop();
-        clip2.setFramePosition(0);
-        clip2.start();
+        if(on){
+            if (clip1.isActive()) clip1.stop();
+            clip2.setFramePosition(0);
+            clip2.start();
+        }
     }
 }

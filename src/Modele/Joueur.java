@@ -4,12 +4,12 @@ public class Joueur {
     String nom;
     int id;
     int couleur;
-    public Joueur(int id,int color) {
-        this.nom = "Joueur "+id;
+    public Joueur(int id, int color) {
+        this.nom = "Joueur_"+id;
         this.id = id;
         this.couleur=color;
     }
-    public Joueur(String nom, int id,int couleur) {
+    public Joueur(String nom, int id, int couleur) {
         this.nom = nom;
         this.id = id;
         this.couleur=couleur;

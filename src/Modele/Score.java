@@ -5,7 +5,7 @@ public class Score implements Comparable<Score> {
     String pseudo;
     int nbVictoires;
     int nbParties;
-    int  lesPoints;
+    int lesPoints;
 
     Score(String pseudo, int nbVictoires, int nbParties) {
         this.pseudo = pseudo;

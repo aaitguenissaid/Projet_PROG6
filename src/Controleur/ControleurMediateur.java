@@ -344,14 +344,14 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void last_historique() {
-        jeu.getHistorique().atteindreFinHistorique();
+        jeu.getHistorique().atteindreDebutHistorique();
         jeuint.metAJour();
     }
 
     @Override
     public void next_historique() {
-        if(jeu.getHistorique().aSuivant()) {
-            jeu.getHistorique().suivant();
+        if(jeu.getHistorique().aPrecedent()) {
+            jeu.getHistorique().precedent();
             jeuint.metAJour();
         }
     }
@@ -373,15 +373,15 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void previous_historique() {
-        if(jeu.getHistorique().aPrecedent()) {
-            jeu.getHistorique().precedent();
+        if(jeu.getHistorique().aSuivant()) {
+            jeu.getHistorique().suivant();
             jeuint.metAJour();
         }
     }
 
     @Override
     public void first_historique() {
-        jeu.getHistorique().atteindreDebutHistorique();
+        jeu.getHistorique().atteindreFinHistorique();
         jeuint.metAJour();
     }
 

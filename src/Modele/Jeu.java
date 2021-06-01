@@ -58,15 +58,7 @@ public class Jeu extends Etat implements Cloneable {
                 //S'il est envisageable de déplacer la tour
                 if(grille[i][j].estValide() && grille[i][j].nbPions()>0 && grille[i][j].nbPions()<5) {
                     int nbPions = grille[i][j].nbPions();
-                    ArrayList<Point> voisins = new ArrayList<>();
-                    voisins.add(new Point(i,j-1));
-                    voisins.add(new Point(i-1,j-1));
-                    voisins.add(new Point(i-1,j));
-                    voisins.add(new Point(i-1,j+1));
-                    voisins.add(new Point(i,j+1));
-                    voisins.add(new Point(i+1,j+1));
-                    voisins.add(new Point(i+1,j));
-                    voisins.add(new Point(i+1,j-1));
+                    ArrayList<Point> voisins = getPointsVoisins(i, j);
                     //On parcourt tous les voisins
                     for(int k=0; k<voisins.size(); k++) {
                         Point voisin = voisins.get(k);
@@ -106,7 +98,7 @@ public class Jeu extends Etat implements Cloneable {
         grille[arrive.x][arrive.y].ajoutePions(pions);
         setTour((tour==0) ? 1 : 0);
 
-        historique.ajouteEtat(grille, tour);
+        historique.ajouteEtat(new Etat(grille, tour));
 
         return true;
     }

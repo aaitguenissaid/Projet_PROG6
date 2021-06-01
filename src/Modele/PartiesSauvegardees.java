@@ -115,9 +115,9 @@ public class PartiesSauvegardees {
             line = in.nextLine();
             tour_etat = Integer.parseInt(line);
 
-            nvx_jeu.historique.ajouteEtat(grille_etat, tour_etat);
+            nvx_jeu.historique.ajouteEtat(new Etat(grille_etat, tour_etat));
         }
-        nvx_jeu.historique.ajouteEtat(nvx_jeu.grille, nvx_jeu.tour);
+        nvx_jeu.historique.ajouteEtat(new Etat(nvx_jeu.grille, nvx_jeu.tour));
 
         return nvx_jeu;
     }

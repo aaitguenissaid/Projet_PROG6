@@ -1,30 +1,35 @@
 package Controleur;
 
 import Modele.Jeu;
+import Structures.Iterateur;
 import Structures.Mouvement;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class IAFort extends IA{
     private final int INF = 1000;
+    HashMap<String, Integer> configurationDejaVu;
+    int indice;
+    int indiceVoisin;
 
     public IAFort(Jeu j, int joueur) {
         super(j, joueur);
     }
 
     /* Prends le valeur d'une hashtable et rends la couleur de sommet d'un pile */
-    private byte getCouleur(byte value){
+    byte getCouleur(byte value){
         return ((value & (1<<7)) == 0) ? (byte) 0 : (byte)1;
     }
 
     /* Prends le valeur d'une hashtable et rends la hauteur de sommet d'un pile */
-    private byte getHauteur(byte value){
+    byte getHauteur(byte value){
         return (byte) (value & (~(1 << 7)));
     }
 
     /* Prends la couleur d'un sommet et sa hauteur, rends la valeur d'un hashtable */
-    private byte setValue(byte couleur, byte hauteur){
+    byte setValue(byte couleur, byte hauteur){
         return (byte)((couleur << 7) | hauteur);
     }
 
@@ -107,7 +112,7 @@ public class IAFort extends IA{
     }
 
     /* Copy une table */
-    private byte[] copyTable(byte[] original){
+    byte[] copyTable(byte[] original){
         int length = original.length;
         byte[] copy = new byte[length];
         for (int i = 0; i < length; i++){
@@ -140,8 +145,10 @@ public class IAFort extends IA{
 
 
     /* Prends une indice de tableau de configuration comme le depart et rends les indices comme arrivées accessibles */
-    private ArrayList<Integer> voisinsAccessibles(byte[] config, int indiceDepart){
+    ArrayList<Integer> voisinsAccessibles(byte[] config, int indiceDepart){
         ArrayList<Integer> resultat = new ArrayList<>();
+        if (getHauteur(config[indiceDepart]) == 0)
+            return resultat;
         int h = decoderIndice(indiceDepart).x;
         int l = decoderIndice(indiceDepart).y;
         int indiceArrivee;
@@ -284,7 +291,7 @@ public class IAFort extends IA{
     }
 
 
-    /* A partir d'une configuration courante, retourne toutes les configurations possibles pour en une étape*/
+    /* A partir d'une configuration courante, retourne toutes les configurations possibles pour en une étape
     public ArrayList<byte[]> configurationSuivants(byte[] configuration){
         ArrayList<byte[]> resultat = new ArrayList<>();
         for (int i = 0; i < configuration.length; i++){
@@ -311,6 +318,51 @@ public class IAFort extends IA{
         }
         return resultat;
     }
+*/
+    public Iterateur<byte[]> configurationSuivants(byte[] configuration){
+        indice = 0;
+        indiceVoisin = 0;
+        return new Iterateur<byte[]>() {
+            public boolean aProchain() {
+                if(indice < configuration.length - 1)
+                    return true;
+                else if (indice == configuration.length - 1){
+                    ArrayList<Integer> voisinsAcc = voisinsAccessibles(configuration, indice);
+                    return  (indiceVoisin < voisinsAcc.size()) ? true : false;
+                }
+                else
+                    return false;
+            }
+
+            public byte[] prochain() {
+                ArrayList<Integer> voisinsAcc = voisinsAccessibles(configuration, indice);
+                int indiceDepart = indice;
+                byte couleurDepart = getCouleur(configuration[indice]);
+                byte hauteurDeaprt = getHauteur(configuration[indice]);
+                byte[] copy = copyTable(configuration);
+                int indiceArrivee = voisinsAcc.get(indiceVoisin);
+                byte hauteurArrivee = getHauteur(configuration[indiceArrivee]);
+                byte nouveauHauteur = (byte) (hauteurDeaprt + hauteurArrivee);
+                byte nouveauValueArrivee = setValue(couleurDepart, nouveauHauteur);
+                copy[indiceDepart] = 0;
+                copy[indiceArrivee] = nouveauValueArrivee;
+                if (indiceVoisin+1 < voisinsAcc.size()){
+                    indiceVoisin++;
+                } else {
+                    indiceVoisin = 0;
+                    indice++;
+                    if (indice < 48){
+                        ArrayList<Integer> voisinsAc = voisinsAccessibles(configuration, indice);
+                        while (voisinsAc.size() == 0){
+                            indice++;
+                            voisinsAc = voisinsAccessibles(configuration, indice);
+                        }
+                    }
+                }
+                return copy;
+            }
+        };
+    }
 
     /* A partir d'une configuration qu'on a trouver pour IA, retourner la case de depart et la case d'arrivée */
     public Mouvement configurationVersMouvement(byte[] configuration, byte[] suivant){
@@ -330,7 +382,7 @@ public class IAFort extends IA{
         return new Mouvement(depart, arrivee);
     }
 
-    /* Fonction minmax */
+    /* Fonction minmax
     private int minmax(byte[] config, boolean estMax){
         if (estFeuille(config))
             return evaluation(config);
@@ -359,10 +411,10 @@ public class IAFort extends IA{
             }
         }
         return 0;
-    }
+    } */
 
 
-    /* Fonction minmax alpha beta */
+    /* Fonction minmax alpha beta
     private int minmaxAlphaBeta(byte[] config, int alpha, int beta, boolean estMax, int horizon){
         if ((estFeuille(config)) || (horizon == 0))
             return evaluerNoeud(config);
@@ -396,8 +448,144 @@ public class IAFort extends IA{
             }
         }
         return 0;
+    }  */
+
+    private String codage(byte value){
+        int hauteur = getHauteur(value);
+        if (getCouleur(value) == 0){
+            return Integer.toString(hauteur);
+        } else {
+            if (hauteur == 1)
+                return "A";
+            else if (hauteur == 2)
+                return "B";
+            else if (hauteur == 3)
+                return "C";
+            else if (hauteur == 4)
+                return "D";
+            else
+                return "E";
+        }
     }
 
+    public String hashCode(byte[] configuration) {
+        String resultat = codage(configuration[0]);;
+        for (int i = 1; i < configuration.length; i++){
+            resultat += codage(configuration[i]);
+        }
+        return resultat;
+    }
+
+    /* Fonction minmax alpha beta */
+    private int minmaxAlphaBeta(byte[] config, int alpha, int beta, boolean estMax, int horizon){
+        if ((estFeuille(config)) || (horizon == 0)){
+            int value;
+            String key = hashCode(config);
+            if (configurationDejaVu.containsKey(key)){
+                value = configurationDejaVu.get(key);
+            } else {
+                value = evaluerNoeud(config);
+                configurationDejaVu.put(hashCode(config), value);
+            }
+            return value;
+        }
+        IterateurIA it = new IterateurIA(this, config);
+        if (estMax){
+            int maxValeur = -INF;
+            while (it.aProchain()){
+                byte[] configSuivant = it.prochain();
+                int valeur;
+                if (configurationDejaVu.containsKey(hashCode(config))){
+                    valeur = configurationDejaVu.get(hashCode(config));
+                } else {
+                    valeur = minmaxAlphaBeta(configSuivant, alpha, beta, false, horizon-1);
+                }
+                maxValeur = Math.max(maxValeur, valeur);
+                if (beta <= alpha)
+                    break;
+
+            }
+            configurationDejaVu.put(hashCode(config), maxValeur);
+            return maxValeur;
+        } else {
+            int minValeur = INF;
+            while (it.aProchain()){
+                byte[] configSuivant = it.prochain();
+                int valeur;
+                if (configurationDejaVu.containsKey(hashCode(config))){
+                    valeur = configurationDejaVu.get(hashCode(config));
+                } else {
+                    valeur = minmaxAlphaBeta(configSuivant, alpha, beta, true, horizon-1);
+                }
+                minValeur = Math.min(minValeur, valeur);
+                beta = Math.min(beta, valeur);
+                if (beta <= alpha)
+                    break;
+            }
+            configurationDejaVu.put(hashCode(config), minValeur);
+            return minValeur;
+        }
+    }
+
+        /* Fonction minmax alpha beta
+    private int minmaxAlphaBeta(byte[] config, int alpha, int beta, boolean estMax, int horizon){
+        if ((estFeuille(config)) || (horizon == 0)){
+            int value;
+            String key = hashCode(config);
+            if (configurationDejaVu.containsKey(key)){
+                value = configurationDejaVu.get(key);
+            } else {
+                value = evaluerNoeud(config);
+                configurationDejaVu.put(hashCode(config), value);
+            }
+            return value;
+        }
+
+        if (estMax){
+            int maxValeur = -INF;
+            ArrayList<byte[]> configSuivants = configurationSuivants(config);
+            if (configSuivants != null){
+                for (int i = 0; i < configSuivants.size(); i++){
+                    byte[] configSuivant = configSuivants.get(i);
+                    int valeur;
+                    if (configurationDejaVu.containsKey(hashCode(config))){
+                        valeur = configurationDejaVu.get(hashCode(config));
+                    } else {
+                        valeur = minmaxAlphaBeta(configSuivant, alpha, beta, false, horizon-1);
+                    }
+                    maxValeur = Math.max(maxValeur, valeur);
+                    if (beta <= alpha)
+                        break;
+                }
+
+                configurationDejaVu.put(hashCode(config), maxValeur);
+                return maxValeur;
+            }
+        } else {
+            int minValeur = INF;
+            ArrayList<byte[]> configSuivants = configurationSuivants(config);
+            if (configSuivants != null){
+                for (int i = 0; i < configSuivants.size(); i++){
+                    byte[] configSuivant = configSuivants.get(i);
+                    int valeur;
+                    if (configurationDejaVu.containsKey(hashCode(config))){
+                        valeur = configurationDejaVu.get(hashCode(config));
+                    } else {
+                        valeur = minmaxAlphaBeta(configSuivant, alpha, beta, true, horizon-1);
+                    }
+                    minValeur = Math.min(minValeur, valeur);
+                    beta = Math.min(beta, valeur);
+                    if (beta <= alpha)
+                        break;
+                }
+                configurationDejaVu.put(hashCode(config), minValeur);
+                return minValeur;
+            }
+        }
+        return 0;
+    }  */
+
+/*
     private byte[] trouverGagnant(byte[] config, ArrayList<byte[]> configSuivants, int horizon){
         byte[] gagnant = null;
         int imax = 0;
@@ -412,29 +600,54 @@ public class IAFort extends IA{
         }
         gagnant = configSuivants.get(imax);
         return gagnant;
-    }
+    }  */
 
+
+    private byte[] trouverGagnant(byte[] config, int horizon){
+        byte[] gagnant = null;
+        int imax = 0;
+        int max = -INF;
+        IterateurIA it = new IterateurIA(this, config);
+        while (it.aProchain()){
+            byte[] configSuivant = it.prochain();
+            int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, horizon);
+            if (courant > max){
+                max = courant;
+                gagnant = configSuivant;
+            }
+        }
+        return gagnant;
+    }
 
 
     @Override
     public Mouvement joue() {
+        long start = System.currentTimeMillis();
+        configurationDejaVu = new HashMap<>();
         byte[] config = configuration();
         byte[] gagnant = null;
+
+        /*
         ArrayList<byte[]> configSuivants = configurationSuivants(config);
 
         System.out.println("configSuivants.size() = " + configSuivants.size());
         if (configSuivants.size() > 150){
             IABasique iaB = new IABasique(jeu, joueur);
             return iaB.joue();
+//            IAAleatoire iaB = new IAAleatoire(jeu, joueur);
+//                return iaB.joue();
 //            gagnant = trouverGagnant(config, configSuivants, 2);
         } else if (configSuivants.size() > 100){
-            gagnant = trouverGagnant(config, configSuivants, 3);
+            gagnant = trouverGagnant(config, configSuivants, 2);
         } else if (configSuivants.size() > 50){
-            gagnant = trouverGagnant(config, configSuivants, 4);
+            gagnant = trouverGagnant(config, configSuivants, 3);
         } else {
-            gagnant = trouverGagnant(config, configSuivants, 5);
-        }
+            gagnant = trouverGagnant(config, configSuivants, 4);
+        }  */
+        gagnant = trouverGagnant(config, 2);
         Mouvement resultat = configurationVersMouvement(config, gagnant);
+        long end=System.currentTimeMillis();
+        System.out.println("Temps d'exécution ："+(end-start)+"ms");
         return resultat;
     }
 

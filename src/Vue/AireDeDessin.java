@@ -24,7 +24,7 @@ public class AireDeDessin extends JComponent {
         tab = new PionComponent[j.getTaille().h][j.getTaille().l];
         for(int i = 0 ; i< j.getTaille().h;i++){
             for(int k = 0; k<j.getTaille().l;k++){
-              tab[i][k]  = new PionComponent(j,new Point(i,k),palette.Couleur3,palette.Couleur4,palette.Couleur5);
+              tab[i][k]  = new PionComponent(j,new Point(i,k),palette);
             }
         }
         set=false;

@@ -19,7 +19,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     //Attributs pour les IAs
     int mode; //0=JvsJ, 1=JvsIA, 2=IAvsIA
     IA IAAffrontement, IA_1, IA_2;
-    String save_pseudo; Joueur JoueurIA;
+    Joueur JoueurIA;
 
     //Attributs pour les animations
     Timer time;
@@ -151,9 +151,6 @@ public class ControleurMediateur implements CollecteurEvenements {
 
         //Mise à jour du jeu
         JoueurIA = (id_ia==1) ? jeu.getJ1() : jeu.getJ2();
-        String saveNomJoueur = (id_ia==1) ? Configuration.PSEUDO_J2 : Configuration.PSEUDO_J1;
-        Configuration.instance().set(saveNomJoueur, JoueurIA.getNom());
-        save_pseudo = JoueurIA.getNom();
         JoueurIA.setNom(nom_ia);
 
         //Mise à jour de l'interface
@@ -177,8 +174,6 @@ public class ControleurMediateur implements CollecteurEvenements {
         IA_2 = construireIA(nom_ia2, 2);
 
         //Mise à jour du jeu
-        Configuration.instance().set(Configuration.PSEUDO_J1, jeu.getNomJ1());
-        Configuration.instance().set(Configuration.PSEUDO_J2, jeu.getNomJ2());
         jeu.getJ1().setNom(nom_ia1);
         jeu.getJ2().setNom(nom_ia2);
 

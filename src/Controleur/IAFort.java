@@ -13,9 +13,11 @@ public class IAFort extends IA{
     HashMap<String, Integer> configurationDejaVu;
     int indice;
     int indiceVoisin;
+    int nombreCoup;
 
     public IAFort(Jeu j, int joueur) {
         super(j, joueur);
+        nombreCoup = 0;
     }
 
     /* Prends le valeur d'une hashtable et rends la couleur de sommet d'un pile */
@@ -290,35 +292,6 @@ public class IAFort extends IA{
         return nombre0 - nombre1;
     }
 
-
-    /* A partir d'une configuration courante, retourne toutes les configurations possibles pour en une étape
-    public ArrayList<byte[]> configurationSuivants(byte[] configuration){
-        ArrayList<byte[]> resultat = new ArrayList<>();
-        for (int i = 0; i < configuration.length; i++){
-            if (configuration[i] != 0){
-                ArrayList<Integer> voisinsAcc = voisinsAccessibles(configuration, i);
-                int indiceDepart = i;
-                byte couleurDepart = getCouleur(configuration[i]);
-                byte hauteurDeaprt = getHauteur(configuration[i]);
-                if (voisinsAcc != null){
-                    if (voisinsAcc.size() > 0){
-                        for (int j = 0; j < voisinsAcc.size(); j++){
-                            byte[] copy = copyTable(configuration);
-                            int indiceArrivee = voisinsAcc.get(j);
-                            byte hauteurArrivee = getHauteur(configuration[indiceArrivee]);
-                            byte nouveauHauteur = (byte) (hauteurDeaprt + hauteurArrivee);
-                            byte nouveauValueArrivee = setValue(couleurDepart, nouveauHauteur);
-                            copy[indiceDepart] = 0;
-                            copy[indiceArrivee] = nouveauValueArrivee;
-                            resultat.add(copy);
-                        }
-                    }
-                }
-            }
-        }
-        return resultat;
-    }
-*/
     public Iterateur<byte[]> configurationSuivants(byte[] configuration){
         indice = 0;
         indiceVoisin = 0;
@@ -381,74 +354,6 @@ public class IAFort extends IA{
         Point arrivee = decoderIndice(indiceArrivee);
         return new Mouvement(depart, arrivee);
     }
-
-    /* Fonction minmax
-    private int minmax(byte[] config, boolean estMax){
-        if (estFeuille(config))
-            return evaluation(config);
-        if (estMax){
-            int maxValeur = -INF;
-            ArrayList<byte[]> configSuivants = configurationSuivants(config);
-            if (configSuivants != null){
-                for (int i = 0; i < configSuivants.size(); i++){
-                    byte[] configSuivant = configSuivants.get(i);
-                    int valeur = minmax(configSuivant, false);
-                    maxValeur = Math.max(maxValeur, valeur);
-                }
-                return maxValeur;
-
-            }
-        } else {
-            int minValeur = INF;
-            ArrayList<byte[]> configSuivants = configurationSuivants(config);
-            if (configSuivants != null){
-                for (int i = 0; i < configSuivants.size(); i++){
-                    byte[] configSuivant = configSuivants.get(i);
-                    int valeur = minmax(configSuivant, true);
-                    minValeur = Math.min(minValeur, valeur);
-                }
-                return minValeur;
-            }
-        }
-        return 0;
-    } */
-
-
-    /* Fonction minmax alpha beta
-    private int minmaxAlphaBeta(byte[] config, int alpha, int beta, boolean estMax, int horizon){
-        if ((estFeuille(config)) || (horizon == 0))
-            return evaluerNoeud(config);
-        if (estMax){
-            int maxValeur = -INF;
-            ArrayList<byte[]> configSuivants = configurationSuivants(config);
-            if (configSuivants != null){
-                for (int i = 0; i < configSuivants.size(); i++){
-                    byte[] configSuivant = configSuivants.get(i);
-                    int valeur = minmaxAlphaBeta(configSuivant, alpha, beta,false, horizon-1);
-                    maxValeur = Math.max(maxValeur, valeur);
-                    alpha = Math.max(alpha, valeur);
-                    if (beta <= alpha)
-                        break;
-                }
-                return maxValeur;
-            }
-        } else {
-            int minValeur = INF;
-            ArrayList<byte[]> configSuivants = configurationSuivants(config);
-            if (configSuivants != null){
-                for (int i = 0; i < configSuivants.size(); i++){
-                    byte[] configSuivant = configSuivants.get(i);
-                    int valeur = minmaxAlphaBeta(configSuivant, alpha, beta, true, horizon-1);
-                    minValeur = Math.min(minValeur, valeur);
-                    beta = Math.min(beta, valeur);
-                    if (beta <= alpha)
-                        break;
-                }
-                return minValeur;
-            }
-        }
-        return 0;
-    }  */
 
     private String codage(byte value){
         int hauteur = getHauteur(value);
@@ -527,82 +432,6 @@ public class IAFort extends IA{
         }
     }
 
-        /* Fonction minmax alpha beta
-    private int minmaxAlphaBeta(byte[] config, int alpha, int beta, boolean estMax, int horizon){
-        if ((estFeuille(config)) || (horizon == 0)){
-            int value;
-            String key = hashCode(config);
-            if (configurationDejaVu.containsKey(key)){
-                value = configurationDejaVu.get(key);
-            } else {
-                value = evaluerNoeud(config);
-                configurationDejaVu.put(hashCode(config), value);
-            }
-            return value;
-        }
-
-        if (estMax){
-            int maxValeur = -INF;
-            ArrayList<byte[]> configSuivants = configurationSuivants(config);
-            if (configSuivants != null){
-                for (int i = 0; i < configSuivants.size(); i++){
-                    byte[] configSuivant = configSuivants.get(i);
-                    int valeur;
-                    if (configurationDejaVu.containsKey(hashCode(config))){
-                        valeur = configurationDejaVu.get(hashCode(config));
-                    } else {
-                        valeur = minmaxAlphaBeta(configSuivant, alpha, beta, false, horizon-1);
-                    }
-                    maxValeur = Math.max(maxValeur, valeur);
-                    if (beta <= alpha)
-                        break;
-                }
-
-                configurationDejaVu.put(hashCode(config), maxValeur);
-                return maxValeur;
-            }
-        } else {
-            int minValeur = INF;
-            ArrayList<byte[]> configSuivants = configurationSuivants(config);
-            if (configSuivants != null){
-                for (int i = 0; i < configSuivants.size(); i++){
-                    byte[] configSuivant = configSuivants.get(i);
-                    int valeur;
-                    if (configurationDejaVu.containsKey(hashCode(config))){
-                        valeur = configurationDejaVu.get(hashCode(config));
-                    } else {
-                        valeur = minmaxAlphaBeta(configSuivant, alpha, beta, true, horizon-1);
-                    }
-                    minValeur = Math.min(minValeur, valeur);
-                    beta = Math.min(beta, valeur);
-                    if (beta <= alpha)
-                        break;
-                }
-                configurationDejaVu.put(hashCode(config), minValeur);
-                return minValeur;
-            }
-        }
-        return 0;
-    }  */
-
-/*
-    private byte[] trouverGagnant(byte[] config, ArrayList<byte[]> configSuivants, int horizon){
-        byte[] gagnant = null;
-        int imax = 0;
-        int max = -INF;
-        for (int i = 0; i < configSuivants.size(); i++){
-            byte[] configSuivant = configSuivants.get(i);
-            int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, horizon);
-            if (courant > max){
-                max = courant;
-                imax = i;
-            }
-        }
-        gagnant = configSuivants.get(imax);
-        return gagnant;
-    }  */
-
-
     private byte[] trouverGagnant(byte[] config, int horizon){
         byte[] gagnant = null;
         int imax = 0;
@@ -626,27 +455,20 @@ public class IAFort extends IA{
         configurationDejaVu = new HashMap<>();
         byte[] config = configuration();
         byte[] gagnant = null;
-
-        /*
-        ArrayList<byte[]> configSuivants = configurationSuivants(config);
-
-        System.out.println("configSuivants.size() = " + configSuivants.size());
-        if (configSuivants.size() > 150){
-            IABasique iaB = new IABasique(jeu, joueur);
-            return iaB.joue();
-//            IAAleatoire iaB = new IAAleatoire(jeu, joueur);
-//                return iaB.joue();
-//            gagnant = trouverGagnant(config, configSuivants, 2);
-        } else if (configSuivants.size() > 100){
-            gagnant = trouverGagnant(config, configSuivants, 2);
-        } else if (configSuivants.size() > 50){
-            gagnant = trouverGagnant(config, configSuivants, 3);
-        } else {
-            gagnant = trouverGagnant(config, configSuivants, 4);
-        }  */
-        gagnant = trouverGagnant(config, 2);
+        if (nombreCoup < 3){
+            gagnant = trouverGagnant(config, 1);
+            nombreCoup++;
+        } else if (nombreCoup < 6){
+            gagnant = trouverGagnant(config, 2);
+            nombreCoup++;
+        } else if (nombreCoup < 9){
+            gagnant = trouverGagnant(config, 2);
+            nombreCoup++;
+        } else
+            gagnant = trouverGagnant(config, 2);
         Mouvement resultat = configurationVersMouvement(config, gagnant);
         long end=System.currentTimeMillis();
+        System.out.println("nombreCoup = " + nombreCoup);
         System.out.println("Temps d'exécution ："+(end-start)+"ms");
         return resultat;
     }

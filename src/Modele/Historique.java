@@ -132,13 +132,17 @@ public class Historique implements Cloneable {
     private void metAJourJeu() {
         jeu.grille = historique.get(current).getCopieGrille();
         jeu.tour = historique.get(current).getTour();
+        jeu.lastDepI=historique.get(current).getLastDepI();
+        jeu.lastDepJ=historique.get(current).getLastDepJ();
+        jeu.lastArrI=historique.get(current).getLastArrI();
+        jeu.lastArrJ=historique.get(current).getLastArrJ();
     }
 
     @Override
     public Object clone() {
         Historique ret = new Historique(jeu, false);
         for(int i=0; i<historique.size(); i++) {
-            ret.ajouteEtat(new Etat(historique.get(i).grille, historique.get(i).getTour()));
+            ret.ajouteEtat(new Etat(historique.get(i).grille, historique.get(i).getTour(), historique.get(i).lastDepI, historique.get(i).lastDepJ, historique.get(i).lastArrI, historique.get(i).lastArrJ, historique.get(i).nbPionsDepl));
         }
         ret.nbCoupsReel = nbCoupsReel;
         ret.current = current;

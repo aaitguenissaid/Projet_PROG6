@@ -63,15 +63,12 @@ public class AireDeDessin extends JComponent {
         paddingH =(getSize().height-hauteurCase*hauteurGrille)/2;
         drawable.setColor(palette.Couleur1);
         drawable.fillRect(0, 0, largeurFenetrePixel, hauteurFenetrePixel);
-        tracerTableaux();
+        tracerGrille();
         if(cc.suggestion()) {
             suggestion(cc.suggestionMouvement());
         }
     }
 
-    public void tracerTableaux(){
-        tracerGrille();
-    }
 
 
     void tracerGrille() {

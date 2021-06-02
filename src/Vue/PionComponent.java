@@ -20,6 +20,7 @@ public class PionComponent extends JComponent {
     Point p;
     PaletteDeCouleurs palette;
     PionComponent(Jeu j, Point c, PaletteDeCouleurs palette){
+        this.setLocation(new Point(-100,-100));
         this.palette =palette;
         this.j = j;
         p=c;
@@ -30,16 +31,13 @@ public class PionComponent extends JComponent {
         this.y=y;
         this.width=width;
         this.height=height;
-        changeLocation();
+        this.setLocation(new Point(x,y));
         this.setSize(new Dimension(width, 7*height));
         padding=(7*height);
         this.c =j.getCase(p.x,p.y);
     }
 
-    private void changeLocation() {
-        
-        this.setLocation(new Point(x,y));
-    }
+
 
     @Override
     public void paintComponent(Graphics g) {

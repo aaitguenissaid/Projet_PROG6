@@ -93,7 +93,7 @@ public class Jeu extends Etat implements Cloneable {
         grille[arrive.x][arrive.y].ajoutePions(pions);
         setTour((tour==0) ? 1 : 0);
 
-        historique.ajouteEtat(new Etat(grille, tour));
+        historique.ajouteEtat(new Etat(grille, tour,lastDepI,lastDepJ,lastArrI,lastArrJ,nbPionsDepl));
 
         return true;
     }

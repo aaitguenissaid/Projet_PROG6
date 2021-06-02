@@ -278,4 +278,20 @@ public class Etat {
         }
         return copy_grid;
     }
+
+    public int getLastDepI() {
+        return lastDepI;
+    }
+
+    public int getLastDepJ() {
+        return lastDepJ;
+    }
+
+    public int getLastArrI() {
+        return lastArrI;
+    }
+
+    public int getLastArrJ() {
+        return lastArrJ;
+    }
 }

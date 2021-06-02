@@ -20,6 +20,8 @@ public interface CollecteurEvenements {
 
     void jouer_contre_ia();
 
+    void lancer_demo();
+
     void reprendre_une_partie();
 
     void enregistrer_la_partie();

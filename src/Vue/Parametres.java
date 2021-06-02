@@ -4,6 +4,7 @@ import Global.Configuration;
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -319,20 +320,25 @@ public class Parametres extends javax.swing.JPanel {
         setSonIcon();
         jPanel2.setBackground(palette.Couleur1);
         jButton1.setBackground(palette.Couleur1);
-        jLabel1.setBackground(palette.Couleur7);
+        jLabel1.setBackground(palette.Couleur1);
+        jLabel1.setForeground(palette.Couleur7);
         jPanel4.setBackground(palette.Couleur1);
         jPanel6.setBackground(palette.Couleur1);
         jLabel4.setBackground(palette.Couleur7);
+        jLabel4.setForeground(palette.Couleur7);
         jCheckBox1.setBackground(palette.Couleur1);
         jCheckBox2.setBackground(palette.Couleur1);
         jCheckBox3.setBackground(palette.Couleur1);
         jPanel7.setBackground(palette.Couleur1);
         jLabel3.setBackground(palette.Couleur7);
+        jLabel3.setForeground(palette.Couleur7);
         jPanel3.setBackground(palette.Couleur1);
         jLabel2.setBackground(palette.Couleur7);
+        jLabel2.setForeground(palette.Couleur7);
         jComboBox2.setBackground(palette.Couleur1);
         jPanel5.setBackground(palette.Couleur1);
         jLabel5.setBackground(palette.Couleur7);
+        jLabel5.setForeground(palette.Couleur7);
         jPanel8.setBackground(palette.Couleur1);
         jButton34.setBackground(new java.awt.Color(2, 172, 229));
         jButton35.setBackground(new java.awt.Color(43, 215, 83));
@@ -342,8 +348,11 @@ public class Parametres extends javax.swing.JPanel {
         jPanel14.setBackground(palette.Couleur1);
         jPanel9.setBackground(palette.Couleur1);
         jLabel6.setBackground(palette.Couleur7);
+        jLabel6.setForeground(palette.Couleur7);
         jPanel10.setBackground(palette.Couleur1);
         jLabel13.setBackground(palette.Couleur7);
+        jLabel13.setForeground(palette.Couleur7);
+
         jButton31.setBackground(new java.awt.Color(2, 172, 229));
         jButton32.setBackground(new java.awt.Color(43, 215, 83));
         jButton33.setBackground(new java.awt.Color(227, 68, 58));

@@ -1,5 +1,7 @@
 package Modele;
 
+import Global.Configuration;
+
 import java.awt.*;
 
 public class PaletteDeCouleurs {
@@ -11,7 +13,14 @@ public class PaletteDeCouleurs {
     public Color Couleur5;
     public Color Couleur6;
     public PaletteDeCouleurs(){
-        setSheme1();
+        int scheme = Integer.parseInt(Configuration.instance().get(Configuration.COULEUR_THEME));
+        switch(scheme) {
+            case 2:setSheme2(); break;
+            case 3:setSheme3(); break;
+            case 4:setSheme4(); break;
+            case 5:setSheme5(); break;
+            default: setSheme1(); break;
+        }
     }
 
     public void setSheme1() {

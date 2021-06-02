@@ -1,5 +1,6 @@
 package Vue;
 
+import Global.Configuration;
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 
@@ -240,30 +241,35 @@ public class Parametres extends javax.swing.JPanel {
     private void jButton34MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: Theme1
         palette.setSheme1();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "1");
         cc.revalidateInterface();
     }
 
     private void jButton35MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Theme2
         palette.setSheme2();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "2");
         cc.revalidateInterface();
     }
 
     private void jButton36MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Theme3
         palette.setSheme3();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "3");
         cc.revalidateInterface();
     }
 
     private void jButton37MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Theme4
         palette.setSheme4();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "4");
         cc.revalidateInterface();
     }
 
     private void jButton38MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Theme5
         palette.setSheme5();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "5");
         cc.revalidateInterface();
     }
 

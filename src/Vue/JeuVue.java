@@ -373,13 +373,13 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel8.setBackground(palette.Couleur1);
         jPanel4.setBackground(palette.Couleur6);
         jPanel5.setBackground(palette.Couleur6);
-        jLabel2.setBackground(palette.Couleur6);
-        jLabel2.setForeground(palette.Couleur3);
-        jLabel3.setBackground(palette.Couleur6);
-        jLabel3.setForeground(palette.Couleur3);
+        jLabel2.setBackground(palette.Couleur7);
+        jLabel2.setForeground(palette.Couleur7);
+        jLabel3.setBackground(palette.Couleur7);
+        jLabel3.setForeground(palette.Couleur7);
         jPanel6.setBackground(palette.Couleur6);
-        jLabel4.setBackground(palette.Couleur6);
-        jLabel4.setForeground(palette.Couleur3);
+        jLabel4.setBackground(palette.Couleur7);
+        jLabel4.setForeground(palette.Couleur7);
         jPanel9.setBackground(palette.Couleur1);
         jButton3.setBackground(palette.Couleur2);
         jButton4.setBackground(palette.Couleur2);
@@ -395,14 +395,14 @@ public class JeuVue extends javax.swing.JPanel {
         jButton8.setBackground(palette.Couleur2);
         jButton8.setForeground(palette.Couleur3);
         jPanel10.setBackground(palette.Couleur6);
-        jLabel5.setBackground(palette.Couleur6);
+        jLabel5.setBackground(palette.Couleur7);
         jPanel11.setBackground(palette.Couleur6);
         jPanel12.setBackground(palette.Couleur6);
-        jLabel6.setBackground(palette.Couleur6);
-        jLabel8.setBackground(palette.Couleur6);
+        jLabel6.setBackground(palette.Couleur7);
+        jLabel8.setBackground(palette.Couleur7);
         jPanel13.setBackground(palette.Couleur6);
-        jLabel7.setBackground(palette.Couleur6);
-        jLabel9.setBackground(palette.Couleur6);
+        jLabel7.setBackground(palette.Couleur7);
+        jLabel9.setBackground(palette.Couleur7);
         if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE))){
             allumerHistorique();
         }else{

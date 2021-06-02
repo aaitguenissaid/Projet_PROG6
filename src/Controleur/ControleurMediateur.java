@@ -11,143 +11,38 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ControleurMediateur implements CollecteurEvenements {
+    public static final int MODE_JvsJ=0;
+    public static final int MODE_JvsIA=1;
+    public static final int MODE_IAvsIA=2;
     Jeu jeu;
-    InterfaceUtilisateur jeuint;
+
+    //Attributs pour les IAs
     int mode; //0=JvsJ, 1=JvsIA, 2=IAvsIA
-    boolean shouldMove;
-    int startCaseI,startCaseJ;
-    boolean activeA, activeB, activeAB;
-    IA IAAffrontement, IA_A, IA_B;
-    String save_pseudo; Joueur JoueurIA;
+    IA IAAffrontement, IA_1, IA_2;
+    Joueur JoueurIA;
+
+    //Attributs pour les animations
     Timer time;
     SequenceListe<Animation> animations;
+
+    //Attributs pour l'interface
+    InterfaceUtilisateur jeuint;
+    boolean shouldMove;
+    int startCaseI,startCaseJ;
     PaletteDeCouleurs palette;
     EffetsSonores sonCtrl;
     Classement classement;
     boolean suggestion=false;
+
+
+
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
         jeu = i.jeu();
-        activeA = false;
-        activeB = false;
-        activeAB = false;
         animations = new SequenceListe<>();
         palette=new PaletteDeCouleurs();
         sonCtrl = new EffetsSonores();
         classement = new Classement(jeu);
-    }
-
-
-    public void activerJoueurA() {
-        if(activeA) {
-            activeA = false;
-            IA_A = null;
-            if(activeAB) time.stop();
-            activeAB = false;
-        } else {
-            String IA = choisirAI("");
-            if (IA != null) {
-                activateOne(IA, "A");
-                if (activeB){
-                    activateBoth();
-                } else {
-                    if (!jeu.estFini()){
-                        if(jeu.getTour()==0) {
-                            Mouvement coup = IA_A.joue();
-                            bouge(coup.getDepart(), coup.getArrivee());
-                            jeuint.metAJour();
-                        }
-                    }
-                }
-            } else {
-                System.out.println("Cancelling AI activation for player A.");
-            }
-        }
-    }
-    public void activerJoueurB() {
-        if(activeB) {
-            activeB = false;
-            IA_B = null;
-            if(activeAB) time.stop();
-            activeAB = false;
-        } else {
-            String IA = choisirAI("");
-            if (IA != null) {
-                activateOne(IA, "B");
-                if (activeA){
-                    activateBoth();
-                } else {
-                    if (!jeu.estFini()){
-                        if(jeu.getTour()==1) {
-                            Mouvement coup = IA_B.joue();
-                            bouge(coup.getDepart(), coup.getArrivee());
-                            jeuint.metAJour();
-                        }
-                    }
-                }
-            } else {
-                System.out.println("Cancelling AI activation for player B.");
-            }
-        }
-    }
-
-    public void activateBoth() {
-        System.out.println("Les deux IA s'affrontent");
-        activeAB = true;
-        time = new Timer(1000, new AdaptateurTemps(this));
-        time.start();
-    }
-
-    public void activateOne(String IAstr, String letter) {
-        System.out.println("Activation de l'" + IAstr + " pour le joueur "+letter+".");
-        if(letter.equals("A")) {
-            IA_A = createIA(IAstr, 0);
-            jeu.getJ1().setNom(IAstr);
-            activeA = true;
-        }
-        else {
-            IA_B = createIA(IAstr, 1);
-            jeu.getJ2().setNom(IAstr);
-            activeB = true;
-        }
-    }
-
-    public IA createIA(String IAstr, int joueur) {
-        if(IAstr.equals("IAAleatoire")) {
-            return new IAAleatoire(jeu, joueur);
-        } else if(IAstr.equals("IAFort")) {
-            return new IAFort(jeu, joueur);
-        } else if(IAstr.equals("IAFortCoup")) {
-            return new IAFortCoup(jeu, joueur);
-        } else {
-            return new IABasique(jeu, joueur);
-        }
-    }
-
-
-    public void activerJoueurIA(){
-        String IAA = choisirAI("Choix de l'IA A");
-        String IAB = choisirAI("Choix de l'IA B");
-        if(IAA==null || IAB==null) {
-            System.out.println("Cancelling AI activation for both players.");
-            return;
-        }
-        IA_A = createIA(IAA, 0);
-        IA_B = createIA(IAB, 1);
-
-        time = new Timer(1000, new AdaptateurTemps(this));
-        time.start();
-
-        activeAB = ! activeAB;
-    }
-
-
-    private String choisirAI(String text) {
-        Object[] possibilities = {"IAAleatoire", "IABasique", "IAFort", "IAFortCoup"};
-        String message = "Choose your AI in the following list.\n" + text ;
-        String title = "AI Choice";
-
-        return (String) jeuint.choisirItem(title, message, possibilities, JOptionPane.QUESTION_MESSAGE);
     }
 
 
@@ -158,10 +53,10 @@ public class ControleurMediateur implements CollecteurEvenements {
     public boolean commande(String c) {
         switch (c) {
             case "ActiveA":
-                activerJoueurA();
+                System.out.println("Cette fonctionnalité n'est plus disponible");
                 break;
             case "ActiveB":
-                activerJoueurB();
+                System.out.println("Cette fonctionnalité n'est plus disponible");
                 break;
             case "fullscreen":
                 jeuint.basculePleinEcran();
@@ -172,6 +67,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         return true;
     }
 
+    //Fin d'un mouvement (l'utilisateur relache la souris)
     @Override
     public void mouvementFini(Mouvement m) {
         shouldMove = false;
@@ -182,27 +78,16 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
         jeuint.metAJour();
         sonCtrl.moveEnd();
-        //System.out.println("Jeu fini : " + jeu.estFini());
-        //System.out.println("Tour : " + jeu.getTour());
 
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");
-        if(!jeu.estFini() && !animationRunning ) {
+        else if(!jeu.estFini()) {
             stop_historique();
             //Si on la navigation n'est pas activée (ou qu'elle vient d'être désactivée)
             if(!jeu.getHistorique().isNavigationOn()) {
                 if (bouge(m.getDepart(), m.getArrivee())) {
-                    Mouvement to_clic = null;
-                    if (activeA) {
-                        to_clic = IA_A.joue();
-                    }
-                    if (activeB) {
-                        to_clic = IA_B.joue();
-                    }
-                    if (activeA || activeB) {
-                        animations.insereTete(new AnimationJoueurIA(1, jeuint, to_clic, this));
-                        time = new Timer(1500, new AdaptateurTemps(this));
-                        time.start();
+                    if(mode==MODE_JvsIA) {
+                        lancerAnimationCoupIA(IAAffrontement);
                     }
                 }
             }
@@ -211,6 +96,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
 
+    //Mouvement de la pile de pions qui suit le curseur, le mouvement n'est pas terminé
     @Override
     public void movePionTo(Point point) {
         if(shouldMove&&(startCaseI<jeu.getTaille().l)&&(startCaseJ<jeu.getTaille().h)){
@@ -219,6 +105,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         }
     }
 
+    //Démarrage d'un mouvement (on presse la souris sur la case de départ)
     @Override
     public void startMove(int i, int j) {
         sonCtrl.moveStart();
@@ -233,34 +120,12 @@ public class ControleurMediateur implements CollecteurEvenements {
         if (jeu.estFini()){
             time.stop();
         } else {
-            //Tictac servant à alterner le jeu des deux IAs
-            if (activeAB){
-                if (jeu.getTour() == 0) {
-                    if (IA_B == null) {
-                        System.err.println("Missing AI.");
-                        System.exit(0);
-                    }
-                    Mouvement coup = IA_A.joue();
-                    bouge(coup.getDepart(), coup.getArrivee());
-                    jeuint.metAJour();
-                } else {
-                    if (IA_B == null) {
-                        System.err.println("Missing AI.");
-                        System.exit(0);
-                    }
-                    Mouvement coup = IA_B.joue();
-                    bouge(coup.getDepart(), coup.getArrivee());
-                    jeuint.metAJour();
-                }
+            if(animations!=null && !animations.estVide()) {
+                Animation a = animations.extraitTete();
+                a.ticTac();
             } else {
-                //Tictac servant pour l'animation qui sépare l'affichage du coup du joueur et l'affichage du coup de l'IA
-                if(animations!=null && !animations.estVide()) {
-                    Animation a = animations.extraitTete();
-                    a.ticTac();
-                } else {
-                    time.stop();
-                    animations = new SequenceListe<>();
-                }
+                time.stop();
+                animations = new SequenceListe<>();
             }
         }
     }
@@ -268,7 +133,9 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void jouer_en_local(){
         mode=0;
-        if(save_pseudo!=null) { JoueurIA.setNom(save_pseudo); }
+        jeu.setNomJ1(Configuration.instance().get(Configuration.PSEUDO_J1));
+        jeu.setNomJ2(Configuration.instance().get(Configuration.PSEUDO_J2));
+        jeuint.setStatistiques();
         jeuint.setGameScreen();
     }
 
@@ -280,17 +147,10 @@ public class ControleurMediateur implements CollecteurEvenements {
         int id_ia = (Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) ? 1 : 2;
 
         String nom_ia = Configuration.instance().get(Configuration.IA_AFFRONTEMENT);
-        switch (nom_ia) {
-            case "IAAleatoire": IAAffrontement=new IAAleatoire(jeu, id_ia); break;
-            case "IABasique": IAAffrontement=new IABasique(jeu, id_ia); break;
-            case "IAFort": IAAffrontement=new IAFort(jeu, id_ia); break;
-            case "IAFortCoup": IAAffrontement=new IAFortCoup(jeu, id_ia); break;
-            default: IAAffrontement=new IAAleatoire(jeu, id_ia); break;
-        }
+        IAAffrontement = construireIA(nom_ia, id_ia);
 
         //Mise à jour du jeu
         JoueurIA = (id_ia==1) ? jeu.getJ1() : jeu.getJ2();
-        save_pseudo = JoueurIA.getNom();
         JoueurIA.setNom(nom_ia);
 
         //Mise à jour de l'interface
@@ -299,10 +159,55 @@ public class ControleurMediateur implements CollecteurEvenements {
 
         //Si c'est son tour, l'IA joue un premier coup
         if(id_ia-1==jeu.getTour()) {
-            Mouvement coup = IAAffrontement.joue();
-            bouge(coup.getDepart(), coup.getArrivee());
-            jeuint.metAJour();
+            lancerAnimationCoupIA(IAAffrontement);
         }
+    }
+
+    @Override
+    public void lancer_demo() {
+        mode=2;
+
+        //Création des IAs
+        String nom_ia1 = Configuration.instance().get(Configuration.IA_1);
+        IA_1 = construireIA(nom_ia1, 1);
+        String nom_ia2 = Configuration.instance().get(Configuration.IA_2);
+        IA_2 = construireIA(nom_ia2, 2);
+
+        //Mise à jour du jeu
+        jeu.getJ1().setNom(nom_ia1);
+        jeu.getJ2().setNom(nom_ia2);
+
+        //Mise à jour de l'interface
+        jeuint.setGameScreen();
+        jeuint.setStatistiques();
+
+        lancerAnimationCoupIA(IA_1);
+    }
+
+    private IA construireIA(String nom_ia, int id_ia) {
+        return switch (nom_ia) {
+            case "IAAleatoire" -> new IAAleatoire(jeu, id_ia);
+            case "IABasique" -> new IABasique(jeu, id_ia);
+            case "IAFort" -> new IAFort(jeu, id_ia);
+            default -> new IAAleatoire(jeu, id_ia);
+        };
+    }
+
+    private void lancerAnimationCoupIA(IA ia) {
+        lancerAnimationCoupIA(ia, 0);
+    }
+
+    private void lancerAnimationCoupIA(IA ia, int id) {
+        if(time!=null && time.isRunning()) time.stop();
+        Mouvement toClic = ia.joue();
+        animations.insereTete((new AnimationJoueurIA(1, jeuint, toClic, this, id)));
+        time = new Timer(1500, new AdaptateurTemps(this));
+        time.start();
+    }
+
+    public void lancerAnimationAdversaire(int id) {
+        IA iaAutre = (id==1) ? IA_2 : IA_1;
+        lancerAnimationCoupIA(iaAutre, (id==1) ? 2 : 1);
     }
 
     public void reprendre_une_partie() {
@@ -369,6 +274,9 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void mainmenu() {
+        if(mode!=MODE_JvsJ && time!=null && time.isRunning()) {
+            time.stop();
+        }
         jeuint.setMainMenu();
     }
 
@@ -463,13 +371,15 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void setNomJ1(String text) {
-        jeu.setNomJ1(text);
+        if(jeu.setNomJ1(text))
+            Configuration.instance().set(Configuration.PSEUDO_J1, text);
         jeuint.setStatistiques();
     }
 
     @Override
     public void setNomJ2(String text) {
-        jeu.setNomJ2(text);
+        if(jeu.setNomJ2(text))
+            Configuration.instance().set(Configuration.PSEUDO_J2, text);
         jeuint.setStatistiques();
     }
 

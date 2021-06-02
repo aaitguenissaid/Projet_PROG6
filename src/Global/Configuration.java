@@ -175,8 +175,15 @@ public class Configuration {
         if(p.stringPropertyNames().contains(attribut)) {
             return p.getProperty(attribut);
         } else {
-            System.err.println("Configuration.get: Attribut invalide");
-            return null;
+            if(prop.stringPropertyNames().contains(attribut)) {
+                //Il manque des préférences dans le fichier de l'utilisateur.
+                //Donc on essaye de les récupérer dans defaut.cfg
+                user_prop.setProperty(attribut, prop.getProperty(attribut));
+                return user_prop.getProperty(attribut);
+            } else {
+                System.err.println("Configuration.get: Attribut invalide");
+                return null;
+            }
         }
     }
 
@@ -185,7 +192,14 @@ public class Configuration {
             user_prop.setProperty(attribut, value);
             enregistrerPropriete(attribut);
         } else {
-            System.err.println("Configuration.set: Attribut invalide");
+            if(prop.stringPropertyNames().contains(attribut)) {
+                //Il manque des préférences dans le fichier de l'utilisateur.
+                //Donc on essaye de les récupérer dans defaut.cfg
+                user_prop.setProperty(attribut, value);
+                enregistrerPropriete(attribut);
+            } else {
+                System.err.println("Configuration.set: Attribut invalide");
+            }
         }
     }
 
@@ -225,4 +239,6 @@ public class Configuration {
     public static final String IA_2="IA_2";
     public static final String SON_ON="sonOn";
     public static final String IA_COMMENCE="IACommence";
+    public static final String PSEUDO_J1="pseudoJ1";
+    public static final String PSEUDO_J2="pseudoJ2";
 }

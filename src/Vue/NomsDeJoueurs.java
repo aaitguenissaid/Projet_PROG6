@@ -1,5 +1,6 @@
 package Vue;
 
+import Global.Configuration;
 import Modele.PaletteDeCouleurs;
 
 import java.awt.*;
@@ -50,7 +51,7 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
         jPanel1.add(filler12);
 
-        jTextField1.setText("Nom1");
+        jTextField1.setText(Configuration.instance().get(Configuration.PSEUDO_J1));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -90,7 +91,7 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel5.add(jLabel3);
         jPanel5.add(filler28);
 
-        jTextField3.setText("Nom2");
+        jTextField3.setText(Configuration.instance().get(Configuration.PSEUDO_J2));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -153,17 +154,23 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jTabbedPane1.setBackground(palette.Couleur1);
         jTabbedPane1.setForeground(palette.Couleur4);
         jPanel1.setBackground(palette.Couleur1);
-        jLabel1.setBackground(palette.Couleur1);
+        jLabel1.setBackground(palette.Couleur7);
         jTextField1.setBackground(palette.Couleur1);
         jPanel2.setBackground(palette.Couleur1);
         jButton2.setBackground(palette.Couleur2);
         jButton1.setBackground(palette.Couleur2);
         jPanel5.setBackground(palette.Couleur1);
-        jLabel3.setBackground(palette.Couleur1);
+        jLabel3.setBackground(palette.Couleur7);
         jTextField3.setBackground(palette.Couleur1);
         jPanel6.setBackground(palette.Couleur1);
         jButton5.setBackground(palette.Couleur2);
         jButton6.setBackground(palette.Couleur2);
+        jLabel1.setForeground(palette.Couleur7);
+        jLabel3.setForeground(palette.Couleur7);
+        jButton1.setForeground(palette.Couleur3);
+        jButton2.setForeground(palette.Couleur3);
+        jButton6.setForeground(palette.Couleur3);
+        jButton5.setForeground(palette.Couleur3);
     }
     private javax.swing.Box.Filler filler11;
     private javax.swing.Box.Filler filler12;

@@ -193,13 +193,13 @@ public class Jeu extends Etat implements Cloneable {
     }
     public boolean setNomJ1(String nom) {
         String []IA_names = Configuration.instance().lis("IA_names").split(",");
-        if(j2.getNom().equals(nom) || Arrays.stream(IA_names).toList().contains(nom)) return false;
+        /*if(j2.getNom().equals(nom) || Arrays.stream(IA_names).toList().contains(nom)) return false;*/
         j1.setNom(nom);
         return true;
     }
     public boolean setNomJ2(String nom) {
         String []IA_names = Configuration.instance().lis("IA_names").split(",");
-        if(j1.getNom().equals(nom) || Arrays.stream(IA_names).toList().contains(nom)) return false;
+        /*if(j1.getNom().equals(nom) || Arrays.stream(IA_names).toList().contains(nom)) return false;*/
         j2.setNom(nom);
         return true;
     }

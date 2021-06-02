@@ -20,18 +20,21 @@ public class IAAleatoire extends IA{
     @Override
     public Mouvement joue() {
         ArrayList<Point> casePeutBouger = jeu.trouveCasePeutBouger();
-        int d = r1.nextInt(casePeutBouger.size());
-        Point depart = casePeutBouger.get(d);
-        int h = depart.x;
-        int l = depart.y;
-        ArrayList<Point> voisinsAccessible = jeu.voisinsAccessibles(h, l);
-        int a;
-        if (voisinsAccessible.size() >1){
-            a = r2.nextInt(voisinsAccessible.size());
-        } else {
-            a = 0;
+        if (casePeutBouger.size() > 0){
+            int d = r1.nextInt(casePeutBouger.size());
+            Point depart = casePeutBouger.get(d);
+            int h = depart.x;
+            int l = depart.y;
+            ArrayList<Point> voisinsAccessible = jeu.voisinsAccessibles(h, l);
+            int a;
+            if (voisinsAccessible.size() >1){
+                a = r2.nextInt(voisinsAccessible.size());
+            } else {
+                a = 0;
+            }
+            Point arrivee = voisinsAccessible.get(a);
+            return new Mouvement(depart, arrivee);
         }
-        Point arrivee = voisinsAccessible.get(a);
-        return new Mouvement(depart, arrivee);
+        return null;
     }
 }

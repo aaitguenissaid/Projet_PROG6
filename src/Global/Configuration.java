@@ -239,4 +239,6 @@ public class Configuration {
     public static final String IA_2="IA_2";
     public static final String SON_ON="sonOn";
     public static final String IA_COMMENCE="IACommence";
+    public static final String PSEUDO_J1="pseudoJ1";
+    public static final String PSEUDO_J2="pseudoJ2";
 }

@@ -133,7 +133,9 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void jouer_en_local(){
         mode=0;
-        if(save_pseudo!=null) { JoueurIA.setNom(save_pseudo); }
+        jeu.setNomJ1(Configuration.instance().get(Configuration.PSEUDO_J1));
+        jeu.setNomJ2(Configuration.instance().get(Configuration.PSEUDO_J2));
+        jeuint.setStatistiques();
         jeuint.setGameScreen();
     }
 
@@ -149,6 +151,8 @@ public class ControleurMediateur implements CollecteurEvenements {
 
         //Mise à jour du jeu
         JoueurIA = (id_ia==1) ? jeu.getJ1() : jeu.getJ2();
+        String saveNomJoueur = (id_ia==1) ? Configuration.PSEUDO_J2 : Configuration.PSEUDO_J1;
+        Configuration.instance().set(saveNomJoueur, JoueurIA.getNom());
         save_pseudo = JoueurIA.getNom();
         JoueurIA.setNom(nom_ia);
 
@@ -173,7 +177,8 @@ public class ControleurMediateur implements CollecteurEvenements {
         IA_2 = construireIA(nom_ia2, 2);
 
         //Mise à jour du jeu
-        //TODO sauvegarder les deux pseudos
+        Configuration.instance().set(Configuration.PSEUDO_J1, jeu.getNomJ1());
+        Configuration.instance().set(Configuration.PSEUDO_J2, jeu.getNomJ2());
         jeu.getJ1().setNom(nom_ia1);
         jeu.getJ2().setNom(nom_ia2);
 

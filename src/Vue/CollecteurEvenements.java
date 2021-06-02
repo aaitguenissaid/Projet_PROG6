@@ -53,5 +53,11 @@ public interface CollecteurEvenements {
     boolean getSonState();
 
     void deisabel_enabel_son();
+
+    boolean suggestion();
+
+    Mouvement suggestionMouvement();
+
+    void demanderSuggestion();
 }
 

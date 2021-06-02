@@ -2,6 +2,7 @@ package Vue;
 
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
+import Structures.Mouvement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +19,10 @@ public class AireDeDessin extends JComponent {
     boolean set;
     PionComponent[][] tab;
     PaletteDeCouleurs palette;
+    CollecteurEvenements cc;
     public AireDeDessin(Jeu j, CollecteurEvenements ctrl){
         jeu = j;
+        cc=ctrl;
         palette = ctrl.getPalette();
         tab = new PionComponent[j.getTaille().h][j.getTaille().l];
         for(int i = 0 ; i< j.getTaille().h;i++){
@@ -61,6 +64,9 @@ public class AireDeDessin extends JComponent {
         drawable.setColor(palette.Couleur1);
         drawable.fillRect(0, 0, largeurFenetrePixel, hauteurFenetrePixel);
         tracerTableaux();
+        if(cc.suggestion()) {
+            suggestion(cc.suggestionMouvement());
+        }
     }
 
     public void tracerTableaux(){
@@ -100,6 +106,22 @@ public class AireDeDessin extends JComponent {
                 }
             }
         }
+    }
+    public void suggestion(Mouvement m){
+        drawable.setColor(Color.CYAN);
+        drawable.setStroke(new BasicStroke(5));
+        drawable.drawLine(paddingW+m.getDepart().y* largeurCase+5,paddingH+m.getDepart().x*hauteurCase+5, paddingW+m.getDepart().y* largeurCase+5, paddingH+(m.getDepart().x+1)*hauteurCase-5);
+        drawable.drawLine(paddingW+m.getDepart().y* largeurCase+5,paddingH+m.getDepart().x*hauteurCase+5, paddingW+(m.getDepart().y+1)* largeurCase-5, paddingH+m.getDepart().x*hauteurCase+5);
+        drawable.drawLine(paddingW+(m.getDepart().y+1)* largeurCase-5,paddingH+m.getDepart().x*hauteurCase+5, paddingW+(m.getDepart().y+1)* largeurCase-5, paddingH+(m.getDepart().x+1)*hauteurCase-5);
+        drawable.drawLine(paddingW+m.getDepart().y* largeurCase+5,paddingH+(m.getDepart().x+1)*hauteurCase-5, paddingW+(m.getDepart().y+1)* largeurCase-5, paddingH+(m.getDepart().x+1)*hauteurCase-5);
+        drawable.setColor(Color.DARK_GRAY);
+        drawable.setStroke(new BasicStroke(5));
+        drawable.drawLine(paddingW+m.getArrivee().y* largeurCase+5,paddingH+m.getArrivee().x*hauteurCase+5, paddingW+m.getArrivee().y* largeurCase+5, paddingH+(m.getArrivee().x+1)*hauteurCase-5);
+        drawable.drawLine(paddingW+m.getArrivee().y* largeurCase+5,paddingH+m.getArrivee().x*hauteurCase+5, paddingW+(m.getArrivee().y+1)* largeurCase-5, paddingH+m.getArrivee().x*hauteurCase+5);
+        drawable.drawLine(paddingW+(m.getArrivee().y+1)* largeurCase-5,paddingH+m.getArrivee().x*hauteurCase+5, paddingW+(m.getArrivee().y+1)* largeurCase-5, paddingH+(m.getArrivee().x+1)*hauteurCase-5);
+        drawable.drawLine(paddingW+m.getArrivee().y* largeurCase+5,paddingH+(m.getArrivee().x+1)*hauteurCase-5, paddingW+(m.getArrivee().y+1)* largeurCase-5, paddingH+(m.getArrivee().x+1)*hauteurCase-5);
+
+
     }
     public void startMove(){
         set = true;

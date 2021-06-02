@@ -24,7 +24,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     PaletteDeCouleurs palette;
     EffetsSonores sonCtrl;
     Classement classement;
-
+    boolean suggestion=false;
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
         jeu = i.jeu();
@@ -330,6 +330,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         }
         System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
         jeuint.setStatistiques();
+        suggestion=false;
         return ret;
     }
 
@@ -440,8 +441,15 @@ public class ControleurMediateur implements CollecteurEvenements {
     public boolean getSonState(){
         return sonCtrl.getSonState();
     }
-
-    public Mouvement suggestion(){
+    public void demanderSuggestion(){
+        jeuint.getAireDeDessin().repaint();
+        suggestion = true;
+        jeuint.getAireDeDessin().repaint();
+    }
+    public boolean suggestion(){
+        return suggestion;
+    }
+    public Mouvement suggestionMouvement(){
         IABasique iaB = new IABasique(jeu, jeu.getTour());
         return iaB.joue();
     }

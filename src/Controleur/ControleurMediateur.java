@@ -117,8 +117,6 @@ public class ControleurMediateur implements CollecteurEvenements {
             return new IAAleatoire(jeu, joueur);
         } else if(IAstr.equals("IAFort")) {
             return new IAFort(jeu, joueur);
-        } else if(IAstr.equals("IAFortCoup")) {
-            return new IAFortCoup(jeu, joueur);
         } else {
             return new IABasique(jeu, joueur);
         }
@@ -143,7 +141,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
 
     private String choisirAI(String text) {
-        Object[] possibilities = {"IAAleatoire", "IABasique", "IAFort", "IAFortCoup"};
+        Object[] possibilities = {"IAAleatoire", "IABasique", "IAFort"};
         String message = "Choose your AI in the following list.\n" + text ;
         String title = "AI Choice";
 
@@ -284,7 +282,6 @@ public class ControleurMediateur implements CollecteurEvenements {
             case "IAAleatoire": IAAffrontement=new IAAleatoire(jeu, id_ia); break;
             case "IABasique": IAAffrontement=new IABasique(jeu, id_ia); break;
             case "IAFort": IAAffrontement=new IAFort(jeu, id_ia); break;
-            case "IAFortCoup": IAAffrontement=new IAFortCoup(jeu, id_ia); break;
             default: IAAffrontement=new IAAleatoire(jeu, id_ia); break;
         }
 

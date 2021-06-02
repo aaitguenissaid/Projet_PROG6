@@ -290,6 +290,7 @@ public class JeuVue extends javax.swing.JPanel {
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
+        //cc.Suggestion();
     }
 
     private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {

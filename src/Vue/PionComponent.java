@@ -2,6 +2,7 @@ package Vue;
 
 import Modele.Case;
 import Modele.Jeu;
+import Modele.PaletteDeCouleurs;
 import Modele.Pion;
 import Structures.Iterateur;
 
@@ -17,10 +18,9 @@ public class PionComponent extends JComponent {
     Graphics2D drawable;
     Jeu j;
     Point p;
-    PionComponent(Jeu j, Point c, Color w, Color b, Color s){
-        one = w;
-        tow = b;
-        bordure = s;
+    PaletteDeCouleurs palette;
+    PionComponent(Jeu j, Point c, PaletteDeCouleurs palette){
+        this.palette =palette;
         this.j = j;
         p=c;
         this.c =j.getCase(p.x,p.y);
@@ -44,12 +44,12 @@ public class PionComponent extends JComponent {
             k--;
             Pion impr = it.prochain();
             if (impr.estCouleur1()) {
-                drawable.setColor(one);
+                drawable.setColor(palette.Couleur3);
             } else {
-                drawable.setColor(tow);
+                drawable.setColor(palette.Couleur4);
             }
             drawable.fillRect(0, padding-height*k, width, height);
-            drawable.setColor(bordure);
+            drawable.setColor(palette.Couleur5);
             drawable.setStroke(new BasicStroke(1));
             drawable.drawLine(0,padding-height*k, 0, padding-height*(k-1));
             drawable.drawLine(width-1,padding-height*k, width-1, padding-height*(k-1));

@@ -103,14 +103,17 @@ public class Parametres extends javax.swing.JPanel {
                 jCheckBox1ActionPerformed(evt);
             }
         });
+        jCheckBox1.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE)));
         jPanel6.add(jCheckBox1);
 
         jCheckBox2.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox2.setText("Interdire l'utilisation de l'historique");
+        jCheckBox2.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)));
         jPanel6.add(jCheckBox2);
 
         jCheckBox3.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox3.setText("Interdire les suggestions des IAs");
+        jCheckBox3.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)));
         jPanel6.add(jCheckBox3);
 
         jPanel4.add(jPanel6);

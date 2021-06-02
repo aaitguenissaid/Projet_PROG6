@@ -103,14 +103,17 @@ public class Parametres extends javax.swing.JPanel {
                 jCheckBox1ActionPerformed(evt);
             }
         });
+        jCheckBox1.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE)));
         jPanel6.add(jCheckBox1);
 
         jCheckBox2.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox2.setText("Interdire l'utilisation de l'historique");
+        jCheckBox2.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)));
         jPanel6.add(jCheckBox2);
 
         jCheckBox3.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox3.setText("Interdire les suggestions des IAs");
+        jCheckBox3.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)));
         jPanel6.add(jCheckBox3);
 
         jPanel4.add(jPanel6);
@@ -133,6 +136,7 @@ public class Parametres extends javax.swing.JPanel {
         jComboBox2.setAlignmentX(0.0F);
         jComboBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jComboBox2.setMaximumSize(new java.awt.Dimension(91, 32));
+        jComboBox2.setSelectedItem(Configuration.instance().get(Configuration.IA_AFFRONTEMENT));
         jPanel3.add(jComboBox2);
 
         jPanel7.add(jPanel3);
@@ -207,6 +211,10 @@ public class Parametres extends javax.swing.JPanel {
                 jButton31MouseClicked(evt);
             }
         });
+        if(!Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON))) {
+            cc.deisabel_enabel_son();
+            setSonIcon();
+        }
         jPanel10.add(jButton31);
 
 
@@ -276,6 +284,8 @@ public class Parametres extends javax.swing.JPanel {
     private void jButton31MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: Sound1
         cc.deisabel_enabel_son();
+        boolean son_on = Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON));
+        Configuration.instance().set(Configuration.SON_ON, String.valueOf(!son_on));
         setSonIcon();
     }
 

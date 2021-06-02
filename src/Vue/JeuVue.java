@@ -1,6 +1,7 @@
 package Vue;
 
 import Modele.PaletteDeCouleurs;
+import Structures.Mouvement;
 
 import java.awt.*;
 import java.io.File;
@@ -290,8 +291,8 @@ public class JeuVue extends javax.swing.JPanel {
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-        //cc.Suggestion();
-    }
+        cc.demanderSuggestion();
+        }
 
     private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:

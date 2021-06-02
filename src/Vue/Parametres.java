@@ -207,6 +207,10 @@ public class Parametres extends javax.swing.JPanel {
                 jButton31MouseClicked(evt);
             }
         });
+        if(!Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON))) {
+            cc.deisabel_enabel_son();
+            setSonIcon();
+        }
         jPanel10.add(jButton31);
 
 
@@ -276,6 +280,8 @@ public class Parametres extends javax.swing.JPanel {
     private void jButton31MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: Sound1
         cc.deisabel_enabel_son();
+        boolean son_on = Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON));
+        Configuration.instance().set(Configuration.SON_ON, String.valueOf(!son_on));
         setSonIcon();
     }
 

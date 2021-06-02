@@ -133,6 +133,7 @@ public class Parametres extends javax.swing.JPanel {
         jComboBox2.setAlignmentX(0.0F);
         jComboBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jComboBox2.setMaximumSize(new java.awt.Dimension(91, 32));
+        jComboBox2.setSelectedItem(Configuration.instance().get(Configuration.IA_AFFRONTEMENT));
         jPanel3.add(jComboBox2);
 
         jPanel7.add(jPanel3);

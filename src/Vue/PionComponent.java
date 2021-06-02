@@ -30,11 +30,17 @@ public class PionComponent extends JComponent {
         this.y=y;
         this.width=width;
         this.height=height;
-        this.setLocation(new Point(x,y));
+        changeLocation();
         this.setSize(new Dimension(width, 7*height));
         padding=(7*height);
         this.c =j.getCase(p.x,p.y);
     }
+
+    private void changeLocation() {
+        
+        this.setLocation(new Point(x,y));
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         drawable = (Graphics2D) g;

@@ -62,8 +62,8 @@ public class DebutJeuDialog extends javax.swing.JDialog {
         getContentPane().setBackground(palette.Couleur1);
         jLabel1.setBackground(palette.Couleur1);
         jPanel1.setBackground(palette.Couleur1);
-        jButton1.setBackground(palette.Couleur1);
-        jButton2.setBackground(palette.Couleur1);
+        jButton1.setBackground(palette.Couleur2);
+        jButton2.setBackground(palette.Couleur2);
     }
 
 

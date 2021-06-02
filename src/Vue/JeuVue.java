@@ -366,7 +366,7 @@ public class JeuVue extends javax.swing.JPanel {
         setBackground(palette.Couleur1);
         jPanel1.setBackground(palette.Couleur1);
         jButton1.setBackground(palette.Couleur1);
-        jLabel1.setForeground(palette.Couleur3);
+        jLabel1.setForeground(palette.Couleur7);
         jButton2.setBackground(palette.Couleur1);
         jPanel2.setBackground(palette.Couleur1);
         jPanel3.setBackground(palette.Couleur1);
@@ -387,7 +387,7 @@ public class JeuVue extends javax.swing.JPanel {
         jButton10.setBackground(palette.Couleur2);
         jButton11.setBackground(palette.Couleur2);
         jButton5.setBackground(palette.Couleur2);
-        jButton5.setForeground(palette.Couleur3);
+        jButton5.setForeground(palette.Couleur7);
         jButton6.setBackground(palette.Couleur2);
         jButton6.setForeground(palette.Couleur3);
         jButton7.setBackground(palette.Couleur2);

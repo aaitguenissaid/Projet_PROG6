@@ -146,6 +146,7 @@ public class Regles extends javax.swing.JPanel {
     }
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO :Ce bouton devrait se lancer jeu
+        cc.lancer_demo();
         System.out.println(jComboBox1.getSelectedItem());
         System.out.println(jComboBox2.getSelectedItem());
     }

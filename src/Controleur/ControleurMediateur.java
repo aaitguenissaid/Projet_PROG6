@@ -245,7 +245,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint.metAJour();
         System.out.println("Jeu fini : " + jeu.estFini());
         if(jeu.estFini()) {
-            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.j1AGagne());
+            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.quiAGagnee());
         }
         System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
         jeuint.setStatistiques();

@@ -210,14 +210,17 @@ public class Jeu extends Etat implements Cloneable {
         j2.setNom(tmp);
     }
 
-    public int j1AGagne() {
+    public int quiAGagnee() {
         int resultat = 2;
-        if(nbPilesJoueur(j1.getId()) > nbPilesJoueur(j2.getId()))
+
+        if(nbPilesJoueur(j1.getId()) == nbPilesJoueur(j2.getId()))
+            if(nbPiles5Joueur(j1.getId()) > nbPiles5Joueur(j2.getId()))
+                resultat = 1;
+            else if(nbPiles5Joueur(j1.getId()) == nbPiles5Joueur(j2.getId()))
+                resultat = 0;
+        else if (nbPilesJoueur(j1.getId()) > nbPilesJoueur(j2.getId()))
             resultat = 1;
-        else if(nbPiles5Joueur(j1.getId()) > nbPiles5Joueur(j2.getId()))
-            resultat = 1;
-        else if(nbPiles5Joueur(j1.getId()) == nbPiles5Joueur(j2.getId()))
-            resultat = 0;
+
         return resultat;
     }
 

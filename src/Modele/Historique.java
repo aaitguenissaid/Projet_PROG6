@@ -73,6 +73,8 @@ public class Historique implements Cloneable {
         return nbCoupsReel;
     }
 
+    public int getCurrent(){return current;}
+
     private void setNavigationOn() {
         navigationOn = true;
     }

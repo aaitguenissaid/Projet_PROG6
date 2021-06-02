@@ -11,13 +11,14 @@ public class AireDeDessin extends JComponent {
 
     int largeurFenetrePixel, hauteurFenetrePixel;
     int largeurGrille,hauteurGrille;
-    int largeurCase,hauteurCase;
-    int paddingW;
-    int paddingH;
+    public int largeurCase;
+    public int hauteurCase;
+    public int paddingW;
+    public int paddingH;
     Graphics2D drawable;
     Jeu jeu;
     boolean set;
-    PionComponent[][] tab;
+    public PionComponent[][] tab;
     PaletteDeCouleurs palette;
     CollecteurEvenements cc;
     public AireDeDessin(Jeu j, CollecteurEvenements ctrl){
@@ -119,6 +120,9 @@ public class AireDeDessin extends JComponent {
         drawable.drawLine(paddingW+m.getArrivee().y* largeurCase+5,paddingH+(m.getArrivee().x+1)*hauteurCase-5, paddingW+(m.getArrivee().y+1)* largeurCase-5, paddingH+(m.getArrivee().x+1)*hauteurCase-5);
 
 
+    }
+    public void animatePion(int k,int l, int x, int y){
+        tab[k][l].movePile(x,y);
     }
     public void startMove(){
         set = true;

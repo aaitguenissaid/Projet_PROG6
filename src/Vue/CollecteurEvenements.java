@@ -65,5 +65,7 @@ public interface CollecteurEvenements {
     void setNomJ1(String text);
 
     void setNomJ2(String text);
+
+    EffetsSonores getEffetsSonores();
 }
 

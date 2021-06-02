@@ -64,7 +64,7 @@ public class JeuVue extends javax.swing.JPanel {
         filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         setToutCouleurs();
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
-
+        h=new HistoriqueTimeLine(a.jeu.getHistorique());
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -187,6 +187,7 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel9.add(jButton11);
 
         jPanel4.add(jPanel9);
+        jPanel4.add(h);
         jPanel4.add(filler6);
 
         jPanel7.setLayout(new java.awt.GridLayout(4, 0));
@@ -281,11 +282,13 @@ public class JeuVue extends javax.swing.JPanel {
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:|<
         cc.last_historique();
+        h.repaint();
     }
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:<
         cc.next_historique();
+        h.repaint();
     }
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {
@@ -316,16 +319,19 @@ public class JeuVue extends javax.swing.JPanel {
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: Stop historique []
         cc.play_pause_historique();
+        h.repaint();
     }
 
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:>
         cc.previous_historique();
+        h.repaint();
     }
 
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:>|
         cc.first_historique();
+        h.repaint();
     }
     public void eteindreHistorique(){
         jButton3.setEnabled(false);
@@ -466,5 +472,6 @@ public class JeuVue extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private HistoriqueTimeLine h;
     // End of variables declaration
 }

@@ -35,7 +35,6 @@ public class ControleurMediateur implements CollecteurEvenements {
     boolean suggestion=false;
 
 
-
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
         jeu = i.jeu();
@@ -77,7 +76,6 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.print("End :");
         System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
         jeuint.metAJour();
-        sonCtrl.moveEnd();
 
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");
@@ -382,7 +380,29 @@ public class ControleurMediateur implements CollecteurEvenements {
             Configuration.instance().set(Configuration.PSEUDO_J2, text);
         jeuint.setStatistiques();
     }
-
+/*
+    @Override
+    public void animatePion(Point depart, Point arrive) {
+        jeuint.getAireDeDessin().animatePion(depart.x,depart.y,arrive.x,arrive.y);
+        int i,j;
+        i=jeuint.getAireDeDessin().paddingW+jeuint.getAireDeDessin().largeurCase*depart.x+jeuint.getAireDeDessin().largeurCase/2;
+        j=jeuint.getAireDeDessin().paddingH+jeuint.getAireDeDessin().hauteurCase*depart.y+jeuint.getAireDeDessin().hauteurCase/2;
+        while((i!=jeuint.getAireDeDessin().paddingW+jeuint.getAireDeDessin().largeurCase*arrive.x+jeuint.getAireDeDessin().largeurCase/2)&&(j!=jeuint.getAireDeDessin().paddingH+jeuint.getAireDeDessin().hauteurCase*arrive.y+jeuint.getAireDeDessin().hauteurCase/2)){
+            if(i>arrive.x){
+                i--;
+            }else if (i<arrive.x){
+                i++;
+            }
+            if(j>arrive.y){
+                j--;
+            }else if (j<arrive.y){
+                j++;
+            }
+            System.out.println("i:"+i+" j:"+j);
+            jeuint.getAireDeDessin().tab[depart.x][depart.y].movePile(i,j);
+        }
+    }
+*/
     public boolean suggestion(){
         return suggestion;
     }
@@ -391,6 +411,8 @@ public class ControleurMediateur implements CollecteurEvenements {
         return iaB.joue();
     }
 
-
+    public EffetsSonores getEffetsSonores(){
+        return sonCtrl;
+    }
 
 }

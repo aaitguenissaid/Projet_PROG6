@@ -2,6 +2,7 @@ package Modele;
 
 import Global.Configuration;
 import Structures.*;
+import Vue.CollecteurEvenements;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class Jeu extends Etat implements Cloneable {
     Joueur j1,j2;
     Historique historique;
     boolean estPartieRecuperee;
-
+    CollecteurEvenements cc;
 
 
 
@@ -94,7 +95,7 @@ public class Jeu extends Etat implements Cloneable {
         setTour((tour==0) ? 1 : 0);
 
         historique.ajouteEtat(new Etat(grille, tour,lastDepI,lastDepJ,lastArrI,lastArrJ,nbPionsDepl));
-
+        cc.getEffetsSonores().moveEnd();
         return true;
     }
 
@@ -250,5 +251,8 @@ public class Jeu extends Etat implements Cloneable {
         ret.lastDepJ = lastDepJ;
         ret.estPartieRecuperee = estPartieRecuperee;
         return ret;
+    }
+    public  void setCollecteurEvenements(CollecteurEvenements cc){
+        this.cc=cc;
     }
 }

@@ -18,45 +18,21 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler11 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+         filler11 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jLabel1 = new javax.swing.JLabel();
         filler12 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler14 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler13 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        jTextField1 = new javax.swing.JTextField();
-        filler15 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler16 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler17 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler19 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler18 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+         jTextField1 = new javax.swing.JTextField();
+       filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jPanel5 = new javax.swing.JPanel();
-        filler20 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler21 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler22 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler23 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+         filler23 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jLabel3 = new javax.swing.JLabel();
-        filler24 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler25 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler26 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler27 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         filler28 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jTextField3 = new javax.swing.JTextField();
-        filler29 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler30 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler31 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler32 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler33 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler34 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+         filler34 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jPanel6 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -74,7 +50,7 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
         jPanel1.add(filler12);
 
-        jTextField1.setText("Nom");
+        jTextField1.setText("Nom1");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -85,11 +61,22 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
 
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButton2.setText("Cancel");
+        jButton2.setText("Sortir ");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
         jPanel2.add(jButton2);
 
 
-        jButton1.setText("Save");
+        jButton1.setText("Sauvegarder ");
+
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jPanel2.add(jButton1);
 
         jPanel1.add(jPanel2);
@@ -103,7 +90,7 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel5.add(jLabel3);
         jPanel5.add(filler28);
 
-        jTextField3.setText("Nom");
+        jTextField3.setText("Nom2");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -114,10 +101,20 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
 
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButton5.setText("Cancel");
+        jButton5.setText("Sortir ");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
         jPanel6.add(jButton5);
 
-        jButton6.setText("Save");
+        jButton6.setText("Sauvegarder ");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton6MouseClicked(evt);
+            }
+        });
         jPanel6.add(jButton6);
 
         jPanel5.add(jPanel6);
@@ -137,6 +134,20 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         // TODO add your handling code here:
     }
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
+        cc.setNomJ1(jTextField1.getText());
+        System.out.println(jTextField1.getText());
+    }
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
+        dispose();
+    }
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {
+        dispose();
+    }
+    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {
+        cc.setNomJ2(jTextField3.getText());
+        System.out.println(jTextField3.getText());
+    }
     public void setToutCouleurs(){
         setBackground(palette.Couleur1);
         jTabbedPane1.setBackground(palette.Couleur1);
@@ -145,47 +156,23 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jLabel1.setBackground(palette.Couleur1);
         jTextField1.setBackground(palette.Couleur1);
         jPanel2.setBackground(palette.Couleur1);
-        jButton2.setBackground(palette.Couleur1);
-        jButton1.setBackground(palette.Couleur1);
+        jButton2.setBackground(palette.Couleur2);
+        jButton1.setBackground(palette.Couleur2);
         jPanel5.setBackground(palette.Couleur1);
         jLabel3.setBackground(palette.Couleur1);
         jTextField3.setBackground(palette.Couleur1);
         jPanel6.setBackground(palette.Couleur1);
-        jButton5.setBackground(palette.Couleur1);
-        jButton6.setBackground(palette.Couleur1);
+        jButton5.setBackground(palette.Couleur2);
+        jButton6.setBackground(palette.Couleur2);
     }
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler10;
     private javax.swing.Box.Filler filler11;
     private javax.swing.Box.Filler filler12;
-    private javax.swing.Box.Filler filler13;
-    private javax.swing.Box.Filler filler14;
-    private javax.swing.Box.Filler filler15;
-    private javax.swing.Box.Filler filler16;
-    private javax.swing.Box.Filler filler17;
-    private javax.swing.Box.Filler filler18;
-    private javax.swing.Box.Filler filler19;
-    private javax.swing.Box.Filler filler2;
-    private javax.swing.Box.Filler filler20;
-    private javax.swing.Box.Filler filler21;
-    private javax.swing.Box.Filler filler22;
     private javax.swing.Box.Filler filler23;
-    private javax.swing.Box.Filler filler24;
-    private javax.swing.Box.Filler filler25;
-    private javax.swing.Box.Filler filler26;
-    private javax.swing.Box.Filler filler27;
     private javax.swing.Box.Filler filler28;
-    private javax.swing.Box.Filler filler29;
     private javax.swing.Box.Filler filler3;
-    private javax.swing.Box.Filler filler30;
-    private javax.swing.Box.Filler filler31;
-    private javax.swing.Box.Filler filler32;
-    private javax.swing.Box.Filler filler33;
     private javax.swing.Box.Filler filler34;
     private javax.swing.Box.Filler filler35;
     private javax.swing.Box.Filler filler7;
-    private javax.swing.Box.Filler filler8;
-    private javax.swing.Box.Filler filler9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;

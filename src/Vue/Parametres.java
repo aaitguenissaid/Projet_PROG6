@@ -238,6 +238,7 @@ public class Parametres extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: back
+        cc.revalidateInterface();
         cc.mainmenu();
     }
 

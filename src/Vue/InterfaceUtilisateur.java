@@ -107,6 +107,7 @@ public class InterfaceUtilisateur implements Runnable {
         param.setToutCouleurs();
         reg.initComponents();
         jeu.initComponents();
+        setStatistiques();
     }
     public void reaglesBack(){
         if(regBack){

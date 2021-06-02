@@ -460,6 +460,19 @@ public class ControleurMediateur implements CollecteurEvenements {
         suggestion = true;
         jeuint.getAireDeDessin().repaint();
     }
+
+    @Override
+    public void setNomJ1(String text) {
+        jeu.setNomJ1(text);
+        jeuint.setStatistiques();
+    }
+
+    @Override
+    public void setNomJ2(String text) {
+        jeu.setNomJ2(text);
+        jeuint.setStatistiques();
+    }
+
     public boolean suggestion(){
         return suggestion;
     }

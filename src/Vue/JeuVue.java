@@ -1,5 +1,6 @@
 package Vue;
 
+import Global.Configuration;
 import Modele.PaletteDeCouleurs;
 import Structures.Mouvement;
 
@@ -143,7 +144,8 @@ public class JeuVue extends javax.swing.JPanel {
         jButton3.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_skip_previous_black_24dp.png")))); // NOI18N
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
+                if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
+                    jButton3MouseClicked(evt);
             }
         });
         jPanel9.add(jButton3);
@@ -151,7 +153,8 @@ public class JeuVue extends javax.swing.JPanel {
         jButton4.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_left_black_24dp.png")))); // NOI18N
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton4MouseClicked(evt);
+                if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
+                    jButton4MouseClicked(evt);
             }
         });
         jPanel9.add(jButton4);
@@ -159,7 +162,8 @@ public class JeuVue extends javax.swing.JPanel {
         jButton9.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_stop_black_24dp.png")))); // NOI18N
         jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton9MouseClicked(evt);
+                if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
+                    jButton9MouseClicked(evt);
             }
         });
         jPanel9.add(jButton9);
@@ -167,7 +171,8 @@ public class JeuVue extends javax.swing.JPanel {
         jButton10.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_right_black_24dp.png")))); // NOI18N
         jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton10MouseClicked(evt);
+                if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
+                    jButton10MouseClicked(evt);
             }
         });
         jPanel9.add(jButton10);
@@ -175,7 +180,8 @@ public class JeuVue extends javax.swing.JPanel {
         jButton11.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_skip_next_black_24dp.png")))); // NOI18N
         jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton11MouseClicked(evt);
+                if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
+                    jButton11MouseClicked(evt);
             }
         });
         jPanel9.add(jButton11);
@@ -204,7 +210,8 @@ public class JeuVue extends javax.swing.JPanel {
         jButton7.setText("Suggestion");
         jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton7MouseClicked(evt);
+                if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)))
+                    jButton7MouseClicked(evt);
             }
         });
         jPanel7.add(jButton7);
@@ -258,10 +265,12 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel2.add(jPanel4);
 
         add(jPanel2);
+
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        cc.reagles();
     }
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
@@ -317,6 +326,26 @@ public class JeuVue extends javax.swing.JPanel {
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:>|
         cc.first_historique();
+    }
+    public void eteindreHistorique(){
+        jButton3.setEnabled(false);
+        jButton4.setEnabled(false);
+        jButton9.setEnabled(false);
+        jButton10.setEnabled(false);
+        jButton11.setEnabled(false);
+    }
+    public void allumerHistorique(){
+        jButton3.setEnabled(true);
+        jButton4.setEnabled(true);
+        jButton9.setEnabled(true);
+        jButton10.setEnabled(true);
+        jButton11.setEnabled(true);
+    }
+    public void eteindreSuggestion(){
+        jButton7.setEnabled(false);
+    }
+    public void allumerSuggestion(){
+        jButton7.setEnabled(true);
     }
     public void setNomDeJ1(String nom){
         jLabel6.setText(nom);
@@ -374,7 +403,17 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel13.setBackground(palette.Couleur6);
         jLabel7.setBackground(palette.Couleur6);
         jLabel9.setBackground(palette.Couleur6);
+        if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE))){
+            allumerHistorique();
+        }else{
+            eteindreHistorique();
+        }
 
+        if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION))){
+            allumerSuggestion();
+        }else{
+            eteindreSuggestion();
+        }
     }
     // Variables declaration - do not modify
     private javax.swing.Box.Filler filler1;

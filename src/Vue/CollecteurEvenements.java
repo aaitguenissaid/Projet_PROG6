@@ -59,5 +59,9 @@ public interface CollecteurEvenements {
     Mouvement suggestionMouvement();
 
     void demanderSuggestion();
+
+    void setNomJ1(String text);
+
+    void setNomJ2(String text);
 }
 

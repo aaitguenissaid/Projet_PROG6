@@ -18,6 +18,8 @@ public interface CollecteurEvenements {
 
     void jouer_en_local();
 
+    void jouer_contre_ia();
+
     void reprendre_une_partie();
 
     void enregistrer_la_partie();

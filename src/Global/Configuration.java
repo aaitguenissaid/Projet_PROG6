@@ -224,4 +224,5 @@ public class Configuration {
     public static final String IA_1="IA_1";
     public static final String IA_2="IA_2";
     public static final String SON_ON="sonOn";
+    public static final String IA_COMMENCE="IACommence";
 }

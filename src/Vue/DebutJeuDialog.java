@@ -74,7 +74,7 @@ public class DebutJeuDialog extends javax.swing.JDialog {
     }
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-        cc.jouer_en_local();
+        cc.jouer_contre_ia();
         dispose();
     }
     private javax.swing.Box.Filler filler1;

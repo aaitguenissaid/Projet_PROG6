@@ -371,13 +371,15 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void setNomJ1(String text) {
-        jeu.setNomJ1(text);
+        if(jeu.setNomJ1(text))
+            Configuration.instance().set(Configuration.PSEUDO_J1, text);
         jeuint.setStatistiques();
     }
 
     @Override
     public void setNomJ2(String text) {
-        jeu.setNomJ2(text);
+        if(jeu.setNomJ2(text))
+            Configuration.instance().set(Configuration.PSEUDO_J2, text);
         jeuint.setStatistiques();
     }
 

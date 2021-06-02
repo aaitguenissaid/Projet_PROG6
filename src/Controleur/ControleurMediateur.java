@@ -185,12 +185,12 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
     private IA construireIA(String nom_ia, int id_ia) {
-        switch (nom_ia) {
-            case "IAAleatoire": return new IAAleatoire(jeu, id_ia);
-            case "IABasique": return new IABasique(jeu, id_ia);
-            case "IAFort": return new IAFort(jeu, id_ia);
-            default: return new IAAleatoire(jeu, id_ia);
-        }
+        return switch (nom_ia) {
+            case "IAAleatoire" -> new IAAleatoire(jeu, id_ia);
+            case "IABasique" -> new IABasique(jeu, id_ia);
+            case "IAFort" -> new IAFort(jeu, id_ia);
+            default -> new IAAleatoire(jeu, id_ia);
+        };
     }
 
     private void lancerAnimationCoupIA(IA ia) {

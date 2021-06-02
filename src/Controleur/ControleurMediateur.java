@@ -275,7 +275,10 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void jouer_contre_ia() {
         mode=1;
+
+        //Création de l'IA
         int id_ia = (Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) ? 1 : 2;
+
         String nom_ia = Configuration.instance().get(Configuration.IA_AFFRONTEMENT);
         switch (nom_ia) {
             case "IAAleatoire": IAAffrontement=new IAAleatoire(jeu, id_ia); break;
@@ -284,11 +287,22 @@ public class ControleurMediateur implements CollecteurEvenements {
             case "IAFortCoup": IAAffrontement=new IAFortCoup(jeu, id_ia); break;
             default: IAAffrontement=new IAAleatoire(jeu, id_ia); break;
         }
+
+        //Mise à jour du jeu
         JoueurIA = (id_ia==1) ? jeu.getJ1() : jeu.getJ2();
         save_pseudo = JoueurIA.getNom();
         JoueurIA.setNom(nom_ia);
+
+        //Mise à jour de l'interface
         jeuint.setGameScreen();
         jeuint.setStatistiques();
+
+        //Si c'est son tour, l'IA joue un premier coup
+        if(id_ia-1==jeu.getTour()) {
+            Mouvement coup = IAAffrontement.joue();
+            bouge(coup.getDepart(), coup.getArrivee());
+            jeuint.metAJour();
+        }
     }
 
     public void reprendre_une_partie() {

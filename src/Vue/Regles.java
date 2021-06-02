@@ -176,12 +176,15 @@ public class Regles extends javax.swing.JPanel {
         jPanel1.setBackground(palette.Couleur1);
         jPanel2.setBackground(palette.Couleur1);
         jButton1.setBackground(palette.Couleur1);
-        jLabel1.setBackground(palette.Couleur7);
+        jLabel1.setBackground(palette.Couleur1);
+        jLabel1.setForeground(palette.Couleur7);
         jPanel4.setBackground(palette.Couleur1);
         jPanel3.setBackground(palette.Couleur1);
         jPanel5.setBackground(palette.Couleur1);
-        jLabel2.setBackground(palette.Couleur7);
-        jLabel3.setBackground(palette.Couleur7);
+        jLabel2.setBackground(palette.Couleur1);
+        jLabel2.setForeground(palette.Couleur7);
+        jLabel3.setForeground(palette.Couleur7);
+        jLabel3.setBackground(palette.Couleur1);
         fontColor = String.format("#%02x%02x%02x", palette.Couleur3.getRed(), palette.Couleur3.getGreen(), palette.Couleur3.getBlue());
     }
     private javax.swing.Box.Filler filler1;

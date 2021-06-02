@@ -1,10 +1,8 @@
 package Controleur;
 
 
-import Modele.Classement;
-import Modele.Jeu;
-import Modele.PaletteDeCouleurs;
-import Modele.PartiesSauvegardees;
+import Global.Configuration;
+import Modele.*;
 import Structures.Mouvement;
 import Structures.SequenceListe;
 import Vue.*;
@@ -15,16 +13,18 @@ import java.awt.*;
 public class ControleurMediateur implements CollecteurEvenements {
     Jeu jeu;
     InterfaceUtilisateur jeuint;
+    int mode; //0=JvsJ, 1=JvsIA, 2=IAvsIA
     boolean shouldMove;
     int startCaseI,startCaseJ;
     boolean activeA, activeB, activeAB;
-    IA IA_A, IA_B;
+    IA IAAffrontement, IA_A, IA_B;
+    String save_pseudo; Joueur JoueurIA;
     Timer time;
     SequenceListe<Animation> animations;
     PaletteDeCouleurs palette;
     EffetsSonores sonCtrl;
     Classement classement;
-
+    boolean suggestion=false;
     public ControleurMediateur(InterfaceUtilisateur i){
         jeuint=i;
         jeu = i.jeu();
@@ -206,7 +206,6 @@ public class ControleurMediateur implements CollecteurEvenements {
                     }
                 }
             }
-            //jeu.annule(m.getDepart(), m.getArrivee(), 1);
         }
 
     }
@@ -265,8 +264,45 @@ public class ControleurMediateur implements CollecteurEvenements {
             }
         }
     }
+
+    @Override
     public void jouer_en_local(){
+        mode=0;
+        if(save_pseudo!=null) { JoueurIA.setNom(save_pseudo); }
         jeuint.setGameScreen();
+    }
+
+    @Override
+    public void jouer_contre_ia() {
+        mode=1;
+
+        //Création de l'IA
+        int id_ia = (Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) ? 1 : 2;
+
+        String nom_ia = Configuration.instance().get(Configuration.IA_AFFRONTEMENT);
+        switch (nom_ia) {
+            case "IAAleatoire": IAAffrontement=new IAAleatoire(jeu, id_ia); break;
+            case "IABasique": IAAffrontement=new IABasique(jeu, id_ia); break;
+            case "IAFort": IAAffrontement=new IAFort(jeu, id_ia); break;
+            case "IAFortCoup": IAAffrontement=new IAFortCoup(jeu, id_ia); break;
+            default: IAAffrontement=new IAAleatoire(jeu, id_ia); break;
+        }
+
+        //Mise à jour du jeu
+        JoueurIA = (id_ia==1) ? jeu.getJ1() : jeu.getJ2();
+        save_pseudo = JoueurIA.getNom();
+        JoueurIA.setNom(nom_ia);
+
+        //Mise à jour de l'interface
+        jeuint.setGameScreen();
+        jeuint.setStatistiques();
+
+        //Si c'est son tour, l'IA joue un premier coup
+        if(id_ia-1==jeu.getTour()) {
+            Mouvement coup = IAAffrontement.joue();
+            bouge(coup.getDepart(), coup.getArrivee());
+            jeuint.metAJour();
+        }
     }
 
     public void reprendre_une_partie() {
@@ -308,6 +344,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         }
         System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
         jeuint.setStatistiques();
+        suggestion=false;
         return ret;
     }
 
@@ -418,4 +455,19 @@ public class ControleurMediateur implements CollecteurEvenements {
     public boolean getSonState(){
         return sonCtrl.getSonState();
     }
+    public void demanderSuggestion(){
+        jeuint.getAireDeDessin().repaint();
+        suggestion = true;
+        jeuint.getAireDeDessin().repaint();
+    }
+    public boolean suggestion(){
+        return suggestion;
+    }
+    public Mouvement suggestionMouvement(){
+        IABasique iaB = new IABasique(jeu, jeu.getTour());
+        return iaB.joue();
+    }
+
+
+
 }

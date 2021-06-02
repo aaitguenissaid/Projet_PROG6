@@ -1,5 +1,7 @@
 package Modele;
 
+import Global.Configuration;
+
 import java.awt.*;
 
 public class PaletteDeCouleurs {
@@ -9,8 +11,17 @@ public class PaletteDeCouleurs {
     public Color Couleur3;
     public Color Couleur4;
     public Color Couleur5;
+    public Color Couleur6;
+    public Color Couleur7;
     public PaletteDeCouleurs(){
-        setSheme1();
+        int scheme = Integer.parseInt(Configuration.instance().get(Configuration.COULEUR_THEME));
+        switch(scheme) {
+            case 2:setSheme2(); break;
+            case 3:setSheme3(); break;
+            case 4:setSheme4(); break;
+            case 5:setSheme5(); break;
+            default: setSheme1(); break;
+        }
     }
 
     public void setSheme1() {
@@ -20,6 +31,8 @@ public class PaletteDeCouleurs {
         Couleur3=Color.decode("#F1F2D8");
         Couleur4=Color.decode("#262422");
         Couleur5=Color.decode("#768C54");
+        Couleur6=Color.decode("#4988BF");
+        Couleur7= Color.decode("#FFFFFF");
     }
 
     public void setSheme2() {
@@ -29,6 +42,8 @@ public class PaletteDeCouleurs {
         Couleur3=Color.decode("#F1CF2F");
         Couleur4=Color.decode("#D92332");
         Couleur5=Color.decode("#232226");
+        Couleur6=Color.decode("#FAFAFA");
+        Couleur7= Color.decode("#FFFFFF");
     }
     public void setSheme3() {
         curentColorSheme=3;
@@ -37,6 +52,8 @@ public class PaletteDeCouleurs {
         Couleur3=Color.decode("#AAF2A7");
         Couleur4=Color.decode("#BF1162");
         Couleur5=Color.decode("#594253");
+        Couleur6=Color.decode("#4988BF");
+        Couleur7= Color.decode("#FFFFFF");
     }
     public void setSheme4() {
         curentColorSheme=4;
@@ -45,6 +62,8 @@ public class PaletteDeCouleurs {
         Couleur3=Color.decode("#F6D55C");
         Couleur4=Color.decode("#ED553B");
         Couleur5=Color.decode("#173F5F");
+        Couleur6=Color.decode("#4988BF");
+        Couleur7= Color.decode("#FFFFFF");
     }
     public void setSheme5() {
         curentColorSheme=5;
@@ -53,6 +72,8 @@ public class PaletteDeCouleurs {
         Couleur3=Color.decode("#F28705");
         Couleur4=Color.decode("#1763A6");
         Couleur5=Color.decode("#F20505");
+        Couleur6=Color.decode("#4988BF");
+        Couleur7= Color.decode("#FFFFFF");
     }
     public int colorSheme(){
         return curentColorSheme;

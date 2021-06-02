@@ -1,5 +1,6 @@
 package Vue;
 
+import Global.Configuration;
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 
@@ -102,14 +103,17 @@ public class Parametres extends javax.swing.JPanel {
                 jCheckBox1ActionPerformed(evt);
             }
         });
+        jCheckBox1.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE)));
         jPanel6.add(jCheckBox1);
 
         jCheckBox2.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox2.setText("Interdire l'utilisation de l'historique");
+        jCheckBox2.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)));
         jPanel6.add(jCheckBox2);
 
         jCheckBox3.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox3.setText("Interdire les suggestions des IAs");
+        jCheckBox3.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)));
         jPanel6.add(jCheckBox3);
 
         jPanel4.add(jPanel6);
@@ -128,10 +132,11 @@ public class Parametres extends javax.swing.JPanel {
         jLabel2.setText("Choisissez la complexité de l'intelligence artificielle :");
         jPanel3.add(jLabel2);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(Configuration.instance().lis("IA_names").split(",")));
         jComboBox2.setAlignmentX(0.0F);
         jComboBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jComboBox2.setMaximumSize(new java.awt.Dimension(91, 32));
+        jComboBox2.setSelectedItem(Configuration.instance().get(Configuration.IA_AFFRONTEMENT));
         jPanel3.add(jComboBox2);
 
         jPanel7.add(jPanel3);
@@ -206,6 +211,10 @@ public class Parametres extends javax.swing.JPanel {
                 jButton31MouseClicked(evt);
             }
         });
+        if(!Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON))) {
+            cc.deisabel_enabel_son();
+            setSonIcon();
+        }
         jPanel10.add(jButton31);
 
 
@@ -240,36 +249,43 @@ public class Parametres extends javax.swing.JPanel {
     private void jButton34MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: Theme1
         palette.setSheme1();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "1");
         cc.revalidateInterface();
     }
 
     private void jButton35MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Theme2
         palette.setSheme2();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "2");
         cc.revalidateInterface();
     }
 
     private void jButton36MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Theme3
         palette.setSheme3();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "3");
         cc.revalidateInterface();
     }
 
     private void jButton37MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Theme4
         palette.setSheme4();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "4");
         cc.revalidateInterface();
     }
 
     private void jButton38MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:Theme5
         palette.setSheme5();
+        Configuration.instance().set(Configuration.COULEUR_THEME, "5");
         cc.revalidateInterface();
     }
 
     private void jButton31MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: Sound1
         cc.deisabel_enabel_son();
+        boolean son_on = Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON));
+        Configuration.instance().set(Configuration.SON_ON, String.valueOf(!son_on));
         setSonIcon();
     }
 

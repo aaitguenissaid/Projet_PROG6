@@ -18,6 +18,8 @@ public interface CollecteurEvenements {
 
     void jouer_en_local();
 
+    void jouer_contre_ia();
+
     void reprendre_une_partie();
 
     void enregistrer_la_partie();
@@ -51,5 +53,11 @@ public interface CollecteurEvenements {
     boolean getSonState();
 
     void deisabel_enabel_son();
+
+    boolean suggestion();
+
+    Mouvement suggestionMouvement();
+
+    void demanderSuggestion();
 }
 

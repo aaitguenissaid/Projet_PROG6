@@ -216,13 +216,13 @@ public class Configuration {
         }
     }
 
-    public static final String COULEUR_J1="couleurJ1";
-    public static final String COULEUR_J2="couleurJ2";
     public static final String COULEUR_THEME="couleurTheme";
     public static final String RELANCE_AUTOMATIQUE="relanceAutomatique";
     public static final String EST_AUTORISE_HISTORIQUE="estAutoriseHistorique";
     public static final String EST_AUTORISE_SUGGESTION="estAutoriseSuggestion";
-    public static final String IA_AFFRONTEMENT="IA_Affrontement";
+    public static final String IA_AFFRONTEMENT="IAAffrontement";
     public static final String IA_1="IA_1";
     public static final String IA_2="IA_2";
+    public static final String SON_ON="sonOn";
+    public static final String IA_COMMENCE="IACommence";
 }

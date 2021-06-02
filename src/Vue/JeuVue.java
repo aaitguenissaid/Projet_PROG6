@@ -1,6 +1,7 @@
 package Vue;
 
 import Modele.PaletteDeCouleurs;
+import Structures.Mouvement;
 
 import java.awt.*;
 import java.io.File;
@@ -112,7 +113,7 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel2.add(jPanel3);
 
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
-
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
@@ -290,7 +291,8 @@ public class JeuVue extends javax.swing.JPanel {
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-    }
+        cc.demanderSuggestion();
+        }
 
     private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
@@ -340,14 +342,14 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel2.setBackground(palette.Couleur1);
         jPanel3.setBackground(palette.Couleur1);
         jPanel8.setBackground(palette.Couleur1);
-        jPanel4.setBackground(palette.Couleur1);
-        jPanel5.setBackground(palette.Couleur1);
-        jLabel2.setBackground(palette.Couleur1);
+        jPanel4.setBackground(palette.Couleur6);
+        jPanel5.setBackground(palette.Couleur6);
+        jLabel2.setBackground(palette.Couleur6);
         jLabel2.setForeground(palette.Couleur3);
-        jLabel3.setBackground(palette.Couleur1);
+        jLabel3.setBackground(palette.Couleur6);
         jLabel3.setForeground(palette.Couleur3);
-        jPanel6.setBackground(palette.Couleur1);
-        jLabel4.setBackground(palette.Couleur1);
+        jPanel6.setBackground(palette.Couleur6);
+        jLabel4.setBackground(palette.Couleur6);
         jLabel4.setForeground(palette.Couleur3);
         jPanel9.setBackground(palette.Couleur1);
         jButton3.setBackground(palette.Couleur2);
@@ -363,15 +365,15 @@ public class JeuVue extends javax.swing.JPanel {
         jButton7.setForeground(palette.Couleur3);
         jButton8.setBackground(palette.Couleur2);
         jButton8.setForeground(palette.Couleur3);
-        jPanel10.setBackground(palette.Couleur1);
-        jLabel5.setBackground(palette.Couleur1);
-        jPanel11.setBackground(palette.Couleur1);
-        jPanel12.setBackground(palette.Couleur1);
-        jLabel6.setBackground(palette.Couleur1);
-        jLabel8.setBackground(palette.Couleur1);
-        jPanel13.setBackground(palette.Couleur1);
-        jLabel7.setBackground(palette.Couleur1);
-        jLabel9.setBackground(palette.Couleur1);
+        jPanel10.setBackground(palette.Couleur6);
+        jLabel5.setBackground(palette.Couleur6);
+        jPanel11.setBackground(palette.Couleur6);
+        jPanel12.setBackground(palette.Couleur6);
+        jLabel6.setBackground(palette.Couleur6);
+        jLabel8.setBackground(palette.Couleur6);
+        jPanel13.setBackground(palette.Couleur6);
+        jLabel7.setBackground(palette.Couleur6);
+        jLabel9.setBackground(palette.Couleur6);
 
     }
     // Variables declaration - do not modify

@@ -5,7 +5,7 @@ public class Joueur {
     int id;
     int couleur;
     public Joueur(int id, int color) {
-        this.nom = "Joueur_"+id;
+        this.nom = "Joueur "+id;
         this.id = id;
         this.couleur=color;
     }

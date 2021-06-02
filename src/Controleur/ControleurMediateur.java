@@ -1,10 +1,8 @@
 package Controleur;
 
 
-import Modele.Classement;
-import Modele.Jeu;
-import Modele.PaletteDeCouleurs;
-import Modele.PartiesSauvegardees;
+import Global.Configuration;
+import Modele.*;
 import Structures.Mouvement;
 import Structures.SequenceListe;
 import Vue.*;
@@ -15,10 +13,12 @@ import java.awt.*;
 public class ControleurMediateur implements CollecteurEvenements {
     Jeu jeu;
     InterfaceUtilisateur jeuint;
+    int mode; //0=JvsJ, 1=JvsIA, 2=IAvsIA
     boolean shouldMove;
     int startCaseI,startCaseJ;
     boolean activeA, activeB, activeAB;
-    IA IA_A, IA_B;
+    IA IAAffrontement, IA_A, IA_B;
+    String save_pseudo; Joueur JoueurIA;
     Timer time;
     SequenceListe<Animation> animations;
     PaletteDeCouleurs palette;
@@ -264,8 +264,31 @@ public class ControleurMediateur implements CollecteurEvenements {
             }
         }
     }
+
+    @Override
     public void jouer_en_local(){
+        mode=0;
+        if(save_pseudo!=null) { JoueurIA.setNom(save_pseudo); }
         jeuint.setGameScreen();
+    }
+
+    @Override
+    public void jouer_contre_ia() {
+        mode=1;
+        int id_ia = (Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) ? 1 : 2;
+        String nom_ia = Configuration.instance().get(Configuration.IA_AFFRONTEMENT);
+        switch (nom_ia) {
+            case "IAAleatoire": IAAffrontement=new IAAleatoire(jeu, id_ia); break;
+            case "IABasique": IAAffrontement=new IABasique(jeu, id_ia); break;
+            case "IAFort": IAAffrontement=new IAFort(jeu, id_ia); break;
+            case "IAFortCoup": IAAffrontement=new IAFortCoup(jeu, id_ia); break;
+            default: IAAffrontement=new IAAleatoire(jeu, id_ia); break;
+        }
+        JoueurIA = (id_ia==1) ? jeu.getJ1() : jeu.getJ2();
+        save_pseudo = JoueurIA.getNom();
+        JoueurIA.setNom(nom_ia);
+        jeuint.setGameScreen();
+        jeuint.setStatistiques();
     }
 
     public void reprendre_une_partie() {

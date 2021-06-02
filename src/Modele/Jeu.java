@@ -30,8 +30,8 @@ public class Jeu extends Etat implements Cloneable {
         super();
         estPartieRecuperee=false;
         if(fromScratch) {
-            j1 = new Joueur(1,0);
-            j2 = new Joueur(2,1);
+            j1 = new Joueur(1,COULEUR1);
+            j2 = new Joueur(2,COULEUR2);
             tour = COULEUR1;
             init_grille();
             //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
@@ -161,15 +161,7 @@ public class Jeu extends Etat implements Cloneable {
                 c.enregistrerScore(getNomJ1(), getNomJ2(), tour!=COULEUR1);
             }
         } else {
-            int nb1=0, nb2=0;
-            for(int i=0; i<taille.h; i++) {
-                for(int j=0; j<taille.l; j++) {
-                    if(grille[i][j].estValide() && grille[i][j].tete!=null) {
-                        if(grille[i][j].tete.estCouleur1()) nb1++;
-                        else nb2++;
-                    }
-                }
-            }
+            int nb1=nbPilesJoueur(1), nb2=nbPilesJoueur(2);
             if(nb1!=nb2) {
                 c.enregistrerScore(getNomJ1(), getNomJ2(), nb1>nb2);
             }

@@ -129,7 +129,7 @@ public class Parametres extends javax.swing.JPanel {
         jLabel2.setText("Choisissez la complexité de l'intelligence artificielle :");
         jPanel3.add(jLabel2);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(Configuration.instance().lis("IA_names").split(",")));
         jComboBox2.setAlignmentX(0.0F);
         jComboBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jComboBox2.setMaximumSize(new java.awt.Dimension(91, 32));

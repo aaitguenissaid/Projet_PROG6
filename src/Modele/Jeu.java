@@ -153,7 +153,7 @@ public class Jeu extends Etat implements Cloneable {
         Classement c = new Classement(this);
         if(isAbandon) {
             // TODO 24 codé en dur!
-            if(nbPilesJoueur(j1.id)==nbPilesJoueur(j2.id) && nbPilesJoueur(j1.id)==24){
+            if(nbPilesJoueur(j1.getId())==nbPilesJoueur(j2.getId()) && nbPilesJoueur(j1.getId())==24){
                 System.out.println("Aucun pion n'a été Bougé");
                 // aucun pion n'a été bougé. pas d'enregistrement.
             } else {
@@ -212,11 +212,11 @@ public class Jeu extends Etat implements Cloneable {
 
     public int j1AGagne() {
         int resultat = 2;
-        if(nbPilesJoueur(j1.id) > nbPilesJoueur(j2.id))
+        if(nbPilesJoueur(j1.getId()) > nbPilesJoueur(j2.getId()))
             resultat = 1;
-        else if(nbPiles5Joueur(j1.id) > nbPiles5Joueur(j2.id))
+        else if(nbPiles5Joueur(j1.getId()) > nbPiles5Joueur(j2.getId()))
             resultat = 1;
-        else
+        else if(nbPiles5Joueur(j1.getId()) == nbPiles5Joueur(j2.getId()))
             resultat = 0;
         return resultat;
     }

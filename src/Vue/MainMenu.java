@@ -125,7 +125,7 @@ public class MainMenu extends javax.swing.JPanel {
     public void setToutCouleurs(){
         setBackground(palette.Couleur1);
         jPanel1.setBackground(palette.Couleur1);
-        jLabel1.setForeground(palette.Couleur3);
+        jLabel1.setForeground(palette.Couleur7);
         jButton2.setBackground(palette.Couleur1);
         jButton1.setBackground(palette.Couleur1);
         jButton3.setBackground(palette.Couleur2);

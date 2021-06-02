@@ -38,8 +38,8 @@ public class PartiesSauvegardees {
         if(out!=null) {
             out.println(j.taille.h + "," + j.taille.l);
             j.print(out); //Affiche la grille et le tour
-            out.println(j.j1.getId() + "," + j.j1.getNom() + "," + j.j1.getColore());
-            out.println(j.j2.getId() + "," + j.j2.getNom() + "," + j.j2.getColore());
+            out.println(j.j1.getId() + "," + j.j1.getNom() + "," + j.j1.getCouleur());
+            out.println(j.j2.getId() + "," + j.j2.getNom() + "," + j.j2.getCouleur());
             j.historique.print(out);
             out.close();
             return true;

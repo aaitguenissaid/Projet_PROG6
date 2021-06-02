@@ -189,7 +189,6 @@ public class ControleurMediateur implements CollecteurEvenements {
             case "IAAleatoire": return new IAAleatoire(jeu, id_ia);
             case "IABasique": return new IABasique(jeu, id_ia);
             case "IAFort": return new IAFort(jeu, id_ia);
-            case "IAFortCoup": return new IAFortCoup(jeu, id_ia);
             default: return new IAAleatoire(jeu, id_ia);
         }
     }

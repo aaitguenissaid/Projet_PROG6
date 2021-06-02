@@ -101,7 +101,8 @@ public class Case implements Cloneable {
     }
 
     public int nbPions() {
-        if(pions==null) return 0;
+        if(pions==null)
+            return 0;
         return pions.taille();
     }
 

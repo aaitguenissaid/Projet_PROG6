@@ -158,7 +158,7 @@ public class Jeu extends Etat implements Cloneable {
                 // aucun pion n'a été bougé. pas d'enregistrement.
             } else {
                 // celui qui a abondonné est perdant!
-                c.enregistrerScore(getNomJ1(), getNomJ2(), tour!=COULEUR1);
+                c.enregistrerScore(getNomJ1(), getNomJ2(), (tour==COULEUR1) ? 2 : 1);
             }
         } else {
             int nb1=0, nb2=0;
@@ -170,8 +170,10 @@ public class Jeu extends Etat implements Cloneable {
                     }
                 }
             }
-            if(nb1!=nb2) {
-                c.enregistrerScore(getNomJ1(), getNomJ2(), nb1>nb2);
+            if(nb1==nb2) {
+                c.enregistrerScore(getNomJ1(), getNomJ2(), 0);
+            } else {
+                c.enregistrerScore(getNomJ1(), getNomJ2(), (nb1>nb2) ? 1 : 2);
             }
         }
         init_grille();
@@ -216,19 +218,16 @@ public class Jeu extends Etat implements Cloneable {
         j2.setNom(tmp);
     }
 
-    public boolean j1AGagne() {
-        boolean resultat = false;
+    public int j1AGagne() {
+        int resultat = 2;
         if(nbPilesJoueur(j1.id) > nbPilesJoueur(j2.id))
-            resultat = true;
-        else {
-            //TODO if comparaison des piles à 5.
-        }
+            resultat = 1;
+        else if(nbPiles5Joueur(j1.id) > nbPiles5Joueur(j2.id))
+            resultat = 1;
+        else
+            resultat = 0;
         return resultat;
     }
-
-
-
-
 
 
     // #################

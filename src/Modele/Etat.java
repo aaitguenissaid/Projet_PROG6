@@ -102,12 +102,21 @@ public class Etat {
     // ########################
     public int nbPilesJoueur(int id) {
         int ret=0;
-        for(int i=0; i<taille.h; i++) {
-            for(int j=0; j< taille.l; j++) {
-                if(estCaseValide(new Point(i, j)) && grille[i][j].tete!=null && grille[i][j].tete.estCouleur(id)) ret++;
-            }
-        }
+        for(int i=0; i<taille.h; i++)
+            for(int j=0; j< taille.l; j++)
+                if(estCaseValide(new Point(i, j)) && grille[i][j].tete!=null && grille[i][j].tete.estCouleur(id))
+                    ret++;
         return ret;
+    }
+
+    //TODO rajoute methode comptage de tours de 5 d'une couleurs.
+    public int nbPiles5Joueur(int id) {
+        int resultat = 0;
+        for(int i=0; i<taille.h; i++)
+            for(int j=0; j< taille.l; j++)
+                if(estCaseValide(new Point(i, j)) && grille[i][j].nbPions()==5 && grille[i][j].tete.estCouleur(id))
+                    resultat++;
+        return resultat;
     }
 
 

@@ -206,7 +206,6 @@ public class ControleurMediateur implements CollecteurEvenements {
                     }
                 }
             }
-            //jeu.annule(m.getDepart(), m.getArrivee(), 1);
         }
 
     }
@@ -418,4 +417,12 @@ public class ControleurMediateur implements CollecteurEvenements {
     public boolean getSonState(){
         return sonCtrl.getSonState();
     }
+
+    public Mouvement suggestion(){
+        IABasique iaB = new IABasique(jeu, jeu.getTour());
+        return iaB.joue();
+    }
+
+
+
 }

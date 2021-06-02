@@ -2,8 +2,15 @@ package Modele;
 
 public class Joueur {
     String nom;
-    int id;
+    private int id;
     int couleur;
+
+    
+    public Joueur(String nom, int id) {
+        this.nom = nom;
+        this.id = id;
+        this.couleur = id;
+    }
     public Joueur(int id, int color) {
         this.nom = "Joueur "+id;
         this.id = id;
@@ -23,10 +30,10 @@ public class Joueur {
     public int getId() {
         return id;
     }
-    public int getColore(){
+    public int getCouleur(){
         return couleur;
     }
-    public void changeColore(int couleur){
+    public void changeCouleur(int couleur){
         this.couleur = couleur;
     }
 }

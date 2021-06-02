@@ -164,6 +164,8 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel6.setBackground(palette.Couleur1);
         jButton5.setBackground(palette.Couleur2);
         jButton6.setBackground(palette.Couleur2);
+        jLabel1.setForeground(palette.Couleur7);
+        jLabel3.setForeground(palette.Couleur7);
     }
     private javax.swing.Box.Filler filler11;
     private javax.swing.Box.Filler filler12;

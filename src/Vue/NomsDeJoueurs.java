@@ -1,5 +1,6 @@
 package Vue;
 
+import Global.Configuration;
 import Modele.PaletteDeCouleurs;
 
 import java.awt.*;
@@ -50,7 +51,7 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
         jPanel1.add(filler12);
 
-        jTextField1.setText("Nom1");
+        jTextField1.setText(Configuration.instance().get(Configuration.PSEUDO_J1));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -90,7 +91,7 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel5.add(jLabel3);
         jPanel5.add(filler28);
 
-        jTextField3.setText("Nom2");
+        jTextField3.setText(Configuration.instance().get(Configuration.PSEUDO_J2));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);

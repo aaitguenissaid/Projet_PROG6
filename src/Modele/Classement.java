@@ -73,31 +73,37 @@ public class Classement {
         return listeScores.iterateur();
     }
 
-    void enregistrerScore(String pseudo, boolean aGagner, int lesNouveauxPoints) {
+    void enregistrerScore(String pseudo, int aGagner, int lesNouveauxPoints) {
         Iterateur<Score> it = listeScores.iterateur();
         boolean b = false;
+
         while(it.aProchain()){
             Score p = it.prochain();
             if (p.pseudo.equals(pseudo)) {
                 p.nbParties++;
-                p.nbVictoires = aGagner ? p.nbVictoires+1 : p.nbVictoires;
-                p.lesPoints += aGagner ? lesNouveauxPoints : -lesNouveauxPoints;
+                if(aGagner==0) {
+
+                } else {
+                    p.nbVictoires += aGagner==1 ? 1 : 0;
+                    p.lesPoints += aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints;
+                }
                 //enregistrer le fichier. suprimer et reecrire.
                 supprimerEnregistrerFichier();
                 b = true;
             }
         }
         if(!b){
-            listeScores.insere(new Score(pseudo, aGagner ? 1 : 0, 1));
+            listeScores.insere(new Score(pseudo, (aGagner==0) ? 0 : (aGagner==1) ? 1 : 0, 1));
             supprimerEnregistrerFichier();
         }
     }
 
-    public void enregistrerScore(String pseudo1, String pseudo2, boolean premierAGagner) {
+    // 0 egalité, 1 pseudo1 a gagné, 2 pseudo2 à gagné.
+    public void enregistrerScore(String pseudo1, String pseudo2, int quiAGagner) { // 0, 1, 2
         //TODO ids codé en dur!
-        int lesNouveauxPoints =  calculePointsAbsolu(1, 2);
-        enregistrerScore(pseudo1, premierAGagner, lesNouveauxPoints);
-        enregistrerScore(pseudo2, !premierAGagner, lesNouveauxPoints);
+        int lesNouveauxPoints =  calculePointsAbsolu();
+        enregistrerScore(pseudo1, (quiAGagner==0) ? 0 : (quiAGagner==1) ? 1 : -1, lesNouveauxPoints);
+        enregistrerScore(pseudo2, (quiAGagner==0) ? 0 : (quiAGagner==2) ? 1 : -1 , lesNouveauxPoints);
     }
 
     void supprimerEnregistrerFichier() {
@@ -118,9 +124,9 @@ public class Classement {
         }
     }
 
-    int calculePointsAbsolu(int id1, int id2) {
-        int nbPileJ1 = jeu.nbPilesJoueur(id1);
-        int nbPileJ2 = jeu.nbPilesJoueur(id2);
+    int calculePointsAbsolu() {
+        int nbPileJ1 = jeu.nbPilesJoueur(1);
+        int nbPileJ2 = jeu.nbPilesJoueur(2);
         int lesPoints = Math.abs(nbPileJ1 - nbPileJ2);
         return lesPoints;
     }

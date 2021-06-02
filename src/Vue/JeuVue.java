@@ -403,6 +403,15 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel13.setBackground(palette.Couleur6);
         jLabel7.setBackground(palette.Couleur1);
         jLabel9.setBackground(palette.Couleur1);
+        jLabel1.setForeground(palette.Couleur7);
+        jLabel2.setForeground(palette.Couleur7);
+        jLabel3.setForeground(palette.Couleur7);
+        jLabel4.setForeground(palette.Couleur7);
+        jLabel5.setForeground(palette.Couleur7);
+        jLabel6.setForeground(palette.Couleur7);
+        jLabel7.setForeground(palette.Couleur7);
+        jLabel8.setForeground(palette.Couleur7);
+        jLabel9.setForeground(palette.Couleur7);
         if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE))){
             allumerHistorique();
         }else{

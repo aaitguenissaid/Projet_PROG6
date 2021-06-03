@@ -75,7 +75,7 @@ public class Classement {
 
     void enregistrerScore(String pseudo, int aGagner, int lesNouveauxPoints) {
         Iterateur<Score> it = listeScores.iterateur();
-        boolean b = false;
+        boolean estJoueurExistant = false;
 
         while(it.aProchain()){
             Score p = it.prochain();
@@ -89,11 +89,13 @@ public class Classement {
                 }
                 //enregistrer le fichier. suprimer et reecrire.
                 supprimerEnregistrerFichier();
-                b = true;
+                estJoueurExistant = true;
             }
         }
-        if(!b){
-            listeScores.insere(new Score(pseudo, (aGagner==0) ? 0 : (aGagner==1) ? 1 : 0, 1));
+        if(!estJoueurExistant){
+            Score p = new Score(pseudo, (aGagner==0) ? 0 : (aGagner==1) ? 1 : 0, 1);
+            p.lesPoints += aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints;
+            listeScores.insere(p);
             supprimerEnregistrerFichier();
         }
     }
@@ -125,8 +127,8 @@ public class Classement {
     }
 
     int calculePointsAbsolu() {
-        int nbPileJ1 = jeu.nbPilesJoueur(1);
-        int nbPileJ2 = jeu.nbPilesJoueur(2);
+        int nbPileJ1 = jeu.nbPilesJoueur(Jeu.COULEUR1);
+        int nbPileJ2 = jeu.nbPilesJoueur(Jeu.COULEUR2);
         int lesPoints = Math.abs(nbPileJ1 - nbPileJ2);
         return lesPoints;
     }

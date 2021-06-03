@@ -31,8 +31,8 @@ public class Jeu extends Etat implements Cloneable {
         super();
         estPartieRecuperee=false;
         if(fromScratch) {
-            j1 = new Joueur(1,COULEUR1);
-            j2 = new Joueur(2,COULEUR2);
+            j1 = new Joueur(0,COULEUR1);
+            j2 = new Joueur(1,COULEUR2);
             tour = COULEUR1;
             init_grille();
             //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
@@ -77,6 +77,10 @@ public class Jeu extends Etat implements Cloneable {
      *  - Le mouvement est impossible (en dehors de la grille, trop / pas assez de pions, case invalide)
      */
     public boolean bouge(Point depart, Point arrive) {
+        return bouge(depart, arrive, true);
+    }
+
+    public boolean bouge(Point depart, Point arrive, boolean addToHistoric) {
         if(historique.isNavigationOn()) {
             //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
             //dans l'état qu'il visitait
@@ -94,8 +98,11 @@ public class Jeu extends Etat implements Cloneable {
         grille[arrive.x][arrive.y].ajoutePions(pions);
         setTour((tour==0) ? 1 : 0);
 
-        historique.ajouteEtat(new Etat(grille, tour,lastDepI,lastDepJ,lastArrI,lastArrJ,nbPionsDepl));
-        cc.getEffetsSonores().moveEnd();
+        if(addToHistoric) {
+            historique.ajouteEtat(new Etat(grille, tour,lastDepI,lastDepJ,lastArrI,lastArrJ,nbPionsDepl));
+            cc.getEffetsSonores().moveEnd();
+        }
+
         return true;
     }
 
@@ -141,34 +148,7 @@ public class Jeu extends Etat implements Cloneable {
     // ###################################
     // #### MANIPULATION DE LA PARTIE ####
     // ###################################
-    //Fait perdre le joueur dont c'était le tour
-    public void abandonner() {
-        relancerPartie(true);
-    }
-
     public void relancerPartie() {
-        relancerPartie(false);
-    }
-
-    public void relancerPartie(boolean isAbandon) {
-        Classement c = new Classement(this);
-        if(isAbandon) {
-            // TODO 24 codé en dur!
-            if(nbPilesJoueur(j1.getId())==nbPilesJoueur(j2.getId()) && nbPilesJoueur(j1.getId())==24){
-                System.out.println("Aucun pion n'a été Bougé");
-                // aucun pion n'a été bougé. pas d'enregistrement.
-            } else {
-                // celui qui a abondonné est perdant!
-                c.enregistrerScore(getNomJ1(), getNomJ2(), (tour==COULEUR1) ? 2 : 1);
-            }
-        } else {
-            int nb1=nbPilesJoueur(1), nb2=nbPilesJoueur(2);
-            if(nb1==nb2) {
-                c.enregistrerScore(getNomJ1(), getNomJ2(), 0);
-            } else {
-                c.enregistrerScore(getNomJ1(), getNomJ2(), (nb1>nb2) ? 1 : 2);
-            }
-        }
         init_grille();
         tour = COULEUR1;
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
@@ -214,13 +194,15 @@ public class Jeu extends Etat implements Cloneable {
     public int quiAGagnee() {
         int resultat = 2;
 
-        if(nbPilesJoueur(j1.getId()) == nbPilesJoueur(j2.getId()))
-            if(nbPiles5Joueur(j1.getId()) > nbPiles5Joueur(j2.getId()))
+        if(nbPilesJoueur(Jeu.COULEUR1) == nbPilesJoueur(Jeu.COULEUR2)) {
+            if (nbPiles5Joueur(Jeu.COULEUR1) > nbPiles5Joueur(Jeu.COULEUR2)) {
                 resultat = 1;
-            else if(nbPiles5Joueur(j1.getId()) == nbPiles5Joueur(j2.getId()))
+            } else if (nbPiles5Joueur(Jeu.COULEUR1) == nbPiles5Joueur(Jeu.COULEUR2)) {
                 resultat = 0;
-        else if (nbPilesJoueur(j1.getId()) > nbPilesJoueur(j2.getId()))
+            }
+        } else if (nbPilesJoueur(Jeu.COULEUR1) > nbPilesJoueur(Jeu.COULEUR2)) {
             resultat = 1;
+        }
 
         return resultat;
     }

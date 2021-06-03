@@ -142,13 +142,13 @@ public class ControleurMediateur implements CollecteurEvenements {
         mode=1;
 
         //Création de l'IA
-        int id_ia = (Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) ? 1 : 2;
+        int id_ia = (Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) ? Jeu.COULEUR1 : Jeu.COULEUR2;
 
         String nom_ia = Configuration.instance().get(Configuration.IA_AFFRONTEMENT);
         IAAffrontement = construireIA(nom_ia, id_ia);
 
         //Mise à jour du jeu
-        JoueurIA = (id_ia==1) ? jeu.getJ1() : jeu.getJ2();
+        JoueurIA = (id_ia==0) ? jeu.getJ1() : jeu.getJ2();
         JoueurIA.setNom(nom_ia);
 
         //Mise à jour de l'interface
@@ -156,7 +156,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint.setStatistiques();
 
         //Si c'est son tour, l'IA joue un premier coup
-        if(id_ia-1==jeu.getTour()) {
+        if(id_ia==jeu.getTour()) {
             lancerAnimationCoupIA(IAAffrontement);
         }
     }
@@ -167,9 +167,9 @@ public class ControleurMediateur implements CollecteurEvenements {
 
         //Création des IAs
         String nom_ia1 = Configuration.instance().get(Configuration.IA_1);
-        IA_1 = construireIA(nom_ia1, 1);
+        IA_1 = construireIA(nom_ia1, Jeu.COULEUR1);
         String nom_ia2 = Configuration.instance().get(Configuration.IA_2);
-        IA_2 = construireIA(nom_ia2, 2);
+        IA_2 = construireIA(nom_ia2, Jeu.COULEUR2);
 
         //Mise à jour du jeu
         jeu.getJ1().setNom(nom_ia1);
@@ -205,7 +205,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     public void lancerAnimationAdversaire(int id) {
         IA iaAutre = (id==1) ? IA_2 : IA_1;
-        lancerAnimationCoupIA(iaAutre, (id==1) ? 2 : 1);
+        lancerAnimationCoupIA(iaAutre, (id==0) ? 1 : 0);
     }
 
     public void reprendre_une_partie() {
@@ -242,11 +242,25 @@ public class ControleurMediateur implements CollecteurEvenements {
         boolean ret = jeu.bouge(depart, arrivee);
         jeuint.metAJour();
         System.out.println("Jeu fini : " + jeu.estFini());
+        jeuint.setStatistiques();
         if(jeu.estFini()) {
             classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.quiAGagnee());
+            if(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE))) {
+                //Indiquer qui a gagné
+                String commentaire = "La partie est finie.";
+                int gagnant = jeu.quiAGagnee();
+
+                if(gagnant==0) commentaire += " C'est une égalité.";
+                else if(gagnant==1) commentaire += " Le gagnant est " + jeu.getNomJ1() + ".";
+                else commentaire += " Le gagnant est " + jeu.getNomJ2() + ".";
+
+                jeuint.informer(commentaire);
+
+                //Relancer la partie
+                relancerPartie();
+            }
         }
         System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
-        jeuint.setStatistiques();
         suggestion=false;
         return ret;
     }
@@ -338,7 +352,13 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void relancerPartie() {
         if(jeu.estFini()) {
             jeu.relancerPartie();
+            //TODO relancer le timer des IAs selon le mode de jeu
             jeuint.metAJour();
+            if(mode==MODE_IAvsIA) {
+                lancerAnimationCoupIA(IA_1, 0);
+            } else if(mode==MODE_JvsIA && Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) {
+                lancerAnimationCoupIA(IAAffrontement, 0);
+            }
         }
     }
 
@@ -350,9 +370,10 @@ public class ControleurMediateur implements CollecteurEvenements {
             String choix_valide = "Continuer";
             String choix_annule = "Annuler";
             if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
-                jeu.abandonner();
+                jeu.relancerPartie();
                 jeuint.metAJour();
             }
+            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), (jeu.getTour()==Jeu.COULEUR1) ? 2 : 1);
         }
     }
     public void deisabel_enabel_son(){

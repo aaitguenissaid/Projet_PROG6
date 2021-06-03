@@ -105,7 +105,7 @@ public class Parametres extends javax.swing.JPanel {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        jCheckBox1.setSelected(!Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE)));
+        jCheckBox1.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE)));
         jPanel6.add(jCheckBox1);
 
         jCheckBox2.setFont(new java.awt.Font("Ubuntu", 0, 14));
@@ -251,13 +251,13 @@ public class Parametres extends javax.swing.JPanel {
     private void jCheckBox3ActionPerformed(ActionEvent evt) {
         Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION));
         b=!b;
-        Configuration.instance().set("estAutoriseSuggestion",b.toString());
+        Configuration.instance().set(Configuration.EST_AUTORISE_SUGGESTION,b.toString());
     }
 
     private void jCheckBox2ActionPerformed(ActionEvent evt) {
         Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE));
         b=!b;
-        Configuration.instance().set("estAutoriseHistorique",b.toString());
+        Configuration.instance().set(Configuration.EST_AUTORISE_HISTORIQUE,b.toString());
     }
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
@@ -268,7 +268,9 @@ public class Parametres extends javax.swing.JPanel {
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        cc.enregistrer_la_partie();
+        Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE));
+        b=!b;
+        Configuration.instance().set(Configuration.RELANCE_AUTOMATIQUE,b.toString());
     }
 
     private void jButton34MouseClicked(java.awt.event.MouseEvent evt) {

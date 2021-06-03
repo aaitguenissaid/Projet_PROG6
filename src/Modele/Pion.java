@@ -21,7 +21,7 @@ public class Pion {
 
     //TODO BUG! en cas d'inversion de couleurs ça renvoies la mauvaise couleur.
     public boolean estCouleur(int id) {
-        if(id==1) {
+        if(id==Jeu.COULEUR1) {
             return estCouleur1();
         }
         return estCouleur2();

@@ -38,6 +38,34 @@ public class Regles extends javax.swing.JPanel {
         setToutCouleurs();
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
+        jPanel5.setLayout(new java.awt.GridLayout(2, 2));
+
+        jLabel2.setText("jLabel2");
+        jPanel5.add(jLabel2);
+        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jPanel5.add(jComboBox1);
+
+        jLabel3.setText("jLabel3");
+        jPanel5.add(jLabel3);
+
+        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel5.add(jComboBox2);
+
+        jPanel3.add(jPanel5);
+
+        jButton2.setText("jButton2");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jButton2);
+
+        jPanel4.add(jPanel3);
+
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
 
         jButton1.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_back_ios_black_24dp.png"))));
@@ -104,33 +132,7 @@ public class Regles extends javax.swing.JPanel {
         jPanel4.add(addImageToPanel("8"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">= Qu’une tour compte 1,2... ou 5 pions, elle vaut toujours UN point.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">En cas d’égalité, c'est celui qui a le plus de tours de 5 pions (avec le pion de sa couleur au sommet) qui a gagné.</p></html>"));
-        jPanel5.setLayout(new java.awt.GridLayout(2, 2));
 
-        jLabel2.setText("jLabel2");
-        jPanel5.add(jLabel2);
-        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jPanel5.add(jComboBox1);
-
-        jLabel3.setText("jLabel3");
-        jPanel5.add(jLabel3);
-
-        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel5.add(jComboBox2);
-
-        jPanel3.add(jPanel5);
-
-        jButton2.setText("jButton2");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
-        jPanel3.add(jButton2);
-
-        jPanel4.add(jPanel3);
 
         jPanel4.setPreferredSize(new Dimension(750,3200));
         jPanel1.add(jPanel4, gridBagConstraints);

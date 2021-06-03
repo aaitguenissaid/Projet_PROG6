@@ -49,8 +49,10 @@ public class AireDeDessin extends JComponent {
         requestFocusInWindow();
         drawable = (Graphics2D) g;
         largeurFenetrePixel = getSize().width-20;
-        hauteurFenetrePixel = getSize().height-20;
-
+        if(jeu.estFini())
+            hauteurFenetrePixel = getSize().height-20 -50;
+        else
+            hauteurFenetrePixel = getSize().height-20;
         largeurGrille=jeu.getTaille().l;
         hauteurGrille=jeu.getTaille().h;
         largeurCase = largeurFenetrePixel / largeurGrille;
@@ -61,7 +63,10 @@ public class AireDeDessin extends JComponent {
             hauteurCase=largeurCase;
         }
         paddingW =(getSize().width-largeurCase*largeurGrille)/2;
-        paddingH =(getSize().height-hauteurCase*hauteurGrille)/2;
+        if(jeu.estFini())
+            paddingH =(getSize().height-hauteurCase*hauteurGrille)/2-25;
+        else
+            paddingH =(getSize().height-hauteurCase*hauteurGrille)/2;
         drawable.setColor(palette.Couleur1);
         drawable.fillRect(0, 0, largeurFenetrePixel, hauteurFenetrePixel);
         tracerGrille();
@@ -73,6 +78,8 @@ public class AireDeDessin extends JComponent {
 
 
     void tracerGrille() {
+        if (jeu.estFini())
+            tracerResultat();
         for (int l = 0; l < largeurGrille; l++) {
             for (int h = 0; h < hauteurGrille; h++) {
                 if(tab[h][l].estValide()) {
@@ -104,6 +111,24 @@ public class AireDeDessin extends JComponent {
                 }
             }
         }
+
+
+    }
+    void tracerResultat(){
+        Font font = new Font("Ubuntu", Font.BOLD, 24);
+        drawable.setFont(font);
+        drawable.setColor(palette.Couleur7);
+        String nom;
+        if(jeu.quiAGagnee()==0)
+            nom=jeu.getNomJ1();
+        else
+            nom=jeu.getNomJ2();
+        String text = "Le joueur "+nom+" gagne!";
+        FontMetrics metrics = drawable.getFontMetrics(font);
+        int x = (largeurFenetrePixel - metrics.stringWidth(text)) / 2;
+        int y = getHeight() - metrics.getHeight() ;
+        drawable.setFont(font);
+        drawable.drawString(text, x, y);
     }
     public void suggestion(Mouvement m){
         drawable.setColor(Color.CYAN);

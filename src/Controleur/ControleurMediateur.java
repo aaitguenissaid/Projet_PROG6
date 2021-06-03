@@ -246,6 +246,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         System.out.println("Jeu fini : " + jeu.estFini());
         jeuint.setStatistiques();
         if(jeu.estFini()) {
+            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.quiAGagnee());
             if(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE))) {
                 //Indiquer qui a gagné
                 String commentaire = "La partie est finie.";
@@ -352,7 +353,6 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void relancerPartie() {
         if(jeu.estFini()) {
-            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.quiAGagnee());
             jeu.relancerPartie();
             //TODO relancer le timer des IAs selon le mode de jeu
             jeuint.metAJour();

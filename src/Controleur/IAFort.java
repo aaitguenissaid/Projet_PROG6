@@ -394,7 +394,7 @@ public class IAFort extends IA{
             }
             return value;
         }
-        IterateurIA it = new IterateurIA(this, config);
+        IterateurSuivant it = new IterateurSuivant(this, config);
         if (estMax){
             int maxValeur = -INF;
             while (it.aProchain()){
@@ -436,7 +436,7 @@ public class IAFort extends IA{
         byte[] gagnant = null;
         int imax = 0;
         int max = -INF;
-        IterateurIA it = new IterateurIA(this, config);
+        IterateurSuivant it = new IterateurSuivant(this, config);
         while (it.aProchain()){
             byte[] configSuivant = it.prochain();
             int courant = minmaxAlphaBeta(configSuivant, -INF, INF,true, horizon);
@@ -455,6 +455,9 @@ public class IAFort extends IA{
         configurationDejaVu = new HashMap<>();
         byte[] config = configuration();
         byte[] gagnant = null;
+        /*  Stratégie 1:
+        byte[] config = configuration();
+        byte[] gagnant = null;
         if (nombreCoup < 3){
             gagnant = trouverGagnant(config, 1);
             nombreCoup++;
@@ -465,7 +468,8 @@ public class IAFort extends IA{
             gagnant = trouverGagnant(config, 2);
             nombreCoup++;
         } else
-            gagnant = trouverGagnant(config, 2);
+            gagnant = trouverGagnant(config, 2); */
+        gagnant = trouverGagnant(config, 2);
         Mouvement resultat = configurationVersMouvement(config, gagnant);
         long end=System.currentTimeMillis();
         System.out.println("nombreCoup = " + nombreCoup);

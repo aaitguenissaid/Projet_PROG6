@@ -76,6 +76,10 @@ public class Jeu extends Etat implements Cloneable {
      *  - Le mouvement est impossible (en dehors de la grille, trop / pas assez de pions, case invalide)
      */
     public boolean bouge(Point depart, Point arrive) {
+        return bouge(depart, arrive, true);
+    }
+
+    public boolean bouge(Point depart, Point arrive, boolean addToHistoric) {
         if(historique.isNavigationOn()) {
             //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
             //dans l'état qu'il visitait
@@ -93,8 +97,9 @@ public class Jeu extends Etat implements Cloneable {
         grille[arrive.x][arrive.y].ajoutePions(pions);
         setTour((tour==0) ? 1 : 0);
 
-        historique.ajouteEtat(new Etat(grille, tour,lastDepI,lastDepJ,lastArrI,lastArrJ,nbPionsDepl));
-
+        if(addToHistoric) {
+            historique.ajouteEtat(new Etat(grille, tour, lastDepI, lastDepJ, lastArrI, lastArrJ, nbPionsDepl));
+        }
         return true;
     }
 

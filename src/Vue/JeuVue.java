@@ -365,8 +365,9 @@ public class JeuVue extends javax.swing.JPanel {
     public void setScoreJ2(String text){
         jLabel9.setText(text);
     }
-    public void setTour(String text){
+    public void setTour(String text,Color c){
         jLabel3.setText(text);
+        jLabel3.setForeground(c);
     }
     public void setToutCouleurs(){
         setBackground(palette.Couleur1);
@@ -382,7 +383,6 @@ public class JeuVue extends javax.swing.JPanel {
         jLabel2.setBackground(palette.Couleur7);
         jLabel2.setForeground(palette.Couleur7);
         jLabel3.setBackground(palette.Couleur1);
-        jLabel3.setForeground(palette.Couleur7);
         jPanel6.setBackground(palette.Couleur6);
         jLabel4.setBackground(palette.Couleur1);
         jLabel4.setForeground(palette.Couleur7);
@@ -411,11 +411,10 @@ public class JeuVue extends javax.swing.JPanel {
         jLabel9.setBackground(palette.Couleur1);
         jLabel1.setForeground(palette.Couleur7);
         jLabel2.setForeground(palette.Couleur7);
-        jLabel3.setForeground(palette.Couleur7);
         jLabel4.setForeground(palette.Couleur7);
         jLabel5.setForeground(palette.Couleur7);
-        jLabel6.setForeground(palette.Couleur7);
-        jLabel7.setForeground(palette.Couleur7);
+        jLabel6.setForeground(palette.Couleur3);
+        jLabel7.setForeground(palette.Couleur4);
         jLabel8.setForeground(palette.Couleur7);
         jLabel9.setForeground(palette.Couleur7);
         if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE))){
@@ -473,5 +472,5 @@ public class JeuVue extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private HistoriqueTimeLine h;
-    // End of variables declaration
+
 }

@@ -20,8 +20,11 @@ public class HistoriqueTimeLine extends JComponent {
         drawable.setColor(Color.CYAN);
         drawable.fillRect(0,0,pos*width,height);
         drawable.setColor(Color.DARK_GRAY);
-        drawable.fillRect(pos*width,0,width,height);
+        drawable.fillRect(pos*width-3,0,5,height);
         drawable.setColor(Color.GREEN);
-        drawable.fillRect((pos+1)*width,0,width*(all-pos),height);
+        drawable.fillRect((pos)*width,0,width*(all-pos),height);
+    }
+    public void setHistorique(Historique h){
+        this.h=h;
     }
 }

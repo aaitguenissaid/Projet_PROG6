@@ -3,7 +3,7 @@ package Modele;
 public class Joueur {
     String nom;
     private int id;
-    int couleur;
+    public int couleur;
 
 
     public Joueur(String nom, int id) {

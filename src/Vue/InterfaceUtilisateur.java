@@ -80,9 +80,9 @@ public class InterfaceUtilisateur implements Runnable {
     }
     public void metAJour() {
         if(j.getTour()==0){
-            jeu.setTour(j.getNomJ1());
+            jeu.setTour(j.getNomJ1(),j.getJ1().couleur==0 ? ctrl.getPalette().Couleur3 :ctrl.getPalette().Couleur4);
         }else{
-            jeu.setTour(j.getNomJ2());
+            jeu.setTour(j.getNomJ2(),j.getJ2().couleur==0 ? ctrl.getPalette().Couleur3 :ctrl.getPalette().Couleur4);
         }
         comp.repaint();
     }

@@ -144,13 +144,13 @@ public class ControleurMediateur implements CollecteurEvenements {
         mode=1;
 
         //Création de l'IA
-        int id_ia = (Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) ? 1 : 2;
+        int id_ia = (Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) ? Jeu.COULEUR1 : Jeu.COULEUR2;
 
         String nom_ia = Configuration.instance().get(Configuration.IA_AFFRONTEMENT);
         IAAffrontement = construireIA(nom_ia, id_ia);
 
         //Mise à jour du jeu
-        JoueurIA = (id_ia==1) ? jeu.getJ1() : jeu.getJ2();
+        JoueurIA = (id_ia==0) ? jeu.getJ1() : jeu.getJ2();
         JoueurIA.setNom(nom_ia);
 
         //Mise à jour de l'interface
@@ -158,7 +158,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint.setStatistiques();
 
         //Si c'est son tour, l'IA joue un premier coup
-        if(id_ia-1==jeu.getTour()) {
+        if(id_ia==jeu.getTour()) {
             lancerAnimationCoupIA(IAAffrontement);
         }
     }
@@ -169,9 +169,9 @@ public class ControleurMediateur implements CollecteurEvenements {
 
         //Création des IAs
         String nom_ia1 = Configuration.instance().get(Configuration.IA_1);
-        IA_1 = construireIA(nom_ia1, 1);
+        IA_1 = construireIA(nom_ia1, Jeu.COULEUR1);
         String nom_ia2 = Configuration.instance().get(Configuration.IA_2);
-        IA_2 = construireIA(nom_ia2, 2);
+        IA_2 = construireIA(nom_ia2, Jeu.COULEUR2);
 
         //Mise à jour du jeu
         jeu.getJ1().setNom(nom_ia1);

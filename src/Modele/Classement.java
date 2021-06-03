@@ -125,8 +125,8 @@ public class Classement {
     }
 
     int calculePointsAbsolu() {
-        int nbPileJ1 = jeu.nbPilesJoueur(1);
-        int nbPileJ2 = jeu.nbPilesJoueur(2);
+        int nbPileJ1 = jeu.nbPilesJoueur(Jeu.COULEUR1);
+        int nbPileJ2 = jeu.nbPilesJoueur(Jeu.COULEUR2);
         int lesPoints = Math.abs(nbPileJ1 - nbPileJ2);
         return lesPoints;
     }

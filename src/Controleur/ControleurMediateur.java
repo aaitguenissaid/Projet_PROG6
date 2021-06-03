@@ -207,7 +207,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     public void lancerAnimationAdversaire(int id) {
         IA iaAutre = (id==1) ? IA_2 : IA_1;
-        lancerAnimationCoupIA(iaAutre, (id==1) ? 2 : 1);
+        lancerAnimationCoupIA(iaAutre, (id==0) ? 1 : 0);
     }
 
     public void reprendre_une_partie() {
@@ -244,11 +244,24 @@ public class ControleurMediateur implements CollecteurEvenements {
         boolean ret = jeu.bouge(depart, arrivee);
         jeuint.metAJour();
         System.out.println("Jeu fini : " + jeu.estFini());
+        jeuint.setStatistiques();
         if(jeu.estFini()) {
-            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.quiAGagnee());
+            if(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE))) {
+                //Indiquer qui a gagné
+                String commentaire = "La partie est finie.";
+                int gagnant = jeu.quiAGagnee();
+
+                if(gagnant==0) commentaire += " C'est une égalité.";
+                else if(gagnant==1) commentaire += " Le gagnant est " + jeu.getNomJ1() + ".";
+                else commentaire += " Le gagnant est " + jeu.getNomJ2() + ".";
+
+                jeuint.informer(commentaire);
+
+                //Relancer la partie
+                relancerPartie();
+            }
         }
         System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
-        jeuint.setStatistiques();
         suggestion=false;
         return ret;
     }
@@ -339,8 +352,15 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void relancerPartie() {
         if(jeu.estFini()) {
+            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.quiAGagnee());
             jeu.relancerPartie();
+            //TODO relancer le timer des IAs selon le mode de jeu
             jeuint.metAJour();
+            if(mode==MODE_IAvsIA) {
+                lancerAnimationCoupIA(IA_1, 0);
+            } else if(mode==MODE_JvsIA && Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) {
+                lancerAnimationCoupIA(IAAffrontement, 0);
+            }
         }
     }
 
@@ -352,9 +372,10 @@ public class ControleurMediateur implements CollecteurEvenements {
             String choix_valide = "Continuer";
             String choix_annule = "Annuler";
             if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
-                jeu.abandonner();
+                jeu.relancerPartie();
                 jeuint.metAJour();
             }
+            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), (jeu.getTour()==Jeu.COULEUR1) ? 2 : 1);
         }
     }
     public void deisabel_enabel_son(){

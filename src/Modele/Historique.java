@@ -2,6 +2,7 @@ package Modele;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Historique implements Cloneable {
     Jeu jeu;
@@ -85,10 +86,7 @@ public class Historique implements Cloneable {
 
     public void validerNavigation() {
         if(current<historique.size()-1 && current>=0) {
-            for (int i = current+1; i<historique.size(); i++) {
-                //On supprime le dernier élément de la liste à chaque itération
-                historique.remove(historique.size()-1);
-            }
+            historique = new ArrayList<>(historique.subList(0, current+1));
         }
         jeu.grille = historique.get(current).getCopieGrille();
         jeu.setTour(historique.get(current).getTour());

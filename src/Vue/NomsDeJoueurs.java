@@ -3,7 +3,10 @@ package Vue;
 import Global.Configuration;
 import Modele.PaletteDeCouleurs;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class NomsDeJoueurs extends javax.swing.JDialog {
     CollecteurEvenements cc;
@@ -52,9 +55,12 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel1.add(filler12);
 
         jTextField1.setText(Configuration.instance().get(Configuration.PSEUDO_J1));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        jTextField1.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                    jButton1.setEnabled(false);
+                    jButton1MouseClicked(null);
+                }
             }
         });
         jPanel1.add(jTextField1);
@@ -70,7 +76,9 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         });
         jPanel2.add(jButton2);
 
+        jButton1.setEnabled(false);
 
+        jButton6.setEnabled(false);
         jButton1.setText("Sauvegarder ");
 
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -84,6 +92,7 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel1.add(filler7);
 
         jTabbedPane1.addTab("premier joueur", jPanel1);
+
         jPanel5.setLayout(new java.awt.GridLayout(7, 1));
         jPanel5.add(filler23);
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -92,9 +101,12 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jPanel5.add(filler28);
 
         jTextField3.setText(Configuration.instance().get(Configuration.PSEUDO_J2));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+        jTextField3.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                    jButton6MouseClicked(null);
+                    jButton6.setEnabled(false);
+                }
             }
         });
         jPanel5.add(jTextField3);
@@ -109,7 +121,6 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
             }
         });
         jPanel6.add(jButton5);
-
         jButton6.setText("Sauvegarder ");
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -127,17 +138,12 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
 
         pack();
     }
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-    }
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
-        cc.setNomJ1(jTextField1.getText());
-        System.out.println(jTextField1.getText());
+        if(jTextField1.getText()!="") {
+            cc.setNomJ1(jTextField1.getText());
+            System.out.println(jTextField1.getText());
+        }
     }
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
         dispose();
@@ -146,8 +152,10 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         dispose();
     }
     private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {
-        cc.setNomJ2(jTextField3.getText());
-        System.out.println(jTextField3.getText());
+        if(jTextField3.getText()!=""){
+            cc.setNomJ2(jTextField3.getText());
+            System.out.println(jTextField3.getText());
+        }
     }
     public void setToutCouleurs(){
         setBackground(palette.Couleur1);

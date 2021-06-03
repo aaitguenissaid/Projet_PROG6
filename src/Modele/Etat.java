@@ -4,6 +4,7 @@ import Global.Configuration;
 import Structures.Iterateur;
 import Structures.SequenceListe;
 import Structures.Size;
+import Vue.EffetsSonores;
 
 import java.awt.*;
 import java.io.PrintWriter;

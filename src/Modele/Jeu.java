@@ -3,6 +3,7 @@ package Modele;
 import Global.Configuration;
 import Structures.*;
 import Vue.CollecteurEvenements;
+import Vue.EffetsSonores;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Jeu extends Etat implements Cloneable {
     Historique historique;
     boolean estPartieRecuperee;
     CollecteurEvenements cc;
+    EffetsSonores son;
 
 
 
@@ -25,6 +27,7 @@ public class Jeu extends Etat implements Cloneable {
     // ########################
     public Jeu() {
         this(true);
+        son = new EffetsSonores();
     }
 
     public Jeu(boolean fromScratch) {
@@ -38,6 +41,7 @@ public class Jeu extends Etat implements Cloneable {
             //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
             historique = new Historique(this);
         }
+        son = new EffetsSonores();
     }
 
 
@@ -100,7 +104,7 @@ public class Jeu extends Etat implements Cloneable {
 
         if(addToHistoric) {
             historique.ajouteEtat(new Etat(grille, tour,lastDepI,lastDepJ,lastArrI,lastArrJ,nbPionsDepl));
-            cc.getEffetsSonores().moveEnd();
+            son.moveEnd();
         }
 
         return true;
@@ -234,7 +238,7 @@ public class Jeu extends Etat implements Cloneable {
         ret.estPartieRecuperee = estPartieRecuperee;
         return ret;
     }
-    public  void setCollecteurEvenements(CollecteurEvenements cc){
-        this.cc=cc;
+    public  void setCollecteurEvenements(CollecteurEvenements ccc){
+        cc=ccc;
     }
 }

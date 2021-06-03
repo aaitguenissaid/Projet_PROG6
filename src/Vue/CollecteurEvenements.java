@@ -1,5 +1,6 @@
 package Vue;
 
+import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 import Structures.Mouvement;
 
@@ -67,5 +68,7 @@ public interface CollecteurEvenements {
     void setNomJ2(String text);
 
     EffetsSonores getEffetsSonores();
+
+    Jeu getJeu();
 }
 

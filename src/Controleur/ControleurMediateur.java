@@ -435,5 +435,8 @@ public class ControleurMediateur implements CollecteurEvenements {
     public EffetsSonores getEffetsSonores(){
         return sonCtrl;
     }
+    public Jeu getJeu(){
+        return jeu;
+    }
 
 }

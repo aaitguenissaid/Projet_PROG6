@@ -22,6 +22,7 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jLabel1 = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
@@ -33,11 +34,14 @@ public class Parametres extends javax.swing.JPanel {
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
         jPanel7 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox4 = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -49,11 +53,14 @@ public class Parametres extends javax.swing.JPanel {
         jPanel14 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jButton31 = new javax.swing.JButton();
-        jButton32 = new javax.swing.JButton();
-        jButton33 = new javax.swing.JButton();
+        jPanel11=new javax.swing.JPanel();
+        jPanel12=new javax.swing.JPanel();
         setToutCouleurs();
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -70,7 +77,7 @@ public class Parametres extends javax.swing.JPanel {
         jPanel2.add(filler1);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 18));
-        jLabel1.setText("Parametres");
+        jLabel1.setText("Paramètres");
         jPanel2.add(jLabel1);
         jPanel2.add(filler2);
 
@@ -128,12 +135,21 @@ public class Parametres extends javax.swing.JPanel {
         jCheckBox3.setSelected(!Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)));
         jPanel6.add(jCheckBox3);
 
+        jCheckBox4.setFont(new java.awt.Font("Ubuntu", 0, 14));
+        jCheckBox4.setText("TODO checkBox4");
+        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox4ActionPerformed(evt);
+            }
+        });
+        jCheckBox4.setSelected(!Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)));
+        jPanel6.add(jCheckBox4);
+
         jPanel4.add(jPanel6);
 
 
         jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("IA");
         jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel7.add(jLabel3);
@@ -146,15 +162,63 @@ public class Parametres extends javax.swing.JPanel {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(Configuration.instance().lis("IA_names").split(",")));
         jComboBox2.setAlignmentX(0.0F);
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
         jComboBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jComboBox2.setMaximumSize(new java.awt.Dimension(91, 32));
         jComboBox2.setSelectedItem(Configuration.instance().get(Configuration.IA_AFFRONTEMENT));
         jPanel3.add(jComboBox2);
 
         jPanel7.add(jPanel3);
+        //
+        jPanel11.setLayout(new java.awt.GridLayout(2, 2));
+        jPanel11.setAlignmentX(0.0F);
+        jPanel12.setAlignmentX(0.0F);
+        jLabel7.setText("jLabel2");
+        jPanel11.add(jLabel7);
+        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(jComboBox3);
 
+        jLabel8.setText("jLabel8");
+        jPanel11.add(jLabel8);
+
+        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(jComboBox4);
+        jPanel12.setAlignmentX(0.0F);
+        jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel12.add(jPanel11);
+
+        jButton2.setText("jButton2");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+        jPanel12.add(jButton2);
+
+
+        ///
         jPanel4.add(jPanel7);
-
+        jPanel12.setMaximumSize(new Dimension(800, 75));
+        jLabel9.setText("DEMO");
+        jLabel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jPanel4.add(jLabel9);
+        jPanel4.add(jPanel12);
         jPanel5.setAlignmentX(0.0F);
         jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -248,10 +312,29 @@ public class Parametres extends javax.swing.JPanel {
         add(jScrollPane5);
     }
 
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        System.out.println(jComboBox2.getSelectedItem());
+
+    }
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        System.out.println(jComboBox3.getSelectedItem());
+
+    }
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        System.out.println(jComboBox4.getSelectedItem());
+
+    }
+
     private void jCheckBox3ActionPerformed(ActionEvent evt) {
         Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION));
         b=!b;
         Configuration.instance().set(Configuration.EST_AUTORISE_SUGGESTION,b.toString());
+    }
+    private void jCheckBox4ActionPerformed(ActionEvent evt) {
+        //TODO CheckBox4 action
     }
 
     private void jCheckBox2ActionPerformed(ActionEvent evt) {
@@ -264,6 +347,13 @@ public class Parametres extends javax.swing.JPanel {
         // TODO add your handling code here: back
         cc.revalidateInterface();
         cc.mainmenu();
+    }
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO :Ce bouton devrait se lancer jeu
+        cc.lancer_demo();
+        System.out.println(jComboBox3.getSelectedItem());
+        System.out.println(jComboBox4.getSelectedItem());
     }
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,8 +412,15 @@ public class Parametres extends javax.swing.JPanel {
         setSonIcon();
         jPanel2.setBackground(palette.Couleur1);
         jButton1.setBackground(palette.Couleur1);
+        jButton2.setBackground(palette.Couleur2);
         jLabel1.setBackground(palette.Couleur1);
         jLabel1.setForeground(palette.Couleur7);
+        jLabel9.setBackground(palette.Couleur1);
+        jLabel9.setForeground(palette.Couleur7);
+        jLabel7.setBackground(palette.Couleur1);
+        jLabel7.setForeground(palette.Couleur7);
+        jLabel8.setBackground(palette.Couleur1);
+        jLabel8.setForeground(palette.Couleur7);
         jPanel4.setBackground(palette.Couleur1);
         jPanel6.setBackground(palette.Couleur1);
         jLabel4.setBackground(palette.Couleur7);
@@ -331,6 +428,7 @@ public class Parametres extends javax.swing.JPanel {
         jCheckBox1.setBackground(palette.Couleur1);
         jCheckBox2.setBackground(palette.Couleur1);
         jCheckBox3.setBackground(palette.Couleur1);
+        jCheckBox4.setBackground(palette.Couleur1);
         jPanel7.setBackground(palette.Couleur1);
         jLabel3.setBackground(palette.Couleur7);
         jLabel3.setForeground(palette.Couleur7);
@@ -338,15 +436,19 @@ public class Parametres extends javax.swing.JPanel {
         jLabel2.setBackground(palette.Couleur7);
         jLabel2.setForeground(palette.Couleur7);
         jComboBox2.setBackground(palette.Couleur1);
+        jComboBox3.setBackground(palette.Couleur1);
+        jComboBox4.setBackground(palette.Couleur1);
         jPanel5.setBackground(palette.Couleur1);
+        jPanel11.setBackground(palette.Couleur1);
+        jPanel12.setBackground(palette.Couleur1);
         jLabel5.setBackground(palette.Couleur7);
         jLabel5.setForeground(palette.Couleur7);
         jPanel8.setBackground(palette.Couleur1);
-        jButton34.setBackground(new java.awt.Color(2, 172, 229));
-        jButton35.setBackground(new java.awt.Color(43, 215, 83));
-        jButton36.setBackground(new java.awt.Color(227, 68, 58));
-        jButton37.setBackground(new java.awt.Color(2, 172, 229));
-        jButton38.setBackground(new java.awt.Color(43, 215, 83));
+        jButton34.setBackground(palette.CouleurSh1);
+        jButton35.setBackground(palette.CouleurSh2);
+        jButton36.setBackground(palette.CouleurSh3);
+        jButton37.setBackground(palette.CouleurSh4);
+        jButton38.setBackground(palette.CouleurSh5);
         jPanel14.setBackground(palette.Couleur1);
         jPanel9.setBackground(palette.Couleur1);
         jLabel6.setBackground(palette.Couleur7);
@@ -355,10 +457,12 @@ public class Parametres extends javax.swing.JPanel {
         jLabel13.setBackground(palette.Couleur7);
         jLabel13.setForeground(palette.Couleur7);
 
-        jButton31.setBackground(new java.awt.Color(2, 172, 229));
-        jButton32.setBackground(new java.awt.Color(43, 215, 83));
-        jButton33.setBackground(new java.awt.Color(227, 68, 58));
+        jButton31.setBackground(palette.Couleur2);
         jPanel1.setBackground(palette.Couleur1);
+        jCheckBox1.setForeground(palette.Couleur7);
+        jCheckBox2.setForeground(palette.Couleur7);
+        jCheckBox3.setForeground(palette.Couleur7);
+        jCheckBox4.setForeground(palette.Couleur7);
     }
     public void setThemeIcon(){
         jButton34.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_disabled_by_default_black_24dp.png"))));
@@ -388,10 +492,14 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -399,8 +507,13 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -412,8 +525,6 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JButton jButton31;
-    private javax.swing.JButton jButton32;
-    private javax.swing.JButton jButton33;
     private javax.swing.JButton jButton34;
     private javax.swing.JButton jButton35;
     private javax.swing.JButton jButton36;

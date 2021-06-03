@@ -5,6 +5,11 @@ import Global.Configuration;
 import java.awt.*;
 
 public class PaletteDeCouleurs {
+    public Color CouleurSh1;
+    public Color CouleurSh2;
+    public Color CouleurSh3;
+    public Color CouleurSh4;
+    public Color CouleurSh5;
     int curentColorSheme=1;
     public Color Couleur1;
     public Color Couleur2;
@@ -14,6 +19,11 @@ public class PaletteDeCouleurs {
     public Color Couleur6;
     public Color Couleur7;
     public PaletteDeCouleurs(){
+        CouleurSh1=Color.decode("#4988BF");
+        CouleurSh2=Color.decode("#53534C");
+        CouleurSh3=Color.decode("#63BBF2");
+        CouleurSh4=Color.decode("#20639B");
+        CouleurSh5=Color.decode("#222226");
         int scheme = Integer.parseInt(Configuration.instance().get(Configuration.COULEUR_THEME));
         switch(scheme) {
             case 2:setSheme2(); break;

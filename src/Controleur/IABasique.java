@@ -127,7 +127,7 @@ public class IABasique extends IA{
                 }
             }
         }
-
+        /* Règle 3: */
         for (int i = 0; i < jeu.getTaille().h; i++){
             for (int j = 0; j < jeu.getTaille().l; j++){
                 if (aPion(i, j)){

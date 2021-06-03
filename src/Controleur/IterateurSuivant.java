@@ -2,13 +2,13 @@ package Controleur;
 
 import java.util.ArrayList;
 
-public class IterateurIA {
+public class IterateurSuivant {
     int indice;
     int indiceVoisin;
     IAFort ia;
     byte[] configuration;
 
-    public IterateurIA(IAFort ia, byte[] configuration){
+    public IterateurSuivant(IAFort ia, byte[] configuration){
         int indice = 0;
         int indiceVoisin = 0;
         this.ia = ia;

@@ -97,7 +97,6 @@ public class MainMenu extends javax.swing.JPanel {
     }
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:Acount
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 NomsDeJoueurs dialog = new NomsDeJoueurs(new javax.swing.JFrame(), true,cc);

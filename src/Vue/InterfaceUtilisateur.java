@@ -62,6 +62,7 @@ public class InterfaceUtilisateur implements Runnable {
     public void setJeu(Jeu j) {
         this.j=j;
         this.comp.setJeu(j);
+        setStatistiques();
     }
 
     public void basculePleinEcran() {

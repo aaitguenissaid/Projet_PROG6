@@ -230,6 +230,18 @@ public class Configuration {
         }
     }
 
+    public byte[] contenuFichier(String nom) {
+        String chemin = lis(nom);
+        InputStream is = charge(chemin);
+
+        try {
+            return is.readAllBytes();
+        } catch(Exception e) {
+            System.err.println("Impoosible de lire l'Icon " + nom);
+            return null;
+        }
+    }
+
     public static final String COULEUR_THEME="couleurTheme";
     public static final String RELANCE_AUTOMATIQUE="relanceAutomatique";
     public static final String EST_AUTORISE_HISTORIQUE="estAutoriseHistorique";
@@ -241,4 +253,13 @@ public class Configuration {
     public static final String IA_COMMENCE="IACommence";
     public static final String PSEUDO_J1="pseudoJ1";
     public static final String PSEUDO_J2="pseudoJ2";
+
+
+    public static final String ICON_BACK="iconBack";
+    public static final String ICON_HELP="iconHelp";
+    public static final String ICON_SKIP_PREVIOUS="iconSkipPrevious";
+    public static final String ICON_ARROW_LEFT="iconArrowLeft";
+    public static final String ICON_STOP="iconStop";
+    public static final String ICON_ARROW_RIGHT="iconArrowRight";
+    public static final String ICON_SKIP_NEXT="iconSkipNext";
 }

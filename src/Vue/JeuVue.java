@@ -68,7 +68,7 @@ public class JeuVue extends javax.swing.JPanel {
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_back_ios_black_24dp.png"))));// NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_BACK)));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -82,7 +82,7 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel1.add(jLabel1);
         jPanel1.add(filler2);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_help_outline_black_24dp.png")))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_HELP)));
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -141,7 +141,7 @@ public class JeuVue extends javax.swing.JPanel {
 
         jPanel9.setLayout(new javax.swing.BoxLayout(jPanel9, javax.swing.BoxLayout.LINE_AXIS));
 
-        jButton3.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_skip_previous_black_24dp.png")))); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_SKIP_PREVIOUS)));
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
@@ -150,7 +150,7 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel9.add(jButton3);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_left_black_24dp.png")))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_ARROW_LEFT)));
         jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
@@ -159,7 +159,7 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel9.add(jButton4);
 
-        jButton9.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_stop_black_24dp.png")))); // NOI18N
+        jButton9.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_STOP)));
         jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
@@ -168,7 +168,7 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel9.add(jButton9);
 
-        jButton10.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_right_black_24dp.png")))); // NOI18N
+        jButton10.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_ARROW_RIGHT)));
         jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
@@ -177,7 +177,7 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel9.add(jButton10);
 
-        jButton11.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_skip_next_black_24dp.png")))); // NOI18N
+        jButton11.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_SKIP_NEXT)));
         jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))

@@ -1,5 +1,6 @@
 package Vue;
 
+import Global.Configuration;
 import Modele.PaletteDeCouleurs;
 
 import java.io.File;
@@ -36,7 +37,7 @@ public class MainMenu extends javax.swing.JPanel {
         jPanel1.add(filler);
         jPanel1.add(filler);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_settings_black_24dp.png")))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_SETTINGS)));
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -44,7 +45,7 @@ public class MainMenu extends javax.swing.JPanel {
         });
         jPanel1.add(jButton2);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_account_circle_black_24dp.png")))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_ACCOUNT)));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);

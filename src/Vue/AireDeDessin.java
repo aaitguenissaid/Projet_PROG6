@@ -119,11 +119,15 @@ public class AireDeDessin extends JComponent {
         drawable.setFont(font);
         drawable.setColor(palette.Couleur7);
         String nom;
-        if(jeu.quiAGagnee()==0)
-            nom=jeu.getNomJ1();
-        else
-            nom=jeu.getNomJ2();
-        String text = "Le joueur "+nom+" gagne!";
+        int gagnant = jeu.quiAGagnee();
+        String text;
+        if(gagnant==0) {
+            text = "Egalité";
+        } else {
+            if(gagnant==1) nom = jeu.getNomJ1();
+            else nom = jeu.getNomJ2();
+            text = "Le joueur "+nom+" gagne !";
+        }
         FontMetrics metrics = drawable.getFontMetrics(font);
         int x = (largeurFenetrePixel - metrics.stringWidth(text)) / 2;
         int y = getHeight() - metrics.getHeight() ;

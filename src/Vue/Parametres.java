@@ -177,10 +177,11 @@ public class Parametres extends javax.swing.JPanel {
         jPanel11.setLayout(new java.awt.GridLayout(2, 2));
         jPanel11.setAlignmentX(0.0F);
         jPanel12.setAlignmentX(0.0F);
-        jLabel7.setText("jLabel2");
+        jLabel7.setText("Complexité de la première IA");
         jPanel11.add(jLabel7);
-        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(Configuration.instance().lis("IA_names").split(",")));
+        jComboBox3.setSelectedItem(Configuration.instance().get(Configuration.IA_1));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox3ActionPerformed(evt);
@@ -188,11 +189,11 @@ public class Parametres extends javax.swing.JPanel {
         });
         jPanel11.add(jComboBox3);
 
-        jLabel8.setText("jLabel8");
+        jLabel8.setText("Complexité de la deuxième IA");
         jPanel11.add(jLabel8);
 
-        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(Configuration.instance().lis("IA_names").split(",")));
+        jComboBox4.setSelectedItem(Configuration.instance().get(Configuration.IA_2));
         jComboBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox4ActionPerformed(evt);
@@ -203,7 +204,7 @@ public class Parametres extends javax.swing.JPanel {
         jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.LINE_AXIS));
         jPanel12.add(jPanel11);
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Lancer la démo");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -313,18 +314,16 @@ public class Parametres extends javax.swing.JPanel {
     }
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        // Handler pour la ComboBox de choix de l'IA_AFFRONTEMENT
         Configuration.instance().set(Configuration.IA_AFFRONTEMENT, jComboBox2.getSelectedItem().toString());
     }
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        System.out.println(jComboBox3.getSelectedItem());
-
+        // Handler pour la ComboBox de choix de l'IA_1
+        Configuration.instance().set(Configuration.IA_1, jComboBox3.getSelectedItem().toString());
     }
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        System.out.println(jComboBox4.getSelectedItem());
-
+        // Handler pour la ComboBox de choix de l'IA_2
+        Configuration.instance().set(Configuration.IA_2, jComboBox4.getSelectedItem().toString());
     }
 
     private void jCheckBox3ActionPerformed(ActionEvent evt) {

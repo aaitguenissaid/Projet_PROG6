@@ -106,7 +106,7 @@ public class Regles extends javax.swing.JPanel {
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">La partie se poursuit tant qu’on peut effectuer des empilements. Le jeu se termine lorsque plus aucun déplacement n’est possible. Seul le dernier étage compte.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">=> Le vainqueur est le joueur totalisant le plus grand nombre de pions isolés ou de sommets de tours de sa couleur.</p></html>"));
         jPanel4.add(addImageToPanel("8"));
-        jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">= Qu’une tour compte 1,2... ou 5 pions, elle vaut toujours UN point.</p></html>"));
+        jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">=> Qu’une tour compte 1,2... ou 5 pions, elle vaut toujours UN point.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">En cas d’égalité, c'est celui qui a le plus de tours de 5 pions (avec le pion de sa couleur au sommet) qui a gagné.</p></html>"));
 
 

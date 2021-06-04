@@ -327,6 +327,7 @@ public class Parametres extends javax.swing.JPanel {
     }
 
     private void jCheckBox3ActionPerformed(ActionEvent evt) {
+        // Handler pour le choix du paramètre général d'autorisation / interdiction des suggestions
         Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION));
         b=!b;
         Configuration.instance().set(Configuration.EST_AUTORISE_SUGGESTION,b.toString());
@@ -336,68 +337,69 @@ public class Parametres extends javax.swing.JPanel {
     }
 
     private void jCheckBox2ActionPerformed(ActionEvent evt) {
+        // Handler pour le choix du paramètre général d'autorisation / interdiction de l'historique
         Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE));
         b=!b;
         Configuration.instance().set(Configuration.EST_AUTORISE_HISTORIQUE,b.toString());
     }
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here: back
+        // Handler pour le bouton de retour
         cc.revalidateInterface();
         cc.mainmenu();
     }
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO :Ce bouton devrait se lancer jeu
+        // Handler pour le bouton de lancement de la démo
         cc.lancer_demo();
         System.out.println(jComboBox3.getSelectedItem());
         System.out.println(jComboBox4.getSelectedItem());
     }
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        // Handler pour le choix du paramètre général de relance automatique
         Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE));
         b=!b;
         Configuration.instance().set(Configuration.RELANCE_AUTOMATIQUE,b.toString());
     }
 
     private void jButton34MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here: Theme1
+        // Handler pour le choix du Theme1
         palette.setSheme1();
         Configuration.instance().set(Configuration.COULEUR_THEME, "1");
         cc.revalidateInterface();
     }
 
     private void jButton35MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:Theme2
+        // Handler pour le choix du Theme2
         palette.setSheme2();
         Configuration.instance().set(Configuration.COULEUR_THEME, "2");
         cc.revalidateInterface();
     }
 
     private void jButton36MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:Theme3
+        // Handler pour le choix du Theme3
         palette.setSheme3();
         Configuration.instance().set(Configuration.COULEUR_THEME, "3");
         cc.revalidateInterface();
     }
 
     private void jButton37MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:Theme4
+        // Handler pour le choix du Theme4
         palette.setSheme4();
         Configuration.instance().set(Configuration.COULEUR_THEME, "4");
         cc.revalidateInterface();
     }
 
     private void jButton38MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:Theme5
+        // Handler pour le choix du Theme5
         palette.setSheme5();
         Configuration.instance().set(Configuration.COULEUR_THEME, "5");
         cc.revalidateInterface();
     }
 
     private void jButton31MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here: Sound1
+        // Handler pour l'activation / la désactivation du son
         cc.deisabel_enabel_son();
         boolean son_on = Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON));
         Configuration.instance().set(Configuration.SON_ON, String.valueOf(!son_on));

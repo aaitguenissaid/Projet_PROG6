@@ -146,9 +146,9 @@ public class IAFort extends IA{
             byte[] config = configuration();
             configurationDejaVuMax.put(hashCode(config), maxValeur);
             return maxValeur;
-
         } else {
             int minValeur = INF;
+            int noteNoeudPrecedent = evaluerNoeud();
             while (it.aProchain()){
                 Mouvement m = it.prochain();
                 Point depart = m.getDepart();
@@ -162,16 +162,21 @@ public class IAFort extends IA{
                     minValeur = Math.min(minValeur, valeur);
                     jeu.annule(depart, arrvee, hauteur);
                     break;
-                } else {
-                    valeur = minmaxAlphaBeta(alpha, beta, true, horizon - 1);
-                    int noteNoeud = evaluerNoeud();
-                    valeur = Math.min(valeur, noteNoeud);
-                    minValeur = Math.min(minValeur, valeur);
-                    beta = Math.min(beta, valeur);
-                    jeu.annule(depart, arrvee, hauteur);
-                    if (beta <= alpha)
-                        break;
                 }
+                int noteNoeudCourant = evaluerNoeud();
+                if (noteNoeudCourant < noteNoeudPrecedent){
+                    minValeur = noteNoeudCourant;
+                    configurationDejaVuMin.put(hashCode(config), noteNoeudCourant);
+                    jeu.annule(depart, arrvee, hauteur);
+                    continue;
+                }
+                valeur = minmaxAlphaBeta(alpha, beta, true, horizon - 1);
+                minValeur = Math.min(minValeur, valeur);
+                beta = Math.min(beta, valeur);
+                jeu.annule(depart, arrvee, hauteur);
+                if (beta <= alpha)
+                    break;
+
             }
             byte[] config = configuration();
             configurationDejaVuMin.put(hashCode(config), minValeur);
@@ -194,7 +199,6 @@ public class IAFort extends IA{
             jeu.bouge(depart, arrvee, false);
             int noteNoeud = evaluerNoeud();
             if (noteNoeud > noteNoeudPrecedent){
-                System.out.println("noteNoeud = " + noteNoeud);
                 gagnant = configSuivant;
                 jeu.annule(depart, arrvee, hauteur);
                 break;
@@ -207,7 +211,6 @@ public class IAFort extends IA{
             }
             jeu.annule(depart, arrvee, hauteur);
         }
-        System.out.println("max = " + max);
         return gagnant;
     }
 

@@ -43,7 +43,7 @@ public class InterfaceUtilisateur implements Runnable {
         comp.setFocusable(true);
         comp.addKeyListener(new AdaptateurDeClavier(ctrl));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(750, 500);
+        frame.setSize(800, 600);
         frame.setVisible(true);
         cl = (CardLayout)(screens.getLayout());
     }

@@ -9,7 +9,8 @@ import java.util.HashMap;
 
 public class IAFort extends IA{
     private final int INF = 1000;
-    HashMap<String, Integer> configurationDejaVu;
+    HashMap<String, Integer> configurationDejaVuMin;
+    HashMap<String, Integer> configurationDejaVuMax;
     int nombreCoup;
 
     public IAFort(Jeu j, int joueur) {
@@ -96,7 +97,7 @@ public class IAFort extends IA{
     }
 
 
-    /* Fonction minmax alpha beta */
+    /* Fonction minmax alpha beta
     private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
         if ((estFeuille()) || (horizon == 0)){
             byte[] config = configuration();
@@ -106,7 +107,7 @@ public class IAFort extends IA{
                 value = configurationDejaVu.get(key);
             } else {
                 value = evaluerNoeud();
-                configurationDejaVu.put(hashCode(config), value);
+                //configurationDejaVu.put(hashCode(config), value);
             }
             return value;
         }
@@ -150,6 +151,8 @@ public class IAFort extends IA{
                     valeur = configurationDejaVu.get(hashCode(config));
                 } else {
                     valeur = minmaxAlphaBeta(alpha, beta, true, horizon - 1);
+                    int noteNoeud = evaluerNoeud();
+                    valeur = Math.min(valeur, noteNoeud);
                 }
                 minValeur = Math.min(minValeur, valeur);
                 beta = Math.min(beta, valeur);
@@ -161,7 +164,93 @@ public class IAFort extends IA{
             configurationDejaVu.put(hashCode(config), minValeur);
             return minValeur;
         }
+    } */
+
+
+
+    private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
+        if ((estFeuille()) || (horizon == 0)){
+            byte[] config = configuration();
+            int value;
+            String key = hashCode(config);
+            if (estMax){
+                if (configurationDejaVuMax.containsKey(key)){
+                    value = configurationDejaVuMax.get(key);
+                } else {
+                    value = evaluerNoeud();
+                    configurationDejaVuMax.put(hashCode(config), value);
+                }
+            } else {
+                if (configurationDejaVuMin.containsKey(key)){
+                    value = configurationDejaVuMin.get(key);
+                } else {
+                    value = evaluerNoeud();
+                    configurationDejaVuMin.put(hashCode(config), value);
+                }
+            }
+            return value;
+        }
+        IterateurCoup it = new IterateurCoup(this);
+        if (estMax){
+            int maxValeur = -INF;
+            while (it.aProchain()){
+                Mouvement m = it.prochain();
+                Point depart = m.getDepart();
+                Point arrvee = m.getArrivee();
+                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
+                jeu.bouge(depart, arrvee,false);
+                byte[] config = configuration();
+                int valeur;
+                if (configurationDejaVuMax.containsKey(hashCode(config))){
+                    valeur = configurationDejaVuMax.get(hashCode(config));
+                    maxValeur = Math.max(maxValeur, valeur);
+                    jeu.annule(depart, arrvee, hauteur);
+                    break;
+                } else {
+                    valeur = minmaxAlphaBeta(alpha, beta, false, horizon-1);
+                    maxValeur = Math.max(maxValeur, valeur);
+                    alpha = Math.max(alpha, valeur);
+                    jeu.annule(depart, arrvee, hauteur);
+                    if (beta <= alpha)
+                        break;
+                }
+            }
+            byte[] config = configuration();
+            configurationDejaVuMax.put(hashCode(config), maxValeur);
+            return maxValeur;
+
+        } else {
+            int minValeur = INF;
+            while (it.aProchain()){
+                Mouvement m = it.prochain();
+                Point depart = m.getDepart();
+                Point arrvee = m.getArrivee();
+                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
+                jeu.bouge(depart, arrvee, false);
+                byte[] config = configuration();
+                int valeur;
+                if (configurationDejaVuMin.containsKey(hashCode(config))){
+                    valeur = configurationDejaVuMin.get(hashCode(config));
+                    minValeur = Math.min(minValeur, valeur);
+                    jeu.annule(depart, arrvee, hauteur);
+                    break;
+                } else {
+                    valeur = minmaxAlphaBeta(alpha, beta, true, horizon - 1);
+                    int noteNoeud = evaluerNoeud();
+                    valeur = Math.min(valeur, noteNoeud);
+                    minValeur = Math.min(minValeur, valeur);
+                    beta = Math.min(beta, valeur);
+                    jeu.annule(depart, arrvee, hauteur);
+                    if (beta <= alpha)
+                        break;
+                }
+            }
+            byte[] config = configuration();
+            configurationDejaVuMin.put(hashCode(config), minValeur);
+            return minValeur;
+        }
     }
+
 
     private Mouvement trouverGagnant(int horizon){
         Mouvement gagnant = null;
@@ -177,12 +266,12 @@ public class IAFort extends IA{
             jeu.bouge(depart, arrvee, false);
             int noteNoeud = evaluerNoeud();
             if (noteNoeud > noteNoeudPrecedent){
-                System.out.println("noteNoeud =" + noteNoeud);
+                System.out.println("noteNoeud = " + noteNoeud);
                 gagnant = configSuivant;
                 jeu.annule(depart, arrvee, hauteur);
                 break;
             } else {
-                courant = minmaxAlphaBeta( -INF, INF,true, horizon);
+                courant = minmaxAlphaBeta( -INF, INF,false, horizon);
                 if (courant > max){
                     max = courant;
                     gagnant = configSuivant;
@@ -190,7 +279,7 @@ public class IAFort extends IA{
             }
             jeu.annule(depart, arrvee, hauteur);
         }
-        System.out.println("courant = " + courant);
+        System.out.println("max = " + max);
         return gagnant;
     }
 
@@ -199,7 +288,8 @@ public class IAFort extends IA{
     public Mouvement joue() {
         long start = System.currentTimeMillis();
         Mouvement resultat;
-        configurationDejaVu = new HashMap<>();
+        configurationDejaVuMin = new HashMap<>();
+        configurationDejaVuMax = new HashMap<>();
         resultat = trouverGagnant(2);
         nombreCoup++;
         long end=System.currentTimeMillis();

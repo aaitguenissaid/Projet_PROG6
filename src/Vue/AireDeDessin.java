@@ -1,5 +1,6 @@
 package Vue;
 
+import Global.Configuration;
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 import Structures.Mouvement;
@@ -70,7 +71,7 @@ public class AireDeDessin extends JComponent {
         drawable.setColor(palette.Couleur1);
         drawable.fillRect(0, 0, largeurFenetrePixel, hauteurFenetrePixel);
         tracerGrille();
-        if(cc.suggestion()) {
+        if(cc.suggestion() && !Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION))) {
             suggestion(cc.suggestionMouvement());
         }
     }

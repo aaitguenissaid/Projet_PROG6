@@ -314,8 +314,7 @@ public class Parametres extends javax.swing.JPanel {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        System.out.println(jComboBox2.getSelectedItem());
-
+        Configuration.instance().set(Configuration.IA_AFFRONTEMENT, jComboBox2.getSelectedItem().toString());
     }
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:

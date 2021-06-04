@@ -352,7 +352,6 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void relancerPartie() {
         if(jeu.estFini()) {
             jeu.relancerPartie();
-            //TODO relancer le timer des IAs selon le mode de jeu
             jeuint.metAJour();
             if(mode==MODE_IAvsIA) {
                 lancerAnimationCoupIA(IA_1, 0);
@@ -370,10 +369,10 @@ public class ControleurMediateur implements CollecteurEvenements {
             String choix_valide = "Continuer";
             String choix_annule = "Annuler";
             if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
+                classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), (jeu.getTour()==Jeu.COULEUR1) ? 2 : 1);
                 jeu.relancerPartie();
                 jeuint.metAJour();
             }
-            classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), (jeu.getTour()==Jeu.COULEUR1) ? 2 : 1);
         }
     }
     public void deisabel_enabel_son(){

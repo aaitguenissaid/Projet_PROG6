@@ -166,20 +166,31 @@ public class IAFort extends IA{
     private Mouvement trouverGagnant(int horizon){
         Mouvement gagnant = null;
         int max = -INF;
+        int courant = -INF;
         IterateurCoup it = new IterateurCoup(this);
+        int noteNoeudPrecedent = evaluerNoeud();
         while (it.aProchain()){
             Mouvement configSuivant = it.prochain();
             Point depart = configSuivant.getDepart();
             Point arrvee = configSuivant.getArrivee();
             int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
             jeu.bouge(depart, arrvee, false);
-            int courant = minmaxAlphaBeta( -INF, INF,true, horizon);
-            jeu.annule(depart, arrvee, hauteur);
-            if (courant > max){
-                max = courant;
+            int noteNoeud = evaluerNoeud();
+            if (noteNoeud > noteNoeudPrecedent){
+                System.out.println("noteNoeud =" + noteNoeud);
                 gagnant = configSuivant;
+                jeu.annule(depart, arrvee, hauteur);
+                break;
+            } else {
+                courant = minmaxAlphaBeta( -INF, INF,true, horizon);
+                if (courant > max){
+                    max = courant;
+                    gagnant = configSuivant;
+                }
             }
+            jeu.annule(depart, arrvee, hauteur);
         }
+        System.out.println("courant = " + courant);
         return gagnant;
     }
 
@@ -189,17 +200,8 @@ public class IAFort extends IA{
         long start = System.currentTimeMillis();
         Mouvement resultat;
         configurationDejaVu = new HashMap<>();
-        if (nombreCoup < 8){
-            resultat = trouverGagnant(2);
-            nombreCoup++;
-        } else if (nombreCoup < 14){
-            resultat = trouverGagnant(3);
-            nombreCoup++;
-        } else {
-            resultat = trouverGagnant(4);
-            nombreCoup++;
-        }
-        System.out.println("nombreCoup = " + nombreCoup);
+        resultat = trouverGagnant(2);
+        nombreCoup++;
         long end=System.currentTimeMillis();
         System.out.println("Temps d'exécution： "+(end-start)+"ms");
         return resultat;

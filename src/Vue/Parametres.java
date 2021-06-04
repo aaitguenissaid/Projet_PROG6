@@ -177,10 +177,11 @@ public class Parametres extends javax.swing.JPanel {
         jPanel11.setLayout(new java.awt.GridLayout(2, 2));
         jPanel11.setAlignmentX(0.0F);
         jPanel12.setAlignmentX(0.0F);
-        jLabel7.setText("jLabel2");
+        jLabel7.setText("Complexité de la première IA");
         jPanel11.add(jLabel7);
-        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(Configuration.instance().lis("IA_names").split(",")));
+        jComboBox3.setSelectedItem(Configuration.instance().get(Configuration.IA_1));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox3ActionPerformed(evt);
@@ -188,11 +189,11 @@ public class Parametres extends javax.swing.JPanel {
         });
         jPanel11.add(jComboBox3);
 
-        jLabel8.setText("jLabel8");
+        jLabel8.setText("Complexité de la deuxième IA");
         jPanel11.add(jLabel8);
 
-        //TODO Ajoutez les noms de toutes les intelligences artificielles au lieu de Item 1..4
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(Configuration.instance().lis("IA_names").split(",")));
+        jComboBox4.setSelectedItem(Configuration.instance().get(Configuration.IA_2));
         jComboBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox4ActionPerformed(evt);
@@ -203,7 +204,7 @@ public class Parametres extends javax.swing.JPanel {
         jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.LINE_AXIS));
         jPanel12.add(jPanel11);
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Lancer la démo");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -313,21 +314,20 @@ public class Parametres extends javax.swing.JPanel {
     }
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        // Handler pour la ComboBox de choix de l'IA_AFFRONTEMENT
         Configuration.instance().set(Configuration.IA_AFFRONTEMENT, jComboBox2.getSelectedItem().toString());
     }
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        System.out.println(jComboBox3.getSelectedItem());
-
+        // Handler pour la ComboBox de choix de l'IA_1
+        Configuration.instance().set(Configuration.IA_1, jComboBox3.getSelectedItem().toString());
     }
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        System.out.println(jComboBox4.getSelectedItem());
-
+        // Handler pour la ComboBox de choix de l'IA_2
+        Configuration.instance().set(Configuration.IA_2, jComboBox4.getSelectedItem().toString());
     }
 
     private void jCheckBox3ActionPerformed(ActionEvent evt) {
+        // Handler pour le choix du paramètre général d'autorisation / interdiction des suggestions
         Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION));
         b=!b;
         Configuration.instance().set(Configuration.EST_AUTORISE_SUGGESTION,b.toString());
@@ -337,68 +337,69 @@ public class Parametres extends javax.swing.JPanel {
     }
 
     private void jCheckBox2ActionPerformed(ActionEvent evt) {
+        // Handler pour le choix du paramètre général d'autorisation / interdiction de l'historique
         Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE));
         b=!b;
         Configuration.instance().set(Configuration.EST_AUTORISE_HISTORIQUE,b.toString());
     }
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here: back
+        // Handler pour le bouton de retour
         cc.revalidateInterface();
         cc.mainmenu();
     }
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO :Ce bouton devrait se lancer jeu
+        // Handler pour le bouton de lancement de la démo
         cc.lancer_demo();
         System.out.println(jComboBox3.getSelectedItem());
         System.out.println(jComboBox4.getSelectedItem());
     }
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        // Handler pour le choix du paramètre général de relance automatique
         Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE));
         b=!b;
         Configuration.instance().set(Configuration.RELANCE_AUTOMATIQUE,b.toString());
     }
 
     private void jButton34MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here: Theme1
+        // Handler pour le choix du Theme1
         palette.setSheme1();
         Configuration.instance().set(Configuration.COULEUR_THEME, "1");
         cc.revalidateInterface();
     }
 
     private void jButton35MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:Theme2
+        // Handler pour le choix du Theme2
         palette.setSheme2();
         Configuration.instance().set(Configuration.COULEUR_THEME, "2");
         cc.revalidateInterface();
     }
 
     private void jButton36MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:Theme3
+        // Handler pour le choix du Theme3
         palette.setSheme3();
         Configuration.instance().set(Configuration.COULEUR_THEME, "3");
         cc.revalidateInterface();
     }
 
     private void jButton37MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:Theme4
+        // Handler pour le choix du Theme4
         palette.setSheme4();
         Configuration.instance().set(Configuration.COULEUR_THEME, "4");
         cc.revalidateInterface();
     }
 
     private void jButton38MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:Theme5
+        // Handler pour le choix du Theme5
         palette.setSheme5();
         Configuration.instance().set(Configuration.COULEUR_THEME, "5");
         cc.revalidateInterface();
     }
 
     private void jButton31MouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here: Sound1
+        // Handler pour l'activation / la désactivation du son
         cc.deisabel_enabel_son();
         boolean son_on = Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON));
         Configuration.instance().set(Configuration.SON_ON, String.valueOf(!son_on));

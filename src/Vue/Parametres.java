@@ -67,7 +67,7 @@ public class Parametres extends javax.swing.JPanel {
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
 
 
-        jButton1.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_back_ios_black_24dp.png"))));
+        jButton1.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_BACK)));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -465,28 +465,30 @@ public class Parametres extends javax.swing.JPanel {
         jCheckBox4.setForeground(palette.Couleur7);
     }
     public void setThemeIcon(){
-        jButton34.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_disabled_by_default_black_24dp.png"))));
-        jButton35.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_disabled_by_default_black_24dp.png"))));
-        jButton36.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_disabled_by_default_black_24dp.png"))));
-        jButton37.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_disabled_by_default_black_24dp.png"))));
-        jButton38.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_disabled_by_default_black_24dp.png"))));
+        byte[] icon_disabled = Configuration.instance().contenuFichier(Configuration.ICON_DISABLED);
+        byte[] icon_done = Configuration.instance().contenuFichier(Configuration.ICON_DONE);
+        jButton34.setIcon(new javax.swing.ImageIcon(icon_disabled));
+        jButton35.setIcon(new javax.swing.ImageIcon(icon_disabled));
+        jButton36.setIcon(new javax.swing.ImageIcon(icon_disabled));
+        jButton37.setIcon(new javax.swing.ImageIcon(icon_disabled));
+        jButton38.setIcon(new javax.swing.ImageIcon(icon_disabled));
         if (palette.colorSheme()==1) {
-            jButton34.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_done_black_24dp.png"))));
+            jButton34.setIcon(new javax.swing.ImageIcon(icon_done));
         }else if (palette.colorSheme()==2) {
-            jButton35.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_done_black_24dp.png"))));
+            jButton35.setIcon(new javax.swing.ImageIcon(icon_done));
         }else if (palette.colorSheme()==3) {
-            jButton36.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_done_black_24dp.png"))));
+            jButton36.setIcon(new javax.swing.ImageIcon(icon_done));
         }else if (palette.colorSheme()==4) {
-            jButton37.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_done_black_24dp.png"))));
+            jButton37.setIcon(new javax.swing.ImageIcon(icon_done));
         }else if (palette.colorSheme()==5) {
-            jButton38.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_done_black_24dp.png"))));
+            jButton38.setIcon(new javax.swing.ImageIcon(icon_done));
         }
     }
     public void setSonIcon(){
         if(cc.getSonState()){
-            jButton31.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_volume_up_black_24dp.png"))));
+            jButton31.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_VOLUME_UP)));
         }else{
-            jButton31.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_volume_off_black_24dp.png"))));
+            jButton31.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_VOLUME_OFF)));
         }
     }
     private javax.swing.Box.Filler filler1;

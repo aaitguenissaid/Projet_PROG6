@@ -1,5 +1,6 @@
 package Vue;
 
+import Global.Configuration;
 import Modele.PaletteDeCouleurs;
 
 import javax.swing.*;
@@ -44,7 +45,7 @@ public class Regles extends javax.swing.JPanel {
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/icons/outline_arrow_back_ios_black_24dp.png"))));
+        jButton1.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_BACK)));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -76,36 +77,36 @@ public class Regles extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.8;
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
-        jPanel4.add(addImageToPanel("12"));
-        jPanel4.add(addImageToPanel("1"));
+        jPanel4.add(addImageToPanel("img12"));
+        jPanel4.add(addImageToPanel("img1"));
         jPanel4.add(addTextToPanel("<html><h1 style='color:"+fontColor+";padding:5px;' >Préparation du jeu</h1></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Disposer sur les trous les 48 pions en alternant les couleurs.</p></html>"));
-        jPanel4.add(addImageToPanel("2"));
+        jPanel4.add(addImageToPanel("img2"));
         jPanel4.add(addTextToPanel("<html><h1 style='color:"+fontColor+";padding:5px;'>Régles</h1></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Chaque joueur choisit sa couleur.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Chaque joueur a le droit de jouer avec tous les pions, y compris ceux de l'adversaire.</p></html>"));
         jPanel4.add(addTextToPanel("<html><h1 style='color:"+fontColor+";padding:5px;'>But du jeu</h1></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Posséder un maximum de tours dont le pion supérieur est de la couleur choisie.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Une tour est constituée de 1 à 5 pions. Jamais plus.</p></html>"));
-        jPanel4.add(addImageToPanel("3"));
+        jPanel4.add(addImageToPanel("img3"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Un joueur est le propriétaire d’une tour lorsqu’un pion de sa couleur en occupe le sommet.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Un pion isolé est également considéré comme une tour.</p></html>"));
-        jPanel4.add(addImageToPanel("4"));
+        jPanel4.add(addImageToPanel("img4"));
         jPanel4.add(addTextToPanel("<html><h1 style='color:"+fontColor+";padding:5px;'>Déplacements</h1></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">A tour de rôle, chaque joueur effectue un seul déplacement à partir de n‘importe quel pion ou pile de pions. Chacun est donc libre de jouer où bon lui semble.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Un déplacement consiste à empiler le ou les pions sur un emplacement directement voisin (diagonale = ok) déjà occupé par un ou plusieurs pions (jamais sur un trou vide).</p></html>"));
-        jPanel4.add(addImageToPanel("5"));
+        jPanel4.add(addImageToPanel("img5"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">=> Chaque coup joué équivaut donc à libérer un emplacement.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">=> Il est interdit de passer au-dessus d’un trou vide.</p></html>"));
-        jPanel4.add(addImageToPanel("6"));
+        jPanel4.add(addImageToPanel("img6"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">On déplace obligatoirement tous les pions situés sur un emplacement (de 1 a 4. Une tour de 5 pions ne se déplace pas).</p></html>"));
-        jPanel4.add(addImageToPanel("7"));
+        jPanel4.add(addImageToPanel("img7"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Une pile de pions ne peut qu’augmenter, jamais diminuer.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">Un pion ou une tour, isolés de tous les côtés, ne pourront donc plus bouger ni changer de propriétaire.</p></html>"));
         jPanel4.add(addTextToPanel("<html><h1 style='color:"+fontColor+";padding:5px;'>Fin de la partie</h1></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">La partie se poursuit tant qu’on peut effectuer des empilements. Le jeu se termine lorsque plus aucun déplacement n’est possible. Seul le dernier étage compte.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">=> Le vainqueur est le joueur totalisant le plus grand nombre de pions isolés ou de sommets de tours de sa couleur.</p></html>"));
-        jPanel4.add(addImageToPanel("8"));
+        jPanel4.add(addImageToPanel("img8"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">=> Qu’une tour compte 1,2... ou 5 pions, elle vaut toujours UN point.</p></html>"));
         jPanel4.add(addTextToPanel("<html><p style=\"color:"+fontColor+";padding:10px; text-align: justify;  text-justify: inter-word;\">En cas d’égalité, c'est celui qui a le plus de tours de 5 pions (avec le pion de sa couleur au sommet) qui a gagné.</p></html>"));
 
@@ -130,7 +131,8 @@ public class Regles extends javax.swing.JPanel {
         JLabel label = new JLabel();
         label.setBackground(palette.Couleur1);
         label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label.setIcon(new javax.swing.ImageIcon(String.valueOf(new File("ressources/img/"+nom+".png"))));
+        label.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(nom)));
+        //String.valueOf(new File("ressources/img/"+nom+".png"))));
         panel.add(label);
         return panel;
     }

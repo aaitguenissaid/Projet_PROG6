@@ -262,4 +262,10 @@ public class Configuration {
     public static final String ICON_STOP="iconStop";
     public static final String ICON_ARROW_RIGHT="iconArrowRight";
     public static final String ICON_SKIP_NEXT="iconSkipNext";
+    public static final String ICON_SETTINGS="iconSettings";
+    public static final String ICON_ACCOUNT="iconAccount";
+    public static final String ICON_DISABLED="iconDisabled";
+    public static final String ICON_DONE="iconDone";
+    public static final String ICON_VOLUME_UP="iconVolumeUp";
+    public static final String ICON_VOLUME_OFF="iconVolumeOff";
 }

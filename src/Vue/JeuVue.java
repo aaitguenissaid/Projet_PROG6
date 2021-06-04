@@ -187,6 +187,7 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel9.add(jButton11);
 
         jPanel4.add(jPanel9);
+        h.setHistorique(cc.getJeu().getHistorique());
         jPanel4.add(h);
         jPanel4.add(filler6);
 
@@ -282,12 +283,14 @@ public class JeuVue extends javax.swing.JPanel {
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:|<
         cc.last_historique();
+        h.setHistorique(cc.getJeu().getHistorique());
         h.repaint();
     }
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:<
         cc.next_historique();
+        h.setHistorique(cc.getJeu().getHistorique());
         h.repaint();
     }
 
@@ -319,18 +322,21 @@ public class JeuVue extends javax.swing.JPanel {
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here: Stop historique []
         cc.play_pause_historique();
+        h.setHistorique(cc.getJeu().getHistorique());
         h.repaint();
     }
 
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:>
         cc.previous_historique();
+        h.setHistorique(cc.getJeu().getHistorique());
         h.repaint();
     }
 
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:>|
         cc.first_historique();
+        h.setHistorique(cc.getJeu().getHistorique());
         h.repaint();
     }
     public void eteindreHistorique(){
@@ -395,11 +401,11 @@ public class JeuVue extends javax.swing.JPanel {
         jButton5.setBackground(palette.Couleur2);
         jButton5.setForeground(palette.Couleur7);
         jButton6.setBackground(palette.Couleur2);
-        jButton6.setForeground(palette.Couleur3);
+        jButton6.setForeground(palette.Couleur7);
         jButton7.setBackground(palette.Couleur2);
-        jButton7.setForeground(palette.Couleur3);
+        jButton7.setForeground(palette.Couleur7);
         jButton8.setBackground(palette.Couleur2);
-        jButton8.setForeground(palette.Couleur3);
+        jButton8.setForeground(palette.Couleur7);
         jPanel10.setBackground(palette.Couleur6);
         jLabel5.setBackground(palette.Couleur1);
         jPanel11.setBackground(palette.Couleur6);

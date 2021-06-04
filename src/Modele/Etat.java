@@ -110,7 +110,7 @@ public class Etat {
         return ret;
     }
 
-    //TODO rajoute methode comptage de tours de 5 d'une couleurs.
+    //Methode de comptage de tours de 5 d'une couleurs.
     public int nbPiles5Joueur(int id) {
         int resultat = 0;
         for(int i=0; i<taille.h; i++)

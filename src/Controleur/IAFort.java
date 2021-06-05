@@ -9,8 +9,6 @@ import java.util.HashMap;
 
 public class IAFort extends IA{
     private final int INF = 1000;
-    HashMap<String, Integer> configurationDejaVuMin;
-    HashMap<String, Integer> configurationDejaVuMax;
     int nombreCoup;
 
     public IAFort(Jeu j, int joueur) {
@@ -163,8 +161,6 @@ public class IAFort extends IA{
     public Mouvement joue() {
         long start = System.currentTimeMillis();
         Mouvement resultat;
-        configurationDejaVuMin = new HashMap<>();
-        configurationDejaVuMax = new HashMap<>();
         resultat = trouverGagnant(2);
         nombreCoup++;
         long end=System.currentTimeMillis();

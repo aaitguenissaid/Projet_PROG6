@@ -1,7 +1,10 @@
 package Global;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import java.awt.*;
 import java.io.*;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -32,6 +35,10 @@ public class Configuration {
         // donc utilisable pour un .jar
         // Attention, par contre, le fichier doit se trouver dans le CLASSPATH
         return ClassLoader.getSystemClassLoader().getResourceAsStream(nom);
+    }
+
+    public static URL chargeURL(String nom) {
+        return ClassLoader.getSystemClassLoader().getResource(nom);
     }
 
     static void chargerProprietes(Properties p, InputStream in, String nom) {
@@ -268,4 +275,7 @@ public class Configuration {
     public static final String ICON_DONE="iconDone";
     public static final String ICON_VOLUME_UP="iconVolumeUp";
     public static final String ICON_VOLUME_OFF="iconVolumeOff";
+
+    public static final String SOUND_1="sound1";
+    public static final String SOUND_2="sound2";
 }

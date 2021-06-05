@@ -85,6 +85,7 @@ public class Historique implements Cloneable {
     }
 
     public void validerNavigation() {
+        nbCoupsReel=current+1;
         if(current<historique.size()-1 && current>=0) {
             historique = new ArrayList<>(historique.subList(0, current+1));
         }

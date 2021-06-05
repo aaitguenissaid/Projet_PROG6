@@ -22,19 +22,19 @@ public class Score implements Comparable<Score> {
         this.lesPoints = lesPoints;
     }
 
-    String getPseudo() {
+    public String getPseudo() {
         return pseudo;
     }
 
-    int getNbVictoires() {
+    public int getNbVictoires() {
         return nbVictoires;
     }
 
-    int getNbParties() {
+    public int getNbParties() {
         return nbParties;
     }
 
-    float getLesPoints() {
+    public int getLesPoints() {
         return lesPoints;
     }
 

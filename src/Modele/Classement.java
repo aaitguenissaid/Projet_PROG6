@@ -68,7 +68,9 @@ public class Classement {
         }
         this.listeScores = listeScores;
     }
-
+    public FAPListe<Score> getList(){
+        return this.listeScores;
+    }
     Iterateur getIterateur() {
         return listeScores.iterateur();
     }

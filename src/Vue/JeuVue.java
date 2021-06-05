@@ -65,7 +65,7 @@ public class JeuVue extends javax.swing.JPanel {
         setToutCouleurs();
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
         h=new HistoriqueTimeLine(a.jeu.getHistorique());
-
+        cc.setHistAffControl(h);
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
         jButton1.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_BACK)));

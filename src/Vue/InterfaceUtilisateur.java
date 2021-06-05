@@ -18,6 +18,7 @@ public class InterfaceUtilisateur implements Runnable {
     CardLayout cl;
     Regles reg;
     JeuVue jeu;
+    ClassementScreen classements;
     boolean regBack =false;
 
     public void run() {
@@ -30,6 +31,7 @@ public class InterfaceUtilisateur implements Runnable {
         param = new Parametres(ctrl);
         reg = new Regles(ctrl);
         jeu = new JeuVue(ctrl,comp);
+        classements = new ClassementScreen(ctrl);
         j.setCollecteurEvenements(ctrl);
         comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
         comp.addMouseMotionListener(new AdaptateurMouvementDeSouri(ctrl,comp));
@@ -39,6 +41,7 @@ public class InterfaceUtilisateur implements Runnable {
         screens.add(jeu,"GAMESCREEN");
         screens.add(param,"PARAMETRES");
         screens.add(reg,"REAGLES");
+        screens.add(classements,"CLASSEMENT");
         frame.add(screens);
         comp.setFocusable(true);
         comp.addKeyListener(new AdaptateurDeClavier(ctrl));
@@ -100,6 +103,8 @@ public class InterfaceUtilisateur implements Runnable {
         cl.show(screens, "MAINMENU");
         regBack=false;
     }
+
+    public void setClassement() { cl.show(screens, "CLASSEMENT"); }
     public void setParametres(){
         cl.show(screens, "PARAMETRES");
     }
@@ -109,6 +114,7 @@ public class InterfaceUtilisateur implements Runnable {
         param.setToutCouleurs();
         reg.initComponents();
         jeu.initComponents();
+        classements.initComponents();
         setStatistiques();
     }
     public void reaglesBack(){
@@ -148,4 +154,5 @@ public class InterfaceUtilisateur implements Runnable {
     public void informer(String description) {
         JOptionPane.showMessageDialog(frame, description);
     }
+
 }

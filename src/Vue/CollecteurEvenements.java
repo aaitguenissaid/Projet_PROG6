@@ -70,5 +70,9 @@ public interface CollecteurEvenements {
     EffetsSonores getEffetsSonores();
 
     Jeu getJeu();
+
+    void classement();
+
+    void setHistAffControl(HistoriqueTimeLine h);
 }
 

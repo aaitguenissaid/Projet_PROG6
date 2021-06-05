@@ -352,8 +352,6 @@ public class Parametres extends javax.swing.JPanel {
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
         // Handler pour le bouton de lancement de la démo
         cc.lancer_demo();
-        System.out.println(jComboBox3.getSelectedItem());
-        System.out.println(jComboBox4.getSelectedItem());
     }
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {

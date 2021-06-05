@@ -23,8 +23,9 @@ public class MainMenu extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         setToutCouleurs();
-        setLayout(new java.awt.GridLayout(8, 3));
+        setLayout(new java.awt.GridLayout(10, 3));
         grid_insérer_des_cellules_vides(1);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 36)); // NOI18N
@@ -85,6 +86,16 @@ public class MainMenu extends javax.swing.JPanel {
             }
         });
         add(jButton5);
+        grid_insérer_des_cellules_vides(5);
+
+        jButton6.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        jButton6.setText("Classement");
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton6MouseClicked(evt);
+            }
+        });
+        add(jButton6);
         grid_insérer_des_cellules_vides(4);
     }
     private void grid_insérer_des_cellules_vides (int k) {
@@ -122,6 +133,9 @@ public class MainMenu extends javax.swing.JPanel {
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {
         cc.reagles();
     }
+    private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {
+        cc.classement();
+    }
     public void setToutCouleurs(){
         setBackground(palette.Couleur1);
         jPanel1.setBackground(palette.Couleur1);
@@ -134,6 +148,8 @@ public class MainMenu extends javax.swing.JPanel {
         jButton4.setForeground(palette.Couleur3);
         jButton5.setBackground(palette.Couleur2);
         jButton5.setForeground(palette.Couleur3);
+        jButton6.setBackground(palette.Couleur2);
+        jButton6.setForeground(palette.Couleur3);
     }
     private javax.swing.Box.Filler filler;
     private javax.swing.JButton jButton1;
@@ -141,6 +157,7 @@ public class MainMenu extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
 }

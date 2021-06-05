@@ -20,7 +20,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     int mode; //0=JvsJ, 1=JvsIA, 2=IAvsIA
     IA IAAffrontement, IA_1, IA_2;
     Joueur JoueurIA;
-
+    HistoriqueTimeLine histAffControl;
     //Attributs pour les animations
     Timer time;
     SequenceListe<Animation> animations;
@@ -164,7 +164,8 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void lancer_demo() {
         mode=2;
-
+        jeu =new Jeu();
+        jeuint.setJeu(jeu);
         //Création des IAs
         String nom_ia1 = Configuration.instance().get(Configuration.IA_1);
         IA_1 = construireIA(nom_ia1, Jeu.COULEUR1);
@@ -277,6 +278,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                 jeu.getHistorique().validerNavigation();
             }
         }
+        histAffControl.repaint();
     }
 
     @Override
@@ -288,6 +290,8 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void mainmenu() {
         if(mode!=MODE_JvsJ && time!=null && time.isRunning()) {
             time.stop();
+            jeu =new Jeu();
+            jeuint.setJeu(jeu);
         }
         jeuint.setMainMenu();
     }
@@ -295,6 +299,8 @@ public class ControleurMediateur implements CollecteurEvenements {
     @Override
     public void reagles() { jeuint.setReagles();}
 
+    @Override
+    public void classement() { jeuint.setClassement(); }
     public PaletteDeCouleurs getPalette(){
         return palette;
     }
@@ -436,6 +442,10 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
     public Jeu getJeu(){
         return jeu;
+    }
+
+    public void setHistAffControl(HistoriqueTimeLine h){
+        histAffControl = h;
     }
 
 }

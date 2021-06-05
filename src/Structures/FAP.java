@@ -5,10 +5,10 @@ public abstract class FAP<Bob> {
     Sequence<Bob> s;
 
     abstract void insere(Bob element);
-    Bob extrait() {
+    public Bob extrait() {
         return s.extraitTete();
     }
-    boolean estVide() {
+    public boolean estVide() {
         return s.estVide();
     }
     public Iterateur iterateur(){

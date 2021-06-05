@@ -113,8 +113,8 @@ public class Configuration {
 
     //Retourne une liste de Points devant être vides dans la grille du Avalam
     public ArrayList<Point> getEmptyPoints() {
-        String filename = this.lisFichier("FichierEmptyPoints");
-        InputStream in = Configuration.charge(filename);
+        String filename = lis("FichierEmptyPoints");
+        InputStream in = charge(filename);
         if(in==null) return new ArrayList<>();
         Scanner sc = new Scanner(in);
 

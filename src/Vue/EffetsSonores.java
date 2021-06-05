@@ -1,7 +1,10 @@
 package Vue;
 
+import Global.Configuration;
+
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import javax.sound.sampled.*;
 
 public class EffetsSonores {
@@ -11,8 +14,10 @@ public class EffetsSonores {
     public EffetsSonores() {
         on =true;
         try {
-            AudioInputStream audioInputStream1 = AudioSystem.getAudioInputStream(new File("ressources/sounds/1.wav").getAbsoluteFile());
-            AudioInputStream audioInputStream2 = AudioSystem.getAudioInputStream(new File("ressources/sounds/2.wav").getAbsoluteFile());
+            URL url1 = Configuration.chargeURL(Configuration.instance().lis(Configuration.SOUND_1));
+            AudioInputStream audioInputStream1 = AudioSystem.getAudioInputStream(url1);
+            URL url2 = Configuration.chargeURL(Configuration.instance().lis(Configuration.SOUND_2));
+            AudioInputStream audioInputStream2 = AudioSystem.getAudioInputStream(url2);
             clip1 = AudioSystem.getClip();
             clip2 = AudioSystem.getClip();
             clip1.open(audioInputStream1);

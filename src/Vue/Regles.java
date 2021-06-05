@@ -132,7 +132,6 @@ public class Regles extends javax.swing.JPanel {
         label.setBackground(palette.Couleur1);
         label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(nom)));
-        //String.valueOf(new File("ressources/img/"+nom+".png"))));
         panel.add(label);
         return panel;
     }

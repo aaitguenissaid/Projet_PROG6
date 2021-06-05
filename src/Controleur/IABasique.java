@@ -5,9 +5,9 @@ import Structures.Mouvement;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class IABasique extends IA{
-
     public IABasique(Jeu j, int joueur) {
         super(j, joueur);
     }
@@ -47,10 +47,10 @@ public class IABasique extends IA{
 
     @Override
     public Mouvement joue() {
-        /* Règle 1: s'il y a pour une case de couleur d'adversaire et le nombre de ses voisins est 1 et le couleur est
-           IABasique, on bouge le tour de pion IABasique sur le tour d'adversaire pour obtenir un point.
-           Règle 2 : s'il y un tour de pions d'adversaire avec hauteur x, et un voisin d'IABasique avec hauteur y, et
-           x+y == 5, on bouge le tour de IABasique pour obtenir un point. */
+          /* Règle 1: s'il y a pour une case de couleur d'adversaire et le nombre de ses voisins est 1 et le couleur est
+            IABasique, on bouge le tour de pion IABasique sur le tour d'adversaire pour obtenir un point.
+            Règle 2 : s'il y un tour de pions d'adversaire avec hauteur x, et un voisin d'IABasique avec hauteur y, et
+            x+y == 5, on bouge le tour de IABasique pour obtenir un point.   */
         for (int i = 0; i < jeu.getTaille().h; i++){
             for (int j = 0; j < jeu.getTaille().l; j++){
                 if (aPion(i, j)){   // if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).nbPions() > 0))
@@ -78,4 +78,5 @@ public class IABasique extends IA{
         IAAleatoire iaA = new IAAleatoire(jeu, joueur);
         return iaA.joue();
     }
+
 }

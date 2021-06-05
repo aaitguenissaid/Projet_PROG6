@@ -79,112 +79,6 @@ public class IAFort extends IA{
     }
 
 
-    /* Prends le jeu courant et encode la configuration de ce jeu */
-    public byte[] configuration(){
-        byte[] resultat = new byte[48];
-        for (int i = 0; i < jeu.getTaille().h; i++){
-            for (int j = 0; j < jeu.getTaille().l; j++){
-                if ((jeu.estCaseValide(new Point(i, j))) &&(jeu.getCase(i, j).nbPions() > 0)){
-                    int indice = coderPoint(i, j);
-                    byte hauteur = (byte) jeu.getCase(i, j).nbPions();
-                    byte couleur = (byte) jeu.getCase(i, j).getTete().getCouleur();
-                    byte value = setValue(couleur, hauteur);
-                    resultat[indice] = value;
-                }
-            }
-        }
-        return resultat;
-    }
-
-    private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
-        if ((estFeuille()) || (horizon == 0)){
-            int value;
-            String key = HashCode();
-            if (estMax){
-                if (configurationDejaVuMax.containsKey(key)){
-                    value = configurationDejaVuMax.get(key);
-                } else {
-                    value = evaluerNoeud();
-                    configurationDejaVuMax.put(key, value);
-                }
-            } else {
-                if (configurationDejaVuMin.containsKey(key)){
-                    value = configurationDejaVuMin.get(key);
-                } else {
-                    value = evaluerNoeud();
-                    configurationDejaVuMin.put(key, value);
-                }
-            }
-            return value;
-        }
-        IterateurCoup it = new IterateurCoup(this);
-        if (estMax){
-            int maxValeur = -INF;
-            while (it.aProchain()){
-                Mouvement m = it.prochain();
-                Point depart = m.getDepart();
-                Point arrvee = m.getArrivee();
-                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
-                jeu.bouge(depart, arrvee,false);
-                int valeur;
-                String key = HashCode();
-                if (configurationDejaVuMax.containsKey(key)){
-                    valeur = configurationDejaVuMax.get(key);
-                    maxValeur = Math.max(maxValeur, valeur);
-                    jeu.annule(depart, arrvee, hauteur);
-                    break;
-                } else {
-                    valeur = minmaxAlphaBeta(alpha, beta, false, horizon-1);
-                    maxValeur = Math.max(maxValeur, valeur);
-                    alpha = Math.max(alpha, valeur);
-                    jeu.annule(depart, arrvee, hauteur);
-                    if (beta <= alpha)
-                        break;
-                }
-            }
-            String key = HashCode();
-            configurationDejaVuMax.put(key, maxValeur);
-            return maxValeur;
-        } else {
-            int minValeur = INF;
-            int noteNoeudPrecedent = evaluerNoeud();
-            while (it.aProchain()){
-                Mouvement m = it.prochain();
-                Point depart = m.getDepart();
-                Point arrvee = m.getArrivee();
-                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
-                jeu.bouge(depart, arrvee, false);
-                int valeur;
-                String key = HashCode();
-                if (configurationDejaVuMin.containsKey(key)){
-                    valeur = configurationDejaVuMin.get(key);
-                    minValeur = Math.min(minValeur, valeur);
-                    jeu.annule(depart, arrvee, hauteur);
-                    break;
-                }
-                int noteNoeudCourant = evaluerNoeud();
-                if (noteNoeudCourant < noteNoeudPrecedent){
-                    minValeur = noteNoeudCourant;
-                    configurationDejaVuMin.put(key, noteNoeudCourant);
-                    jeu.annule(depart, arrvee, hauteur);
-                    continue;
-                }
-                valeur = minmaxAlphaBeta(alpha, beta, true, horizon - 1);
-                minValeur = Math.min(minValeur, valeur);
-                beta = Math.min(beta, valeur);
-                jeu.annule(depart, arrvee, hauteur);
-                if (beta <= alpha)
-                    break;
-
-            }
-            String key = HashCode();
-            configurationDejaVuMin.put(key, minValeur);
-            return minValeur;
-        }
-    }
-
-
-/*
     private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
         if ((estFeuille()) || (horizon == 0)){
             int value = evaluerNoeud();
@@ -199,7 +93,6 @@ public class IAFort extends IA{
                 Point arrvee = m.getArrivee();
                 int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
                 jeu.bouge(depart, arrvee,false);
-                byte[] config = configuration();
                 int valeur;
                 valeur = minmaxAlphaBeta(alpha, beta, false, horizon-1);
                 maxValeur = Math.max(maxValeur, valeur);
@@ -234,7 +127,7 @@ public class IAFort extends IA{
             }
             return minValeur;
         }
-    }  */
+    }
 
     private Mouvement trouverGagnant(int horizon){
         Mouvement gagnant = null;

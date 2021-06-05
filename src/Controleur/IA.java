@@ -32,28 +32,41 @@ abstract class IA {
         return (byte)((couleur << 7) | hauteur);
     }
 
-    private String codage(byte value){
-        int hauteur = getHauteur(value);
-        if (getCouleur(value) == 0){
-            return Integer.toString(hauteur);
-        } else {
-            if (hauteur == 1)
-                return "A";
-            else if (hauteur == 2)
-                return "B";
-            else if (hauteur == 3)
-                return "C";
-            else if (hauteur == 4)
-                return "D";
-            else
-                return "E";
-        }
+    private String codage(int hauteur){
+        if (hauteur == 1)
+            return "A";
+        else if (hauteur == 2)
+            return "B";
+        else if (hauteur == 3)
+            return "C";
+        else if (hauteur == 4)
+            return "D";
+        else
+            return "E";
     }
 
     public String hashCode(byte[] configuration) {
         String resultat = codage(configuration[0]);;
         for (int i = 1; i < configuration.length; i++){
             resultat += codage(configuration[i]);
+        }
+        return resultat;
+    }
+
+    public String HashCode(){
+        String resultat = null;
+        for (int i = 0; i < jeu.getTaille().h; i++){
+            for (int j = 0; j < jeu.getTaille().l; j++){
+                if (jeu.getCase(i, j).nbPions() == 0)
+                    resultat += Integer.toString(0);
+                else {
+                    int hauteur = jeu.getCase(i, j).nbPions();
+                    if (jeu.getCase(i, j).getTete().getCouleur() == 0)
+                        resultat += Integer.toString(hauteur);
+                     else
+                        resultat += codage(hauteur);
+                    }
+                }
         }
         return resultat;
     }

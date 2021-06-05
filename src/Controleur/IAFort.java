@@ -98,22 +98,21 @@ public class IAFort extends IA{
 
     private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
         if ((estFeuille()) || (horizon == 0)){
-            byte[] config = configuration();
             int value;
-            String key = hashCode(config);
+            String key = HashCode();
             if (estMax){
                 if (configurationDejaVuMax.containsKey(key)){
                     value = configurationDejaVuMax.get(key);
                 } else {
                     value = evaluerNoeud();
-                    configurationDejaVuMax.put(hashCode(config), value);
+                    configurationDejaVuMax.put(key, value);
                 }
             } else {
                 if (configurationDejaVuMin.containsKey(key)){
                     value = configurationDejaVuMin.get(key);
                 } else {
                     value = evaluerNoeud();
-                    configurationDejaVuMin.put(hashCode(config), value);
+                    configurationDejaVuMin.put(key, value);
                 }
             }
             return value;
@@ -127,10 +126,10 @@ public class IAFort extends IA{
                 Point arrvee = m.getArrivee();
                 int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
                 jeu.bouge(depart, arrvee,false);
-                byte[] config = configuration();
                 int valeur;
-                if (configurationDejaVuMax.containsKey(hashCode(config))){
-                    valeur = configurationDejaVuMax.get(hashCode(config));
+                String key = HashCode();
+                if (configurationDejaVuMax.containsKey(key)){
+                    valeur = configurationDejaVuMax.get(key);
                     maxValeur = Math.max(maxValeur, valeur);
                     jeu.annule(depart, arrvee, hauteur);
                     break;
@@ -143,8 +142,8 @@ public class IAFort extends IA{
                         break;
                 }
             }
-            byte[] config = configuration();
-            configurationDejaVuMax.put(hashCode(config), maxValeur);
+            String key = HashCode();
+            configurationDejaVuMax.put(key, maxValeur);
             return maxValeur;
         } else {
             int minValeur = INF;
@@ -155,10 +154,10 @@ public class IAFort extends IA{
                 Point arrvee = m.getArrivee();
                 int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
                 jeu.bouge(depart, arrvee, false);
-                byte[] config = configuration();
                 int valeur;
-                if (configurationDejaVuMin.containsKey(hashCode(config))){
-                    valeur = configurationDejaVuMin.get(hashCode(config));
+                String key = HashCode();
+                if (configurationDejaVuMin.containsKey(key)){
+                    valeur = configurationDejaVuMin.get(key);
                     minValeur = Math.min(minValeur, valeur);
                     jeu.annule(depart, arrvee, hauteur);
                     break;
@@ -166,7 +165,7 @@ public class IAFort extends IA{
                 int noteNoeudCourant = evaluerNoeud();
                 if (noteNoeudCourant < noteNoeudPrecedent){
                     minValeur = noteNoeudCourant;
-                    configurationDejaVuMin.put(hashCode(config), noteNoeudCourant);
+                    configurationDejaVuMin.put(key, noteNoeudCourant);
                     jeu.annule(depart, arrvee, hauteur);
                     continue;
                 }
@@ -178,12 +177,64 @@ public class IAFort extends IA{
                     break;
 
             }
-            byte[] config = configuration();
-            configurationDejaVuMin.put(hashCode(config), minValeur);
+            String key = HashCode();
+            configurationDejaVuMin.put(key, minValeur);
             return minValeur;
         }
     }
 
+
+/*
+    private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
+        if ((estFeuille()) || (horizon == 0)){
+            int value = evaluerNoeud();
+            return value;
+        }
+        IterateurCoup it = new IterateurCoup(this);
+        if (estMax){
+            int maxValeur = -INF;
+            while (it.aProchain()){
+                Mouvement m = it.prochain();
+                Point depart = m.getDepart();
+                Point arrvee = m.getArrivee();
+                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
+                jeu.bouge(depart, arrvee,false);
+                byte[] config = configuration();
+                int valeur;
+                valeur = minmaxAlphaBeta(alpha, beta, false, horizon-1);
+                maxValeur = Math.max(maxValeur, valeur);
+                alpha = Math.max(alpha, valeur);
+                jeu.annule(depart, arrvee, hauteur);
+                if (beta <= alpha)
+                    break;
+            }
+            return maxValeur;
+        } else {
+            int minValeur = INF;
+            int noteNoeudPrecedent = evaluerNoeud();
+            while (it.aProchain()){
+                Mouvement m = it.prochain();
+                Point depart = m.getDepart();
+                Point arrvee = m.getArrivee();
+                int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
+                jeu.bouge(depart, arrvee, false);
+                int valeur;
+                int noteNoeudCourant = evaluerNoeud();
+                if (noteNoeudCourant < noteNoeudPrecedent){
+                    minValeur = noteNoeudCourant;
+                    jeu.annule(depart, arrvee, hauteur);
+                    continue;
+                }
+                valeur = minmaxAlphaBeta(alpha, beta, true, horizon - 1);
+                minValeur = Math.min(minValeur, valeur);
+                beta = Math.min(beta, valeur);
+                jeu.annule(depart, arrvee, hauteur);
+                if (beta <= alpha)
+                    break;
+            }
+            return minValeur;
+        }
+    }  */
 
     private Mouvement trouverGagnant(int horizon){
         Mouvement gagnant = null;

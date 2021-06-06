@@ -196,7 +196,7 @@ public class AireDeDessin extends JComponent {
         drawable.drawLine(paddingW+(m.getArrivee().y+1)* largeurCase-5,paddingH+m.getArrivee().x*hauteurCase+5, paddingW+(m.getArrivee().y+1)* largeurCase-5, paddingH+(m.getArrivee().x+1)*hauteurCase-5);
         drawable.drawLine(paddingW+m.getArrivee().y* largeurCase+5,paddingH+(m.getArrivee().x+1)*hauteurCase-5, paddingW+(m.getArrivee().y+1)* largeurCase-5, paddingH+(m.getArrivee().x+1)*hauteurCase-5);
 */
-        tracerArrow(2,new Dimension(m.getDepart().x,m.getDepart().y),new Dimension(m.getArrivee().x,m.getArrivee().y));
+        tracerArrow(2,new Dimension(m.getDepart().y,m.getDepart().x),new Dimension(m.getArrivee().y,m.getArrivee().x));
     }
     public void animatePion(int k,int l, int x, int y){
         tab[k][l].movePile(x,y);

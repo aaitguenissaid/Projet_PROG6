@@ -120,7 +120,11 @@ public class ControleurMediateur implements CollecteurEvenements {
         } else {
             if(animations!=null && !animations.estVide()) {
                 Animation a = animations.extraitTete();
-                a.ticTac();
+                if(a.getClass()!=AnimationJoueurIA.class || (a.getClass()==AnimationJoueurIA.class && !jeu.getHistorique().isNavigationOn())) {
+                    a.ticTac();
+                } else {
+                    animations.insereTete(a);
+                }
             } else {
                 time.stop();
                 animations = new SequenceListe<>();

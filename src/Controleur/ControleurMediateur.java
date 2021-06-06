@@ -152,8 +152,11 @@ public class ControleurMediateur implements CollecteurEvenements {
         IAAffrontement = construireIA(nom_ia, id_ia);
 
         //Mise à jour du jeu
-        JoueurIA = (id_ia==0) ? jeu.getJ1() : jeu.getJ2();
+        JoueurIA = (id_ia==Jeu.COULEUR1) ? jeu.getJ1() : jeu.getJ2();
         JoueurIA.setNom(nom_ia);
+        Joueur vraiJoueur = (id_ia==Jeu.COULEUR1) ? jeu.getJ2() : jeu.getJ1();
+        String pseudoID = (id_ia==Jeu.COULEUR1) ? Configuration.PSEUDO_J2 : Configuration.PSEUDO_J1;
+        vraiJoueur.setNom(Configuration.instance().get(pseudoID));
 
         //Mise à jour de l'interface
         jeuint.setGameScreen();
@@ -235,12 +238,21 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
     public void enregistrer_la_partie() {
-        String titre = "Choix du nom";
-        String description = "Veuillez entrer un nom pour votre partie.";
-        String nom = (String) jeuint.choisirItem(titre, description, null, JOptionPane.PLAIN_MESSAGE);
-        if(nom!=null && nom.length()>2) {
-            PartiesSauvegardees.enregistrerPartie(nom.replace(" ","_"), this.jeu);
-        }
+        String nom = null;
+        do {
+            String titre = "Choix du nom";
+            String description = "Veuillez entrer un nom pour votre partie.";
+            nom = (String) jeuint.choisirItem(titre, description, null, JOptionPane.PLAIN_MESSAGE);
+            if (nom != null && nom.length() > 0) {
+                PartiesSauvegardees.enregistrerPartie(nom.replace(" ", "_"), this.jeu);
+            }
+        } while(
+                (nom==null || nom.length()<=0)
+                && jeuint.valideAction(
+                        "Partie non enregistrée",
+                        "Partie non enregistrée. Voulez-vous enregistrer votre partie ?",
+                        "Enregistrer",
+                        "Ne pas enregistrer"));
     }
 
     public boolean bouge(Point depart, Point arrivee) {
@@ -292,9 +304,19 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void mainmenu() {
-        if(mode!=MODE_JvsJ && time!=null && time.isRunning()) {
-            time.stop();
-            jeu =new Jeu();
+        if(jeuint.getPageActuelle().equals("GAMESCREEN")) {
+            animations = new SequenceListe<>();
+            if (mode != MODE_JvsJ && time != null && time.isRunning()) {
+                time.stop();
+            }
+            if(jeuint.valideAction(
+                    "Enregistrement Partie",
+                    "Souhatez-vous enregistrer la partie en cours avant de quitter ?",
+                    "Enregistrer",
+                    "Ne pas enregistrer")) {
+                enregistrer_la_partie();
+            }
+            jeu = new Jeu();
             jeuint.setJeu(jeu);
         }
         jeuint.setMainMenu();
@@ -362,6 +384,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void relancerPartie() {
         if(jeu.estFini()) {
             jeu.relancerPartie();
+            animations = new SequenceListe<>();
             jeuint.metAJour();
             if(mode==MODE_IAvsIA) {
                 lancerAnimationCoupIA(IA_1, 0);

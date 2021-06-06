@@ -20,8 +20,10 @@ public class InterfaceUtilisateur implements Runnable {
     JeuVue jeu;
     ClassementScreen classements;
     boolean regBack =false;
+    String pageActuelle;
 
     public void run() {
+        pageActuelle = "MAINMENU";
         frame = new JFrame("Jeu Avalam");
         j = new Jeu();
         l=6;h=7;
@@ -95,20 +97,20 @@ public class InterfaceUtilisateur implements Runnable {
     }
 
     public void setGameScreen(){
-        cl.show(screens, "GAMESCREEN");
+        show("GAMESCREEN");
         metAJour();
         regBack=true;
     }
     public void setMainMenu(){
-        cl.show(screens, "MAINMENU");
+        show("MAINMENU");
         regBack=false;
     }
 
-    public void setClassement() { cl.show(screens, "CLASSEMENT"); }
+    public void setClassement() { show("CLASSEMENT"); }
     public void setParametres(){
-        cl.show(screens, "PARAMETRES");
+        show("PARAMETRES");
     }
-    public void setReagles(){ cl.show(screens, "REAGLES"); }
+    public void setReagles(){ show("REAGLES"); }
     public void revalidateInterface(){
         main.initComponents();
         param.setToutCouleurs();
@@ -119,11 +121,18 @@ public class InterfaceUtilisateur implements Runnable {
     }
     public void reaglesBack(){
         if(regBack){
-            cl.show(screens, "GAMESCREEN");
+            show("GAMESCREEN");
         }else{
-            cl.show(screens, "MAINMENU");
+            show("MAINMENU");
         }
     }
+
+    private void show(String nomPage) {
+        cl.show(screens, nomPage);
+        pageActuelle = nomPage;
+    }
+
+    public String getPageActuelle() { return pageActuelle; }
 
     public boolean valideAction(String titre, String description, String choix_valider, String choix_annuler) {
         Object[] options = {choix_annuler, choix_valider};

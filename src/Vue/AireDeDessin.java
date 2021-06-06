@@ -7,6 +7,10 @@ import Structures.Mouvement;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class AireDeDessin extends JComponent {
 
@@ -71,7 +75,9 @@ public class AireDeDessin extends JComponent {
         drawable.setColor(palette.Couleur1);
         drawable.fillRect(0, 0, largeurFenetrePixel, hauteurFenetrePixel);
         tracerGrille();
-        if(cc.suggestion() && !Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION))) {
+        if((jeu.lastDepJ>=0)&&(jeu.lastDepI>=0)&&(jeu.lastArrJ>=0)&&(jeu.lastArrI>=0))
+            tracerLastMove(jeu.lastDepJ,jeu.lastDepI,jeu.lastArrJ,jeu.lastArrI);
+        if(cc.suggestion() && Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION))) {
             suggestion(cc.suggestionMouvement());
         }
     }
@@ -88,21 +94,6 @@ public class AireDeDessin extends JComponent {
                         tab[h][l].setPionComponent(paddingW+l*largeurCase+largeurCase/3,paddingH+h*hauteurCase,hauteurCase/8,largeurCase/3);
                     }
                     this.add(tab[h][l]);
-                    if(jeu.estCaseDepart(h,l)){
-                        drawable.setColor(Color.CYAN);
-                        drawable.setStroke(new BasicStroke(5));
-                        drawable.drawLine(paddingW+l* largeurCase+5,paddingH+h*hauteurCase+5, paddingW+l* largeurCase+5, paddingH+(h+1)*hauteurCase-5);
-                        drawable.drawLine(paddingW+l* largeurCase+5,paddingH+h*hauteurCase+5, paddingW+(l+1)* largeurCase-5, paddingH+h*hauteurCase+5);
-                        drawable.drawLine(paddingW+(l+1)* largeurCase-5,paddingH+h*hauteurCase+5, paddingW+(l+1)* largeurCase-5, paddingH+(h+1)*hauteurCase-5);
-                        drawable.drawLine(paddingW+l* largeurCase+5,paddingH+(h+1)*hauteurCase-5, paddingW+(l+1)* largeurCase-5, paddingH+(h+1)*hauteurCase-5);
-                    }else if(jeu.estCaseArrive(h,l)){
-                        drawable.setColor(Color.DARK_GRAY);
-                        drawable.setStroke(new BasicStroke(5));
-                        drawable.drawLine(paddingW+l* largeurCase+5,paddingH+h*hauteurCase+5, paddingW+l* largeurCase+5, paddingH+(h+1)*hauteurCase-5);
-                        drawable.drawLine(paddingW+l* largeurCase+5,paddingH+h*hauteurCase+5, paddingW+(l+1)* largeurCase-5, paddingH+h*hauteurCase+5);
-                        drawable.drawLine(paddingW+(l+1)* largeurCase-5,paddingH+h*hauteurCase+5, paddingW+(l+1)* largeurCase-5, paddingH+(h+1)*hauteurCase-5);
-                        drawable.drawLine(paddingW+l* largeurCase+5,paddingH+(h+1)*hauteurCase-5, paddingW+(l+1)* largeurCase-5, paddingH+(h+1)*hauteurCase-5);
-                    }
                     drawable.setColor(palette.Couleur5);
                     drawable.setStroke(new BasicStroke(3));
                     drawable.drawLine(paddingW+l* largeurCase,paddingH+h*hauteurCase, paddingW+l* largeurCase, paddingH+(h+1)*hauteurCase);
@@ -112,7 +103,63 @@ public class AireDeDessin extends JComponent {
                 }
             }
         }
-
+    }
+    void tracerArrow(int mode,Dimension from,Dimension to){
+        if(mode==1){
+            drawable.setColor(Color.CYAN);
+        }else{
+            drawable.setColor(Color.DARK_GRAY);
+        }
+        drawable.setStroke(new BasicStroke(3));
+        if((from.width<to.width)&&(from.height<to.height)){//Done
+            drawable.drawLine(paddingW+(from.width+1)* largeurCase-largeurCase/5,paddingH+(from.height+1)*hauteurCase-largeurCase/5, paddingW+to.width* largeurCase+largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5-5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/5-5, paddingH+to.height*hauteurCase+largeurCase/5);
+        }else if((from.width>to.width)&&(from.height>to.height)){//Done
+            drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/5,paddingH+from.height*hauteurCase+largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1, paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+(to.height+1)*hauteurCase-largeurCase/5+5-1);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1, paddingW+(to.width+1)* largeurCase-largeurCase/5+5-1, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1);
+        }else if((from.width<to.width)&&(from.height>to.height)){//Done
+            drawable.drawLine(paddingW+(from.width+1)* largeurCase-largeurCase/5,paddingH+from.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1, paddingW+to.width* largeurCase+largeurCase/5-5, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1, paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5+5-1);
+        }else if((from.width>to.width)&&(from.height<to.height)){//Done
+            drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/5,paddingH+(from.height+1)*hauteurCase-largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+to.height*hauteurCase+largeurCase/5-5);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5+5, paddingH+to.height*hauteurCase+largeurCase/5);
+        }else if((from.width>to.width)&&(from.height==to.height)){//Done
+            drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/5,paddingH+from.height*hauteurCase+largeurCase/2, paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2, paddingW+(to.width+1)* largeurCase-largeurCase/5+5, paddingH+to.height*hauteurCase+largeurCase/2+6);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2, paddingW+(to.width+1)* largeurCase-largeurCase/5+5, paddingH+to.height*hauteurCase+largeurCase/2-5);
+        }else if((from.width==to.width)&&(from.height>to.height)){//Done
+            drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/2,paddingH+from.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2, paddingH+(to.height+1)*hauteurCase-largeurCase/5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/2, paddingH+(to.height+1)*hauteurCase-largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2+5, paddingH+(to.height+1)*hauteurCase-largeurCase/5+5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/2, paddingH+(to.height+1)*hauteurCase-largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2-5, paddingH+(to.height+1)*hauteurCase-largeurCase/5+5);
+        }else if((from.width<to.width)&&(from.height==to.height)){//Done
+            drawable.drawLine(paddingW+(from.width+1)* largeurCase-largeurCase/5,paddingH+from.height*hauteurCase+largeurCase/2, paddingW+to.width* largeurCase+largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2, paddingW+to.width* largeurCase+largeurCase/5-5, paddingH+to.height*hauteurCase+largeurCase/2-5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2, paddingW+to.width* largeurCase+largeurCase/5-5, paddingH+to.height*hauteurCase+largeurCase/2+5);
+        }else if((from.width==to.width)&&(from.height<to.height)){//
+            drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/2,paddingH+(from.height+1)*hauteurCase-largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2, paddingH+to.height*hauteurCase+largeurCase/5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/2+1, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2+5+1, paddingH+to.height*hauteurCase+largeurCase/5-5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/2, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2-5, paddingH+to.height*hauteurCase+largeurCase/5-5);
+        }
+    }
+    void tracerLastMove(int l,int h,int i,int j){
+            /*drawable.setColor(Color.CYAN);
+            drawable.setStroke(new BasicStroke(5));
+            drawable.drawLine(paddingW+l* largeurCase+5,paddingH+h*hauteurCase+5, paddingW+l* largeurCase+5, paddingH+(h+1)*hauteurCase-5);
+            drawable.drawLine(paddingW+l* largeurCase+5,paddingH+h*hauteurCase+5, paddingW+(l+1)* largeurCase-5, paddingH+h*hauteurCase+5);
+            drawable.drawLine(paddingW+(l+1)* largeurCase-5,paddingH+h*hauteurCase+5, paddingW+(l+1)* largeurCase-5, paddingH+(h+1)*hauteurCase-5);
+            drawable.drawLine(paddingW+l* largeurCase+5,paddingH+(h+1)*hauteurCase-5, paddingW+(l+1)* largeurCase-5, paddingH+(h+1)*hauteurCase-5);
+            drawable.setColor(Color.DARK_GRAY);
+            drawable.setStroke(new BasicStroke(5));
+            drawable.drawLine(paddingW+i* largeurCase+5,paddingH+j*hauteurCase+5, paddingW+i* largeurCase+5, paddingH+(j+1)*hauteurCase-5);
+            drawable.drawLine(paddingW+i* largeurCase+5,paddingH+j*hauteurCase+5, paddingW+(i+1)* largeurCase-5, paddingH+j*hauteurCase+5);
+            drawable.drawLine(paddingW+(i+1)* largeurCase-5,paddingH+j*hauteurCase+5, paddingW+(i+1)* largeurCase-5, paddingH+(j+1)*hauteurCase-5);
+            drawable.drawLine(paddingW+i* largeurCase+5,paddingH+(j+1)*hauteurCase-5, paddingW+(i+1)* largeurCase-5, paddingH+(j+1)*hauteurCase-5);
+            */
+            tracerArrow(1,new Dimension (l,h),new Dimension(i,j));
 
     }
     void tracerResultat(){
@@ -136,7 +183,7 @@ public class AireDeDessin extends JComponent {
         drawable.drawString(text, x, y);
     }
     public void suggestion(Mouvement m){
-        drawable.setColor(Color.CYAN);
+  /*      drawable.setColor(Color.CYAN);
         drawable.setStroke(new BasicStroke(5));
         drawable.drawLine(paddingW+m.getDepart().y* largeurCase+5,paddingH+m.getDepart().x*hauteurCase+5, paddingW+m.getDepart().y* largeurCase+5, paddingH+(m.getDepart().x+1)*hauteurCase-5);
         drawable.drawLine(paddingW+m.getDepart().y* largeurCase+5,paddingH+m.getDepart().x*hauteurCase+5, paddingW+(m.getDepart().y+1)* largeurCase-5, paddingH+m.getDepart().x*hauteurCase+5);
@@ -148,8 +195,8 @@ public class AireDeDessin extends JComponent {
         drawable.drawLine(paddingW+m.getArrivee().y* largeurCase+5,paddingH+m.getArrivee().x*hauteurCase+5, paddingW+(m.getArrivee().y+1)* largeurCase-5, paddingH+m.getArrivee().x*hauteurCase+5);
         drawable.drawLine(paddingW+(m.getArrivee().y+1)* largeurCase-5,paddingH+m.getArrivee().x*hauteurCase+5, paddingW+(m.getArrivee().y+1)* largeurCase-5, paddingH+(m.getArrivee().x+1)*hauteurCase-5);
         drawable.drawLine(paddingW+m.getArrivee().y* largeurCase+5,paddingH+(m.getArrivee().x+1)*hauteurCase-5, paddingW+(m.getArrivee().y+1)* largeurCase-5, paddingH+(m.getArrivee().x+1)*hauteurCase-5);
-
-
+*/
+        tracerArrow(2,new Dimension(m.getDepart().x,m.getDepart().y),new Dimension(m.getArrivee().x,m.getArrivee().y));
     }
     public void animatePion(int k,int l, int x, int y){
         tab[k][l].movePile(x,y);

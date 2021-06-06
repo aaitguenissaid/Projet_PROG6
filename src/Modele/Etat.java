@@ -15,7 +15,11 @@ public class Etat {
     Case[][] grille;
     Size taille;
     int tour;
-    int lastDepI,lastDepJ,lastArrI,lastArrJ, nbPionsDepl; //ajouté pour afficher avoir coup
+    public int lastDepI;
+    public int lastDepJ;
+    public int lastArrI;
+    public int lastArrJ;
+    int nbPionsDepl; //ajouté pour afficher avoir coup
 
 
 

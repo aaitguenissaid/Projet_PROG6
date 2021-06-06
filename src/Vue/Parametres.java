@@ -135,16 +135,6 @@ public class Parametres extends javax.swing.JPanel {
         jCheckBox3.setSelected(!Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)));
         jPanel6.add(jCheckBox3);
 
-        jCheckBox4.setFont(new java.awt.Font("Ubuntu", 0, 14));
-        jCheckBox4.setText("TODO checkBox4");
-        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox4ActionPerformed(evt);
-            }
-        });
-        jCheckBox4.setSelected(!Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)));
-        jPanel6.add(jCheckBox4);
-
         jPanel4.add(jPanel6);
 
 
@@ -155,7 +145,7 @@ public class Parametres extends javax.swing.JPanel {
         jPanel7.add(jLabel3);
 
         jPanel3.setAlignmentX(0.0F);
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, BoxLayout.PAGE_AXIS));
 
         jLabel2.setText("Choisissez la complexité de l'intelligence artificielle :");
         jPanel3.add(jLabel2);
@@ -171,6 +161,16 @@ public class Parametres extends javax.swing.JPanel {
         jComboBox2.setMaximumSize(new java.awt.Dimension(91, 32));
         jComboBox2.setSelectedItem(Configuration.instance().get(Configuration.IA_AFFRONTEMENT));
         jPanel3.add(jComboBox2);
+
+        jCheckBox4.setFont(new java.awt.Font("Ubuntu", 0, 14));
+        jCheckBox4.setText("Laisser commencer l'IA");
+        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox4ActionPerformed(evt);
+            }
+        });
+        jCheckBox4.setSelected(Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE)));
+        jPanel3.add(jCheckBox4);
 
         jPanel7.add(jPanel3);
         //
@@ -333,7 +333,10 @@ public class Parametres extends javax.swing.JPanel {
         Configuration.instance().set(Configuration.EST_AUTORISE_SUGGESTION,b.toString());
     }
     private void jCheckBox4ActionPerformed(ActionEvent evt) {
-        //TODO CheckBox4 action
+        // Handler pour laisser commencer l'IA
+        Boolean b =Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE));
+        b=!b;
+        Configuration.instance().set(Configuration.IA_COMMENCE,b.toString());
     }
 
     private void jCheckBox2ActionPerformed(ActionEvent evt) {

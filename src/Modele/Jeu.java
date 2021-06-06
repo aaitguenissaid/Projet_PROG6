@@ -29,7 +29,9 @@ public class Jeu extends Etat implements Cloneable {
         this(true);
         son = new EffetsSonores();
     }
-
+    public void disable_enable_son(){
+        son.deisabel_enabel_son();
+    }
     public Jeu(boolean fromScratch) {
         super();
         estPartieRecuperee=false;

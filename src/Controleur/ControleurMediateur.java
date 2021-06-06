@@ -387,6 +387,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
     public void deisabel_enabel_son(){
         sonCtrl.deisabel_enabel_son();
+        jeu.disable_enable_son();
     }
     public boolean getSonState(){
         return sonCtrl.getSonState();

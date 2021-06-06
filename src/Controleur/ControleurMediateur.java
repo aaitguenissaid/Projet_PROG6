@@ -71,10 +71,10 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void mouvementFini(Mouvement m) {
         shouldMove = false;
         jeuint.getAireDeDessin().stopMove();
-        System.out.print("Start :");
-        System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
-        System.out.print("End :");
-        System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
+//        System.out.print("Start :");
+//        System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
+//        System.out.print("End :");
+///        System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
         jeuint.metAJour();
 
         boolean animationRunning = time!=null && time.isRunning();
@@ -246,7 +246,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     public boolean bouge(Point depart, Point arrivee) {
         boolean ret = jeu.bouge(depart, arrivee);
         jeuint.metAJour();
-        System.out.println("Jeu fini : " + jeu.estFini());
+        //System.out.println("Jeu fini : " + jeu.estFini());
         jeuint.setStatistiques();
         if(jeu.estFini()) {
             classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.quiAGagnee());
@@ -265,7 +265,7 @@ public class ControleurMediateur implements CollecteurEvenements {
                 relancerPartie();
             }
         }
-        System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
+        //System.out.println("Nombre de pions déplacés : " + jeu.getNbPionsDepl());
         suggestion=false;
         return ret;
     }

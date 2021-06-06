@@ -163,7 +163,7 @@ public class Parametres extends javax.swing.JPanel {
         jPanel3.add(jComboBox2);
 
         jCheckBox4.setFont(new java.awt.Font("Ubuntu", 0, 14));
-        jCheckBox4.setText("Laisser commencer l'IA");
+        jCheckBox4.setText("Laisser l'IA commencer");
         jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox4ActionPerformed(evt);

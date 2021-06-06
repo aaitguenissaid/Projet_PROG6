@@ -84,7 +84,7 @@ public class ControleurMediateur implements CollecteurEvenements {
             //Si on la navigation n'est pas activée (ou qu'elle vient d'être désactivée)
             if(!jeu.getHistorique().isNavigationOn()) {
                 if (bouge(m.getDepart(), m.getArrivee())) {
-                    if(mode==MODE_JvsIA) {
+                    if(mode==MODE_JvsIA && jeu.getTour()==JoueurIA.getId()) {
                         lancerAnimationCoupIA(IAAffrontement);
                     }
                 }

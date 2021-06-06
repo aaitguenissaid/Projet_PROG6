@@ -19,7 +19,10 @@ public class PionComponent extends JComponent {
     Jeu j;
     Point p;
     PaletteDeCouleurs palette;
-    PionComponent(Jeu j, Point c, PaletteDeCouleurs palette){
+    int a,b;
+    PionComponent(Jeu j, Point c, PaletteDeCouleurs palette,int a,int b){
+        this.a=a;
+        this.b=b;
         this.setLocation(new Point(-100,-100));
         this.palette =palette;
         this.j = j;
@@ -44,6 +47,10 @@ public class PionComponent extends JComponent {
         drawable = (Graphics2D) g;
         int k=c.nbPions()+1;
         Iterateur<Pion> it = c.getIterateur();
+        int difColor=0;
+        if((a==j.lastArrI)&&(b==j.lastArrJ)){
+            difColor=j.getNbPionsDepl();
+        }
         while (it.aProchain()) {
             k--;
             Pion impr = it.prochain();
@@ -53,8 +60,13 @@ public class PionComponent extends JComponent {
                 drawable.setColor(palette.Couleur4);
             }
             drawable.fillRect(0, padding-height*k, width, height);
-            drawable.setColor(palette.Couleur5);
-            drawable.setStroke(new BasicStroke(1));
+            if(difColor>0){
+                drawable.setColor(palette.Couleur7);
+                difColor--;
+            } else{
+                drawable.setColor(palette.Couleur5);
+            }
+            drawable.setStroke(new BasicStroke(2));
             drawable.drawLine(0,padding-height*k, 0, padding-height*(k-1));
             drawable.drawLine(width-1,padding-height*k, width-1, padding-height*(k-1));
             drawable.drawLine(0,padding-height*k, width-1, padding-height*k);

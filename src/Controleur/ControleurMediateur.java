@@ -309,12 +309,14 @@ public class ControleurMediateur implements CollecteurEvenements {
             if (mode != MODE_JvsJ && time != null && time.isRunning()) {
                 time.stop();
             }
-            if(jeuint.valideAction(
-                    "Enregistrement Partie",
-                    "Souhatez-vous enregistrer la partie en cours avant de quitter ?",
-                    "Enregistrer",
-                    "Ne pas enregistrer")) {
-                enregistrer_la_partie();
+            if(jeu.estPartieNonSauvegardee) {
+                if (jeuint.valideAction(
+                        "Enregistrement Partie",
+                        "Souhatez-vous enregistrer la partie en cours avant de quitter ?",
+                        "Enregistrer",
+                        "Ne pas enregistrer")) {
+                    enregistrer_la_partie();
+                }
             }
             jeu = new Jeu();
             jeuint.setJeu(jeu);

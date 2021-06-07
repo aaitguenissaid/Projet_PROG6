@@ -34,7 +34,6 @@ public class InterfaceUtilisateur implements Runnable {
         reg = new Regles(ctrl);
         jeu = new JeuVue(ctrl,comp);
         classements = new ClassementScreen(ctrl);
-        j.setCollecteurEvenements(ctrl);
         comp.addMouseListener(new AdaptateurDeSouri(ctrl,comp));
         comp.addMouseMotionListener(new AdaptateurMouvementDeSouri(ctrl,comp));
         setStatistiques();

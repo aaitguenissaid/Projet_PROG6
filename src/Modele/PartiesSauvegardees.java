@@ -36,6 +36,7 @@ public class PartiesSauvegardees {
                 +"."
                 +Configuration.instance().lis("ExtensionSauvegarde"));
         if(out!=null) {
+            j.estPartieNonSauvegardee=false;
             out.println(j.taille.h + "," + j.taille.l);
             j.print(out); //Affiche la grille et le tour
             out.println(j.j1.getId() + "," + j.j1.getNom() + "," + j.j1.getCouleur());

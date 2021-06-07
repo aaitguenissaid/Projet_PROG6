@@ -236,6 +236,7 @@ public class Jeu extends Etat implements Cloneable {
         ret.lastArrJ = lastArrJ;
         ret.lastDepI = lastDepI;
         ret.lastDepJ = lastDepJ;
+        ret.nbPionsDepl = nbPionsDepl;
         ret.estPartieRecuperee = estPartieRecuperee;
         return ret;
     }

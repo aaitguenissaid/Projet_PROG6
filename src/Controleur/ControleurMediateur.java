@@ -458,6 +458,7 @@ public class ControleurMediateur implements CollecteurEvenements {
             if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
                 jeu.partieAbandonnee=true;
                 classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), (jeu.getTour()==Jeu.COULEUR1) ? 2 : 1);
+                jeuint.revalidateInterface();
                 if(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE))) {
                     String nom_gagnant = (jeu.getTour()==Jeu.COULEUR1) ? jeu.getNomJ2() : jeu.getNomJ1();
                     jeuint.informer("Le joueur " + nom_gagnant + " a gagné !");

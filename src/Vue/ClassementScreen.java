@@ -19,11 +19,11 @@ public class ClassementScreen extends javax.swing.JPanel {
     public ClassementScreen(CollecteurEvenements ctrl) {
         cc=ctrl;
         palette = cc.getPalette();
-        it = cc.getClassement().getList().iterateur();
         initComponents();
     }
     void initComponents() {
         removeAll();
+        it = cc.getClassement().getList().iterateur();
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel2 = new javax.swing.JPanel();

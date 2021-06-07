@@ -40,6 +40,6 @@ public class Score implements Comparable<Score> {
 
     @Override
     public int compareTo(Score o) {
-        return nbVictoires;
+        return o.nbVictoires-nbVictoires;
     }
 }

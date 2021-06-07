@@ -88,6 +88,9 @@ public class Classement {
                     p.nbVictoires += aGagner==1 ? 1 : 0;
                     p.lesPoints += aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints;
                 }
+                Score n = new Score(pseudo,p.nbVictoires,p.nbParties,p.lesPoints);
+                it.supprime();
+                listeScores.insere(n);
                 //enregistrer le fichier. suprimer et reecrire.
                 supprimerEnregistrerFichier();
                 estJoueurExistant = true;

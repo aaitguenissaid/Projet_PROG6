@@ -156,7 +156,6 @@ public class Etat {
         return resultat;
     }
 
-    //TODO faire un hashset des cases acces
     public ArrayList<Point> trouveCasePeutBouger() {
         ArrayList<Point> peuventBouger = new ArrayList<>();
         for(Point p : casesPeutBouger) {

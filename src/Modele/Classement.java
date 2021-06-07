@@ -52,7 +52,7 @@ public class Classement {
                 System.exit(0);
             }
             while (ligne.length() > 0) {
-                String[] mots = new String[4];
+                String[] mots;
                 mots = ligne.split("\t");
                 String pseudo = mots[0];
                 int nbVictoires = Integer.parseInt(mots[1]);
@@ -83,9 +83,7 @@ public class Classement {
             Score p = it.prochain();
             if (p.pseudo.equals(pseudo)) {
                 p.nbParties++;
-                if(aGagner==0) {
-
-                } else {
+                if (aGagner != 0) {
                     p.nbVictoires += aGagner==1 ? 1 : 0;
                     p.lesPoints += aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints;
                 }
@@ -129,9 +127,6 @@ public class Classement {
     }
 
     int calculePointsAbsolu() {
-        int nbPileJ1 = jeu.nbPilesJoueur(Jeu.COULEUR1);
-        int nbPileJ2 = jeu.nbPilesJoueur(Jeu.COULEUR2);
-        int lesPoints = Math.abs(nbPileJ1 - nbPileJ2);
-        return lesPoints;
+        return Math.abs(jeu.nbPilesJoueur(Jeu.COULEUR1) - jeu.nbPilesJoueur(Jeu.COULEUR2));
     }
 }

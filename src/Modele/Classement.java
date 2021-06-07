@@ -95,8 +95,8 @@ public class Classement {
             }
         }
         if(!estJoueurExistant){
-            System.out.println(lesNouveauxPoints);
-            Score p = new Score(pseudo, (aGagner==0) ? 0 : (aGagner==1) ? 1 : 0, 1,500+ (aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints));
+            Score p = new Score(pseudo, (aGagner==0) ? 0 : (aGagner==1) ? 1 : 0,
+                    1,500+ (aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints));
             listeScores.insere(p);
             supprimerEnregistrerFichier();
         }

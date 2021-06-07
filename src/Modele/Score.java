@@ -40,16 +40,8 @@ public class Score implements Comparable<Score> {
         return nbParties;
     }
 
-    public float getRatio() {
-        return ratio;
-    }
-
     public int getLesPoints() {
         return lesPoints;
-    }
-
-    public void setLesPoints(int lesNouveauxPoints) {
-        this.lesPoints += lesNouveauxPoints;
     }
 
     @Override

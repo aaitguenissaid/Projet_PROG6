@@ -1,5 +1,6 @@
 package Vue;
 
+import Modele.Classement;
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 import Structures.Mouvement;
@@ -76,5 +77,7 @@ public interface CollecteurEvenements {
     void classement();
 
     void setHistAffControl(HistoriqueTimeLine h);
+
+    Classement getClassement();
 }
 

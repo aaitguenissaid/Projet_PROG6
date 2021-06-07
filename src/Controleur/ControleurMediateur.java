@@ -201,6 +201,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     private void lancerAnimationCoupIA(IA ia) {
         lancerAnimationCoupIA(ia, 0);
+        jeuint.setStatistiques();
     }
 
     private void lancerAnimationCoupIA(IA ia, int id) {
@@ -347,6 +348,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void last_historique() {
         jeu.getHistorique().atteindreDebutHistorique();
         jeuint.metAJour();
+        jeuint.setStatistiques();
     }
 
     @Override
@@ -354,6 +356,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(jeu.getHistorique().aPrecedent()) {
             jeu.getHistorique().precedent();
             jeuint.metAJour();
+            jeuint.setStatistiques();
             return true;
         }
         return false;
@@ -371,6 +374,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(jeu.getHistorique().aSuivant()) {
             jeu.getHistorique().suivant();
             jeuint.metAJour();
+            jeuint.setStatistiques();
             return true;
         }
         return false;
@@ -380,6 +384,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void first_historique() {
         jeu.getHistorique().atteindreFinHistorique();
         jeuint.metAJour();
+        jeuint.setStatistiques();
     }
 
     @Override
@@ -388,6 +393,7 @@ public class ControleurMediateur implements CollecteurEvenements {
             jeu.relancerPartie();
             animations = new SequenceListe<>();
             jeuint.metAJour();
+            jeuint.setStatistiques();
             if(mode==MODE_IAvsIA) {
                 lancerAnimationCoupIA(IA_1, 0);
             } else if(mode==MODE_JvsIA && Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) {

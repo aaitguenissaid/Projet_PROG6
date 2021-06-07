@@ -15,7 +15,7 @@ public class Jeu extends Etat implements Cloneable {
     Joueur j1,j2;
     Historique historique;
     boolean estPartieRecuperee;
-    CollecteurEvenements cc;
+    public boolean estPartieNonSauvegardee;
 
 
 
@@ -38,6 +38,7 @@ public class Jeu extends Etat implements Cloneable {
             //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
             historique = new Historique(this);
         }
+        estPartieNonSauvegardee=false;
     }
 
 
@@ -90,6 +91,7 @@ public class Jeu extends Etat implements Cloneable {
             if (!estMouvementPossible(depart, arrive)) return false;
         }
 
+        estPartieNonSauvegardee=true;
         lastDepI=depart.x;lastDepJ=depart.y;lastArrI=arrive.x;lastArrJ=arrive.y;
         nbPionsDepl=grille[depart.x][depart.y].nbPions();
 
@@ -150,6 +152,7 @@ public class Jeu extends Etat implements Cloneable {
         tour = COULEUR1;
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
         estPartieRecuperee=false;
+        estPartieNonSauvegardee=false;
         historique = new Historique(this);
     }
 
@@ -230,8 +233,5 @@ public class Jeu extends Etat implements Cloneable {
         ret.lastDepJ = lastDepJ;
         ret.estPartieRecuperee = estPartieRecuperee;
         return ret;
-    }
-    public  void setCollecteurEvenements(CollecteurEvenements ccc){
-        cc=ccc;
     }
 }

@@ -1,10 +1,12 @@
 package Modele;
 
+import Controleur.ControleurMediateur;
 import Global.Configuration;
 import Structures.Size;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class PartiesSauvegardees {
@@ -48,7 +50,7 @@ public class PartiesSauvegardees {
         return false;
     }
 
-    public static Jeu recupererPartie(String nom) {
+    public static Jeu recupererPartie(String nom, ControleurMediateur cm) {
         Scanner in = Configuration.instance().ouvrirFichierLecture(nom
                 +"."
                 +Configuration.instance().lis("ExtensionSauvegarde"));
@@ -70,6 +72,9 @@ public class PartiesSauvegardees {
         if(!in.hasNextLine()) return null;
         line = in.nextLine();
         nvx_jeu.grille = Etat.readGrille(line, nvx_jeu.taille.h, nvx_jeu.taille.l);
+
+        //#### Récupération des cases qui peuvent bouger ####
+        nvx_jeu.recalculerCasesPeutBouger();
 
         //#### Récupération du tour ####
         if(!in.hasNextLine()) return null;

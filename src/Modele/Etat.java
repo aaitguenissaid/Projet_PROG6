@@ -140,7 +140,7 @@ public class Etat {
     public ArrayList<Point> voisinsAccessibles(int h, int l){
         int nbPionsDep = grille[h][l].nbPions();
         ArrayList<Point> resultat = new ArrayList<>();
-        if (nbPionsDep > 0) {
+        if (nbPionsDep > 0 && nbPionsDep <5) {
             for(int i=h-1; i<=h+1; i++) {
                 for(int j=l-1; j<=l+1; j++) {
                     Point p = new Point(i, j);
@@ -167,6 +167,16 @@ public class Etat {
         return peuventBouger;
     }
 
+    public void recalculerCasesPeutBouger() {
+        casesPeutBouger = new HashSet<>();
+        for(int i=0; i<taille.h; i++) {
+            for(int j=0; j<taille.h; j++) {
+                if(estCaseValide(new Point(i, j)) && voisinsAccessibles(i, j).size()>0)
+                    casesPeutBouger.add(new Point(i, j));
+            }
+        }
+    }
+
 
 
 
@@ -176,7 +186,6 @@ public class Etat {
     // #######################
     // #### VERIFICATIONS ####
     // #######################
-    //TODO int positifs dans la classe point.
     protected boolean coordonneesValides(Point pt) {
         return (pt.x>=0 && pt.x<taille.h && pt.y>=0 && pt.y<taille.l);
     }

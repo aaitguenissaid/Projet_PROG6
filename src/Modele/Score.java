@@ -38,18 +38,6 @@ public class Score implements Comparable<Score> {
         return lesPoints;
     }
 
-    void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
-    }
-
-    void setNbVictoires(int nbVictoires) {
-        this.nbVictoires = nbVictoires;
-    }
-
-    void setNbParties(int nbParties) {
-        this.nbParties = nbParties;
-    }
-
     @Override
     public int compareTo(Score o) {
         return nbVictoires;

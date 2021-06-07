@@ -450,6 +450,12 @@ public class ControleurMediateur implements CollecteurEvenements {
             Configuration.instance().set(Configuration.PSEUDO_J2, text);
         jeuint.setStatistiques();
     }
+
+    public void inverserJoueurs() {
+        String tmp = Configuration.instance().get(Configuration.PSEUDO_J1);
+        Configuration.instance().set(Configuration.PSEUDO_J1, Configuration.instance().get(Configuration.PSEUDO_J2));
+        Configuration.instance().set(Configuration.PSEUDO_J2, tmp);
+    }
 /*
     @Override
     public void animatePion(Point depart, Point arrive) {

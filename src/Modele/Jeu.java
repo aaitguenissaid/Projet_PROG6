@@ -190,11 +190,12 @@ public class Jeu extends Etat implements Cloneable {
         return true;
     }
 
-    public void inverseJoueurs() {
+    //L'inversion des joueurs se fait à partir de la classe ControleurMediateur
+    /*public void inverseJoueurs() {
         String tmp = j1.getNom();
         j1.setNom(j2.getNom());
         j2.setNom(tmp);
-    }
+    }*/
 
     public int quiAGagnee() {
         int resultat = 2;

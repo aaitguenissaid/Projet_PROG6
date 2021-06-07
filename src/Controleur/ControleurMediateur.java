@@ -391,12 +391,22 @@ public class ControleurMediateur implements CollecteurEvenements {
                 if(it.prochain() instanceof AnimationHistorique)
                     it.supprime();
             }
+            playBoutonHistorique();
         } else {
             navigationHistoriqueRunning=true;
             animations.insereTete(new AnimationHistorique(1, this));
             time = new Timer(1500, new AdaptateurTemps(this));
             time.start();
+            pauseBoutonHistorique();
         }
+    }
+
+    public void playBoutonHistorique() {
+        jeuint.playBoutonHistorique();
+    }
+
+    public void pauseBoutonHistorique() {
+        jeuint.pauseBoutonHistorique();
     }
 
     @Override

@@ -159,7 +159,7 @@ public class JeuVue extends javax.swing.JPanel {
         });
         jPanel9.add(jButton4);
 
-        jButton9.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_STOP)));
+        jButton9.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_PLAY)));
         jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)))
@@ -338,6 +338,13 @@ public class JeuVue extends javax.swing.JPanel {
         cc.first_historique();
         h.setHistorique(cc.getJeu().getHistorique());
         h.repaint();
+    }
+
+    public void pauseBoutonHistorique() {
+        jButton9.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_STOP)));
+    }
+    public void playBoutonHistorique() {
+        jButton9.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_PLAY)));
     }
     public void eteindreHistorique(){
         jButton3.setEnabled(false);

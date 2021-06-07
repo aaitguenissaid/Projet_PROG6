@@ -169,4 +169,7 @@ public class InterfaceUtilisateur implements Runnable {
     public void informer(String description) {
         JOptionPane.showMessageDialog(frame, description);
     }
+
+    public void pauseBoutonHistorique() {jeu.pauseBoutonHistorique();}
+    public void playBoutonHistorique() {jeu.playBoutonHistorique();}
 }

@@ -22,11 +22,13 @@ public class AnimationHistorique extends Animation {
         } else {
             estTerminee = !cm.previous_historique();
         }
-        if(!estTerminee) {
-            cm.animations.insereTete(this);
-        } else {
+        if(estTerminee) {
             cm.navigationHistoriqueRunning=false;
+            cm.playBoutonHistorique();
+        } else {
+            cm.animations.insereTete(this);
         }
+        cm.histAffControl.repaint();
     }
 
     @Override

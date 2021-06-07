@@ -2,12 +2,8 @@ package Modele;
 
 import Global.Configuration;
 import Structures.*;
-import Vue.CollecteurEvenements;
-import Vue.EffetsSonores;
 import Structures.Point;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Jeu extends Etat implements Cloneable {
     public static final int COULEUR1 = 0;
@@ -60,7 +56,8 @@ public class Jeu extends Etat implements Cloneable {
                 if(grille[i][j].estValide() && grille[i][j].nbPions()>0 && grille[i][j].nbPions()<5) {
                     int nbPions = grille[i][j].nbPions();
                     ArrayList<Point> voisins = voisinsAccessibles(i, j);
-                    if(voisins!=null && voisins.size()>0) return false;
+                    if(voisins!=null && voisins.size()>0)
+                        return false;
                 }
             }
         }

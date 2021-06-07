@@ -186,7 +186,6 @@ public class Etat {
     // #######################
     // #### VERIFICATIONS ####
     // #######################
-    //TODO int positifs dans la classe point.
     protected boolean coordonneesValides(Point pt) {
         return (pt.x>=0 && pt.x<taille.h && pt.y>=0 && pt.y<taille.l);
     }

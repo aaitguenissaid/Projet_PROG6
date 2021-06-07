@@ -38,6 +38,7 @@ public class Historique implements Cloneable {
     }
 
     public Etat getEtatNavigation() {
+        if(!navigationOn) return jeu;
         if(historique==null || current<0 || current>historique.size()) return null;
         return historique.get(current);
     }

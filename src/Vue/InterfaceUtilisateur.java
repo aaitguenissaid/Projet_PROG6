@@ -56,8 +56,8 @@ public class InterfaceUtilisateur implements Runnable {
         jeu.setNomDeJ1(j.getNomJ1());
         jeu.setNomDeJ2(j.getNomJ2());
         // TODO update score avec les piles a 5 en cas d'egalité.
-        jeu.setScoreJ1(String.valueOf(j.nbPilesJoueur(Jeu.COULEUR1)));
-        jeu.setScoreJ2(String.valueOf(j.nbPilesJoueur(Jeu.COULEUR2)));
+        jeu.setScoreJ1(String.valueOf(j.getHistorique().getEtatNavigation().nbPilesJoueur(Jeu.COULEUR1)));
+        jeu.setScoreJ2(String.valueOf(j.getHistorique().getEtatNavigation().nbPilesJoueur(Jeu.COULEUR2)));
     }
 
     public Jeu jeu(){

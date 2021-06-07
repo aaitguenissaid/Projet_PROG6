@@ -8,6 +8,7 @@ import Structures.SequenceListe;
 import Vue.*;
 
 import javax.swing.*;
+import Structures.Point;
 import java.awt.*;
 
 public class ControleurMediateur implements CollecteurEvenements {
@@ -201,6 +202,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     private void lancerAnimationCoupIA(IA ia) {
         lancerAnimationCoupIA(ia, 0);
+        jeuint.setStatistiques();
     }
 
     private void lancerAnimationCoupIA(IA ia, int id) {
@@ -260,6 +262,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint.metAJour();
         //System.out.println("Jeu fini : " + jeu.estFini());
         jeuint.setStatistiques();
+        sonCtrl.moveEnd();
         if(jeu.estFini()) {
             classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.quiAGagnee());
             if(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE))) {
@@ -309,12 +312,14 @@ public class ControleurMediateur implements CollecteurEvenements {
             if (mode != MODE_JvsJ && time != null && time.isRunning()) {
                 time.stop();
             }
-            if(jeuint.valideAction(
-                    "Enregistrement Partie",
-                    "Souhatez-vous enregistrer la partie en cours avant de quitter ?",
-                    "Enregistrer",
-                    "Ne pas enregistrer")) {
-                enregistrer_la_partie();
+            if(jeu.estPartieNonSauvegardee) {
+                if (jeuint.valideAction(
+                        "Enregistrement Partie",
+                        "Souhatez-vous enregistrer la partie en cours avant de quitter ?",
+                        "Enregistrer",
+                        "Ne pas enregistrer")) {
+                    enregistrer_la_partie();
+                }
             }
             jeu = new Jeu();
             jeuint.setJeu(jeu);
@@ -345,6 +350,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void last_historique() {
         jeu.getHistorique().atteindreDebutHistorique();
         jeuint.metAJour();
+        jeuint.setStatistiques();
     }
 
     @Override
@@ -352,6 +358,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(jeu.getHistorique().aPrecedent()) {
             jeu.getHistorique().precedent();
             jeuint.metAJour();
+            jeuint.setStatistiques();
             return true;
         }
         return false;
@@ -369,6 +376,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(jeu.getHistorique().aSuivant()) {
             jeu.getHistorique().suivant();
             jeuint.metAJour();
+            jeuint.setStatistiques();
             return true;
         }
         return false;
@@ -378,6 +386,7 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void first_historique() {
         jeu.getHistorique().atteindreFinHistorique();
         jeuint.metAJour();
+        jeuint.setStatistiques();
     }
 
     @Override
@@ -386,6 +395,7 @@ public class ControleurMediateur implements CollecteurEvenements {
             jeu.relancerPartie();
             animations = new SequenceListe<>();
             jeuint.metAJour();
+            jeuint.setStatistiques();
             if(mode==MODE_IAvsIA) {
                 lancerAnimationCoupIA(IA_1, 0);
             } else if(mode==MODE_JvsIA && Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) {
@@ -402,15 +412,21 @@ public class ControleurMediateur implements CollecteurEvenements {
             String choix_valide = "Continuer";
             String choix_annule = "Annuler";
             if(jeuint.valideAction(titre, description, choix_valide, choix_annule)) {
+                jeu.partieAbandonnee=true;
                 classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), (jeu.getTour()==Jeu.COULEUR1) ? 2 : 1);
-                jeu.relancerPartie();
+                if(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE))) {
+                    String nom_gagnant = (jeu.getTour()==Jeu.COULEUR1) ? jeu.getNomJ2() : jeu.getNomJ1();
+                    jeuint.informer("Le joueur " + nom_gagnant + " a gagné !");
+                    jeu.relancerPartie();
+                } else {
+
+                }
                 jeuint.metAJour();
             }
         }
     }
     public void deisabel_enabel_son(){
         sonCtrl.deisabel_enabel_son();
-        jeu.disable_enable_son();
     }
     public boolean getSonState(){
         return sonCtrl.getSonState();

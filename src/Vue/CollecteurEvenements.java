@@ -3,7 +3,7 @@ package Vue;
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 import Structures.Mouvement;
-
+import Structures.Point;
 import java.awt.*;
 
 public interface CollecteurEvenements {

@@ -4,7 +4,7 @@ import Global.Configuration;
 import Structures.*;
 import Vue.CollecteurEvenements;
 import Vue.EffetsSonores;
-
+import Structures.Point;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +15,8 @@ public class Jeu extends Etat implements Cloneable {
     Joueur j1,j2;
     Historique historique;
     boolean estPartieRecuperee;
-    CollecteurEvenements cc;
-    EffetsSonores son;
+    public boolean estPartieNonSauvegardee;
+    public boolean partieAbandonnee;
 
 
 
@@ -27,10 +27,6 @@ public class Jeu extends Etat implements Cloneable {
     // ########################
     public Jeu() {
         this(true);
-        son = new EffetsSonores();
-    }
-    public void disable_enable_son(){
-        son.deisabel_enabel_son();
     }
     public Jeu(boolean fromScratch) {
         super();
@@ -43,7 +39,8 @@ public class Jeu extends Etat implements Cloneable {
             //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
             historique = new Historique(this);
         }
-        son = new EffetsSonores();
+        estPartieNonSauvegardee=false;
+        partieAbandonnee=false;
     }
 
 
@@ -55,6 +52,7 @@ public class Jeu extends Etat implements Cloneable {
     // #### VERIFICATION ####
     // ######################
     public boolean estFini() {
+        if(partieAbandonnee) return true;
         //On recherche les piles que l'on peut déplacer
         for(int i=0; i<taille.h; i++) {
             for (int j = 0; j < taille.l; j++) {
@@ -87,6 +85,7 @@ public class Jeu extends Etat implements Cloneable {
     }
 
     public boolean bouge(Point depart, Point arrive, boolean addToHistoric) {
+        if(estFini()) return false;
         if(historique.isNavigationOn()) {
             //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
             //dans l'état qu'il visitait
@@ -96,6 +95,7 @@ public class Jeu extends Etat implements Cloneable {
             if (!estMouvementPossible(depart, arrive)) return false;
         }
 
+        estPartieNonSauvegardee=true;
         lastDepI=depart.x;lastDepJ=depart.y;lastArrI=arrive.x;lastArrJ=arrive.y;
         nbPionsDepl=grille[depart.x][depart.y].nbPions();
 
@@ -106,7 +106,6 @@ public class Jeu extends Etat implements Cloneable {
 
         if(addToHistoric) {
             historique.ajouteEtat(new Etat(grille, tour,lastDepI,lastDepJ,lastArrI,lastArrJ,nbPionsDepl));
-            son.moveEnd();
         }
 
         return true;
@@ -157,6 +156,8 @@ public class Jeu extends Etat implements Cloneable {
         tour = COULEUR1;
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
         estPartieRecuperee=false;
+        estPartieNonSauvegardee=false;
+        partieAbandonnee=false;
         historique = new Historique(this);
     }
 
@@ -235,10 +236,8 @@ public class Jeu extends Etat implements Cloneable {
         ret.lastArrJ = lastArrJ;
         ret.lastDepI = lastDepI;
         ret.lastDepJ = lastDepJ;
+        ret.nbPionsDepl = nbPionsDepl;
         ret.estPartieRecuperee = estPartieRecuperee;
         return ret;
-    }
-    public  void setCollecteurEvenements(CollecteurEvenements ccc){
-        cc=ccc;
     }
 }

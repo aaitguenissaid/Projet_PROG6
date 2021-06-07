@@ -3,9 +3,7 @@ package Controleur;
 import Modele.Jeu;
 import Structures.Mouvement;
 import Structures.Point;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class IAFort extends IA{
     private final int INF = 1000;
@@ -16,42 +14,9 @@ public class IAFort extends IA{
         nombreCoup = 0;
     }
 
-    private boolean memeCouleur(int i, int j){
-        int couleurDepart = jeu.getCase(i, j).getTete().getCouleur();
-        ArrayList<Point> voisins = jeu.voisinsAccessibles(i, j);
-        for (int s = 0; s < voisins.size(); s++){
-            int x = voisins.get(s).x;
-            int y = voisins.get(s).y;
-            int couleurArrivee = jeu.getCase(x, y).getTete().getCouleur();
-            if (couleurDepart != couleurArrivee)
-                return false;
-        }
-        return true;
-    }
-
-
     private boolean estFeuille(){
         ArrayList<Point> casePeutBouger = jeu.trouveCasePeutBouger();
         return ((casePeutBouger == null) | (casePeutBouger.size() == 0));
-    }
-
-    private int nonJoueur(int j){
-        return j == 0 ? 1 : 0;
-    }
-    private ArrayList<Point> aCouleur(int x, int y, int couleur){
-        ArrayList<Point> resultat = new ArrayList<>();
-        int c = jeu.getCase(x, y).getTete().getCouleur();
-        if (c == couleur)
-            resultat.add(new Point(x, y));
-        ArrayList<Point> voisinsAccessible = jeu.voisinsAccessibles(x, y);
-        for (int i = 0; i < voisinsAccessible.size(); i++){
-            int getX = voisinsAccessible.get(i).x;
-            int getY = voisinsAccessible.get(i).y;
-            c = jeu.getCase(getX, getY).getTete().getCouleur();
-            if (c == couleur)
-                resultat.add(voisinsAccessible.get(i));
-        }
-        return resultat;
     }
 
     private int evaluerNoeud(){
@@ -76,8 +41,7 @@ public class IAFort extends IA{
 
     private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
         if ( (horizon == 0)|(estFeuille())){
-            int value = evaluerNoeud();
-            return value;
+            return evaluerNoeud();
         }
         IterateurCoup it = new IterateurCoup(this);
         if (estMax){
@@ -127,7 +91,7 @@ public class IAFort extends IA{
     private Mouvement trouverGagnant(int horizon){
         Mouvement gagnant = null;
         int max = -INF;
-        int courant = -INF;
+        int courant;
         IterateurCoup it = new IterateurCoup(this);
         int noteNoeudPrecedent = evaluerNoeud();
         while (it.aProchain()){
@@ -136,17 +100,10 @@ public class IAFort extends IA{
             Point arrvee = configSuivant.getArrivee();
             int hauteur = jeu.getCase(depart.x, depart.y).nbPions();
             jeu.bouge(depart, arrvee, false);
-            int noteNoeud = evaluerNoeud();
-            if (noteNoeud > noteNoeudPrecedent){
+            courant = minmaxAlphaBeta( -INF, INF,false, horizon);
+            if (courant > max){
+                max = courant;
                 gagnant = configSuivant;
-                jeu.annule(depart, arrvee, hauteur);
-                break;
-            } else {
-                courant = minmaxAlphaBeta( -INF, INF,false, horizon);
-                if (courant > max){
-                    max = courant;
-                    gagnant = configSuivant;
-                }
             }
             jeu.annule(depart, arrvee, hauteur);
         }

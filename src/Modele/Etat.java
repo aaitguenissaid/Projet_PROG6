@@ -5,7 +5,7 @@ import Structures.Iterateur;
 import Structures.SequenceListe;
 import Structures.Size;
 import Vue.EffetsSonores;
-
+import Structures.Point;
 import java.awt.*;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -131,10 +131,12 @@ public class Etat {
     // ##### ANALYSE DE LA GRILLE #####
     // ################################
     // Prends une indice de tableau de configuration comme le depart et rends les indices comme arrivées accessibles
+
     public ArrayList<Point> voisinsAccessibles(int h, int l){
         int nbPionsDep = grille[h][l].nbPions();
         ArrayList<Point> resultat = new ArrayList<>();
         if (nbPionsDep > 0) {
+            //TODO remplacer getPointsVoisins() avec deux boucles.
             ArrayList<Point> pointsVoisins = getPointsVoisins(h, l);
             for (Point v : pointsVoisins) {
                 if (estCaseValide(v) && grille[v.x][v.y].nbPions() > 0 && grille[v.x][v.y].nbPions() + nbPionsDep <= 5) {
@@ -144,7 +146,7 @@ public class Etat {
         }
         return resultat;
     }
-
+    //TODO faire un hashset des cases acces
     public ArrayList<Point> trouveCasePeutBouger() {
         ArrayList<Point> casePeutBouger = new ArrayList<>();
         for (int i = 0; i < taille.h; i++) {
@@ -180,6 +182,7 @@ public class Etat {
     // #######################
     // #### VERIFICATIONS ####
     // #######################
+    //TODO int positifs dans la classe point.
     protected boolean coordonneesValides(Point pt) {
         return (pt.x>=0 && pt.x<taille.h && pt.y>=0 && pt.y<taille.l);
     }

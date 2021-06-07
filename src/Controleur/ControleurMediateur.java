@@ -8,6 +8,7 @@ import Structures.SequenceListe;
 import Vue.*;
 
 import javax.swing.*;
+import Structures.Point;
 import java.awt.*;
 
 public class ControleurMediateur implements CollecteurEvenements {

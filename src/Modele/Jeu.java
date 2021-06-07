@@ -4,7 +4,7 @@ import Global.Configuration;
 import Structures.*;
 import Vue.CollecteurEvenements;
 import Vue.EffetsSonores;
-
+import Structures.Point;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;

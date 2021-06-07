@@ -1,5 +1,5 @@
 package Structures;
-
+import Structures.Point;
 import java.awt.*;
 
 public class Mouvement {

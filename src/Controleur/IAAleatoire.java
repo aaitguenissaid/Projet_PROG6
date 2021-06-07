@@ -3,7 +3,7 @@ package Controleur;
 import Structures.Mouvement;
 
 import Modele.Jeu;
-
+import Structures.Point;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;

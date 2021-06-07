@@ -13,7 +13,7 @@ public class HistoriqueTimeLine extends JComponent {
     }
     public void paintComponent(Graphics g) {
         drawable = (Graphics2D) g;
-        int all = h.getNbCoupsReel()-1;
+        int all = h.getNbCoups()-1;
         int pos =h.getCurrent();
         int width;
         if(all==0)
@@ -23,11 +23,11 @@ public class HistoriqueTimeLine extends JComponent {
         int height=10;
         drawable.setColor(Color.GREEN);
         drawable.fillRect(0,0,getWidth(),height);
-        if(all==0){
+        if((all==0)||(pos==all)){
             drawable.setColor(Color.CYAN);
-            drawable.fillRect(0,0,width,height);
+            drawable.fillRect(0,0,getWidth(),height);
             drawable.setColor(Color.DARK_GRAY);
-            drawable.fillRect(width-3,0,5,height);
+            drawable.fillRect(getWidth()-3,0,5,height);
         }else{
             drawable.setColor(Color.CYAN);
             drawable.fillRect(0,0,pos*width,height);

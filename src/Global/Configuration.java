@@ -2,6 +2,7 @@ package Global;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import Structures.Point;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;

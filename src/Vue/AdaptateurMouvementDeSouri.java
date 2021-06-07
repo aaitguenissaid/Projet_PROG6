@@ -1,7 +1,7 @@
 package Vue;
 
 import Structures.Mouvement;
-
+import Structures.Point;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

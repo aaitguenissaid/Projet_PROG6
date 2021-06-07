@@ -137,6 +137,7 @@ public class Historique implements Cloneable {
         jeu.lastDepJ=historique.get(current).getLastDepJ();
         jeu.lastArrI=historique.get(current).getLastArrI();
         jeu.lastArrJ=historique.get(current).getLastArrJ();
+        jeu.nbPionsDepl=historique.get(current).getNbPionsDepl();
     }
 
     @Override

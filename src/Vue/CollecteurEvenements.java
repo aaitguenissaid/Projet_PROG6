@@ -3,7 +3,7 @@ package Vue;
 import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 import Structures.Mouvement;
-
+import Structures.Point;
 import java.awt.*;
 
 public interface CollecteurEvenements {
@@ -66,6 +66,8 @@ public interface CollecteurEvenements {
     void setNomJ1(String text);
 
     void setNomJ2(String text);
+
+    void inverserJoueurs();
 
     EffetsSonores getEffetsSonores();
 

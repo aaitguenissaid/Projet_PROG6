@@ -6,6 +6,7 @@ import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 import Modele.Score;
 import Structures.FAPListe;
+import Structures.Iterateur;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,12 +15,11 @@ public class ClassementScreen extends javax.swing.JPanel {
     CollecteurEvenements cc;
     PaletteDeCouleurs palette;
     String fontColor;
-    FAPListe<Score> listeScores;
+    Iterateur<Score> it;
     public ClassementScreen(CollecteurEvenements ctrl) {
         cc=ctrl;
         palette = cc.getPalette();
-        Classement classment = new Classement(new Jeu());
-        listeScores = classment.getList();
+        it = cc.getClassement().getList().iterateur();
         initComponents();
     }
     void initComponents() {
@@ -72,14 +72,11 @@ public class ClassementScreen extends javax.swing.JPanel {
         gridBagConstraints.weighty = 0.8;
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
         jPanel4.add(addTitleToPanel());
-        if(listeScores!=null){
-            while (!listeScores.estVide()) {
-                Score s = listeScores.extrait();
-                jPanel4.add(addLineToPanel(s.getPseudo(), s.getNbVictoires(), s.getNbParties(), s.getLesPoints()));
-            }
-        }else{
-            System.out.println("Bug");
+        while (it.aProchain()) {
+            Score s =  it.prochain();
+            jPanel4.add(addLineToPanel(s.getPseudo(), s.getNbVictoires(), s.getNbParties(), s.getLesPoints()));
         }
+
 
         jPanel1.add(jPanel4, gridBagConstraints);
         jScrollPane5.setViewportView(jPanel1);

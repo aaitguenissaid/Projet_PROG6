@@ -216,7 +216,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     public void lancerAnimationAdversaire(int id) {
         IA iaAutre = (id==1) ? IA_2 : IA_1;
-        lancerAnimationCoupIA(iaAutre, (id==0) ? 1 : 0);
+        lancerAnimationCoupIA(iaAutre, (id==Jeu.COULEUR1) ? Jeu.COULEUR2 : Jeu.COULEUR1);
     }
 
     public void reprendre_une_partie() {

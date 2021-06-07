@@ -451,6 +451,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint.setStatistiques();
     }
 
+    @Override
     public void inverserJoueurs() {
         String tmp = Configuration.instance().get(Configuration.PSEUDO_J1);
         Configuration.instance().set(Configuration.PSEUDO_J1, Configuration.instance().get(Configuration.PSEUDO_J2));

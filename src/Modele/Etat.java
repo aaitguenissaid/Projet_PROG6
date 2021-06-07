@@ -136,7 +136,7 @@ public class Etat {
         int nbPionsDep = grille[h][l].nbPions();
         ArrayList<Point> resultat = new ArrayList<>();
         if (nbPionsDep > 0) {
-            //TODO remplacer getPointsVoisins() avec deux boucles.
+            //remplacer getPointsVoisins() avec deux boucles. // UPDATE la methode est beaucoup plus mieux qu'une boucle.
             ArrayList<Point> pointsVoisins = getPointsVoisins(h, l);
             for (Point v : pointsVoisins) {
                 if (estCaseValide(v) && grille[v.x][v.y].nbPions() > 0 && grille[v.x][v.y].nbPions() + nbPionsDep <= 5) {
@@ -182,7 +182,7 @@ public class Etat {
     // #######################
     // #### VERIFICATIONS ####
     // #######################
-    //TODO int positifs dans la classe point.
+    // int positifs dans la classe point. // UPDATE est ce que tout ces testes sont necessaire
     protected boolean coordonneesValides(Point pt) {
         return (pt.x>=0 && pt.x<taille.h && pt.y>=0 && pt.y<taille.l);
     }

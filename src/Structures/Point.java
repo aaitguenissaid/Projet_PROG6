@@ -28,10 +28,4 @@ public class Point {
         }
         return super.equals(obj);
     }
-    /*
-    @Override
-    public boolean equals(Object pt) {
-            return (x == pt.x) && (y == pt.y);
-    }
-   */
 }

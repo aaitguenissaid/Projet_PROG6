@@ -260,7 +260,6 @@ public class ControleurMediateur implements CollecteurEvenements {
     public boolean bouge(Point depart, Point arrivee) {
         boolean ret = jeu.bouge(depart, arrivee);
         jeuint.metAJour();
-        //System.out.println("Jeu fini : " + jeu.estFini());
         jeuint.setStatistiques();
         sonCtrl.moveEnd();
         if(jeu.estFini()) {
@@ -449,6 +448,13 @@ public class ControleurMediateur implements CollecteurEvenements {
         if(jeu.setNomJ2(text))
             Configuration.instance().set(Configuration.PSEUDO_J2, text);
         jeuint.setStatistiques();
+    }
+
+    @Override
+    public void inverserJoueurs() {
+        String tmp = Configuration.instance().get(Configuration.PSEUDO_J1);
+        Configuration.instance().set(Configuration.PSEUDO_J1, Configuration.instance().get(Configuration.PSEUDO_J2));
+        Configuration.instance().set(Configuration.PSEUDO_J2, tmp);
     }
 /*
     @Override

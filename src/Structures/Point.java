@@ -1,5 +1,7 @@
 package Structures;
 
+import java.util.Objects;
+
 public class Point {
     public int x;
     public int y;
@@ -21,11 +23,15 @@ public class Point {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Point) {
-            Point pt = (Point) obj;
-            return (x == pt.x) && (y == pt.y);
-        }
-        return super.equals(obj);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return x == point.x && y == point.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

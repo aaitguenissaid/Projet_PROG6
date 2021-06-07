@@ -4,11 +4,11 @@ import Global.Configuration;
 import Structures.Iterateur;
 import Structures.SequenceListe;
 import Structures.Size;
-import Vue.EffetsSonores;
 import Structures.Point;
-import java.awt.*;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Etat {
     public static final int DEFAULT_SIZE = 9;
@@ -20,6 +20,7 @@ public class Etat {
     public int lastArrI;
     public int lastArrJ;
     int nbPionsDepl; //ajouté pour afficher avoir coup
+    protected HashSet<Point> casesPeutBouger;
 
 
 
@@ -30,11 +31,13 @@ public class Etat {
     // ##### INITIALISATION #####
     // ##########################
     public Etat(Case [][]grille, int tour, int lastDepI, int lastDepJ, int lastArrI, int lastArrJ, int nbPionsDepl) {
+        this.casesPeutBouger = new HashSet<>();
         this.taille = new Size(grille.length,grille.length);
         this.grille = new Case[this.taille.h][this.taille.l];
         for(int i=0; i<taille.h; i++) {
             for(int j=0; j<taille.l; j++) {
                 this.grille[i][j] = (Case) grille[i][j].clone();
+                if(grille[i][j].estValide()) casesPeutBouger.add(new Point(i, j));
             }
         }
         this.tour = tour;
@@ -50,6 +53,7 @@ public class Etat {
     }
 
     public Etat() {
+        this.casesPeutBouger = new HashSet<>();
         taille = new Size(DEFAULT_SIZE, DEFAULT_SIZE);
         grille = new Case[this.taille.h][this.taille.l];
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
@@ -67,6 +71,7 @@ public class Etat {
                 } else if((i==centerH && j==centerL)) {
                     grille[i][j] = new Case(true);
                 } else {
+                    casesPeutBouger.add(new Point(i, j));
                     if(i%2==0)
                         grille[i][j] = new Case(true, new Pion(j%2));
                     else
@@ -136,30 +141,30 @@ public class Etat {
         int nbPionsDep = grille[h][l].nbPions();
         ArrayList<Point> resultat = new ArrayList<>();
         if (nbPionsDep > 0) {
-            //remplacer getPointsVoisins() avec deux boucles. // UPDATE la methode est beaucoup plus mieux qu'une boucle.
-            ArrayList<Point> pointsVoisins = getPointsVoisins(h, l);
-            for (Point v : pointsVoisins) {
-                if (estCaseValide(v) && grille[v.x][v.y].nbPions() > 0 && grille[v.x][v.y].nbPions() + nbPionsDep <= 5) {
-                    resultat.add(v);
+            for(int i=h-1; i<=h+1; i++) {
+                for(int j=l-1; j<=l+1; j++) {
+                    Point p = new Point(i, j);
+                    if ((i!=h || j!=l) &&
+                            estCaseValide(p) &&
+                            grille[p.x][p.y].nbPions() > 0 &&
+                            grille[p.x][p.y].nbPions() + nbPionsDep <= 5) {
+                        resultat.add(p);
+                    }
                 }
             }
         }
         return resultat;
     }
-    //TODO faire un hashset des cases acces
+
     public ArrayList<Point> trouveCasePeutBouger() {
-        ArrayList<Point> casePeutBouger = new ArrayList<>();
-        for (int i = 0; i < taille.h; i++) {
-            for (int j = 0; j < taille.l; j++) {
-                if ((estCaseValide(new Point(i, j))) && (grille[i][j].nbPions()>0)) {
-                    ArrayList<Point> vosinsAccessible = voisinsAccessibles(i, j);
-                    if (vosinsAccessible != null && vosinsAccessible.size() != 0) {
-                        casePeutBouger.add(new Point(i, j));
-                    }
+        ArrayList<Point> peuventBouger = new ArrayList<>();
+        for(Point p : casesPeutBouger) {
+                ArrayList<Point> voisinsAccessible = voisinsAccessibles(p.x, p.y);
+                if (voisinsAccessible != null && voisinsAccessible.size() != 0) {
+                    peuventBouger.add(p);
                 }
-            }
         }
-        return casePeutBouger;
+        return peuventBouger;
     }
     private ArrayList<Point> getPointsVoisins(int h, int l) {
         ArrayList<Point> ret = new ArrayList<>();
@@ -182,7 +187,6 @@ public class Etat {
     // #######################
     // #### VERIFICATIONS ####
     // #######################
-    // int positifs dans la classe point. // UPDATE est ce que tout ces testes sont necessaire
     protected boolean coordonneesValides(Point pt) {
         return (pt.x>=0 && pt.x<taille.h && pt.y>=0 && pt.y<taille.l);
     }

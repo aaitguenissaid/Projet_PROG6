@@ -67,6 +67,8 @@ public interface CollecteurEvenements {
 
     void setNomJ2(String text);
 
+    void inverserJoueurs();
+
     EffetsSonores getEffetsSonores();
 
     Jeu getJeu();

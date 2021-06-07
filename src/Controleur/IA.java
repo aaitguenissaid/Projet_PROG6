@@ -17,6 +17,5 @@ abstract class IA {
 
     }
 
-
     public abstract Mouvement joue();
 }

@@ -166,18 +166,7 @@ public class Etat {
         }
         return peuventBouger;
     }
-    private ArrayList<Point> getPointsVoisins(int h, int l) {
-        ArrayList<Point> ret = new ArrayList<>();
-        ret.add(new Point(h, l-1));
-        ret.add(new Point(h-1, l-1));
-        ret.add(new Point(h-1, l));
-        ret.add(new Point(h-1, l+1));
-        ret.add(new Point(h, l+1));
-        ret.add(new Point(h+1, l+1));
-        ret.add(new Point(h+1, l));
-        ret.add(new Point(h+1, l-1));
-        return ret;
-    }
+
 
 
 

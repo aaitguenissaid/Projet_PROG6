@@ -16,6 +16,7 @@ public class Jeu extends Etat implements Cloneable {
     Historique historique;
     boolean estPartieRecuperee;
     public boolean estPartieNonSauvegardee;
+    public boolean partieAbandonnee;
 
 
 
@@ -39,6 +40,7 @@ public class Jeu extends Etat implements Cloneable {
             historique = new Historique(this);
         }
         estPartieNonSauvegardee=false;
+        partieAbandonnee=false;
     }
 
 
@@ -50,6 +52,7 @@ public class Jeu extends Etat implements Cloneable {
     // #### VERIFICATION ####
     // ######################
     public boolean estFini() {
+        if(partieAbandonnee) return true;
         //On recherche les piles que l'on peut déplacer
         for(int i=0; i<taille.h; i++) {
             for (int j = 0; j < taille.l; j++) {
@@ -82,6 +85,7 @@ public class Jeu extends Etat implements Cloneable {
     }
 
     public boolean bouge(Point depart, Point arrive, boolean addToHistoric) {
+        if(estFini()) return false;
         if(historique.isNavigationOn()) {
             //Si l'utilisateur était en train de naviguer dans l'historique, on demande confirmation pour retourner
             //dans l'état qu'il visitait
@@ -153,6 +157,7 @@ public class Jeu extends Etat implements Cloneable {
         lastDepI=lastDepJ=lastArrI=lastArrJ=-1;
         estPartieRecuperee=false;
         estPartieNonSauvegardee=false;
+        partieAbandonnee=false;
         historique = new Historique(this);
     }
 

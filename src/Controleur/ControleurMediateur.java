@@ -136,7 +136,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void jouer_en_local(){
-        mode=0;
+        mode=MODE_JvsJ;
         jeu.setNomJ1(Configuration.instance().get(Configuration.PSEUDO_J1));
         jeu.setNomJ2(Configuration.instance().get(Configuration.PSEUDO_J2));
         jeuint.setStatistiques();
@@ -145,7 +145,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void jouer_contre_ia() {
-        mode=1;
+        mode=MODE_JvsIA;
 
         //Création de l'IA
         int id_ia = (Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) ? Jeu.COULEUR1 : Jeu.COULEUR2;
@@ -172,7 +172,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void lancer_demo() {
-        mode=2;
+        mode=MODE_IAvsIA;
         jeu =new Jeu();
         jeuint.setJeu(jeu);
         //Création des IAs

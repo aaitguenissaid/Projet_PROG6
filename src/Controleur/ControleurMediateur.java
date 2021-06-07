@@ -10,6 +10,7 @@ import Vue.*;
 import javax.swing.*;
 import Structures.Point;
 import java.awt.*;
+import java.util.Arrays;
 
 public class ControleurMediateur implements CollecteurEvenements {
     public static final int MODE_JvsJ=0;
@@ -86,7 +87,7 @@ public class ControleurMediateur implements CollecteurEvenements {
             if(!jeu.getHistorique().isNavigationOn()) {
                 if (bouge(m.getDepart(), m.getArrivee())) {
                     if(mode==MODE_JvsIA && jeu.getTour()==JoueurIA.getId()) {
-                        lancerAnimationCoupIA(IAAffrontement);
+                        lancerAnimationCoupIA(IAAffrontement, JoueurIA.getId());
                     }
                 }
             }
@@ -165,7 +166,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
         //Si c'est son tour, l'IA joue un premier coup
         if(id_ia==jeu.getTour()) {
-            lancerAnimationCoupIA(IAAffrontement);
+            lancerAnimationCoupIA(IAAffrontement, JoueurIA.getId());
         }
     }
 
@@ -188,7 +189,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint.setGameScreen();
         jeuint.setStatistiques();
 
-        lancerAnimationCoupIA(IA_1);
+        lancerAnimationCoupIA(IA_1, Jeu.COULEUR1);
     }
 
     private IA construireIA(String nom_ia, int id_ia) {
@@ -200,17 +201,13 @@ public class ControleurMediateur implements CollecteurEvenements {
         };
     }
 
-    private void lancerAnimationCoupIA(IA ia) {
-        lancerAnimationCoupIA(ia, 0);
-        jeuint.setStatistiques();
-    }
-
     private void lancerAnimationCoupIA(IA ia, int id) {
         if(time!=null && time.isRunning()) time.stop();
         Mouvement toClic = ia.joue();
         animations.insereTete((new AnimationJoueurIA(1, jeuint, toClic, this, id)));
         time = new Timer(1500, new AdaptateurTemps(this));
         time.start();
+        jeuint.setStatistiques();
     }
 
     public void lancerAnimationAdversaire(int id) {
@@ -225,10 +222,28 @@ public class ControleurMediateur implements CollecteurEvenements {
         String nom_partie = (String) jeuint.choisirItem(titre, description, parties, JOptionPane.QUESTION_MESSAGE);
 
         if(nom_partie!=null) {
-            Jeu j = PartiesSauvegardees.recupererPartie(nom_partie);
+            Jeu j = PartiesSauvegardees.recupererPartie(nom_partie, this);
             if (j != null) {
                 this.jeu = j;
                 jeuint.setJeu(j);
+
+                //Récupération des IAs
+                String [] IA_names = Configuration.instance().lis("IA_names").split(",");
+                boolean j1EstIA = Arrays.stream(IA_names).toList().contains(j.getNomJ1());
+                boolean j2EstIA = Arrays.stream(IA_names).toList().contains(j.getNomJ2());
+                if(j1EstIA && j2EstIA) {
+                    mode = MODE_IAvsIA;
+                    IA_1 = construireIA(jeu.getNomJ1(), Jeu.COULEUR1);
+                    IA_2 = construireIA(jeu.getNomJ2(), Jeu.COULEUR2);
+                } else if(j1EstIA || j2EstIA) {
+                    mode = MODE_JvsIA;
+                    JoueurIA = (j1EstIA) ? jeu.getJ1() : jeu.getJ2();
+                    IAAffrontement = construireIA(JoueurIA.getNom(), JoueurIA.getId());
+                } else {
+                    mode = MODE_JvsJ;
+                }
+
+                lancerPartie();
                 jeuint.setGameScreen();
             } else {
                 JOptionPane.showMessageDialog(jeuint.getFrame(),
@@ -392,14 +407,17 @@ public class ControleurMediateur implements CollecteurEvenements {
     public void relancerPartie() {
         if(jeu.estFini()) {
             jeu.relancerPartie();
-            animations = new SequenceListe<>();
-            jeuint.metAJour();
-            jeuint.setStatistiques();
-            if(mode==MODE_IAvsIA) {
-                lancerAnimationCoupIA(IA_1, 0);
-            } else if(mode==MODE_JvsIA && Boolean.parseBoolean(Configuration.instance().get(Configuration.IA_COMMENCE))) {
-                lancerAnimationCoupIA(IAAffrontement, 0);
-            }
+            lancerPartie();
+        }
+    }
+    private void lancerPartie() {
+        animations = new SequenceListe<>();
+        jeuint.metAJour();
+        jeuint.setStatistiques();
+        if(mode==MODE_IAvsIA) {
+            lancerAnimationCoupIA(IA_1, 0);
+        } else if(mode==MODE_JvsIA && jeu.getTour()==IAAffrontement.joueur) {
+            lancerAnimationCoupIA(IAAffrontement, 0);
         }
     }
 

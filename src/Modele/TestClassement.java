@@ -10,7 +10,7 @@ public class TestClassement {
         Random r = new Random();
         int n = 10;
         int m = 100;
-        String[] pseudos = {"aaaaa", "bbbbb", "ccccc", "vvvvv", "eeeee", "fffff", "ggggg", "hhhhh", "kkkkk", "jjjjj"};
+        String[] pseudos = {"aaaaaaaaaa", "bbbbbbbbbb", "cccccccccc", "vvvvvvvvvv", "eeeeeeeeee", "ffffffffff", "gggggggggg", "hhhhhhhhhh", "kkkkkkkkkk", "jjjjjjjjjj"};
 
         for(int i = 0; i<m/2-1; i+=2) {
             int nbPseudo = r.nextInt(n-1);

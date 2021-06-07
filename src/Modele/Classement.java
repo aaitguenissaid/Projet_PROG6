@@ -57,7 +57,7 @@ public class Classement {
                 String pseudo = mots[0];
                 int nbVictoires = Integer.parseInt(mots[1]);
                 int nbParties = Integer.parseInt(mots[2]);
-                int lesPoints = Integer.parseInt(mots[3]);
+                int lesPoints = Integer.parseInt(mots[4]);
                 Score score = new Score(pseudo, nbVictoires, nbParties, lesPoints);
                 listeScores.insere(score);
                 if(sc.hasNextLine())
@@ -84,18 +84,19 @@ public class Classement {
             Score p = it.prochain();
             if (p.pseudo.equals(pseudo)) {
                 p.nbParties++;
-                if (aGagner != 0) {
-                    p.nbVictoires += aGagner==1 ? 1 : 0;
-                    p.lesPoints += aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints;
-                }
+                p.nbVictoires += aGagner==1 ? 1 : 0;
+                p.lesPoints += aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints;
+                Score n = new Score(pseudo,p.nbVictoires,p.nbParties,p.lesPoints);
+                it.supprime();
+                listeScores.insere(n);
                 //enregistrer le fichier. suprimer et reecrire.
                 supprimerEnregistrerFichier();
                 estJoueurExistant = true;
             }
         }
         if(!estJoueurExistant){
-            Score p = new Score(pseudo, (aGagner==0) ? 0 : (aGagner==1) ? 1 : 0, 1);
-            p.lesPoints += aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints;
+            System.out.println(lesNouveauxPoints);
+            Score p = new Score(pseudo, (aGagner==0) ? 0 : (aGagner==1) ? 1 : 0, 1,500+ (aGagner==1 ? lesNouveauxPoints : -lesNouveauxPoints));
             listeScores.insere(p);
             supprimerEnregistrerFichier();
         }
@@ -116,7 +117,7 @@ public class Classement {
             Iterateur<Score> iterateur = listeScores.iterateur();
             while(iterateur.aProchain()){
                 Score sc = iterateur.prochain();
-                String s = sc.pseudo + "\t" + sc.nbVictoires + "\t" + sc.nbParties + "\t" + sc.lesPoints + "\n";
+                String s = sc.pseudo + "\t" + sc.nbVictoires + "\t" + sc.nbParties + "\t" + sc.ratio + "\t" + sc.lesPoints + "\n";
                 fileWriter.write(s);
             }
             fileWriter.close();

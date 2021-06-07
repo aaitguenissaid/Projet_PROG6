@@ -80,6 +80,9 @@ public class AireDeDessin extends JComponent {
         if(cc.suggestion() && Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION))) {
             suggestion(cc.suggestionMouvement());
         }
+        drawable.setColor(palette.Couleur5);
+        drawable.setStroke(new BasicStroke(3));
+        drawable.drawLine(getWidth()-3,0,getWidth()-3,getHeight());
     }
 
 

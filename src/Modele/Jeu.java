@@ -128,9 +128,7 @@ public class Jeu extends Etat implements Cloneable {
         grille[arrive.x][arrive.y].updateTete();
         grille[depart.x][depart.y].ajoutePions(seq);
         setTour((tour==0) ? 1 : 0);
-
-        historique.supprimeTete();
-
+        
         return true;
     }
 

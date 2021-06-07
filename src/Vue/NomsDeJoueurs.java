@@ -60,6 +60,12 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
                 if (e.getKeyCode()==KeyEvent.VK_ENTER){
                     jButton1.setEnabled(false);
                     jButton1MouseClicked(null);
+                }       else {
+                  //  String str = jTextField1.getText()+e.toString();
+                  //  if (str.equals(cc.getJeu().getNomJ1())){
+                      //  jButton1.setEnabled(false);
+                    //}else{
+                    jButton1.setEnabled(true);//}
                 }
             }
         });
@@ -76,14 +82,12 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         });
         jPanel2.add(jButton2);
 
-        jButton1.setEnabled(false);
-
-        jButton6.setEnabled(false);
         jButton1.setText("Sauvegarder ");
 
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
+                jButton1.setEnabled(false);
             }
         });
         jPanel2.add(jButton1);
@@ -93,6 +97,8 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("premier joueur", jPanel1);
 
+        jButton6.setEnabled(false);
+        jButton1.setEnabled(false);
         jPanel5.setLayout(new java.awt.GridLayout(7, 1));
         jPanel5.add(filler23);
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -106,6 +112,13 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
                 if (e.getKeyCode()==KeyEvent.VK_ENTER){
                     jButton6MouseClicked(null);
                     jButton6.setEnabled(false);
+                }else {
+                    //String str = jTextField3.getText()+e.toString();
+                  //  if (str.equals(cc.getJeu().getNomJ2())){
+                   //     jButton6.setEnabled(false);
+                  //  }else{
+                    jButton6.setEnabled(true);
+                //}
                 }
             }
         });
@@ -125,6 +138,7 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton6MouseClicked(evt);
+                jButton6.setEnabled(false);
             }
         });
         jPanel6.add(jButton6);
@@ -143,6 +157,8 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         if(jTextField1.getText()!="") {
             cc.setNomJ1(jTextField1.getText());
             System.out.println(jTextField1.getText());
+        }else{
+            jButton1.setEnabled(true);
         }
     }
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
@@ -155,6 +171,8 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         if(jTextField3.getText()!=""){
             cc.setNomJ2(jTextField3.getText());
             System.out.println(jTextField3.getText());
+        }else{
+            jButton6.setEnabled(true);
         }
     }
     public void setToutCouleurs(){

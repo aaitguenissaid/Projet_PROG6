@@ -12,7 +12,7 @@ public class EffetsSonores {
     Clip clip2;
     boolean on;
     public EffetsSonores() {
-        on =Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON));
+        on =Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON))    ;
         try {
             URL url1 = Configuration.chargeURL(Configuration.instance().lis(Configuration.SOUND_1));
             AudioInputStream audioInputStream1 = AudioSystem.getAudioInputStream(url1);

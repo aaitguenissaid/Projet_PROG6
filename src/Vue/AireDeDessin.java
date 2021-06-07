@@ -33,7 +33,7 @@ public class AireDeDessin extends JComponent {
         tab = new PionComponent[j.getTaille().h][j.getTaille().l];
         for(int i = 0 ; i< j.getTaille().h;i++){
             for(int k = 0; k<j.getTaille().l;k++){
-              tab[i][k]  = new PionComponent(j,new Point(i,k),palette);
+              tab[i][k]  = new PionComponent(j,new Point(i,k),palette,i,k);
             }
         }
         set=false;
@@ -166,15 +166,19 @@ public class AireDeDessin extends JComponent {
         Font font = new Font("Ubuntu", Font.BOLD, 24);
         drawable.setFont(font);
         drawable.setColor(palette.Couleur7);
-        String nom;
-        int gagnant = jeu.quiAGagnee();
-        String text;
-        if(gagnant==0) {
-            text = "Egalité";
+        String nom, text;
+        if(jeu.partieAbandonnee) {
+            nom = (jeu.getTour()==Jeu.COULEUR1) ? jeu.getNomJ2() : jeu.getNomJ1();
+            text="Le joueur "+ nom +" gagne";
         } else {
-            if(gagnant==1) nom = jeu.getNomJ1();
-            else nom = jeu.getNomJ2();
-            text = "Le joueur "+nom+" gagne !";
+            int gagnant = jeu.quiAGagnee();
+            if (gagnant == 0) {
+                text = "Egalité";
+            } else {
+                if (gagnant == 1) nom = jeu.getNomJ1();
+                else nom = jeu.getNomJ2();
+                text = "Le joueur " + nom + " gagne !";
+            }
         }
         FontMetrics metrics = drawable.getFontMetrics(font);
         int x = (largeurFenetrePixel - metrics.stringWidth(text)) / 2;

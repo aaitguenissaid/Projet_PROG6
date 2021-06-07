@@ -359,6 +359,10 @@ public class JeuVue extends javax.swing.JPanel {
     public void allumerSuggestion(){
         jButton7.setEnabled(true);
     }
+    public void eteindreRelancerPartie() {jButton5.setEnabled(false);}
+    public void allumerRelancerPartie() {jButton5.setEnabled(true);}
+    public void eteindreAbandonner() {jButton6.setEnabled(false);}
+    public void allumerAbandonner() {jButton6.setEnabled(true);}
     public void setNomDeJ1(String nom){
         jLabel6.setText(nom);
     }

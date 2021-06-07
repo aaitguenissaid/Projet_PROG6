@@ -32,10 +32,7 @@ public class IAFort extends IA{
 
     private boolean estFeuille(){
         ArrayList<Point> casePeutBouger = jeu.trouveCasePeutBouger();
-        if ((casePeutBouger == null) | (casePeutBouger.size() == 0))
-            return true;
-        else
-            return false;
+        return ((casePeutBouger == null) | (casePeutBouger.size() == 0));
     }
 
     private int nonJoueur(int j){
@@ -78,7 +75,7 @@ public class IAFort extends IA{
 
 
     private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
-        if ((estFeuille()) || (horizon == 0)){
+        if ( (horizon == 0)|(estFeuille())){
             int value = evaluerNoeud();
             return value;
         }

@@ -104,6 +104,9 @@ public class Jeu extends Etat implements Cloneable {
         grille[arrive.x][arrive.y].ajoutePions(pions);
         setTour((tour==0) ? 1 : 0);
 
+        casesPeutBouger.remove(depart);
+        if(grille[arrive.x][arrive.y].nbPions()==5) casesPeutBouger.remove(arrive);
+
         if(addToHistoric) {
             historique.ajouteEtat(new Etat(grille, tour,lastDepI,lastDepJ,lastArrI,lastArrJ,nbPionsDepl));
         }
@@ -127,7 +130,9 @@ public class Jeu extends Etat implements Cloneable {
         grille[arrive.x][arrive.y].updateTete();
         grille[depart.x][depart.y].ajoutePions(seq);
         setTour((tour==0) ? 1 : 0);
-        
+
+        casesPeutBouger.add(depart);
+        if(!casesPeutBouger.contains(arrive)) casesPeutBouger.add(arrive);
         return true;
     }
 

@@ -260,7 +260,6 @@ public class ControleurMediateur implements CollecteurEvenements {
     public boolean bouge(Point depart, Point arrivee) {
         boolean ret = jeu.bouge(depart, arrivee);
         jeuint.metAJour();
-        //System.out.println("Jeu fini : " + jeu.estFini());
         jeuint.setStatistiques();
         sonCtrl.moveEnd();
         if(jeu.estFini()) {

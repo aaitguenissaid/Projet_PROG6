@@ -55,7 +55,7 @@ public class Regles extends javax.swing.JPanel {
         jPanel2.add(filler1);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
-        jLabel1.setText("Parametres");
+        jLabel1.setText("Reagles");
         jPanel2.add(jLabel1);
         jPanel2.add(filler2);
 

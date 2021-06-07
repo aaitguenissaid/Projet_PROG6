@@ -13,7 +13,7 @@ public class HistoriqueTimeLine extends JComponent {
     }
     public void paintComponent(Graphics g) {
         drawable = (Graphics2D) g;
-        int all = h.getNbCoupsReel()-1;
+        int all = h.getNbCoups()-1;
         int pos =h.getCurrent();
         int width;
         if(all==0)

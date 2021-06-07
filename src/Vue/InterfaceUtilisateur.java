@@ -85,6 +85,13 @@ public class InterfaceUtilisateur implements Runnable {
         return frame;
     }
     public void metAJour() {
+        if(j.estFini()) {
+            jeu.allumerRelancerPartie();
+            jeu.eteindreAbandonner();
+        } else {
+            jeu.allumerAbandonner();
+            jeu.eteindreRelancerPartie();
+        }
         if(j.getTour()==0){
             jeu.setTour(j.getNomJ1(),j.getJ1().couleur==0 ? ctrl.getPalette().Couleur3 :ctrl.getPalette().Couleur4);
         }else{
@@ -163,5 +170,4 @@ public class InterfaceUtilisateur implements Runnable {
     public void informer(String description) {
         JOptionPane.showMessageDialog(frame, description);
     }
-
 }

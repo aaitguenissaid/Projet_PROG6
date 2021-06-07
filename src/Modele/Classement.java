@@ -25,7 +25,7 @@ public class Classement {
         jeu =j;
         //check if file exists
         //if yes load scores into the seq
-        FAPListe<Score> listeScores = new FAPListe<Score>();
+        FAPListe<Score> listeScores = new FAPListe<>();
         fichierClassement = new File(nomFichierClassement);
 
         //Création du fichier de Classement s'il n'existe pas
@@ -71,6 +71,7 @@ public class Classement {
     public FAPListe<Score> getList(){
         return this.listeScores;
     }
+
     Iterateur getIterateur() {
         return listeScores.iterateur();
     }

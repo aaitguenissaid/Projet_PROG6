@@ -157,6 +157,8 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         if(jTextField1.getText()!="") {
             cc.setNomJ1(jTextField1.getText());
             System.out.println(jTextField1.getText());
+        }else{
+            jButton1.setEnabled(true);
         }
     }
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
@@ -169,6 +171,8 @@ public class NomsDeJoueurs extends javax.swing.JDialog {
         if(jTextField3.getText()!=""){
             cc.setNomJ2(jTextField3.getText());
             System.out.println(jTextField3.getText());
+        }else{
+            jButton6.setEnabled(true);
         }
     }
     public void setToutCouleurs(){

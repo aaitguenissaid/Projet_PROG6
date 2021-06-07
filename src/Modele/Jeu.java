@@ -16,7 +16,6 @@ public class Jeu extends Etat implements Cloneable {
     Historique historique;
     boolean estPartieRecuperee;
     CollecteurEvenements cc;
-    EffetsSonores son;
 
 
 
@@ -27,10 +26,6 @@ public class Jeu extends Etat implements Cloneable {
     // ########################
     public Jeu() {
         this(true);
-        son = new EffetsSonores();
-    }
-    public void disable_enable_son(){
-        son.deisabel_enabel_son();
     }
     public Jeu(boolean fromScratch) {
         super();
@@ -43,7 +38,6 @@ public class Jeu extends Etat implements Cloneable {
             //L'historique doit être construit en dernier (il récupère la grille initiale du jeu)
             historique = new Historique(this);
         }
-        son = new EffetsSonores();
     }
 
 
@@ -106,7 +100,6 @@ public class Jeu extends Etat implements Cloneable {
 
         if(addToHistoric) {
             historique.ajouteEtat(new Etat(grille, tour,lastDepI,lastDepJ,lastArrI,lastArrJ,nbPionsDepl));
-            son.moveEnd();
         }
 
         return true;

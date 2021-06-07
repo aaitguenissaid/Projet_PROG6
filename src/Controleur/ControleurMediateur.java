@@ -261,6 +261,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         jeuint.metAJour();
         //System.out.println("Jeu fini : " + jeu.estFini());
         jeuint.setStatistiques();
+        sonCtrl.moveEnd();
         if(jeu.estFini()) {
             classement.enregistrerScore(jeu.getNomJ1(), jeu.getNomJ2(), jeu.quiAGagnee());
             if(Boolean.parseBoolean(Configuration.instance().get(Configuration.RELANCE_AUTOMATIQUE))) {
@@ -416,7 +417,6 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
     public void deisabel_enabel_son(){
         sonCtrl.deisabel_enabel_son();
-        jeu.disable_enable_son();
     }
     public boolean getSonState(){
         return sonCtrl.getSonState();

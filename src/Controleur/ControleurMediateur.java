@@ -3,6 +3,7 @@ package Controleur;
 
 import Global.Configuration;
 import Modele.*;
+import Structures.Iterateur;
 import Structures.Mouvement;
 import Structures.SequenceListe;
 import Vue.*;
@@ -23,9 +24,11 @@ public class ControleurMediateur implements CollecteurEvenements {
     IA IAAffrontement, IA_1, IA_2;
     Joueur JoueurIA;
     HistoriqueTimeLine histAffControl;
+
     //Attributs pour les animations
     Timer time;
     SequenceListe<Animation> animations;
+    boolean navigationHistoriqueRunning;
 
     //Attributs pour l'interface
     InterfaceUtilisateur jeuint;
@@ -44,6 +47,7 @@ public class ControleurMediateur implements CollecteurEvenements {
         palette=new PaletteDeCouleurs();
         sonCtrl = new EffetsSonores();
         classement = new Classement(jeu);
+        navigationHistoriqueRunning=false;
     }
 
 
@@ -380,9 +384,19 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void play_pause_historique() {
-        animations.insereTete(new AnimationHistorique(1, this));
-        time = new Timer(1500, new AdaptateurTemps(this));
-        time.start();
+        if(navigationHistoriqueRunning) {
+            navigationHistoriqueRunning=false;
+            Iterateur<Animation> it = animations.iterateur();
+            while (it.aProchain()) {
+                if(it.prochain() instanceof AnimationHistorique)
+                    it.supprime();
+            }
+        } else {
+            navigationHistoriqueRunning=true;
+            animations.insereTete(new AnimationHistorique(1, this));
+            time = new Timer(1500, new AdaptateurTemps(this));
+            time.start();
+        }
     }
 
     @Override

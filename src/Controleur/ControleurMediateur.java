@@ -556,8 +556,8 @@ public class ControleurMediateur implements CollecteurEvenements {
         return suggestion;
     }
     public Mouvement suggestionMouvement(){
-        IABasique iaB = new IABasique(jeu, jeu.getTour());
-        return iaB.joue();
+        IAFort iaF = new IAFort(jeu, jeu.getTour(), 3);
+        return iaF.joue();
     }
 
     public EffetsSonores getEffetsSonores(){

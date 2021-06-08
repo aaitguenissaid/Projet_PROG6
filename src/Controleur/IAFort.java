@@ -20,6 +20,12 @@ public class IAFort extends IA{
         hauteur = Integer.parseInt(Configuration.instance().get(nom));
     }
 
+    public IAFort(Jeu j, int joueur, int hauteur) {
+        super(j, joueur);
+        nombreCoup = 0;
+        this.hauteur = hauteur;
+    }
+
     private boolean estFeuille(){
         ArrayList<Point> casePeutBouger = jeu.trouveCasePeutBouger();
         return ((casePeutBouger == null) | (casePeutBouger.size() == 0));

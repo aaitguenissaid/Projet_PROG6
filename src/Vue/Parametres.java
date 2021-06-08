@@ -30,7 +30,10 @@ public class Parametres extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
@@ -50,6 +53,7 @@ public class Parametres extends javax.swing.JPanel {
         jButton36 = new javax.swing.JButton();
         jButton37 = new javax.swing.JButton();
         jButton38 = new javax.swing.JButton();
+        jButton39 = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -147,6 +151,7 @@ public class Parametres extends javax.swing.JPanel {
         jCheckBox2.setSelected(!Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)));
         jPanel6.add(jCheckBox2);
 
+
         jCheckBox3.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox3.setText("Interdire les suggestions des IAs");
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -157,13 +162,27 @@ public class Parametres extends javax.swing.JPanel {
         jCheckBox3.setSelected(!Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)));
         jPanel6.add(jCheckBox3);
 
-        jPanel4.add(jPanel6);
 
+        jPanel15.setLayout(new javax.swing.BoxLayout(jPanel15, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel15.setAlignmentX(0.0F);
+        jLabel10.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du premier joueur : </h4>  <h3 style=\"text-align:center;\">"+cc.getJeu().getNomJ1()+"</h3></html>");
+        jPanel15.add(jLabel10);
+        jButton39.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_SWAP)));
+        jButton39.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton39MouseClicked(evt);
+            }
+        });
+        jPanel15.add(jButton39);
+        jLabel11.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du deuxième joueur : </h4>  <h3 style=\"text-align:center;\">"+cc.getJeu().getNomJ2()+"</h3></html>");
+        jPanel15.add(jLabel11);
+        jPanel6.add(jPanel15);
+
+        jPanel4.add(jPanel6);
 
         jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.PAGE_AXIS));
 
         jLabel3.setText("IA");
-        jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel7.add(jLabel3);
 
         jPanel3.setAlignmentX(0.0F);
@@ -397,6 +416,11 @@ public class Parametres extends javax.swing.JPanel {
         System.out.println(jSpinner2.getValue());
         cc.lancer_demo();
     }
+    private void jButton39MouseClicked(java.awt.event.MouseEvent evt) {
+        //invercer ici
+        jLabel10.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du premier joueur : </h4>  <h3 style=\"text-align:center;\">"+cc.getJeu().getNomJ1()+"</h3></html>");
+        jLabel11.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du deuxième joueur : </h4>  <h3 style=\"text-align:center;\">"+cc.getJeu().getNomJ2()+"</h3></html>");
+    }
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
         // Handler pour le choix du paramètre général de relance automatique
@@ -462,10 +486,17 @@ public class Parametres extends javax.swing.JPanel {
         setThemeIcon();
         setSonIcon();
         jPanel2.setBackground(palette.Couleur1);
+        jPanel15.setBackground(palette.Couleur1);
         jButton1.setBackground(palette.Couleur1);
         jButton2.setBackground(palette.Couleur2);
+        jButton39.setBackground(palette.Couleur2);
+        jButton39.setForeground(palette.Couleur7);
         jLabel1.setBackground(palette.Couleur1);
         jLabel1.setForeground(palette.Couleur7);
+        jLabel10.setBackground(palette.Couleur1);
+        jLabel10.setForeground(palette.Couleur7);
+        jLabel11.setBackground(palette.Couleur1);
+        jLabel11.setForeground(palette.Couleur7);
         jLabel9.setBackground(palette.Couleur1);
         jLabel9.setForeground(palette.Couleur7);
         jLabel7.setBackground(palette.Couleur1);
@@ -568,11 +599,14 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -588,6 +622,7 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.JButton jButton36;
     private javax.swing.JButton jButton37;
     private javax.swing.JButton jButton38;
+    private javax.swing.JButton jButton39;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
 

@@ -106,7 +106,7 @@ public class ClassementScreen extends javax.swing.JPanel {
         jLabel5.setForeground(palette.Couleur7);
         jLabel6.setForeground(palette.Couleur7);
         jLabel7.setForeground(palette.Couleur7);
-        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel6.setLayout(new GridLayout(1, 4));//new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
 
         jLabel4.setText(nom);
         jPanel6.add(jLabel4);
@@ -140,7 +140,7 @@ public class ClassementScreen extends javax.swing.JPanel {
         jLabel5.setForeground(palette.Couleur7);
         jLabel6.setForeground(palette.Couleur7);
         jLabel7.setForeground(palette.Couleur7);
-        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel6.setLayout(new GridLayout(1, 4));//new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
 
         jLabel4.setText("Nom du joueur   ");
         jPanel6.add(jLabel4);

@@ -1,5 +1,6 @@
 package Controleur;
 
+import Global.Configuration;
 import Modele.Jeu;
 import Structures.Mouvement;
 import Structures.Point;
@@ -11,10 +12,12 @@ public class IAFort extends IA{
     int nombreCoup;
     HashMap<String, Integer> configurationDejaVu;
     int initDepartI, initDepartJ, initArriveeI, initArriveeJ, initNbPionsDepl;
+    int hauteur;
 
     public IAFort(Jeu j, int joueur, String nom) {
         super(j, joueur);
         nombreCoup = 0;
+        hauteur = Integer.parseInt(Configuration.instance().get(nom));
     }
 
     private boolean estFeuille(){
@@ -147,7 +150,8 @@ public class IAFort extends IA{
         long start = System.currentTimeMillis();
         Mouvement resultat;
         configurationDejaVu = new HashMap<>();
-        resultat = trouverGagnant(2);
+        System.out.println("hauteur" + hauteur);
+        resultat = trouverGagnant(hauteur - 1);
         nombreCoup++;
         long end=System.currentTimeMillis();
         System.out.println("Temps d'exécution： "+(end-start)+"ms");

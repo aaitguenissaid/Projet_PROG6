@@ -14,11 +14,6 @@ public class IAFort extends IA{
 
     public IAFort(Jeu j, int joueur, String nom) {
         super(j, joueur);
-        initDepartI=j.lastDepI;
-        initDepartJ=j.lastDepJ;
-        initArriveeI=j.lastArrI;
-        initArriveeJ=j.lastArrJ;
-        initNbPionsDepl=j.getNbPionsDepl();
         nombreCoup = 0;
     }
 
@@ -144,6 +139,11 @@ public class IAFort extends IA{
 
     @Override
     public Mouvement joue() {
+        initDepartI=jeu.lastDepI;
+        initDepartJ=jeu.lastDepJ;
+        initArriveeI=jeu.lastArrI;
+        initArriveeJ=jeu.lastArrJ;
+        initNbPionsDepl=jeu.getNbPionsDepl();
         long start = System.currentTimeMillis();
         Mouvement resultat;
         configurationDejaVu = new HashMap<>();

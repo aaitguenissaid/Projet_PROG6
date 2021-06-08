@@ -177,7 +177,7 @@ public class Parametres extends javax.swing.JPanel {
 
         jPanel15.setLayout(new javax.swing.BoxLayout(jPanel15, javax.swing.BoxLayout.LINE_AXIS));
         jPanel15.setAlignmentX(0.0F);
-        jLabel10.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du premier joueur : </h4>  <h3 style=\"text-align:center;\">"+cc.getJeu().getNomJ1()+"</h3></html>");
+        jLabel10.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du premier joueur : </h4>  <h3 style=\"text-align:center;\">"+Configuration.instance().get(Configuration.PSEUDO_J1)+"</h3></html>");
         jPanel15.add(jLabel10);
         jButton39.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_SWAP)));
         jButton39.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -186,7 +186,7 @@ public class Parametres extends javax.swing.JPanel {
             }
         });
         jPanel15.add(jButton39);
-        jLabel11.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du deuxième joueur : </h4>  <h3 style=\"text-align:center;\">"+cc.getJeu().getNomJ2()+"</h3></html>");
+        jLabel11.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du deuxième joueur : </h4>  <h3 style=\"text-align:center;\">"+Configuration.instance().get(Configuration.PSEUDO_J2)+"</h3></html>");
         jPanel15.add(jLabel11);
         jPanel6.add(jPanel15);
 
@@ -442,8 +442,9 @@ public class Parametres extends javax.swing.JPanel {
     }
     private void jButton39MouseClicked(java.awt.event.MouseEvent evt) {
         //invercer ici
-        jLabel10.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du premier joueur : </h4>  <h3 style=\"text-align:center;\">"+cc.getJeu().getNomJ1()+"</h3></html>");
-        jLabel11.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du deuxième joueur : </h4>  <h3 style=\"text-align:center;\">"+cc.getJeu().getNomJ2()+"</h3></html>");
+        cc.inverserJoueurs();
+        jLabel10.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du premier joueur : </h4>  <h3 style=\"text-align:center;\">"+Configuration.instance().get(Configuration.PSEUDO_J1)+"</h3></html>");
+        jLabel11.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du deuxième joueur : </h4>  <h3 style=\"text-align:center;\">"+Configuration.instance().get(Configuration.PSEUDO_J2)+"</h3></html>");
     }
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {

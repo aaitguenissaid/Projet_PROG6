@@ -1,9 +1,6 @@
 package Global;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import Structures.Point;
-import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
@@ -243,7 +240,15 @@ public class Configuration {
         InputStream is = charge(chemin);
 
         try {
-            return is.readAllBytes();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] data = new byte[1024];
+            while ((nRead = is.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+            buffer.flush();
+            byte[] byteArray = buffer.toByteArray();
+            return byteArray;
         } catch(Exception e) {
             System.err.println("Impoosible de lire l'Icon " + nom);
             return null;

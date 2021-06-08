@@ -10,8 +10,7 @@ import Vue.*;
 
 import javax.swing.*;
 import Structures.Point;
-import java.awt.*;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class ControleurMediateur implements CollecteurEvenements {
     public static final int MODE_JvsJ=0;
@@ -199,12 +198,16 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
     private IA construireIA(String nom_ia, int id_ia) {
-        return switch (nom_ia) {
-            case "IAAleatoire" -> new IAAleatoire(jeu, id_ia);
-            case "IABasique" -> new IABasique(jeu, id_ia);
-            case "IAFort" -> new IAFort(jeu, id_ia);
-            default -> new IAAleatoire(jeu, id_ia);
-        };
+        switch (nom_ia) {
+            case "IAAleatoire":
+                return new IAAleatoire(jeu, id_ia);
+            case "IABasique":
+                return new IABasique(jeu, id_ia);
+            case "IAFort":
+                return new IAFort(jeu, id_ia);
+            default:
+                return new IAAleatoire(jeu, id_ia);
+        }
     }
 
     private void lancerAnimationCoupIA(IA ia, int id) {
@@ -235,8 +238,19 @@ public class ControleurMediateur implements CollecteurEvenements {
 
                 //Récupération des IAs
                 String [] IA_names = Configuration.instance().lis("IA_names").split(",");
-                boolean j1EstIA = Arrays.stream(IA_names).toList().contains(j.getNomJ1());
-                boolean j2EstIA = Arrays.stream(IA_names).toList().contains(j.getNomJ2());
+
+                java.util.List<String> list = new ArrayList<>();
+                for (String IA_name : IA_names) {
+                    list.add(IA_name);
+                }
+                boolean j1EstIA = list.contains(j.getNomJ1());
+
+                java.util.List<String> result = new ArrayList<>();
+                for (String IA_name : IA_names) {
+                    result.add(IA_name);
+                }
+                boolean j2EstIA = result.contains(j.getNomJ2());
+
                 if(j1EstIA && j2EstIA) {
                     mode = MODE_IAvsIA;
                     IA_1 = construireIA(jeu.getNomJ1(), Jeu.COULEUR1);

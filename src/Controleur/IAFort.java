@@ -150,7 +150,6 @@ public class IAFort extends IA{
         long start = System.currentTimeMillis();
         Mouvement resultat;
         configurationDejaVu = new HashMap<>();
-        System.out.println("hauteur" + hauteur);
         resultat = trouverGagnant(hauteur - 1);
         nombreCoup++;
         long end=System.currentTimeMillis();

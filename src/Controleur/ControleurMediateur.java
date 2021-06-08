@@ -84,7 +84,6 @@ public class ControleurMediateur implements CollecteurEvenements {
 //        System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
 //        System.out.print("End :");
 ///        System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
-        jeuint.metAJour();
 
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");
@@ -93,6 +92,7 @@ public class ControleurMediateur implements CollecteurEvenements {
             //Si on la navigation n'est pas activée (ou qu'elle vient d'être désactivée)
             if(!jeu.getHistorique().isNavigationOn()) {
                 if (bouge(m.getDepart(), m.getArrivee())) {
+                    jeuint.metAJour();
                     if(mode==MODE_JvsIA && jeu.getTour()==JoueurIA.getId()) {
                         lancerAnimationCoupIA(IAAffrontement, JoueurIA.getId());
                     }

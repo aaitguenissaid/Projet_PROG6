@@ -27,6 +27,7 @@ public class Parametres extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jScrollPane5 = new javax.swing.JScrollPane();
+        jScrollPane5.getVerticalScrollBar().setUnitIncrement(16);
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();

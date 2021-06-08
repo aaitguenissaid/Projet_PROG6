@@ -4,8 +4,6 @@ import Modele.Jeu;
 import Structures.Mouvement;
 import Structures.Point;
 
-import java.awt.*;
-import java.util.ArrayList;
 
 abstract class IA {
     Jeu jeu;

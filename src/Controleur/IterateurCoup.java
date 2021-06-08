@@ -3,7 +3,6 @@ package Controleur;
 import Modele.Jeu;
 import Structures.Mouvement;
 import Structures.Point;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class IterateurCoup {
@@ -31,7 +30,7 @@ public class IterateurCoup {
             int h = casePeutBouger.get(indice).x;
             int l = casePeutBouger.get(indice).y;
             ArrayList<Point> voisinsAcc = j.voisinsAccessibles(h, l);
-            return  (indiceVoisin < voisinsAcc.size()) ? true : false;
+            return  (indiceVoisin < voisinsAcc.size()) ;
         }
         else
             return false;

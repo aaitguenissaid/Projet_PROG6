@@ -78,7 +78,7 @@ public class Parametres extends javax.swing.JPanel {
                 36,
                 1);
         SpinnerNumberModel model3 = new SpinnerNumberModel(
-                Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA2)),
+                Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA_AFFRONTEMENT)),
                 1,
                 36,
                 1);
@@ -507,7 +507,7 @@ public class Parametres extends javax.swing.JPanel {
         Configuration.instance().set(Configuration.HAUTEUR_IA2, String.valueOf(jSpinner2.getValue()));
     }
     private void spinner3Changed(ChangeEvent e) {
-
+        Configuration.instance().set(Configuration.HAUTEUR_IA_AFFRONTEMENT, String.valueOf(jSpinner3.getValue()));
     }
 
 

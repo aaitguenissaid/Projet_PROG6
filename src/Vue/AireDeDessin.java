@@ -120,19 +120,19 @@ public class AireDeDessin extends JComponent {
             drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/5-5, paddingH+to.height*hauteurCase+largeurCase/5);
         }else if((from.width>to.width)&&(from.height>to.height)){//Done
             drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/5,paddingH+from.height*hauteurCase+largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5);
-            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1, paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+(to.height+1)*hauteurCase-largeurCase/5+5-1);
-            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1, paddingW+(to.width+1)* largeurCase-largeurCase/5+5-1, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5+5);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5+5, paddingH+(to.height+1)*hauteurCase-largeurCase/5);
         }else if((from.width<to.width)&&(from.height>to.height)){//Done
             drawable.drawLine(paddingW+(from.width+1)* largeurCase-largeurCase/5,paddingH+from.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5);
-            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1, paddingW+to.width* largeurCase+largeurCase/5-5, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1);
-            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5-1, paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5+5-1);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5, paddingW+to.width* largeurCase+largeurCase/5-5, paddingH+(to.height+1)*hauteurCase-largeurCase/5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5, paddingW+to.width* largeurCase+largeurCase/5, paddingH+(to.height+1)*hauteurCase-largeurCase/5+5);
         }else if((from.width>to.width)&&(from.height<to.height)){//Done
             drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/5,paddingH+(from.height+1)*hauteurCase-largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5);
-            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5-1, paddingH+to.height*hauteurCase+largeurCase/5-5);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5-5);
             drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+(to.width+1)* largeurCase-largeurCase/5+5, paddingH+to.height*hauteurCase+largeurCase/5);
         }else if((from.width>to.width)&&(from.height==to.height)){//Done
             drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/5,paddingH+from.height*hauteurCase+largeurCase/2, paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2);
-            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2, paddingW+(to.width+1)* largeurCase-largeurCase/5+5, paddingH+to.height*hauteurCase+largeurCase/2+6);
+            drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2, paddingW+(to.width+1)* largeurCase-largeurCase/5+5, paddingH+to.height*hauteurCase+largeurCase/2+5);
             drawable.drawLine(paddingW+(to.width+1)* largeurCase-largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2, paddingW+(to.width+1)* largeurCase-largeurCase/5+5, paddingH+to.height*hauteurCase+largeurCase/2-5);
         }else if((from.width==to.width)&&(from.height>to.height)){//Done
             drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/2,paddingH+from.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2, paddingH+(to.height+1)*hauteurCase-largeurCase/5);
@@ -144,7 +144,7 @@ public class AireDeDessin extends JComponent {
             drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/5, paddingH+to.height*hauteurCase+largeurCase/2, paddingW+to.width* largeurCase+largeurCase/5-5, paddingH+to.height*hauteurCase+largeurCase/2+5);
         }else if((from.width==to.width)&&(from.height<to.height)){//
             drawable.drawLine(paddingW+from.width* largeurCase+largeurCase/2,paddingH+(from.height+1)*hauteurCase-largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2, paddingH+to.height*hauteurCase+largeurCase/5);
-            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/2+1, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2+5+1, paddingH+to.height*hauteurCase+largeurCase/5-5);
+            drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/2+1, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2+5, paddingH+to.height*hauteurCase+largeurCase/5-5);
             drawable.drawLine(paddingW+to.width* largeurCase+largeurCase/2, paddingH+to.height*hauteurCase+largeurCase/5, paddingW+to.width* largeurCase+largeurCase/2-5, paddingH+to.height*hauteurCase+largeurCase/5-5);
         }
     }

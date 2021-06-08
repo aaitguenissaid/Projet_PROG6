@@ -122,7 +122,6 @@ public class IAFort extends IA{
         int max = -INF;
         int courant;
         IterateurCoup it = new IterateurCoup(this);
-        int noteNoeudPrecedent = evaluerNoeud();
         while (it.aProchain()){
             Mouvement configSuivant = it.prochain();
             Point depart = configSuivant.getDepart();

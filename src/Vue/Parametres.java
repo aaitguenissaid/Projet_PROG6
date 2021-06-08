@@ -27,10 +27,14 @@ public class Parametres extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jScrollPane5 = new javax.swing.JScrollPane();
+        jScrollPane5.getVerticalScrollBar().setUnitIncrement(16);
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
@@ -50,6 +54,7 @@ public class Parametres extends javax.swing.JPanel {
         jButton36 = new javax.swing.JButton();
         jButton37 = new javax.swing.JButton();
         jButton38 = new javax.swing.JButton();
+        jButton39 = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -60,6 +65,7 @@ public class Parametres extends javax.swing.JPanel {
         jLabel13 = new javax.swing.JLabel();
         jButton31 = new javax.swing.JButton();
         jPanel11=new javax.swing.JPanel();
+        jPanel16=new javax.swing.JPanel();
         jPanel12=new javax.swing.JPanel();
         SpinnerNumberModel model1 = new SpinnerNumberModel(
                 Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA1)),
@@ -68,6 +74,11 @@ public class Parametres extends javax.swing.JPanel {
                 1);
         SpinnerNumberModel model2 = new SpinnerNumberModel(
                 Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA2)),
+                1,
+                36,
+                1);
+        SpinnerNumberModel model3 = new SpinnerNumberModel(
+                Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA_AFFRONTEMENT)),
                 1,
                 36,
                 1);
@@ -81,6 +92,12 @@ public class Parametres extends javax.swing.JPanel {
         jSpinner2.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 spinner2Changed(e);
+            }
+        });
+        jSpinner3 = new javax.swing.JSpinner(model3);
+        jSpinner3.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                spinner3Changed(e);
             }
         });
         setToutCouleurs();
@@ -147,6 +164,7 @@ public class Parametres extends javax.swing.JPanel {
         jCheckBox2.setSelected(!Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_HISTORIQUE)));
         jPanel6.add(jCheckBox2);
 
+
         jCheckBox3.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox3.setText("Interdire les suggestions des IAs");
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -157,13 +175,27 @@ public class Parametres extends javax.swing.JPanel {
         jCheckBox3.setSelected(!Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION)));
         jPanel6.add(jCheckBox3);
 
-        jPanel4.add(jPanel6);
 
+        jPanel15.setLayout(new javax.swing.BoxLayout(jPanel15, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel15.setAlignmentX(0.0F);
+        jLabel10.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du premier joueur : </h4>  <h3 style=\"text-align:center;\">"+Configuration.instance().get(Configuration.PSEUDO_J1)+"</h3></html>");
+        jPanel15.add(jLabel10);
+        jButton39.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_SWAP)));
+        jButton39.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton39MouseClicked(evt);
+            }
+        });
+        jPanel15.add(jButton39);
+        jLabel11.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du deuxième joueur : </h4>  <h3 style=\"text-align:center;\">"+Configuration.instance().get(Configuration.PSEUDO_J2)+"</h3></html>");
+        jPanel15.add(jLabel11);
+        jPanel6.add(jPanel15);
+
+        jPanel4.add(jPanel6);
 
         jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.PAGE_AXIS));
 
         jLabel3.setText("IA");
-        jLabel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel7.add(jLabel3);
 
         jPanel3.setAlignmentX(0.0F);
@@ -171,7 +203,7 @@ public class Parametres extends javax.swing.JPanel {
 
         jLabel2.setText("Choisissez la complexité de l'intelligence artificielle :");
         jPanel3.add(jLabel2);
-
+        jPanel16.setLayout(new javax.swing.BoxLayout(jPanel16, javax.swing.BoxLayout.LINE_AXIS));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(Configuration.instance().lis("IA_names").split(",")));
         jComboBox2.setAlignmentX(0.0F);
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -180,10 +212,13 @@ public class Parametres extends javax.swing.JPanel {
             }
         });
         jComboBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jComboBox2.setMaximumSize(new java.awt.Dimension(91, 32));
+        jComboBox2.setMaximumSize(new java.awt.Dimension(100, 30));
         jComboBox2.setSelectedItem(Configuration.instance().get(Configuration.IA_AFFRONTEMENT));
-        jPanel3.add(jComboBox2);
-
+        jSpinner3.setMaximumSize(new java.awt.Dimension(100, 30));
+        jPanel16.add(jComboBox2);
+        jPanel16.add(jSpinner3);
+        jPanel16.setAlignmentX(0.0F);
+        jPanel3.add(jPanel16);
         jCheckBox4.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox4.setText("Laisser l'IA commencer");
         jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
@@ -330,6 +365,11 @@ public class Parametres extends javax.swing.JPanel {
         }else{
             jSpinner2.setEnabled(true);
         }
+        if(!jComboBox2.getSelectedItem().toString().equals("IAFort")){
+            jSpinner3.setEnabled(false);
+        }else{
+            jSpinner3.setEnabled(true);
+        }
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weightx = 8.0;
@@ -343,7 +383,11 @@ public class Parametres extends javax.swing.JPanel {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
         // Handler pour la ComboBox de choix de l'IA_AFFRONTEMENT
-
+        if(!jComboBox2.getSelectedItem().toString().equals("IAFort")){
+            jSpinner3.setEnabled(false);
+        }else{
+            jSpinner3.setEnabled(true);
+        }
         Configuration.instance().set(Configuration.IA_AFFRONTEMENT, jComboBox2.getSelectedItem().toString());
     }
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -396,6 +440,12 @@ public class Parametres extends javax.swing.JPanel {
         System.out.println(jSpinner1.getValue());
         System.out.println(jSpinner2.getValue());
         cc.lancer_demo();
+    }
+    private void jButton39MouseClicked(java.awt.event.MouseEvent evt) {
+        //invercer ici
+        cc.inverserJoueurs();
+        jLabel10.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du premier joueur : </h4>  <h3 style=\"text-align:center;\">"+Configuration.instance().get(Configuration.PSEUDO_J1)+"</h3></html>");
+        jLabel11.setText("<html><h4 style=\"text-align:center;padding:5px;\">Nom du deuxième joueur : </h4>  <h3 style=\"text-align:center;\">"+Configuration.instance().get(Configuration.PSEUDO_J2)+"</h3></html>");
     }
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -456,16 +506,26 @@ public class Parametres extends javax.swing.JPanel {
     private void spinner2Changed(ChangeEvent e) {
         Configuration.instance().set(Configuration.HAUTEUR_IA2, String.valueOf(jSpinner2.getValue()));
     }
+    private void spinner3Changed(ChangeEvent e) {
+        Configuration.instance().set(Configuration.HAUTEUR_IA_AFFRONTEMENT, String.valueOf(jSpinner3.getValue()));
+    }
 
 
     public void setToutCouleurs() {
         setThemeIcon();
         setSonIcon();
         jPanel2.setBackground(palette.Couleur1);
+        jPanel15.setBackground(palette.Couleur1);
         jButton1.setBackground(palette.Couleur1);
         jButton2.setBackground(palette.Couleur2);
+        jButton39.setBackground(palette.Couleur2);
+        jButton39.setForeground(palette.Couleur7);
         jLabel1.setBackground(palette.Couleur1);
         jLabel1.setForeground(palette.Couleur7);
+        jLabel10.setBackground(palette.Couleur1);
+        jLabel10.setForeground(palette.Couleur7);
+        jLabel11.setBackground(palette.Couleur1);
+        jLabel11.setForeground(palette.Couleur7);
         jLabel9.setBackground(palette.Couleur1);
         jLabel9.setForeground(palette.Couleur7);
         jLabel7.setBackground(palette.Couleur1);
@@ -510,6 +570,7 @@ public class Parametres extends javax.swing.JPanel {
 
         jButton31.setBackground(palette.Couleur2);
         jPanel1.setBackground(palette.Couleur1);
+        jPanel16.setBackground(palette.Couleur1);
         jCheckBox1.setForeground(palette.Couleur7);
         jCheckBox2.setForeground(palette.Couleur7);
         jCheckBox3.setForeground(palette.Couleur7);
@@ -518,6 +579,8 @@ public class Parametres extends javax.swing.JPanel {
         jSpinner1.setForeground(palette.Couleur7);
         jSpinner2.setBackground(palette.Couleur1);
         jSpinner2.setForeground(palette.Couleur7);
+        jSpinner3.setBackground(palette.Couleur1);
+        jSpinner3.setForeground(palette.Couleur7);
 
     }
     public void setThemeIcon(){
@@ -568,11 +631,15 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -588,7 +655,9 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.JButton jButton36;
     private javax.swing.JButton jButton37;
     private javax.swing.JButton jButton38;
+    private javax.swing.JButton jButton39;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner jSpinner3;
 
 }

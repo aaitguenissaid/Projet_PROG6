@@ -285,6 +285,7 @@ public class Configuration {
     public static final String ICON_VOLUME_UP="iconVolumeUp";
     public static final String ICON_VOLUME_OFF="iconVolumeOff";
     public static final String ICON_PLAY="iconPlay";
+    public static final String ICON_SWAP="iconSwap";
 
     public static final String SOUND_1="sound1";
     public static final String SOUND_2="sound2";

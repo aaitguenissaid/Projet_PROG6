@@ -10,10 +10,12 @@ public class IAFort extends IA{
     private final int INF = 1000;
     int nombreCoup;
     HashMap<String, Integer> configurationDejaVu;
+    int hauteur;
 
     public IAFort(Jeu j, int joueur) {
         super(j, joueur);
         nombreCoup = 0;
+        hauteur = 3;
     }
 
     private boolean estFeuille(){
@@ -141,7 +143,7 @@ public class IAFort extends IA{
         long start = System.currentTimeMillis();
         Mouvement resultat;
         configurationDejaVu = new HashMap<>();
-        resultat = trouverGagnant(2);
+        resultat = trouverGagnant(hauteur - 1);
         nombreCoup++;
         long end=System.currentTimeMillis();
         System.out.println("Temps d'exécution： "+(end-start)+"ms");

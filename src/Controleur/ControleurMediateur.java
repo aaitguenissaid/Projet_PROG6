@@ -10,7 +10,6 @@ import Vue.*;
 
 import javax.swing.*;
 import Structures.Point;
-import java.awt.*;
 import java.util.Arrays;
 
 public class ControleurMediateur implements CollecteurEvenements {
@@ -529,8 +528,8 @@ public class ControleurMediateur implements CollecteurEvenements {
         return suggestion;
     }
     public Mouvement suggestionMouvement(){
-        IABasique iaB = new IABasique(jeu, jeu.getTour());
-        return iaB.joue();
+        IAFort iaF = new IAFort(jeu, jeu.getTour());
+        return iaF.joue();
     }
 
     public EffetsSonores getEffetsSonores(){

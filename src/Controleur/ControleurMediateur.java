@@ -199,10 +199,20 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
     private IA construireIA(String nom_ia, int id_ia) {
+        String nom="";
+        if(mode==MODE_IAvsIA) {
+            if(id_ia==Jeu.COULEUR1) {
+                nom = Configuration.HAUTEUR_IA1;
+            } else {
+                nom = Configuration.HAUTEUR_IA2;
+            }
+        } else if(mode==MODE_JvsIA) {
+            nom = Configuration.HAUTEUR_IA_AFFRONTEMENT;
+        }
         return switch (nom_ia) {
             case "IAAleatoire" -> new IAAleatoire(jeu, id_ia);
             case "IABasique" -> new IABasique(jeu, id_ia);
-            case "IAFort" -> new IAFort(jeu, id_ia);
+            case "IAFort" -> new IAFort(jeu, id_ia, nom);
             default -> new IAAleatoire(jeu, id_ia);
         };
     }

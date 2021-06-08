@@ -11,7 +11,7 @@ public class IAFort extends IA{
     int nombreCoup;
     HashMap<String, Integer> configurationDejaVu;
 
-    public IAFort(Jeu j, int joueur) {
+    public IAFort(Jeu j, int joueur, String nom) {
         super(j, joueur);
         nombreCoup = 0;
     }

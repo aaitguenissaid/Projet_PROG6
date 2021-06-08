@@ -12,6 +12,8 @@ import javax.swing.*;
 import Structures.Point;
 import java.util.ArrayList;
 
+import java.util.Arrays;
+
 public class ControleurMediateur implements CollecteurEvenements {
     public static final int MODE_JvsJ=0;
     public static final int MODE_JvsIA=1;
@@ -81,7 +83,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 //        System.out.print("Start :");
 //        System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
 //        System.out.print("End :");
-///       System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
+///        System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
         jeuint.metAJour();
 
         boolean animationRunning = time!=null && time.isRunning();
@@ -495,8 +497,8 @@ public class ControleurMediateur implements CollecteurEvenements {
             }
         }
     }
-    public void deisabel_enabel_son(){
-        sonCtrl.deisabel_enabel_son();
+    public void disable_enable_son(){
+        sonCtrl.disable_enable_son();
     }
     public boolean getSonState(){
         return sonCtrl.getSonState();

@@ -68,12 +68,12 @@ public class Parametres extends javax.swing.JPanel {
                 Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA1)),
                 1,
                 36,
-                1.0);
+                1);
         SpinnerNumberModel model2 = new SpinnerNumberModel(
                 Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA2)),
                 1,
                 36,
-                1.0);
+                1);
         jSpinner1 = new javax.swing.JSpinner(model1);
         jSpinner1.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {

@@ -2,8 +2,9 @@ package Structures;
 
 public class FAPListe<Bill extends Comparable<Bill>> extends FAP<Bill> {
     SequenceListe<Bill> s;
-
+    int t;
     public FAPListe() {
+        t=0;
         s = new SequenceListe<>();
         super.s = s;
     }
@@ -11,7 +12,7 @@ public class FAPListe<Bill extends Comparable<Bill>> extends FAP<Bill> {
     @Override
     public void insere(Bill element) {
         Maillon<Bill> courant, precedent;
-
+        t++;
         precedent = null;
         courant = s.tete;
         while ((courant != null) && (element.compareTo(courant.element) > 0)) {

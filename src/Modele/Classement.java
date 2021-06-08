@@ -121,9 +121,8 @@ public class Classement {
                 fileWriter.write(s);
             }
             fileWriter.close();
-            System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("Erreur lors de la sauvegarde du classement.");
             e.printStackTrace();
         }
     }

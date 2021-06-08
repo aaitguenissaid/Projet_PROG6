@@ -81,7 +81,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 //        System.out.print("Start :");
 //        System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
 //        System.out.print("End :");
-///        System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
+///       System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
         jeuint.metAJour();
 
         boolean animationRunning = time!=null && time.isRunning();
@@ -198,6 +198,17 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
     private IA construireIA(String nom_ia, int id_ia) {
+        String nom="";
+        if(mode==MODE_IAvsIA) {
+            if(id_ia==Jeu.COULEUR1) {
+                nom = Configuration.HAUTEUR_IA1;
+            } else {
+                nom = Configuration.HAUTEUR_IA2;
+            }
+        } else if(mode==MODE_JvsIA) {
+            nom = Configuration.HAUTEUR_IA_AFFRONTEMENT;
+        }
+
         switch (nom_ia) {
             case "IAAleatoire":
                 return new IAAleatoire(jeu, id_ia);

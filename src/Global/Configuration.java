@@ -266,6 +266,9 @@ public class Configuration {
     public static final String IA_COMMENCE="IACommence";
     public static final String PSEUDO_J1="pseudoJ1";
     public static final String PSEUDO_J2="pseudoJ2";
+    public static final String HAUTEUR_IA1="hauteurIA1";
+    public static final String HAUTEUR_IA2="hauteurIA2";
+    public static final String HAUTEUR_IA_AFFRONTEMENT="hauteurIAAffrontement";
 
 
     public static final String ICON_BACK="iconBack";

@@ -56,7 +56,7 @@ public interface CollecteurEvenements {
 
     boolean getSonState();
 
-    void deisabel_enabel_son();
+    void disable_enable_son();
 
     boolean suggestion();
 

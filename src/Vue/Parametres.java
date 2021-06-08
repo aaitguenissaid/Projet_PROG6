@@ -1,7 +1,6 @@
 package Vue;
 
 import Global.Configuration;
-import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 
 import javax.swing.*;
@@ -9,8 +8,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.ObjectInputFilter;
 
 public class Parametres extends javax.swing.JPanel {
     CollecteurEvenements cc;
@@ -314,10 +311,6 @@ public class Parametres extends javax.swing.JPanel {
                 jButton31MouseClicked(evt);
             }
         });
-        if(!Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON))) {
-            cc.deisabel_enabel_son();
-            setSonIcon();
-        }
         jPanel10.add(jButton31);
 
 
@@ -449,9 +442,10 @@ public class Parametres extends javax.swing.JPanel {
 
     private void jButton31MouseClicked(java.awt.event.MouseEvent evt) {
         // Handler pour l'activation / la désactivation du son
-        cc.deisabel_enabel_son();
+        cc.getEffetsSonores().sonChanged();
         boolean son_on = Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON));
         Configuration.instance().set(Configuration.SON_ON, String.valueOf(!son_on));
+        cc.disable_enable_son();
         setSonIcon();
     }
 
@@ -547,7 +541,7 @@ public class Parametres extends javax.swing.JPanel {
         }
     }
     public void setSonIcon(){
-        if(cc.getSonState()){
+        if(Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON))){
             jButton31.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_VOLUME_UP)));
         }else{
             jButton31.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_VOLUME_OFF)));

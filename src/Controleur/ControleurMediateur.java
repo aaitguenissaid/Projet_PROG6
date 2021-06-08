@@ -10,7 +10,7 @@ import Vue.*;
 
 import javax.swing.*;
 import Structures.Point;
-import java.awt.*;
+
 import java.util.Arrays;
 
 public class ControleurMediateur implements CollecteurEvenements {
@@ -480,8 +480,8 @@ public class ControleurMediateur implements CollecteurEvenements {
             }
         }
     }
-    public void deisabel_enabel_son(){
-        sonCtrl.deisabel_enabel_son();
+    public void disable_enable_son(){
+        sonCtrl.disable_enable_son();
     }
     public boolean getSonState(){
         return sonCtrl.getSonState();

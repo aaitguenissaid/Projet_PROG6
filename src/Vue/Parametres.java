@@ -64,6 +64,7 @@ public class Parametres extends javax.swing.JPanel {
         jLabel13 = new javax.swing.JLabel();
         jButton31 = new javax.swing.JButton();
         jPanel11=new javax.swing.JPanel();
+        jPanel16=new javax.swing.JPanel();
         jPanel12=new javax.swing.JPanel();
         SpinnerNumberModel model1 = new SpinnerNumberModel(
                 Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA1)),
@@ -71,6 +72,11 @@ public class Parametres extends javax.swing.JPanel {
                 36,
                 1);
         SpinnerNumberModel model2 = new SpinnerNumberModel(
+                Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA2)),
+                1,
+                36,
+                1);
+        SpinnerNumberModel model3 = new SpinnerNumberModel(
                 Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA2)),
                 1,
                 36,
@@ -85,6 +91,12 @@ public class Parametres extends javax.swing.JPanel {
         jSpinner2.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 spinner2Changed(e);
+            }
+        });
+        jSpinner3 = new javax.swing.JSpinner(model3);
+        jSpinner3.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                spinner3Changed(e);
             }
         });
         setToutCouleurs();
@@ -190,7 +202,7 @@ public class Parametres extends javax.swing.JPanel {
 
         jLabel2.setText("Choisissez la complexité de l'intelligence artificielle :");
         jPanel3.add(jLabel2);
-
+        jPanel16.setLayout(new javax.swing.BoxLayout(jPanel16, javax.swing.BoxLayout.LINE_AXIS));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(Configuration.instance().lis("IA_names").split(",")));
         jComboBox2.setAlignmentX(0.0F);
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
@@ -199,10 +211,13 @@ public class Parametres extends javax.swing.JPanel {
             }
         });
         jComboBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jComboBox2.setMaximumSize(new java.awt.Dimension(91, 32));
+        jComboBox2.setMaximumSize(new java.awt.Dimension(100, 30));
         jComboBox2.setSelectedItem(Configuration.instance().get(Configuration.IA_AFFRONTEMENT));
-        jPanel3.add(jComboBox2);
-
+        jSpinner3.setMaximumSize(new java.awt.Dimension(100, 30));
+        jPanel16.add(jComboBox2);
+        jPanel16.add(jSpinner3);
+        jPanel16.setAlignmentX(0.0F);
+        jPanel3.add(jPanel16);
         jCheckBox4.setFont(new java.awt.Font("Ubuntu", 0, 14));
         jCheckBox4.setText("Laisser l'IA commencer");
         jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
@@ -349,6 +364,11 @@ public class Parametres extends javax.swing.JPanel {
         }else{
             jSpinner2.setEnabled(true);
         }
+        if(!jComboBox2.getSelectedItem().toString().equals("IAFort")){
+            jSpinner3.setEnabled(false);
+        }else{
+            jSpinner3.setEnabled(true);
+        }
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.weightx = 8.0;
@@ -362,7 +382,11 @@ public class Parametres extends javax.swing.JPanel {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {
         // Handler pour la ComboBox de choix de l'IA_AFFRONTEMENT
-
+        if(!jComboBox2.getSelectedItem().toString().equals("IAFort")){
+            jSpinner3.setEnabled(false);
+        }else{
+            jSpinner3.setEnabled(true);
+        }
         Configuration.instance().set(Configuration.IA_AFFRONTEMENT, jComboBox2.getSelectedItem().toString());
     }
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -480,6 +504,9 @@ public class Parametres extends javax.swing.JPanel {
     private void spinner2Changed(ChangeEvent e) {
         Configuration.instance().set(Configuration.HAUTEUR_IA2, String.valueOf(jSpinner2.getValue()));
     }
+    private void spinner3Changed(ChangeEvent e) {
+
+    }
 
 
     public void setToutCouleurs() {
@@ -541,6 +568,7 @@ public class Parametres extends javax.swing.JPanel {
 
         jButton31.setBackground(palette.Couleur2);
         jPanel1.setBackground(palette.Couleur1);
+        jPanel16.setBackground(palette.Couleur1);
         jCheckBox1.setForeground(palette.Couleur7);
         jCheckBox2.setForeground(palette.Couleur7);
         jCheckBox3.setForeground(palette.Couleur7);
@@ -549,6 +577,8 @@ public class Parametres extends javax.swing.JPanel {
         jSpinner1.setForeground(palette.Couleur7);
         jSpinner2.setBackground(palette.Couleur1);
         jSpinner2.setForeground(palette.Couleur7);
+        jSpinner3.setBackground(palette.Couleur1);
+        jSpinner3.setForeground(palette.Couleur7);
 
     }
     public void setThemeIcon(){
@@ -607,6 +637,7 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -625,5 +656,6 @@ public class Parametres extends javax.swing.JPanel {
     private javax.swing.JButton jButton39;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
+    private javax.swing.JSpinner jSpinner3;
 
 }

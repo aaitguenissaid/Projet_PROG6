@@ -10,9 +10,15 @@ public class IAFort extends IA{
     private final int INF = 1000;
     int nombreCoup;
     HashMap<String, Integer> configurationDejaVu;
+    int initDepartI, initDepartJ, initArriveeI, initArriveeJ, initNbPionsDepl;
 
     public IAFort(Jeu j, int joueur, String nom) {
         super(j, joueur);
+        initDepartI=j.lastDepI;
+        initDepartJ=j.lastDepJ;
+        initArriveeI=j.lastArrI;
+        initArriveeJ=j.lastArrJ;
+        initNbPionsDepl=j.getNbPionsDepl();
         nombreCoup = 0;
     }
 
@@ -145,6 +151,11 @@ public class IAFort extends IA{
         nombreCoup++;
         long end=System.currentTimeMillis();
         System.out.println("Temps d'exécution： "+(end-start)+"ms");
+        jeu.lastDepI=initDepartI;
+        jeu.lastDepJ=initDepartJ;
+        jeu.lastArrI=initArriveeI;
+        jeu.lastArrJ=initArriveeJ;
+        jeu.setNbPionsDepl(initNbPionsDepl);
         return resultat;
     }
 }

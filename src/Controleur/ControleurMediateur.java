@@ -10,6 +10,8 @@ import Vue.*;
 
 import javax.swing.*;
 import Structures.Point;
+import java.util.ArrayList;
+
 import java.util.Arrays;
 
 public class ControleurMediateur implements CollecteurEvenements {
@@ -82,7 +84,6 @@ public class ControleurMediateur implements CollecteurEvenements {
 //        System.out.println("x-"+m.getDepart().x+" y-"+m.getDepart().y);
 //        System.out.print("End :");
 ///        System.out.println("x-"+m.getArrivee().x+" y-"+m.getArrivee().y);
-        jeuint.metAJour();
 
         boolean animationRunning = time!=null && time.isRunning();
         if(animationRunning) System.out.println("Animation running, ignoring clic.");
@@ -91,6 +92,7 @@ public class ControleurMediateur implements CollecteurEvenements {
             //Si on la navigation n'est pas activée (ou qu'elle vient d'être désactivée)
             if(!jeu.getHistorique().isNavigationOn()) {
                 if (bouge(m.getDepart(), m.getArrivee())) {
+                    jeuint.metAJour();
                     if(mode==MODE_JvsIA && jeu.getTour()==JoueurIA.getId()) {
                         lancerAnimationCoupIA(IAAffrontement, JoueurIA.getId());
                     }
@@ -198,12 +200,27 @@ public class ControleurMediateur implements CollecteurEvenements {
     }
 
     private IA construireIA(String nom_ia, int id_ia) {
-        return switch (nom_ia) {
-            case "IAAleatoire" -> new IAAleatoire(jeu, id_ia);
-            case "IABasique" -> new IABasique(jeu, id_ia);
-            case "IAFort" -> new IAFort(jeu, id_ia);
-            default -> new IAAleatoire(jeu, id_ia);
-        };
+        String nom="";
+        if(mode==MODE_IAvsIA) {
+            if(id_ia==Jeu.COULEUR1) {
+                nom = Configuration.HAUTEUR_IA1;
+            } else {
+                nom = Configuration.HAUTEUR_IA2;
+            }
+        } else if(mode==MODE_JvsIA) {
+            nom = Configuration.HAUTEUR_IA_AFFRONTEMENT;
+        }
+
+        switch (nom_ia) {
+            case "IAAleatoire":
+                return new IAAleatoire(jeu, id_ia);
+            case "IABasique":
+                return new IABasique(jeu, id_ia);
+            case "IAFort":
+                return new IAFort(jeu, id_ia, nom);
+            default:
+                return new IAAleatoire(jeu, id_ia);
+        }
     }
 
     private void lancerAnimationCoupIA(IA ia, int id) {
@@ -234,8 +251,19 @@ public class ControleurMediateur implements CollecteurEvenements {
 
                 //Récupération des IAs
                 String [] IA_names = Configuration.instance().lis("IA_names").split(",");
-                boolean j1EstIA = Arrays.stream(IA_names).toList().contains(j.getNomJ1());
-                boolean j2EstIA = Arrays.stream(IA_names).toList().contains(j.getNomJ2());
+
+                java.util.List<String> list = new ArrayList<>();
+                for (String IA_name : IA_names) {
+                    list.add(IA_name);
+                }
+                boolean j1EstIA = list.contains(j.getNomJ1());
+
+                java.util.List<String> result = new ArrayList<>();
+                for (String IA_name : IA_names) {
+                    result.add(IA_name);
+                }
+                boolean j2EstIA = result.contains(j.getNomJ2());
+
                 if(j1EstIA && j2EstIA) {
                     mode = MODE_IAvsIA;
                     IA_1 = construireIA(jeu.getNomJ1(), Jeu.COULEUR1);
@@ -469,8 +497,8 @@ public class ControleurMediateur implements CollecteurEvenements {
             }
         }
     }
-    public void deisabel_enabel_son(){
-        sonCtrl.deisabel_enabel_son();
+    public void disable_enable_son(){
+        sonCtrl.disable_enable_son();
     }
     public boolean getSonState(){
         return sonCtrl.getSonState();
@@ -528,8 +556,8 @@ public class ControleurMediateur implements CollecteurEvenements {
         return suggestion;
     }
     public Mouvement suggestionMouvement(){
-        IAFort iaF = new IAFort(jeu, jeu.getTour());
-        return iaF.joue();
+        IABasique iaB = new IABasique(jeu, jeu.getTour());
+        return iaB.joue();
     }
 
     public EffetsSonores getEffetsSonores(){

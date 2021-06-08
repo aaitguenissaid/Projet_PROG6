@@ -118,12 +118,12 @@ public class JeuVue extends javax.swing.JPanel {
         jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jLabel2.setText("Tour:");
+        jLabel2.setText("Tour : ");
         jLabel2.setToolTipText("");
         jPanel5.add(jLabel2);
 
         jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        jLabel3.setText("Nom_joueur(Noir)");
+        jLabel3.setText("X"); //Nom Joueur
         jPanel5.add(jLabel3);
 
         jPanel4.add(jPanel5);

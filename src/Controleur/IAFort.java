@@ -10,12 +10,11 @@ public class IAFort extends IA{
     private final int INF = 1000;
     int nombreCoup;
     HashMap<String, Integer> configurationDejaVu;
-    int hauteur;
+    int initDepartI, initDepartJ, initArriveeI, initArriveeJ, initNbPionsDepl;
 
-    public IAFort(Jeu j, int joueur) {
+    public IAFort(Jeu j, int joueur, String nom) {
         super(j, joueur);
         nombreCoup = 0;
-        hauteur = 3;
     }
 
     private boolean estFeuille(){
@@ -140,13 +139,23 @@ public class IAFort extends IA{
 
     @Override
     public Mouvement joue() {
+        initDepartI=jeu.lastDepI;
+        initDepartJ=jeu.lastDepJ;
+        initArriveeI=jeu.lastArrI;
+        initArriveeJ=jeu.lastArrJ;
+        initNbPionsDepl=jeu.getNbPionsDepl();
         long start = System.currentTimeMillis();
         Mouvement resultat;
         configurationDejaVu = new HashMap<>();
-        resultat = trouverGagnant(hauteur - 1);
+        resultat = trouverGagnant(2);
         nombreCoup++;
         long end=System.currentTimeMillis();
         System.out.println("Temps d'exécution： "+(end-start)+"ms");
+        jeu.lastDepI=initDepartI;
+        jeu.lastDepJ=initDepartJ;
+        jeu.lastArrI=initArriveeI;
+        jeu.lastArrJ=initArriveeJ;
+        jeu.setNbPionsDepl(initNbPionsDepl);
         return resultat;
     }
 }

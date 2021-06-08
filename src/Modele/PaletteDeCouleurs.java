@@ -26,11 +26,16 @@ public class PaletteDeCouleurs {
         CouleurSh5=Color.decode("#222226");
         int scheme = Integer.parseInt(Configuration.instance().get(Configuration.COULEUR_THEME));
         switch (scheme) {
-            case 2 -> setSheme2();
-            case 3 -> setSheme3();
-            case 4 -> setSheme4();
-            case 5 -> setSheme5();
-            default -> setSheme1();
+            case 2:
+                setSheme2(); break;
+            case 3:
+                setSheme3(); break;
+            case 4:
+                setSheme4(); break;
+            case 5:
+                setSheme5(); break;
+            default:
+                setSheme1(); break;
         }
     }
 

@@ -30,8 +30,8 @@ public class EffetsSonores {
             e.printStackTrace();
         }
     }
-    public void deisabel_enabel_son(){
-        on=!on;
+    public void disable_enable_son(){
+        on=Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON));
     }
     public boolean getSonState(){
         return on;
@@ -41,6 +41,17 @@ public class EffetsSonores {
             if (clip2.isActive()) clip2.stop();
             clip1.setFramePosition(0);
             clip1.start();
+        }
+    }
+    public void sonChanged() {
+        if(on) {
+            if (clip2.isActive()) clip2.stop();
+            clip1.setFramePosition(0);
+            clip1.start();
+        } else {
+            if (clip1.isActive()) clip1.stop();
+            clip2.setFramePosition(0);
+            clip2.start();
         }
     }
     public void moveEnd(){

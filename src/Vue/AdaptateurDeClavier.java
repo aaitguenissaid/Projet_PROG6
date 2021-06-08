@@ -26,7 +26,7 @@ public class AdaptateurDeClavier implements KeyListener {
                 cc.commande("fullscreen");
                 break;
             default:
-                System.out.println("Invalide command");
+                break; //On ignore
 
             //throw new IllegalStateException("Unexpected value: " + e.getKeyCode());
         }

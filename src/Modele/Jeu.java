@@ -144,6 +144,7 @@ public class Jeu extends Etat implements Cloneable {
     public Historique getHistorique() {
         return historique;
     }
+    public void setNbPionsDepl(int nb) {this.nbPionsDepl=nb;}
 
 
 

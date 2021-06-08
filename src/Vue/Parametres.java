@@ -5,9 +5,12 @@ import Modele.Jeu;
 import Modele.PaletteDeCouleurs;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.ObjectInputFilter;
 
 public class Parametres extends javax.swing.JPanel {
     CollecteurEvenements cc;
@@ -61,10 +64,28 @@ public class Parametres extends javax.swing.JPanel {
         jButton31 = new javax.swing.JButton();
         jPanel11=new javax.swing.JPanel();
         jPanel12=new javax.swing.JPanel();
-        SpinnerNumberModel model1 = new SpinnerNumberModel(2, 1, 36, 1.0);
-        SpinnerNumberModel model2 = new SpinnerNumberModel(2, 1, 36, 1.0);
+        SpinnerNumberModel model1 = new SpinnerNumberModel(
+                Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA1)),
+                1,
+                36,
+                1.0);
+        SpinnerNumberModel model2 = new SpinnerNumberModel(
+                Integer.parseInt(Configuration.instance().get(Configuration.HAUTEUR_IA2)),
+                1,
+                36,
+                1.0);
         jSpinner1 = new javax.swing.JSpinner(model1);
+        jSpinner1.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                spinner1Changed(e);
+            }
+        });
         jSpinner2 = new javax.swing.JSpinner(model2);
+        jSpinner2.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                spinner2Changed(e);
+            }
+        });
         setToutCouleurs();
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -432,6 +453,14 @@ public class Parametres extends javax.swing.JPanel {
         boolean son_on = Boolean.parseBoolean(Configuration.instance().get(Configuration.SON_ON));
         Configuration.instance().set(Configuration.SON_ON, String.valueOf(!son_on));
         setSonIcon();
+    }
+
+    private void spinner1Changed(ChangeEvent e) {
+        Configuration.instance().set(Configuration.HAUTEUR_IA1, String.valueOf(jSpinner1.getValue()));
+    }
+
+    private void spinner2Changed(ChangeEvent e) {
+        Configuration.instance().set(Configuration.HAUTEUR_IA2, String.valueOf(jSpinner2.getValue()));
     }
 
 

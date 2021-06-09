@@ -109,7 +109,11 @@ public class AireDeDessin extends JComponent {
     }
     void tracerArrow(int mode,Dimension from,Dimension to){
         if(mode==1){
-            drawable.setColor(Color.CYAN);
+            if(jeu.getTour()==0){
+                drawable.setColor(palette.Couleur4);
+            }else{
+                drawable.setColor(palette.Couleur3);
+            }
         }else{
             drawable.setColor(Color.DARK_GRAY);
         }

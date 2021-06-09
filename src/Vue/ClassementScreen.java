@@ -56,7 +56,6 @@ public class ClassementScreen extends javax.swing.JPanel {
         jPanel2.add(filler2);
         add(jPanel2);
         jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {1};
         jPanel1Layout.rowHeights = new int[] {1};

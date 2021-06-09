@@ -77,7 +77,7 @@ public class ClassementScreen extends javax.swing.JPanel {
         }
 
 
-        jPanel4.setPreferredSize(new Dimension(750,it.t()*10));
+        jPanel4.setPreferredSize(new Dimension(750,it.t()*10 ));
         jPanel1.add(jPanel4, gridBagConstraints);
         jScrollPane5.setViewportView(jPanel1);
         jScrollPane5.getVerticalScrollBar().setUnitIncrement(16);

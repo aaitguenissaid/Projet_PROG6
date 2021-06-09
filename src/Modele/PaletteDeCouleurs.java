@@ -83,7 +83,7 @@ public class PaletteDeCouleurs {
     public void setSheme5() {
         curentColorSheme=5;
         Couleur1=Color.decode("#222226");
-        Couleur2=Color.decode("#7B44F2");
+        Couleur2=Color.decode("#6182C2");
         Couleur3=Color.decode("#F28705");
         Couleur4=Color.decode("#1763A6");
         Couleur5=Color.decode("#035948");

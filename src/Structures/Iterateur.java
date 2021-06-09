@@ -15,5 +15,4 @@ public abstract class Iterateur<Tata> {
         }
         peutSupprimer = false;
     }
-    public abstract int t();
 }

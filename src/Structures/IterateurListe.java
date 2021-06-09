@@ -25,7 +25,6 @@ public class IterateurListe<Riri> extends Iterateur<Riri> {
     public void supprime() {
 
         super.supprime();
-        s.t--;
         if (arrierePrecedent == null) {
             s.tete = courant;
         } else {
@@ -36,9 +35,5 @@ public class IterateurListe<Riri> extends Iterateur<Riri> {
             s.queue = arrierePrecedent;
         precedent = arrierePrecedent;
         s.taille--;
-    }
-
-    public int t(){
-        return s.t;
     }
 }

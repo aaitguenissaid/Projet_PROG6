@@ -1,7 +1,7 @@
 package Structures;
 
 public class FAPListe<Bill extends Comparable<Bill>> extends FAP<Bill> {
-    SequenceListe<Bill> s;
+    public SequenceListe<Bill> s;
     int t;
     public FAPListe() {
         t=0;

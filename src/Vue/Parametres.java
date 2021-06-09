@@ -437,8 +437,6 @@ public class Parametres extends javax.swing.JPanel {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {
         // Handler pour le bouton de lancement de la démo
-        System.out.println(jSpinner1.getValue());
-        System.out.println(jSpinner2.getValue());
         cc.lancer_demo();
     }
     private void jButton39MouseClicked(java.awt.event.MouseEvent evt) {

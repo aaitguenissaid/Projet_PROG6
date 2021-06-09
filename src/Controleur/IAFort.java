@@ -158,7 +158,6 @@ public class IAFort extends IA{
         resultat = trouverGagnant(hauteur - 1);
         nombreCoup++;
         long end=System.currentTimeMillis();
-        System.out.println("Temps d'exécution： "+(end-start)+"ms");
         jeu.lastDepI=initDepartI;
         jeu.lastDepJ=initDepartJ;
         jeu.lastArrI=initArriveeI;

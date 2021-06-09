@@ -124,7 +124,7 @@ public class ControleurMediateur implements CollecteurEvenements {
 
     @Override
     public void ticTac() {
-        if (jeu.estFini()){
+        if (jeu.estFini() && !navigationHistoriqueRunning){
             time.stop();
         } else {
             if(animations!=null && !animations.estVide()) {

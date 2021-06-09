@@ -157,8 +157,6 @@ public class IAFort extends IA{
         configurationDejaVu = new HashMap<>();
         resultat = trouverGagnant(hauteur - 1);
         nombreCoup++;
-        System.out.println("joueur = " + joueur);
-        System.out.println("joueur = " + joueur);
         long end=System.currentTimeMillis();
         System.out.println("Temps d'exécution： "+(end-start)+"ms");
         jeu.lastDepI=initDepartI;

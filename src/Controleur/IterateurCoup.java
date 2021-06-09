@@ -4,6 +4,7 @@ import Modele.Jeu;
 import Structures.Mouvement;
 import Structures.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class IterateurCoup {
     int indice;
@@ -20,6 +21,7 @@ public class IterateurCoup {
         this.ia = ia;
         j = ia.jeu;
         casePeutBouger = j.trouveCasePeutBouger();
+        Collections.shuffle(casePeutBouger);
         peutBougerLength = casePeutBouger.size();
     }
 

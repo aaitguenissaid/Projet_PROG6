@@ -341,7 +341,7 @@ public class JeuVue extends javax.swing.JPanel {
     }
 
     public void pauseBoutonHistorique() {
-        jButton9.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_STOP)));
+        jButton9.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_PAUSE)));
     }
     public void playBoutonHistorique() {
         jButton9.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_PLAY)));

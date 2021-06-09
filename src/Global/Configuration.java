@@ -269,6 +269,7 @@ public class Configuration {
     public static final String HAUTEUR_IA1="hauteurIA1";
     public static final String HAUTEUR_IA2="hauteurIA2";
     public static final String HAUTEUR_IA_AFFRONTEMENT="hauteurIAAffrontement";
+    public static final String ICON_PAUSE="iconPause";
 
 
     public static final String ICON_BACK="iconBack";

@@ -56,14 +56,12 @@ public class ClassementScreen extends javax.swing.JPanel {
         jPanel2.add(filler2);
         add(jPanel2);
         jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
         java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
         jPanel1Layout.columnWidths = new int[] {1};
         jPanel1Layout.rowHeights = new int[] {1};
         jPanel1Layout.columnWeights = new double[] {1.0};
         jPanel1Layout.rowWeights = new double[] {1.0};
         jPanel1.setLayout(jPanel1Layout);
-
         jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -76,8 +74,6 @@ public class ClassementScreen extends javax.swing.JPanel {
             Score s =  it.prochain();
             jPanel4.add(addLineToPanel(s.getPseudo(), s.getNbVictoires(), s.getNbParties(), s.getLesPoints()));
         }
-
-
         jPanel1.add(jPanel4, gridBagConstraints);
         jScrollPane5.setViewportView(jPanel1);
         jScrollPane5.getVerticalScrollBar().setUnitIncrement(16);

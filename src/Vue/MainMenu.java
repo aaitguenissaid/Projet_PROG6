@@ -44,6 +44,7 @@ public class MainMenu extends javax.swing.JPanel {
                 jButton2MouseClicked(evt);
             }
         });
+        jButton2.setToolTipText("Paramètres");
         jPanel1.add(jButton2);
 
         jButton1.setIcon(new javax.swing.ImageIcon(Configuration.instance().contenuFichier(Configuration.ICON_ACCOUNT)));
@@ -52,6 +53,7 @@ public class MainMenu extends javax.swing.JPanel {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.setToolTipText("Changer les noms des joueurs");
         jPanel1.add(jButton1);
 
         add(jPanel1);

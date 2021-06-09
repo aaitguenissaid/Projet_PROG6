@@ -1,6 +1,7 @@
 package Vue;
 
 import Controleur.ControleurMediateur;
+import Global.Configuration;
 import Modele.Jeu;
 import javax.swing.*;
 import java.awt.*;
@@ -47,7 +48,7 @@ public class InterfaceUtilisateur implements Runnable {
         comp.setFocusable(true);
         comp.addKeyListener(new AdaptateurDeClavier(ctrl));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(850, 700);
+        frame.setSize(950, 700);
         frame.setVisible(true);
         cl = (CardLayout)(screens.getLayout());
     }
@@ -87,7 +88,11 @@ public class InterfaceUtilisateur implements Runnable {
         if(j.estFini()) {
             jeu.allumerRelancerPartie();
             jeu.eteindreAbandonner();
-        } else {
+            jeu.eteindreSuggestion();
+        } else if(!j.getHistorique().isNavigationOn()) {
+            if(Boolean.parseBoolean(Configuration.instance().get(Configuration.EST_AUTORISE_SUGGESTION))) {
+                jeu.allumerSuggestion();
+            }
             jeu.allumerAbandonner();
             jeu.eteindreRelancerPartie();
         }

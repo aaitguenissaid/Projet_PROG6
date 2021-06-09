@@ -1,6 +1,7 @@
 package Structures;
 
 public class SequenceListe<Titi> implements Sequence<Titi> {
+    public int t;
     Maillon<Titi> tete, queue;
     int taille;
     public Titi teteReturn(){

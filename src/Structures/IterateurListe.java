@@ -23,6 +23,7 @@ public class IterateurListe<Riri> extends Iterateur<Riri> {
     }
     @Override
     public void supprime() {
+
         super.supprime();
         if (arrierePrecedent == null) {
             s.tete = courant;

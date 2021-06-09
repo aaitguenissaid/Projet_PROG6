@@ -28,7 +28,7 @@ public class IAFort extends IA{
 
     private boolean estFeuille(){
         ArrayList<Point> casePeutBouger = jeu.trouveCasePeutBouger();
-        return ((casePeutBouger == null) | (casePeutBouger.size() == 0));
+        return ((casePeutBouger == null) || (casePeutBouger.size() == 0));
     }
 
     private int evaluerNoeud(){
@@ -38,7 +38,7 @@ public class IAFort extends IA{
             for (int j = 0; j < jeu.getTaille().l; j++) {
                 if ((jeu.estCaseValide(new Point(i, j))) && (jeu.getCase(i, j).nbPions() > 0)) {
                     ArrayList<Point> voisinsAccessible = jeu.voisinsAccessibles(i, j);
-                    if ((voisinsAccessible == null) | (voisinsAccessible.size() == 0)) {
+                    if ((voisinsAccessible == null) || (voisinsAccessible.size() == 0)) {
                         if (jeu.getCase(i, j).getTete().getCouleur() == joueur)
                             nombre0++;
                         else
@@ -52,7 +52,7 @@ public class IAFort extends IA{
 
 
     private int minmaxAlphaBeta(int alpha, int beta, boolean estMax, int horizon){
-        if ( (horizon == 0)|(estFeuille())){
+        if ( (horizon == 0)||(estFeuille())){
             int value;
             String key = HashCode();
             if (configurationDejaVu.containsKey(key)){
@@ -157,6 +157,8 @@ public class IAFort extends IA{
         configurationDejaVu = new HashMap<>();
         resultat = trouverGagnant(hauteur - 1);
         nombreCoup++;
+        System.out.println("joueur = " + joueur);
+        System.out.println("joueur = " + joueur);
         long end=System.currentTimeMillis();
         System.out.println("Temps d'exécution： "+(end-start)+"ms");
         jeu.lastDepI=initDepartI;
